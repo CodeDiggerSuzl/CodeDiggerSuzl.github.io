@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Golang-3 面向对象 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶🥳" /><meta name="description" content="面向对象 仅仅支持封装,不支持继承和多态 没有 class,只有 struct 定义 使用 type关键字 1 2 3 4 type Node struct { Value int Left, Right *Node } 结构的创建 root := TreeNode{value :3} root.Left =&amp;amp;TreeNode{} root.Right = &amp;amp;TreeNode{nil,nil,5} root.Right.Left" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/golang-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Golang-3 面向对象" />
+<meta property="og:description" content="面向对象 仅仅支持封装,不支持继承和多态 没有 class,只有 struct 定义 使用 type关键字 1 2 3 4 type Node struct { Value int Left, Right *Node } 结构的创建 root := TreeNode{value :3} root.Left =&amp;TreeNode{} root.Right = &amp;TreeNode{nil,nil,5} root.Right.Left" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/golang-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" />
+<meta property="article:published_time" content="2019-08-04T15:53:36+08:00" />
+<meta property="article:modified_time" content="2019-08-04T15:53:36+08:00" />
+<meta itemprop="name" content="Golang-3 面向对象">
+<meta itemprop="description" content="面向对象 仅仅支持封装,不支持继承和多态 没有 class,只有 struct 定义 使用 type关键字 1 2 3 4 type Node struct { Value int Left, Right *Node } 结构的创建 root := TreeNode{value :3} root.Left =&amp;TreeNode{} root.Right = &amp;TreeNode{nil,nil,5} root.Right.Left">
+
+
+<meta itemprop="datePublished" content="2019-08-04T15:53:36&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-04T15:53:36&#43;08:00" />
+<meta itemprop="wordCount" content="2182">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang-3 面向对象"/>
+<meta name="twitter:description" content="面向对象 仅仅支持封装,不支持继承和多态 没有 class,只有 struct 定义 使用 type关键字 1 2 3 4 type Node struct { Value int Left, Right *Node } 结构的创建 root := TreeNode{value :3} root.Left =&amp;TreeNode{} root.Right = &amp;TreeNode{nil,nil,5} root.Right.Left"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Golang-3 面向对象</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            </div>
+          <span class="more-meta"> 约 2182 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#面向对象">面向对象</a>
+<ul>
+<li>
+<ul>
+<li><a href="#仅仅支持封装-不支持继承和多态">仅仅支持封装,不支持继承和多态</a></li>
+<li><a href="#没有-class-只有-struct">没有 class,只有 struct</a></li>
+</ul></li>
+<li><a href="#定义-使用-type-关键字">定义 使用 <code>type</code>关键字</a>
+<ul>
+<li><a href="#结构的创建">结构的创建</a>
+<ul>
+<li><a href="#go-没有构造函数这个说法"><strong>go 没有构造函数这个说法</strong></a></li>
+</ul></li>
+<li><a href="#结构是在堆上还是-栈上">结构是在堆上还是 栈上?</a></li>
+<li><a href="#node-go">node.go</a></li>
+<li><a href="#为结构定义方法">为结构定义方法</a></li>
+</ul></li>
+<li><a href="#值接受者-和指针接收者">值接受者 和指针接收者</a></li>
+</ul></li>
+<li><a href="#封装">封装</a>
+<ul>
+<li><a href="#camelcase">CamelCase</a></li>
+<li><a href="#包">包</a>
+<ul>
+<li><a href="#没有继承-怎么扩展系统类型或者别人的-struct">没有继承,怎么扩展系统类型或者别人的 struct</a></li>
+</ul></li>
+<li><a href="#gopath">GOPATH</a>
+<ul>
+<li><a href="#linux-设置">Linux 设置</a></li>
+<li><a href="#使用-go-get-获取第三方库">使用 go get 获取第三方库</a></li>
+<li><a href="#gopath-下的文件">gopath 下的文件</a></li>
+</ul></li>
+<li><a href="#todo">TODO :</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="面向对象">面向对象</h2>
+
+<h4 id="仅仅支持封装-不支持继承和多态">仅仅支持封装,不支持继承和多态</h4>
+
+<h4 id="没有-class-只有-struct">没有 class,只有 struct</h4>
+
+<h3 id="定义-使用-type-关键字">定义 使用 <code>type</code>关键字</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Value</span>       <span class="kt">int</span>
+	<span class="nx">Left</span><span class="p">,</span> <span class="nx">Right</span> <span class="o">*</span><span class="nx">Node</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="结构的创建">结构的创建</h4>
+
+<ol>
+<li><code>root := TreeNode{value :3}</code></li>
+<li><code>root.Left =&amp;TreeNode{}</code></li>
+<li><code>root.Right = &amp;TreeNode{nil,nil,5}</code></li>
+<li><code>root.Right.Left = new (TreeNode)</code></li>
+<li><strong>无论地址还是结构本身,都是用 <code>.</code>来访问成员</strong></li>
+</ol>
+
+<h5 id="go-没有构造函数这个说法"><strong>go 没有构造函数这个说法</strong></h5>
+
+<p>使用自定义工厂函数来构建 返回的是结构的地址</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="cm">/*
+</span><span class="cm"> 没有构造函数, 使用工厂函数来构建 Node
+</span><span class="cm"> 在 cpp 中 局部变量 的地址是错误的 但是在 go 中不会有问题
+</span><span class="cm">*/</span>
+<span class="kd">func</span> <span class="nf">CreateNode</span><span class="p">(</span><span class="nx">Value</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">Node</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">Value</span><span class="p">:</span> <span class="nx">Value</span><span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>返回的是<strong>局部变量</strong>的地址</li>
+</ul>
+
+<h4 id="结构是在堆上还是-栈上">结构是在堆上还是 栈上?</h4>
+
+<ul>
+<li>不一定,没人用就会放在栈上,有人使用就是堆上</li>
+<li>不需要考虑局部变量在哪里分配的</li>
+</ul>
+
+<h4 id="node-go">node.go</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+
+<span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Value</span>       <span class="kt">int</span>
+	<span class="nx">Left</span><span class="p">,</span> <span class="nx">Right</span> <span class="o">*</span><span class="nx">Node</span>
+<span class="p">}</span>
+
+<span class="cm">/*
+</span><span class="cm"> 没有构造函数, 使用工厂函数来构建 Node
+</span><span class="cm"> 在 cpp 中局部变量的地址是错误的 但是在 go 中不会有问题
+</span><span class="cm">*/</span>
+<span class="kd">func</span> <span class="nf">CreateNode</span><span class="p">(</span><span class="nx">Value</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">Node</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">Value</span><span class="p">:</span> <span class="nx">Value</span><span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* 为结构定义方法:
+</span><span class="cm">1. 写在结构体的外面
+</span><span class="cm">2. 有一个接受者
+</span><span class="cm">3. 在方法名前加了一个接收者 代表 this
+</span><span class="cm">代表 print 是给 前面括号中接受者来用的
+</span><span class="cm">4. node 传递的是值不是引用 所有的都是值传递
+</span><span class="cm">*/</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="nx">Node</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/*
+</span><span class="cm"> 这样定义 set 方法不会改变 node 的值因为传递
+</span><span class="cm"> func (node Node)setValue(Value int)  {
+</span><span class="cm">		node.Value = Value
+</span><span class="cm"> }
+</span><span class="cm"> 应该使用指针来定义方法
+</span><span class="cm"> 在调用的时候 解析 地址来设置 Value
+</span><span class="cm"> nil 可以调用方法
+</span><span class="cm">*/</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="nf">SetValue</span><span class="p">(</span><span class="nx">Value</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nil is inside the func pass&#34;</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="c1">// 加不加 * 号都要使用调用
+</span><span class="c1"></span>	<span class="c1">// 也不用使用*node 来调用 Value
+</span><span class="c1"></span>	<span class="nx">node</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">Value</span>
+<span class="p">}</span>
+
+<span class="cm">/* 也可以这样写 */</span>
+<span class="kd">func</span> <span class="nf">Print</span><span class="p">(</span><span class="nx">node</span> <span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="cm">/* 遍历树 中序遍历 */</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="nf">Traverse</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="nx">node</span><span class="p">.</span><span class="nx">Left</span><span class="p">.</span><span class="nf">Traverse</span><span class="p">()</span>
+	<span class="nx">node</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+	<span class="nx">node</span><span class="p">.</span><span class="nx">Right</span><span class="p">.</span><span class="nf">Traverse</span><span class="p">()</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>建立的树如下:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-txt" data-lang="txt">	   3
+	 /	  \
+	0	   5
+ 	 \	   /
+ 	  2   0</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 为结构定义方法:
+</span><span class="c1">// 1. 写在结构体的外面
+</span><span class="c1">// 2. 有一个接受者
+</span><span class="c1">// 3. 在方法名前加了一个接收者 代表 this
+</span><span class="c1">// 	  代表 print 是给 前面括号中接受者来用的
+</span><span class="c1">// 4. node 传递的是值不是引用 所有的都是值传递
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="nx">treeNode</span><span class="p">)</span> <span class="nb">print</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 这样定义 set 方法不会改变 node 的值因为传递
+</span><span class="c1">// func (node treeNode)setValue(value int)  {
+</span><span class="c1">// 		node.value = value
+</span><span class="c1">// }
+</span><span class="c1">// 应该使用指针来定义方法
+</span><span class="c1">// 在调用的时候 解析 地址来设置 value
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">treeNode</span><span class="p">)</span> <span class="nf">setValue</span><span class="p">(</span><span class="nx">value</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">// 加不加 * 号都要使用调用
+</span><span class="c1"></span>	<span class="c1">// 也不用使用*node 来调用 value
+</span><span class="c1"></span>	<span class="nx">node</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">value</span>
+<span class="p">}</span>
+<span class="c1">// 也可以这样写
+</span><span class="c1"></span><span class="kd">func</span> <span class="nb">print</span><span class="p">(</span><span class="nx">node</span> <span class="nx">treeNode</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">root</span> <span class="nx">treeNode</span>
+	<span class="nx">root</span> <span class="p">=</span> <span class="nx">treeNode</span><span class="p">{</span><span class="nx">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+	<span class="c1">//指针 指向地址 现在为 nil
+</span><span class="c1"></span>	<span class="nx">root</span><span class="p">.</span><span class="nx">left</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">treeNode</span><span class="p">{}</span>
+	<span class="nx">root</span><span class="p">.</span><span class="nx">right</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">treeNode</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">}</span>
+	<span class="c1">// 不管是指针实例都是用.
+</span><span class="c1"></span>	<span class="nx">root</span><span class="p">.</span><span class="nx">left</span><span class="p">.</span><span class="nx">right</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">treeNode</span><span class="p">)</span>
+	<span class="nx">root</span><span class="p">.</span><span class="nx">left</span><span class="p">.</span><span class="nx">right</span> <span class="p">=</span> <span class="nf">createNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+	<span class="nx">nodes</span> <span class="o">:=</span> <span class="p">[]</span><span class="nx">treeNode</span><span class="p">{</span>
+		<span class="p">{</span><span class="nx">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+		<span class="p">{},</span>
+		<span class="p">{</span><span class="mi">6</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">root</span><span class="p">},</span>
+	<span class="p">}</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">nodes</span><span class="p">)</span>
+
+	<span class="c1">//************
+</span><span class="c1"></span>	<span class="c1">// 无论是值接收者还是指接受者,都调用
+</span><span class="c1"></span>	<span class="c1">//************
+</span><span class="c1"></span>	<span class="c1">// 在使用值调用的时候会拷贝
+</span><span class="c1"></span>	<span class="nx">root</span><span class="p">.</span><span class="nb">print</span><span class="p">()</span>
+	<span class="c1">// 使用指针调用的时候会传递地址
+</span><span class="c1"></span>	<span class="nx">root</span><span class="p">.</span><span class="nf">setValue</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+	<span class="nx">pRoot</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">root</span>
+	<span class="nx">pRoot</span><span class="p">.</span><span class="nf">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+	<span class="nx">pRoot</span><span class="p">.</span><span class="nb">print</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><strong>编译器会根据指针接收者还是值接收来分辨 使用拷贝还是地址</strong></p>
+
+<h4 id="为结构定义方法">为结构定义方法</h4>
+
+<ol>
+<li><p>显式定义和命名方法接受者</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="nf">SetValue</span><span class="p">(</span><span class="nx">Value</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nil is inside the func pass&#34;</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="c1">// 加不加 * 号都要使用调用
+</span><span class="c1"></span>	<span class="c1">// 也不用使用*node 来调用 Value
+</span><span class="c1"></span>	<span class="nx">node</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">Value</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>只是一种语法的定义</p></li>
+
+<li><p>没有<code>self</code> 和 <code>this</code></p></li>
+
+<li><p><strong>nil 指针也能调用方法</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">treeNode</span><span class="p">)</span> <span class="nf">setValue</span><span class="p">(</span><span class="nx">value</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nil is inside the func pass&#34;</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="c1">// 加不加 * 号都可以使用这个方法来调用
+</span><span class="c1"></span>	<span class="c1">// 也不用使用*node 来调用 value
+</span><span class="c1"></span>	<span class="nx">node</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">value</span>
+<span class="p">}</span>
+
+<span class="o">------------------------------------------------</span>
+<span class="nx">root</span> <span class="p">=</span> <span class="kd">var</span> <span class="nx">root</span> <span class="nx">treeNode</span>
+	<span class="nx">root</span> <span class="p">=</span> <span class="nx">treeNode</span><span class="p">{</span><span class="nx">value</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="kd">var</span> <span class="nx">pRoot</span> <span class="o">*</span><span class="nx">treeNode</span>
+	<span class="nx">pRoot</span><span class="p">.</span><span class="nf">setValue</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+	<span class="nx">pRoot</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">root</span>
+	<span class="nx">pRoot</span><span class="p">.</span><span class="nf">setValue</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>
+	<span class="nx">pRoot</span><span class="p">.</span><span class="nb">print</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p><strong>树的中序遍历 TODO?</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">treeNode</span><span class="p">)</span><span class="nf">traverse</span><span class="p">(){</span>
+  <span class="c1">// 判断空指针
+</span><span class="c1"></span>  <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span><span class="p">{</span>
+    <span class="k">return</span>
+  <span class="p">}</span>
+  <span class="nx">node</span><span class="p">.</span><span class="nx">left</span><span class="p">.</span><span class="nf">traverse</span><span class="p">()</span>
+  <span class="nx">node</span><span class="p">.</span><span class="nb">print</span><span class="p">()</span>
+  <span class="nx">node</span><span class="p">.</span><span class="nx">rignt</span><span class="p">.</span><span class="nf">traverse</span><span class="p">()</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="值接受者-和指针接收者">值接受者 和指针接收者</h3>
+
+<ul>
+<li>改变内容需要使用指针接收者</li>
+<li>结构特别大需要用指针接收者</li>
+<li>一致性 :如果有指针接受者,最好都是指针接收者</li>
+<li>值接收者是 go 语言特有的</li>
+<li>值/指着接受者可以接收者值/指针接收者</li>
+</ul>
+
+<h2 id="封装">封装</h2>
+
+<h3 id="camelcase">CamelCase</h3>
+
+<ul>
+<li>名字使用 CamelCase<br /></li>
+<li>首字母大写代表 <strong>public</strong></li>
+<li>首字母小写代表 <strong>private</strong></li>
+<li>public 和 private 是针对<strong>包</strong>来说的</li>
+</ul>
+
+<h3 id="包">包</h3>
+
+<ul>
+<li>每个目录一个包</li>
+<li>main 包包含可执行入口</li>
+<li>为结构定义的方法必须处于同一个包中</li>
+
+<li><p><strong>可以是不同的文件</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+
+	<span class="s">&#34;github.com/CodeDiggerSuzl/GoogleGolang/ch3&#34;</span>
+<span class="p">)</span>
+
+<span class="cm">/*
+</span><span class="cm">扩充其他人的 struct
+</span><span class="cm">肚放一个指针 不然还需要拷贝
+</span><span class="cm">1. 使用 组和 的方式 ||
+</span><span class="cm">*/</span>
+<span class="kd">type</span> <span class="nx">myTreeNode</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">node</span> <span class="o">*</span><span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span>
+<span class="p">}</span>
+<span class="c1">// 后续遍历 二叉树
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">myNode</span> <span class="o">*</span><span class="nx">myTreeNode</span><span class="p">)</span> <span class="nf">postOrder</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">myNode</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nx">myNode</span><span class="p">.</span><span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="c1">// 通过这个访问左子树 myNode.node.Left
+</span><span class="c1"></span>	<span class="nx">left</span> <span class="o">:=</span> <span class="nx">myTreeNode</span><span class="p">{</span><span class="nx">myNode</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">Left</span><span class="p">}</span>
+	<span class="nx">left</span><span class="p">.</span><span class="nf">postOrder</span><span class="p">()</span>
+	<span class="c1">//包装一下 ? 什么意思
+</span><span class="c1"></span>	<span class="c1">// 会报错
+</span><span class="c1"></span>	<span class="c1">// cannot call pointer method on myTreeNode literal
+</span><span class="c1"></span>	<span class="c1">// can not take the address of myTreeNode literal
+</span><span class="c1"></span>	<span class="c1">// 只有变量才能拿到地址 ⤵️
+</span><span class="c1"></span>	<span class="nx">right</span> <span class="o">:=</span> <span class="nx">myTreeNode</span><span class="p">{</span><span class="nx">myNode</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">Right</span><span class="p">}</span>
+	<span class="nx">right</span><span class="p">.</span><span class="nf">postOrder</span><span class="p">()</span> <span class="c1">//?
+</span><span class="c1"></span>	<span class="c1">// 访问节点本的 node 的 Print
+</span><span class="c1"></span>	<span class="nx">myNode</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">root</span> <span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span>
+	<span class="nx">root</span> <span class="p">=</span> <span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span><span class="p">{</span><span class="nx">Value</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+	<span class="c1">//指针 指向地址 现在为 nil
+</span><span class="c1"></span>	<span class="nx">root</span><span class="p">.</span><span class="nx">Left</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span><span class="p">{}</span>
+	<span class="nx">root</span><span class="p">.</span><span class="nx">Right</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span><span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">nil</span><span class="p">}</span>
+	<span class="c1">// 不管是指针实例都是用 . 调用
+</span><span class="c1"></span>	<span class="nx">root</span><span class="p">.</span><span class="nx">Right</span><span class="p">.</span><span class="nx">Left</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span><span class="p">)</span>
+	<span class="nx">root</span><span class="p">.</span><span class="nx">Left</span><span class="p">.</span><span class="nx">Right</span> <span class="p">=</span> <span class="nx">ch3</span><span class="p">.</span><span class="nf">CreateNode</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+	<span class="nx">root</span><span class="p">.</span><span class="nx">Right</span><span class="p">.</span><span class="nx">Left</span><span class="p">.</span><span class="nf">SetValue</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+	<span class="cm">/* 	nodes := []ch3.Node{
+</span><span class="cm">	   		{Value: 3},
+</span><span class="cm">	   		{},
+</span><span class="cm">	   		{6, nil, &amp;root},
+</span><span class="cm">	   	}
+</span><span class="cm">	   	fmt.Println(nodes) */</span>
+	<span class="c1">//************
+</span><span class="c1"></span>	<span class="c1">// 无论是值接收者还是指接受者,都调用
+</span><span class="c1"></span>	<span class="c1">//************
+</span><span class="c1"></span>	<span class="c1">// 在使用值调用的时候会拷贝
+</span><span class="c1"></span>	<span class="c1">// root.Print()
+</span><span class="c1"></span>	<span class="c1">// 使用指针调用的时候会传递地址
+</span><span class="c1"></span>	<span class="c1">// root.SetValue(3)
+</span><span class="c1"></span>	<span class="c1">// pRoot := &amp;root
+</span><span class="c1"></span>	<span class="cm">/* var pRoot *ch3.Node
+</span><span class="cm">	pRoot = &amp;root
+</span><span class="cm">	pRoot.Print() */</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;----&#34;</span><span class="p">)</span>
+	<span class="nx">root</span><span class="p">.</span><span class="nf">Traverse</span><span class="p">()</span>
+	<span class="nx">myroot</span> <span class="o">:=</span> <span class="nx">myTreeNode</span><span class="p">{</span><span class="o">&amp;</span><span class="nx">root</span><span class="p">}</span>
+	<span class="nx">myroot</span><span class="p">.</span><span class="nf">postOrder</span><span class="p">()</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h4 id="没有继承-怎么扩展系统类型或者别人的-struct">没有继承,怎么扩展系统类型或者别人的 struct</h4>
+
+<ol>
+<li><p>定义别名</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 使用别名
+</span><span class="c1">// 是一个 int 的 slice
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Queue</span> <span class="p">[]</span><span class="kt">int</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>使用组合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="cm">/*
+</span><span class="cm">扩充其他人的 struct
+</span><span class="cm">肚放一个指针 不然还需要拷贝
+</span><span class="cm">1. 使用 组和 的方式 ||
+</span><span class="cm">*/</span>
+<span class="kd">type</span> <span class="nx">myTreeNode</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">node</span> <span class="o">*</span><span class="nx">ch3</span><span class="p">.</span><span class="nx">Node</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h3 id="gopath">GOPATH</h3>
+
+<ul>
+<li>Windows: <code>%USEPROFILE%\go(windows)</code></li>
+<li>Linux :<code>~/go(unix,linux)</code></li>
+<li>官方推荐将所有的项目和第三放的库都放在同一个 gopath 中</li>
+<li>也可以将每个项目放在不用的 gopath 中</li>
+</ul>
+
+<h4 id="linux-设置">Linux 设置</h4>
+
+<ol>
+<li>gopath</li>
+<li>path</li>
+<li>gobin</li>
+</ol>
+
+<p>引入包就是在 gopath 中的 src 中找的</p>
+
+<h4 id="使用-go-get-获取第三方库">使用 go get 获取第三方库</h4>
+
+<ol>
+<li><p>使用 <code>go get …</code></p></li>
+
+<li><p>使用<code>gopm</code>来获取无法下载的包</p></li>
+</ol>
+
+<p><code>go get github.com/gopmgo/gopm</code></p>
+
+<p><code>go get -v github.com/gpmgo/gopm</code></p>
+
+<ol>
+<li><p>使用 <code>go build</code> 来进行编译</p></li>
+
+<li><p><code>go install</code>来产生 pkg 和可执行文件 会放到 bin 中 可以执行的文件</p></li>
+
+<li><p><code>go run</code>来直接编译运行</p></li>
+</ol>
+
+<h4 id="gopath-下的文件">gopath 下的文件</h4>
+
+<ul>
+<li>src git repository 或者自己的项目</li>
+<li>pkg install 产生的文件</li>
+<li>bin 可执行文件</li>
+</ul>
+
+<hr />
+
+<ul>
+<li><strong>每个目录下都有一个 main 文件</strong></li>
+<li>每个目录下就是一个 package 都可以叫 main</li>
+<li>但是只能有一个入口  main 方法</li>
+<li><code>go install ./…</code> 表示安装所有的文件</li>
+</ul>
+
+<h3 id="todo">TODO :</h3>
+
+<ul>
+<li><p>literal</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 通过这个访问左子树 myNode.node.Left
+</span><span class="c1"></span>	<span class="nx">left</span> <span class="o">:=</span> <span class="nx">myTreeNode</span><span class="p">{</span><span class="nx">myNode</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">Left</span><span class="p">}</span>
+	<span class="nx">left</span><span class="p">.</span><span class="nf">postOrder</span><span class="p">()</span>
+	<span class="c1">//包装一下 ? 什么意思
+</span><span class="c1"></span>	<span class="c1">// 会报错
+</span><span class="c1"></span>	<span class="c1">// cannot call pointer method on myTreeNode literal
+</span><span class="c1"></span>	<span class="c1">// can not take the address of myTreeNode literal
+</span><span class="c1"></span>	<span class="c1">// 只有变量才能拿到地址 ⤵️
+</span><span class="c1"></span>	<span class="nx">right</span> <span class="o">:=</span> <span class="nx">myTreeNode</span><span class="p">{</span><span class="nx">myNode</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">Right</span><span class="p">}</span>
+	<span class="nx">right</span><span class="p">.</span><span class="nf">postOrder</span><span class="p">()</span> </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>struct 看看再</p></li>
+
+<li><p>二叉树的遍历</p></li>
+
+<li><p>只有变量才能接受地址</p></li>
+
+<li><p>指针和地址?</p></li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶🥳</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-08-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/golang-%E6%8E%A5%E5%8F%A3/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Golang-3 接口</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/golang-%E5%86%85%E7%BD%AE%E5%AE%B9%E5%99%A8/">
+            <span class="next-text nav-default">Golang-2 内置容器</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

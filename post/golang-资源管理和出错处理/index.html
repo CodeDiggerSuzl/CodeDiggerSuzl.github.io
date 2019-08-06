@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Golang-5 资源管理和出错处理 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶🥳" /><meta name="description" content="资源管理 def 调用实现资源管理 确保在函数结束后发生 err 栈结构 先进后出的结构 在干什么的时候 可能会出错的时候就加上defer 1 2 3 4 5 6 7 8 9 10 11 12 13" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/golang-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%92%8C%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Golang-5 资源管理和出错处理" />
+<meta property="og:description" content="资源管理 def 调用实现资源管理 确保在函数结束后发生 err 栈结构 先进后出的结构 在干什么的时候 可能会出错的时候就加上defer 1 2 3 4 5 6 7 8 9 10 11 12 13" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/golang-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%92%8C%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/" />
+<meta property="article:published_time" content="2019-08-04T22:25:22+08:00" />
+<meta property="article:modified_time" content="2019-08-04T22:25:22+08:00" />
+<meta itemprop="name" content="Golang-5 资源管理和出错处理">
+<meta itemprop="description" content="资源管理 def 调用实现资源管理 确保在函数结束后发生 err 栈结构 先进后出的结构 在干什么的时候 可能会出错的时候就加上defer 1 2 3 4 5 6 7 8 9 10 11 12 13">
+
+
+<meta itemprop="datePublished" content="2019-08-04T22:25:22&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-04T22:25:22&#43;08:00" />
+<meta itemprop="wordCount" content="1292">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang-5 资源管理和出错处理"/>
+<meta name="twitter:description" content="资源管理 def 调用实现资源管理 确保在函数结束后发生 err 栈结构 先进后出的结构 在干什么的时候 可能会出错的时候就加上defer 1 2 3 4 5 6 7 8 9 10 11 12 13"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Golang-5 资源管理和出错处理</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            </div>
+          <span class="more-meta"> 约 1292 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#资源管理">资源管理</a>
+<ul>
+<li><a href="#def-调用实现资源管理">def 调用实现资源管理</a></li>
+<li><a href="#什么时候用-defer">什么时候用 defer</a></li>
+<li><a href="#err-是什么">ERR 是什么?</a></li>
+<li><a href="#统一的错误处理">统一的错误处理</a></li>
+</ul></li>
+<li><a href="#panic">panic</a>
+<ul>
+<li><a href="#作用-类似-throw">作用: 类似 throw</a></li>
+<li><a href="#recover">recover</a></li>
+<li><a href="#统一服务器异常处理完善">统一服务器异常处理完善</a></li>
+<li><a href="#error-和-panic">error 和 panic</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="资源管理">资源管理</h2>
+
+<h3 id="def-调用实现资源管理">def 调用实现资源管理</h3>
+
+<ol>
+<li><p>确保在函数结束后发生 err</p></li>
+
+<li><p>栈结构 先进后出的结构  在干什么的时候  可能会出错的时候就加上<code>defer</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">writeFile</span><span class="p">(</span><span class="nx">fileName</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Create</span><span class="p">(</span><span class="nx">fileName</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+	<span class="nx">f</span> <span class="o">:=</span> <span class="nx">queue</span><span class="p">.</span><span class="nf">Fibonacci</span><span class="p">()</span>
+	<span class="nx">writer</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewWriter</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+	<span class="k">defer</span> <span class="nx">writer</span><span class="p">.</span><span class="nf">Flush</span><span class="p">()</span> <span class="c1">// 先执行
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span> <span class="nf">f</span><span class="p">())</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>参数在<code>defer</code>语句的时候调用</p></li>
+</ol>
+
+<h3 id="什么时候用-defer">什么时候用 defer</h3>
+
+<ol>
+<li>open/close</li>
+<li>lock/unlock</li>
+<li>Pritprit</li>
+</ol>
+
+<h3 id="err-是什么">ERR 是什么?</h3>
+
+<p><strong>是一个接口:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">err</span> <span class="kd">interface</span><span class="p">{</span>
+  <span class="nf">Error</span><span class="p">()</span>	<span class="kt">string</span> 
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>err 其实也是一个值</p>
+
+<p>自己定义 error</p>
+
+<ol>
+<li><p>new</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">err</span> <span class="p">=</span> <span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;some string&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>实现 err 接口</p></li>
+
+<li><p>example</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">file</span><span class="p">,</span><span class="nx">err</span> <span class="o">:=</span> <span class="kc">nil</span><span class="p">{</span>
+  <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span><span class="kc">nil</span><span class="p">{</span>
+    <span class="k">if</span> <span class="nx">pathError</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span><span class="nf">err</span><span class="p">(</span><span class="o">*</span><span class="nx">os</span><span class="p">.</span><span class="nx">PathError</span><span class="p">);</span><span class="nx">ok</span><span class="p">{</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">pathError</span><span class="p">.</span><span class="nx">Err</span><span class="p">)</span>
+    <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;unknown error&#34;</span><span class="p">,</span><span class="nx">err</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h3 id="统一的错误处理">统一的错误处理</h3>
+
+<ol>
+<li><p>定义一个&rdquo;<strong>碰到错误就 return 的业务方法</strong>&ldquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">//抽取函数
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">HandleFileList</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="kt">error</span><span class="p">{</span>
+	<span class="nx">path</span> <span class="o">:=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="s">&#34;/list/&#34;</span><span class="p">):]</span>
+	<span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+	<span class="nx">all</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="nx">writer</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">all</span><span class="p">)</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>定义一个 type  连接err 和 err 统一处理的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">appHandler</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="kt">error</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>定义统一处理错误的包装类</p>
+
+<p><strong>函数式编程,输入一个函数,输出一个函数, 对输入的函数进行包装🥳</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">errWrapper</span><span class="p">(</span><span class="nx">handler</span> <span class="nx">appHandler</span><span class="p">)</span> <span class="kd">func</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// handler 去做业务逻辑 出现错误  err,对 err 进行判断 实现统一处理
+</span><span class="c1"></span>		<span class="nx">err</span> <span class="o">:=</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Warn</span><span class="p">(</span><span class="s">&#34;Error handling request :%s&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+			<span class="nx">code</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span>
+			<span class="k">switch</span> <span class="p">{</span>
+			<span class="k">case</span> <span class="nx">os</span><span class="p">.</span><span class="nf">IsNotExist</span><span class="p">(</span><span class="nx">err</span><span class="p">):</span>
+				<span class="nx">code</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span>
+       <span class="o">...</span><span class="p">.</span>
+     <span class="c1">// case 可以判断很多种
+</span><span class="c1"></span>			<span class="k">case</span> <span class="nx">os</span><span class="p">.</span><span class="nf">IsPermission</span><span class="p">(</span><span class="nx">err</span><span class="p">):</span>
+				<span class="nx">code</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusForbidden</span>
+			<span class="k">default</span><span class="p">:</span>
+				<span class="nx">code</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span>
+			<span class="p">}</span>
+			<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nf">StatusText</span><span class="p">(</span><span class="nx">code</span><span class="p">),</span> <span class="nx">code</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h2 id="panic">panic</h2>
+
+<h3 id="作用-类似-throw">作用: 类似 throw</h3>
+
+<ol>
+<li>停止当前函数执行</li>
+<li>一直向上返回,执行每一层的 defer</li>
+<li>如果没有遇见 recover 程序就退出了</li>
+</ol>
+
+<h3 id="recover">recover</h3>
+
+<ol>
+<li><p><strong>仅仅</strong>在 defer 中调用, 使用匿名函数 并且在函数体后加上<code>()</code> 表示可以调用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">tryRecover</span><span class="p">()</span> <span class="p">{</span>
+	<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c1">// 匿名函数 调用这个匿名函数还要加() 在函数体后
+</span><span class="c1"></span>		<span class="nx">f</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">()</span>
+   <span class="c1">// recover 中可以填写任何值 
+</span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.(</span><span class="kt">error</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+			<span class="nb">panic</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}()</span>
+	<span class="nb">panic</span><span class="p">(</span><span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;this is an error:🤢&#34;</span><span class="p">))</span>
+   	
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p>recover  定义 <code>func recover() interface{}</code></p>
+
+<ol>
+<li><p>获取 panic 的值</p></li>
+
+<li><p>没有办法处理可以重新 panic</p></li>
+</ol>
+
+<h3 id="统一服务器异常处理完善">统一服务器异常处理完善</h3>
+
+<ol>
+<li><p>使用接口</p></li>
+
+<li><p>使用 type assertion 对 error 进行判断</p></li>
+
+<li><p>使用 函数式编程对处理方法进行包装</p></li>
+</ol>
+
+<p>完整代码:</p>
+
+<p>handler.go</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">filelisting</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;io/ioutil&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+	<span class="s">&#34;strings&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">prefix</span> <span class="p">=</span> <span class="s">&#34;/list/&#34;</span>
+<span class="c1">// TODO 🤢 自定义一种 userError 的类型 实现另一个 userError 接口()
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">userError</span> <span class="kt">string</span>
+<span class="c1">// 实现 userError 接口
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">userError</span><span class="p">)</span> <span class="nf">Error</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">e</span><span class="p">.</span><span class="nf">Message</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="nx">userError</span><span class="p">)</span> <span class="nf">Message</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="c1">// return e 自己 转换成 string
+</span><span class="c1"></span><span class="p">}</span>
+<span class="c1">// 碰见 err就抛出
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">HandleFileList</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span>
+	<span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">Index</span><span class="p">(</span>
+		<span class="nx">request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nf">userError</span><span class="p">(</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;path %s must start &#34;</span><span class="o">+</span>
+				<span class="s">&#34;with %s&#34;</span><span class="p">,</span>
+				<span class="nx">request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">prefix</span><span class="p">))</span>
+	<span class="p">}</span>
+	<span class="nx">path</span> <span class="o">:=</span> <span class="nx">request</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">prefix</span><span class="p">):]</span>
+	<span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="nx">all</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">err</span>
+	<span class="p">}</span>
+
+	<span class="nx">writer</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">all</span><span class="p">)</span>
+	<span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>web.go</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span><span class="lnt">76
+</span><span class="lnt">77
+</span><span class="lnt">78
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;log&#34;</span>
+	<span class="s">&#34;net/http&#34;</span>
+	<span class="nx">_</span> <span class="s">&#34;net/http/pprof&#34;</span>
+	<span class="s">&#34;os&#34;</span>
+
+	<span class="s">&#34;imooc.com/ccmouse/learngo/errhandling/filelistingserver/filelisting&#34;</span>
+<span class="p">)</span>
+
+<span class="c1">// 定义一个 type 返回 error (连接 HandleFileList 和 errWrapper)
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">appHandler</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span>
+                     <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="kt">error</span>
+
+<span class="c1">// 函数式编程: 传入一个函数 返回一个函数对这个函数进行包装后返回 (并不是返回类型函数和传入函数的类型完全一样)
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">errWrapper</span><span class="p">(</span><span class="nx">handler</span> <span class="nx">appHandler</span><span class="p">)</span> <span class="kd">func</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> 
+                                         <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//返回的 error
+</span><span class="c1"></span>	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+		<span class="c1">// panic
+</span><span class="c1"></span>		<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+			<span class="c1">// 对 panic 进行保护 
+</span><span class="c1"></span>			<span class="c1">// 使用匿名函数 能够调用 后面加上()
+</span><span class="c1"></span>			<span class="k">if</span> <span class="nx">r</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">r</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+				<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Panic: %v&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+				<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span>
+					<span class="nx">http</span><span class="p">.</span><span class="nf">StatusText</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">),</span>
+					<span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+			<span class="p">}</span>
+		<span class="p">}()</span>
+
+		<span class="nx">err</span> <span class="o">:=</span> <span class="nf">handler</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span> <span class="nx">request</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Error occurred &#34;</span><span class="o">+</span>
+				<span class="s">&#34;handling request: %s&#34;</span><span class="p">,</span>
+				<span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">())</span>
+
+			<span class="c1">// user error  type assertion 区分 type 如果是 userError 就返回 自定义信息
+</span><span class="c1"></span>			<span class="k">if</span> <span class="nx">userErr</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">err</span><span class="p">.(</span><span class="nx">userError</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+				<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span>
+					<span class="nx">userErr</span><span class="p">.</span><span class="nf">Message</span><span class="p">(),</span>
+					<span class="nx">http</span><span class="p">.</span><span class="nx">StatusBadRequest</span><span class="p">)</span>
+				<span class="k">return</span>  <span class="c1">// 处理完了 return
+</span><span class="c1"></span>			<span class="p">}</span>
+
+			<span class="c1">// system error
+</span><span class="c1"></span>			<span class="nx">code</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span>
+			<span class="k">switch</span> <span class="p">{</span>
+			<span class="k">case</span> <span class="nx">os</span><span class="p">.</span><span class="nf">IsNotExist</span><span class="p">(</span><span class="nx">err</span><span class="p">):</span>
+				<span class="nx">code</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span>
+			<span class="k">case</span> <span class="nx">os</span><span class="p">.</span><span class="nf">IsPermission</span><span class="p">(</span><span class="nx">err</span><span class="p">):</span>
+				<span class="nx">code</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusForbidden</span>
+			<span class="k">default</span><span class="p">:</span>
+				<span class="nx">code</span> <span class="p">=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span>
+			<span class="p">}</span>
+			<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">writer</span><span class="p">,</span>
+				<span class="nx">http</span><span class="p">.</span><span class="nf">StatusText</span><span class="p">(</span><span class="nx">code</span><span class="p">),</span> <span class="nx">code</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 自定义接口
+</span><span class="c1"></span>
+<span class="kd">type</span> <span class="nx">userError</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="kt">error</span> <span class="c1">// 系统看
+</span><span class="c1"></span>	<span class="nf">Message</span><span class="p">()</span> <span class="kt">string</span> <span class="c1">//用户可以看到的错误
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">http</span><span class="p">.</span><span class="nf">HandleFunc</span><span class="p">(</span><span class="s">&#34;/&#34;</span><span class="p">,</span><span class="nf">errWrapper</span><span class="p">(</span><span class="nx">filelisting</span><span class="p">.</span><span class="nx">HandleFileList</span><span class="p">))</span>
+
+	<span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">ListenAndServe</span><span class="p">(</span><span class="s">&#34;:8888&#34;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="error-和-panic">error 和 panic</h3>
+
+<ol>
+<li>尽量不要用 panic</li>
+<li>意料之中的要用 <code>error</code> 比如文件打不开</li>
+<li>意料只为的使用 <code>panic</code> 比如数组越界</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶🥳</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-08-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/golang-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
+            <span class="next-text nav-default">Golang-4 函数式编程</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

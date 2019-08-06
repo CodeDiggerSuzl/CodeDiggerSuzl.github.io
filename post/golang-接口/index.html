@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Golang-3 接口 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶🥳" /><meta name="description" content="接口 ducktyping ? 描述事物的外部行为 而非内部结构 &amp;ldquo;像鸭子走路,走路像鸭子,那就是🦆&amp;rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&amp;#34;www.google.com&amp;#34;) } 1. 运行时才知" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/golang-%E6%8E%A5%E5%8F%A3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Golang-3 接口" />
+<meta property="og:description" content="接口 ducktyping ? 描述事物的外部行为 而非内部结构 &ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&#34;www.google.com&#34;) } 1. 运行时才知" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/golang-%E6%8E%A5%E5%8F%A3/" />
+<meta property="article:published_time" content="2019-08-04T15:53:46+08:00" />
+<meta property="article:modified_time" content="2019-08-04T15:53:46+08:00" />
+<meta itemprop="name" content="Golang-3 接口">
+<meta itemprop="description" content="接口 ducktyping ? 描述事物的外部行为 而非内部结构 &ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&#34;www.google.com&#34;) } 1. 运行时才知">
+
+
+<meta itemprop="datePublished" content="2019-08-04T15:53:46&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-04T15:53:46&#43;08:00" />
+<meta itemprop="wordCount" content="1066">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang-3 接口"/>
+<meta name="twitter:description" content="接口 ducktyping ? 描述事物的外部行为 而非内部结构 &ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&#34;www.google.com&#34;) } 1. 运行时才知"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Golang-3 接口</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            </div>
+          <span class="more-meta"> 约 1066 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#接口">接口</a>
+<ul>
+<li><a href="#ducktyping">ducktyping ?</a></li>
+<li><a href="#接口的定义">接口的定义</a></li>
+<li><a href="#接口中变量的-r-是什么">接口中变量的 r 是什么?</a>
+<ul>
+<li><a href="#获取接口的具体类型">获取接口的具体类型</a></li>
+<li><a href="#接口变量里有什么">接口变量里有什么?</a></li>
+</ul></li>
+<li><a href="#查看接口变量">查看接口变量:</a></li>
+<li><a href="#使用者定义接口的方法">使用者定义接口的方法</a></li>
+<li><a href="#go-中的标准接口">go 中的标准接口</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="接口">接口</h2>
+
+<h3 id="ducktyping">ducktyping ?</h3>
+
+<ul>
+<li><p>描述事物的外部行为 而非内部结构</p></li>
+
+<li><p>&ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo;</p></li>
+
+<li><p>Python 中的 duck typing</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">retriver</span><span class="p">){</span>
+	<span class="k">return</span> <span class="n">retriver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;www.google.com&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="mf">1.</span> <span class="err">运行时才知道传入的</span> <span class="n">retriever</span> <span class="err">有没有</span> <span class="n">get</span>
+<span class="mf">2.</span> <span class="err">需要注释来说明接口</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>c++</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="err"> </span><span class="nc">R</span><span class="o">&gt;</span>
+<span class="n">string</span> <span class="n">download</span><span class="p">(</span><span class="k">const</span> <span class="n">R</span><span class="o">&amp;</span> <span class="n">retriver</span><span class="p">){</span>
+	<span class="k">return</span> <span class="n">retriver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#34;www.google.com&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="mf">1.</span> <span class="err">编译时才知道传入的</span> <span class="n">retriver</span> <span class="err">有没有</span> <span class="n">get</span>
+<span class="mf">2.</span> <span class="err">需要注释来说明</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>Java</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">R</span> <span class="nf">implements</span> <span class="n">Retriever</span><span class="o">&gt;</span>
+<span class="nf">String</span> <span class="n">download</span><span class="p">(</span><span class="n">R</span> <span class="nf">r</span><span class="p">){</span>
+	<span class="k">return</span> <span class="n">r</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;ww.google.com&#34;</span><span class="p">)</span>
+<span class="p">}</span>  
+<span class="n">1</span><span class="p">.</span> <span class="nf">传入参数必须实现</span> <span class="n">Retriver</span> <span class="nf">接口</span>
+<span class="n">2</span><span class="p">.</span> <span class="nf">不是</span> <span class="n">duck</span> <span class="nf">typing</span> 
+<span class="n">3</span><span class="p">.</span> <span class="nf">不需要注释</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>go</p>
+
+<ul>
+<li>duck typing 的灵活性</li>
+<li>同时需要两个接口</li>
+<li>具有 java 的类型检查</li>
+</ul></li>
+</ul>
+
+<h3 id="接口的定义">接口的定义</h3>
+
+<p><strong>go语言中的接口由 使用者定义</strong></p>
+
+<ol>
+<li><p>接口</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 接口
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Retriever</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
+<span class="p">}</span>
+   
+<span class="c1">//使用者
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">download</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>接口的实现</p></li>
+</ol>
+
+<p>实现是隐式的</p>
+
+<p>只要实现里面的方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">   <span class="kd">type</span> <span class="nx">RealRetriver</span> <span class="kd">struct</span> <span class="p">{</span>
+   	<span class="nx">UserAgent</span> <span class="kt">string</span>
+   	<span class="nx">TimeOut</span>   <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+   <span class="p">}</span>
+   
+   <span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+   	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+   	<span class="p">}</span>
+   	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">httputil</span><span class="p">.</span><span class="nf">DumpResponse</span><span class="p">(</span><span class="nx">resp</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+   	<span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+   	<span class="p">}</span>
+   	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+   <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="接口中变量的-r-是什么">接口中变量的 r 是什么?</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">   <span class="kd">var</span> <span class="nx">r</span> <span class="nx">Retriever</span>
+   	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;哈哈哈&#34;</span><span class="p">}</span>
+   	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">r</span><span class="p">)</span>
+   	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span>
+   	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">r</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>输出 类型 和值</p>
+
+<p>ch4.Retriver {哈哈哈} //</p>
+
+<p>ch4.RealRetriver { 0s}  // content 是 空格 time 是 0s</p>
+
+<p>当变成指针的时候</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">   <span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+   	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+   	<span class="p">}</span>
+   	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">httputil</span><span class="p">.</span><span class="nf">DumpResponse</span><span class="p">(</span><span class="nx">resp</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+   	<span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+   	<span class="p">}</span>
+   	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+   <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>打印出结果:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">   <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">implement</span> <span class="nf">Retriever</span> <span class="p">(</span><span class="nx">Get</span> <span class="nx">method</span> <span class="nx">has</span> <span class="nx">pointer</span> <span class="nx">receiver</span><span class="p">)</span>
+   </code></pre></td></tr></table>
+</div>
+</div>
+<p>改成地址访问的时候:<code>r = &amp;ch4.RealRetriver{}</code></p>
+
+<p>打印结果</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">   ch4.Retriver {哈哈哈}
+   *ch4.RealRetriver &amp;{ 0s} 输出的是指针  指向地址  
+   </pre></td></tr></table>
+</div>
+</div>
+<p><strong>说明可以是值,也可以是指针</strong></p>
+
+<p>通常接口用值,不用指针 接口内通常有一个指针</p>
+
+<h4 id="获取接口的具体类型">获取接口的具体类型</h4>
+
+<ol>
+<li><p>switch</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">  <span class="kd">func</span> <span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">switch</span> <span class="nx">v</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">:</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Contents:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">Contents</span><span class="p">)</span>
+    <span class="k">case</span> <span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">:</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;UserAgent:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+      </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p><strong>Type assertion  通过<code>r.(类型)</code>获取到接口肚子里的类型.</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">  <span class="nx">realTypeRetriever</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">realTypeRetriever</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
+      </code></pre></td></tr></table>
+</div>
+</div>
+<p>加上判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">  <span class="k">if</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span><span class="p">(</span><span class="nx">mock</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">);</span><span class="nx">ko</span><span class="p">{</span>
+    <span class="o">...</span>
+  <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+    <span class="o">...</span>
+  <span class="p">}</span>
+      </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>接口里出了类型还有值</p></li>
+</ol>
+
+<h4 id="接口变量里有什么">接口变量里有什么?</h4>
+
+<ol>
+<li>实现者的类型</li>
+<li>实现者的值(也可以说是实现者的指针)</li>
+</ol>
+
+<ul>
+<li><p>接口变量自带指针</p></li>
+
+<li><p>接口变量同样采取值传递,几乎不需要使用接口的指针</p></li>
+
+<li><p>指针接收者实现只能以指针方式使用; 值接收者都可以</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
+	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
+  
+  
+	<span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span>
+  </code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h3 id="查看接口变量">查看接口变量:</h3>
+
+<ul>
+<li><p>表示任何类型: <code>interface{}</code>花括号</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 是一个 任何类型的 的 slice
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Queue</span> <span class="p">[]</span><span class="kd">interface</span><span class="p">{}</span>
+<span class="c1">// 限定为 int
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">Queue</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+	<span class="c1">//*q = append(*q, v)
+</span><span class="c1">// 或者为 但是在运行的时候才会出错
+</span><span class="c1"></span><span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">,</span><span class="nx">v</span><span class="p">.(</span><span class="kt">int</span><span class="p">))</span>
+<span class="p">}</span>
+<span class="c1">// 限制为 int
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">Queue</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="c1">// TODO 为什么要加()
+</span><span class="c1"></span>	<span class="nx">head</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+	<span class="k">return</span> <span class="nx">head</span><span class="p">.(</span><span class="kt">int</span><span class="p">)</span><span class="c1">// 将 interface{} 强制转换成 int
+</span><span class="c1"></span><span class="p">}</span>
+  </code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>Type Assertion</p></li>
+
+<li><p>Type Switch</p></li>
+</ul>
+
+<h3 id="使用者定义接口的方法">使用者定义接口的方法</h3>
+
+<ol>
+<li><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Retriever</span> <span class="kd">interface</span> <span class="p">{</span>
+ <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">,</span>
+     <span class="nx">form</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">download</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>使用接口的组合</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Poster</span> <span class="kd">interface</span><span class="p">{</span>
+ <span class="nf">Post</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span> <span class="p">,</span><span class="kd">map</span><span class="p">[])</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="nx">poster</span> <span class="nx">Poster</span><span class="p">){</span>
+ <span class="nx">poster</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="s">&#34;http://www.google.com&#34;</span><span class="p">,</span>
+             <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+               <span class="s">&#34;name&#34;</span><span class="p">:</span><span class="s">&#34;suzl&#34;</span><span class="p">,</span>
+             <span class="p">}</span>
+            <span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p>在定义一个接口实行<strong>组合</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nf">session</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">PosterRetriever</span><span class="p">){</span>
+  <span class="nx">s</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
+  <span class="nx">s</span><span class="p">.</span><span class="nf">Post</span><span class="p">()</span>
+<span class="p">}</span> </code></pre></td></tr></table>
+</div>
+</div>
+<p>接口只管定义方法,使用和声明接口需要什么样子的能力</p>
+
+<h3 id="go-中的标准接口">go 中的标准接口</h3>
+
+<ul>
+<li><strong>Stringer</strong></li>
+<li><strong>Reader</strong></li>
+<li><strong>Writer</strong></li>
+</ul>
+
+<p>系统中的 ReadWriter 接口,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ReaderWriter</span> <span class="kd">interface</span><span class="p">{</span>
+  <span class="nx">Reader</span>
+  <span class="nx">Writer</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>接口组合是使用者组合的,实现者只管定义方法就行了</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶🥳</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-08-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/golang-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Golang-4 函数式编程</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/golang-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">
+            <span class="next-text nav-default">Golang-3 面向对象</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

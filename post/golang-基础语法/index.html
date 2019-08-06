@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Golang-1 基础语法 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶🥳" /><meta name="description" content="整理自慕课网 ccmouse 老师的课堂笔记 感谢 Variables define variables use var var a,b,v var s,v, string = &amp;quot;hello&amp;quot;,&amp;quot;world&amp;quot; use var can be use in a function or in a package Can also use var () to define multiple variables The compiler can auto get the type of each variable var a,b,t = true,false,3 use := to define variables a, b" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/golang-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Golang-1 基础语法" />
+<meta property="og:description" content="整理自慕课网 ccmouse 老师的课堂笔记 感谢 Variables define variables use var var a,b,v var s,v, string = &quot;hello&quot;,&quot;world&quot; use var can be use in a function or in a package Can also use var () to define multiple variables The compiler can auto get the type of each variable var a,b,t = true,false,3 use := to define variables a, b" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/golang-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" />
+<meta property="article:published_time" content="2019-08-04T15:52:56+08:00" />
+<meta property="article:modified_time" content="2019-08-04T15:52:56+08:00" />
+<meta itemprop="name" content="Golang-1 基础语法">
+<meta itemprop="description" content="整理自慕课网 ccmouse 老师的课堂笔记 感谢 Variables define variables use var var a,b,v var s,v, string = &quot;hello&quot;,&quot;world&quot; use var can be use in a function or in a package Can also use var () to define multiple variables The compiler can auto get the type of each variable var a,b,t = true,false,3 use := to define variables a, b">
+
+
+<meta itemprop="datePublished" content="2019-08-04T15:52:56&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-04T15:52:56&#43;08:00" />
+<meta itemprop="wordCount" content="1180">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang-1 基础语法"/>
+<meta name="twitter:description" content="整理自慕课网 ccmouse 老师的课堂笔记 感谢 Variables define variables use var var a,b,v var s,v, string = &quot;hello&quot;,&quot;world&quot; use var can be use in a function or in a package Can also use var () to define multiple variables The compiler can auto get the type of each variable var a,b,t = true,false,3 use := to define variables a, b"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Golang-1 基础语法</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-04 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            </div>
+          <span class="more-meta"> 约 1180 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#variables">Variables</a>
+<ul>
+<li><a href="#define-variables">define  variables</a></li>
+<li><a href="#primitive-variable-types">primitive variable types</a></li>
+<li><a href="#const-常量">const 常量</a></li>
+<li><a href="#变量总结">变量总结</a></li>
+</ul></li>
+<li><a href="#if-loop">if loop</a>
+<ul>
+<li><a href="#if">If</a></li>
+<li><a href="#switch">switch</a></li>
+<li><a href="#for">for</a>
+<ul>
+<li><a href="#没有-while-循环">没有 while 循环</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#function">function</a>
+<ul>
+<li><a href="#定义">定义</a></li>
+</ul></li>
+<li><a href="#指针"><strong>指针</strong>***</a>
+<ul>
+<li>
+<ul>
+<li><a href="#指针不能运算"><strong>指针不能运算</strong></a></li>
+<li><a href="#参数传递">参数传递</a></li>
+<li><a href="#go-只有值传递">go 只有值传递!!!</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<ul>
+<li><p>整理自慕课网 ccmouse 老师的课堂笔记 感谢</p>
+
+<h2 id="variables">Variables</h2></li>
+</ul>
+
+<h3 id="define-variables">define  variables</h3>
+
+<ul>
+<li>use <code>var</code>
+
+<ol>
+<li><code>var a,b,v</code></li>
+<li><code>var s,v, string = &quot;hello&quot;,&quot;world&quot;</code></li>
+<li><strong>use <code>var</code> can be use in  a function or in a package</strong></li>
+<li>Can also use <code>var ()</code> to define multiple variables</li>
+</ol></li>
+<li>The compiler can auto get the type of each variable
+
+<ol>
+<li><code>var a,b,t = true,false,3</code></li>
+</ol></li>
+<li>use <code>:=</code> to define variables
+
+<ol>
+<li>a, b := 8,&ldquo;lol&rdquo;</li>
+<li><strong>can only be use in a function</strong> cann&rsquo;t be use in a package</li>
+</ol></li>
+</ul>
+
+<h3 id="primitive-variable-types">primitive variable types</h3>
+
+<ol>
+<li>bool , string</li>
+<li>(u)int,(u)int,(u)int16,(u)int32,(u)Int64,<strong>uintptr</strong>
+
+<ol>
+<li>With <code>u</code> means without symbol  integer</li>
+<li>without <code>u</code> means with symbol integer ,  with to types
+
+<ol>
+<li>With length 8 16 32 64</li>
+<li>without length , means it will automaticly change its length when in different opreating system</li>
+<li><strong>uintptr</strong>  also change with different opreating system</li>
+</ol></li>
+</ol></li>
+<li>byte rune
+
+<ol>
+<li><strong>rune :  means char in java ,  4字节 32位 ? TODO</strong><br /></li>
+</ol></li>
+<li>float32  float64 complex 64 complex 128
+
+<ol>
+<li>complex64 复数 实部和虚部分别为 32</li>
+<li>128 64</li>
+</ol></li>
+<li><strong>go 语言必须强制类型转换</strong></li>
+</ol>
+
+<h3 id="const-常量">const 常量</h3>
+
+<ul>
+<li><p><code>const = ha.txt</code></p></li>
+
+<li><p><code>const ()</code></p></li>
+
+<li><p>名字不用大写</p></li>
+
+<li><p>可以规定类型 也可以不用</p></li>
+
+<li><p><strong>枚举类型</strong></p>
+
+<ul>
+<li><p><strong>iota</strong> 一个种子</p></li>
+
+<li><p>普通枚举类型</p></li>
+
+<li><p>自增枚举类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">enums</span><span class="p">(){</span>
+<span class="kd">const</span> <span class="p">(</span>
+    <span class="nx">cpp</span> <span class="p">=</span> <span class="kc">iota</span>
+    <span class="nx">_</span>
+    <span class="nx">python</span>
+    <span class="nx">golang</span>
+    <span class="nx">java</span>
+    <span class="nx">c</span>
+<span class="p">)</span>
+<span class="c1">// 还可以参与 运算
+</span><span class="c1"></span><span class="kd">const</span><span class="p">(</span>
+    <span class="nx">b</span> <span class="p">=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">10</span><span class="o">*</span><span class="kc">iota</span><span class="p">)</span>
+    <span class="nx">kb</span>
+    <span class="nx">mb</span>
+    <span class="nx">gb</span>
+    <span class="nx">tb</span>
+    <span class="nx">pb</span>
+<span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">cpp</span><span class="p">,</span><span class="nx">python</span><span class="p">,</span><span class="nx">golang</span><span class="p">,</span><span class="nx">java</span><span class="p">,</span><span class="nx">c</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span><span class="nx">kb</span><span class="p">,</span><span class="nx">mb</span><span class="p">,</span><span class="nx">gb</span><span class="p">,</span><span class="nx">tb</span><span class="p">,</span><span class="nx">pb</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul></li>
+</ul>
+
+<h3 id="变量总结">变量总结</h3>
+
+<ol>
+<li>类型写在变量名字之后</li>
+<li>编译器自动推断</li>
+<li>没有 <code>char</code>只有<code>rune</code></li>
+<li>支持复数类型</li>
+</ol>
+
+<h2 id="if-loop">if loop</h2>
+
+<h3 id="if">If</h3>
+
+<ol>
+<li>条件中不需要括号</li>
+<li>if 条件中可以多个语句的,</li>
+<li>if 条件中可以赋值 并且 if 条件中的变量作用域就在这个 if 语句中</li>
+</ol>
+
+<h3 id="switch">switch</h3>
+
+<ol>
+<li><p>switch 会自动的 break , 每个 case 都会自动添加 break</p></li>
+
+<li><p>除非使用 fallthrough</p></li>
+
+<li><p>switch 后可以没有表达式 在case 中加入表达式就行了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">grade</span><span class="p">(</span><span class="nx">score</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="c1">// 不用 switch score 直接 switch
+</span><span class="c1"></span>	<span class="nx">g</span> <span class="o">:=</span> <span class="s">&#34;&#34;</span>
+	<span class="k">switch</span> <span class="p">{</span>
+	<span class="k">case</span> <span class="nx">score</span> <span class="p">&gt;</span> <span class="mi">100</span> <span class="o">||</span> <span class="nx">score</span> <span class="p">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;worng score :%d&#34;</span><span class="p">,</span> <span class="nx">score</span><span class="p">))</span>
+	<span class="k">case</span> <span class="nx">score</span> <span class="p">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+		<span class="nx">g</span> <span class="p">=</span> <span class="s">&#34;F&#34;</span>
+	<span class="k">case</span> <span class="nx">score</span> <span class="p">&lt;</span> <span class="mi">80</span><span class="p">:</span>
+		<span class="nx">g</span> <span class="p">=</span> <span class="s">&#34;D&#34;</span>
+	<span class="k">default</span><span class="p">:</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">g</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h3 id="for">for</h3>
+
+<ol>
+<li><p>条件中没有括号</p></li>
+
+<li><p>for 的的条件中可以省略 初始条件 结束条件 递增表达式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Open</span><span class="p">(</span><span class="nx">filename</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+	<span class="c1">// 没有起始条件 递增条件 
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nf">Text</span><span class="p">())</span>
+	<span class="p">}</span>
+	<span class="c1">// 什么条件都没有  死循环
+</span><span class="c1"></span>	<span class="k">for</span><span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;forever&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="c1">// 没有初始条件 相当于while
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">convert2Binary</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="nx">result</span> <span class="o">:=</span> <span class="s">&#34;&#34;</span>
+	<span class="k">for</span> <span class="p">;</span> <span class="nx">n</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">n</span> <span class="o">/=</span> <span class="mi">2</span> <span class="p">{</span>
+		<span class="nx">lsb</span> <span class="o">:=</span> <span class="nx">n</span> <span class="o">%</span> <span class="mi">2</span>
+		<span class="nx">result</span> <span class="p">=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">lsb</span><span class="p">)</span> <span class="o">+</span> <span class="nx">result</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">result</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h4 id="没有-while-循环">没有 while 循环</h4>
+
+<h2 id="function">function</h2>
+
+<h3 id="定义">定义</h3>
+
+<ol>
+<li><p><code>func eval(a,b int,op string) int</code> 返回单个值</p></li>
+
+<li><p>可以返回多个值 还可以给 返回值起名字</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">div</span> <span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="kt">int</span><span class="p">)(</span><span class="nx">q</span><span class="p">,</span><span class="nx">r</span> <span class="kt">int</span><span class="p">){</span>
+ <span class="k">return</span> <span class="nx">a</span><span class="o">/</span><span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">%</span><span class="nx">b</span>
+ <span class="c1">// 也可以这样写 函数体长的时候 不建议
+</span><span class="c1"></span> <span class="nx">q</span> <span class="p">=</span> <span class="nx">a</span><span class="o">/</span><span class="nx">b</span>
+ <span class="nx">r</span> <span class="p">=</span> <span class="nx">a</span><span class="o">%</span><span class="nx">b</span>
+ <span class="k">return</span> 
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>在接受返回值的时候 不想要某个值可以用 <code>_</code> 代替</p></li>
+
+<li><p>两个返回值 常用在 错误上 error</p></li>
+
+<li><p>go 是函数式编程 函数一等公民</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+   
+<span class="kn">import</span> <span class="p">(</span>
+	<span class="s">&#34;fmt&#34;</span>
+	<span class="s">&#34;math&#34;</span>
+	<span class="s">&#34;reflect&#34;</span>
+	<span class="s">&#34;runtime&#34;</span>
+<span class="p">)</span>
+   
+<span class="c1">//重写 pow
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">pow</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">b</span><span class="p">)))</span>
+   
+<span class="p">}</span>
+   
+<span class="c1">// 函数一公民 可当做参数
+</span><span class="c1">// 接受一个参数类型为 int int 返回值类为int 的函数 和两个int类型的参数 返回为int
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">apply</span><span class="p">(</span><span class="nx">op</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="c1">// 使用 reflect 包来得到 op 的指针
+</span><span class="c1"></span>	<span class="nx">p</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">op</span><span class="p">).</span><span class="nf">Pointer</span><span class="p">()</span>
+	<span class="nx">opName</span> <span class="o">:=</span> <span class="nx">runtime</span><span class="p">.</span><span class="nf">FuncForPC</span><span class="p">(</span><span class="nx">p</span><span class="p">).</span><span class="nf">Name</span><span class="p">()</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">opName</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nf">op</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="c1">// 调用其他方法
+</span><span class="c1"></span>	 <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">apply</span><span class="p">(</span><span class="nx">pow</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+	<span class="c1">// 可直接写匿名函数 在调用的时候
+</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">apply</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">a</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">b</span><span class="p">)))</span>
+	<span class="p">},</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="p">}</span>
+   
+   
+<span class="nx">main</span><span class="p">.</span><span class="nx">pow</span> <span class="mi">3</span> <span class="mi">4</span>      <span class="nx">打印结果</span> <span class="nx">包名</span><span class="p">.</span><span class="nx">函数名</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">func1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="nx">包名</span><span class="p">.</span><span class="nx">函数名</span><span class="p">.</span><span class="nx">第一个函数</span>
+<span class="mi">81</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p><strong>没有 lamda 表达式</strong></p>
+
+<ol>
+<li><p>没有 默认参数 和 函数重载</p></li>
+
+<li><p>只有可变参数列表 可变参数列表</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">numbers</span> <span class="o">...</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="nx">s</span> <span class="o">:=</span> <span class="mi">0</span>
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">numbers</span> <span class="p">{</span>
+		<span class="nx">s</span> <span class="o">+=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">s</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p>sum up</p>
+
+<ol>
+<li>返回值类型写在后</li>
+<li>可以返回多个值</li>
+<li>函数值作为参数</li>
+<li>没有默认参数,可选参数</li>
+</ol>
+
+<h2 id="指针"><strong>指针</strong>***</h2>
+
+<h4 id="指针不能运算"><strong>指针不能运算</strong></h4>
+
+<h4 id="参数传递">参数传递</h4>
+
+<p>值传递 引用传递?</p>
+
+<ol>
+<li>值传递 拷贝 做了拷贝</li>
+<li>引用传递  变量值直接改了</li>
+</ol>
+
+<h4 id="go-只有值传递">go 只有值传递!!!</h4>
+
+<p>参数传递</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">var a int</th>
+<th align="center">func f(a int) 此时a 的是拷贝的不会变</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center"></td>
+<td align="center"><strong>func f (pa *int)</strong> 会改变原来的值</td>
+</tr>
+
+<tr>
+<td align="center">var cache Cache</td>
+<td align="center"><strong>func f(cache Cache)</strong></td>
+</tr>
+
+<tr>
+<td align="center">调用时就要考虑到 是值还是引用传递</td>
+<td align="center"></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 交换两个值
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">swap</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="o">*</span><span class="kt">int</span><span class="p">){</span>
+  <span class="o">*</span><span class="nx">b</span><span class="p">,</span><span class="o">*</span><span class="nx">a</span> <span class="p">=</span> <span class="o">*</span><span class="nx">a</span><span class="p">,</span><span class="o">*</span><span class="nx">b</span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶🥳</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-08-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/golang-%E5%86%85%E7%BD%AE%E5%AE%B9%E5%99%A8/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Golang-2 内置容器</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

@@ -7,17 +7,26 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Tue, 06 Aug 2019 22:31:28 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 08 Aug 2019 21:15:30 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>Golang-8 Goroutine</title>
+      <link>http://codedigger.cn/post/golang-goroutine/</link>
+      <pubDate>Thu, 08 Aug 2019 21:15:30 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/golang-goroutine/</guid>
+      <description>Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&amp;gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因</description>
+    </item>
+    
+    <item>
       <title>Golang-7 测试</title>
-      <link>http://codedigger.cn/post/golang-6%E6%B5%8B%E8%AF%95/</link>
+      <link>http://codedigger.cn/post/golang-%E6%B5%8B%E8%AF%95/</link>
       <pubDate>Tue, 06 Aug 2019 22:31:28 +0800</pubDate>
       
-      <guid>http://codedigger.cn/post/golang-6%E6%B5%8B%E8%AF%95/</guid>
+      <guid>http://codedigger.cn/post/golang-%E6%B5%8B%E8%AF%95/</guid>
       <description>测试 Debugging sucks,Testing rocks 传统测试&amp;amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优</description>
     </item>
     

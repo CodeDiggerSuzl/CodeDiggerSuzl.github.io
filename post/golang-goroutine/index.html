@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Golang-8 Goroutine - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&amp;gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/golang-goroutine/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Golang-8 Goroutine" />
+<meta property="og:description" content="Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/golang-goroutine/" />
+<meta property="article:published_time" content="2019-08-08T21:15:30+08:00" />
+<meta property="article:modified_time" content="2019-08-08T21:15:30+08:00" />
+<meta itemprop="name" content="Golang-8 Goroutine">
+<meta itemprop="description" content="Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因">
+
+
+<meta itemprop="datePublished" content="2019-08-08T21:15:30&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-08T21:15:30&#43;08:00" />
+<meta itemprop="wordCount" content="848">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang-8 Goroutine"/>
+<meta name="twitter:description" content="Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Golang-8 Goroutine</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-08-08 </span>
+        <div class="post-category">
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            </div>
+          <span class="more-meta"> 约 848 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#goroutine-并发编程">Goroutine 并发编程</a>
+<ul>
+<li><a href="#使用-go-关键字">使用 go 关键字</a></li>
+<li><a href="#协程-coroutine">协程 Coroutine</a>
+<ul>
+<li><a href="#轻量级的线程">轻量级的线程</a></li>
+<li><a href="#非抢占式多任务处理"><strong>非抢占式多任务处理</strong></a></li>
+<li><a href="#goroutine-中的-i">goroutine 中的 i</a></li>
+</ul></li>
+<li><a href="#协程">协程</a>
+<ul>
+<li><a href="#普通函数和协程的对比">普通函数和协程的对比</a></li>
+<li><a href="#其他语言">其他语言</a></li>
+<li><a href="#调度器">调度器</a></li>
+<li><a href="#goroutine-的定义">goroutine 的定义</a></li>
+<li><a href="#goroutine-可能的切换点">goroutine 可能的切换点</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="goroutine-并发编程">Goroutine 并发编程</h1>
+
+<p>原生支持</p>
+
+<h2 id="使用-go-关键字">使用 go 关键字</h2>
+
+<ol>
+<li>函数体 =&gt; 匿名函数</li>
+<li>协程</li>
+<li>1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现</li>
+</ol>
+
+<h2 id="协程-coroutine">协程 Coroutine</h2>
+
+<h3 id="轻量级的线程">轻量级的线程</h3>
+
+<p>因为:
+1. <strong>非抢占式</strong>多任务处理,由协程主动交出控制权
+2. 线程是抢占式任务处理
+3. 是<strong>编译器(go)/解释器/虚拟机</strong>层面的多任务,而不是操作系统层面的多任务
+4. 多个协程可能在一或多个线程上运行 由调度器决定的这是</p>
+
+<h3 id="非抢占式多任务处理"><strong>非抢占式多任务处理</strong></h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">a</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="kt">int</span>
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">{</span>
+		<span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">i</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">{</span>
+				<span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">++</span><span class="c1">// 非 io 操作 不会有协程切换,会被一个协程抢掉
+</span><span class="c1"></span>			<span class="p">}</span>
+          <span class="c1">//  fmt.Println(i) io 操作会有协程之间的切换 
+</span><span class="c1"></span>        <span class="p">}(</span><span class="nx">i</span><span class="p">)</span>
+        
+	<span class="p">}</span>
+	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<ol>
+<li>main 函数也是一个 goroutine</li>
+<li>a[i]++  没有进行协程的切换 会抢掉控制权 没有交出控制权</li>
+<li>main 函数也是一个 goroutine 进入睡眠,没法获得控制权,导致 main 无法获取控制权 就会一直睡 然后就死机了</li>
+</ol>
+</blockquote>
+
+<h3 id="goroutine-中的-i">goroutine 中的 i</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">a</span> <span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="kt">int</span>
+	<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+		<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+			<span class="k">for</span> <span class="p">{</span>
+				<span class="nx">a</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span><span class="o">++</span>
+				<span class="nx">runtime</span><span class="p">.</span><span class="nf">Gosched</span><span class="p">()</span>
+			<span class="p">}</span>
+		<span class="p">}()</span>
+	<span class="p">}</span>
+	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>这样会报错 <code>index out of range</code></li>
+
+<li><p>使用 <code>go run -race goroutine.go</code> 来查看数据冲突</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">Read</span> <span class="nx">at</span> <span class="mh">0x00c00001a0a8</span> <span class="nx">by</span> <span class="nx">goroutine</span> <span class="mi">6</span><span class="p">:</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nf">func1</span><span class="p">()</span>
+ <span class="nx">goroutine</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">14</span> <span class="o">+</span><span class="mh">0x70</span>
+
+<span class="nx">Previous</span> <span class="nx">write</span> <span class="nx">at</span> <span class="mh">0x00c00001a0a8</span> <span class="nx">by</span> <span class="nx">main</span> <span class="nx">goroutine</span><span class="p">:</span>
+<span class="nx">main</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span>
+  <span class="nx">goroutine</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">11</span> <span class="o">+</span><span class="mh">0x11b</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>这是因为当不加 <code>i</code> 时候,这是一闭包,最后循环的时候,i 为 10,此时调出循环,但是 这是 数组读到的也是 10 就会越界了</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+    <span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ii</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="nx">a</span><span class="p">[</span><span class="nx">ii</span><span class="p">]</span><span class="o">++</span>
+            <span class="nx">runtime</span><span class="p">.</span><span class="nf">Gosched</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}(</span><span class="nx">i</span><span class="p">)</span> <span class="c1">// from loop i  
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h2 id="协程">协程</h2>
+
+<h3 id="普通函数和协程的对比">普通函数和协程的对比</h3>
+
+<blockquote>
+<p>子程序是协程的一个特例</p>
+</blockquote>
+
+<ul>
+<li>普通函数
+
+<ol>
+<li>在一个线程内</li>
+<li>方法执行完之后才会将控制权交还给 main 函数</li>
+</ol></li>
+<li>协程
+
+<ol>
+<li>可能运行在同一个线程中里</li>
+<li>main 函数和其他函之间有一个通道</li>
+<li>数据可以相互流通 控制权亦可以流通</li>
+</ol></li>
+</ul>
+
+<h3 id="其他语言">其他语言</h3>
+
+<ul>
+<li>C++ 使用 Boost.Coroutine 支持</li>
+<li>java 不支持</li>
+
+<li><p>Python 使用 <code>yield</code> 关键字实现协程 -&gt; Python 3.5 后加入了<code>async def</code>对协程原生支持</p>
+
+<h3 id="调度器">调度器</h3></li>
+</ul>
+
+<p>当开一个 go 进程</p>
+
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5so56s1mnj31am0ps41z.jpg" alt="" /></p>
+
+<ol>
+<li>有一个调度器</li>
+<li>有可能一个协程放在一个线程中</li>
+<li>有可能多个协程放在一个线程中</li>
+</ol>
+
+<p>这是由调度器来决定的</p>
+
+<h3 id="goroutine-的定义">goroutine 的定义</h3>
+
+<ul>
+<li>任何函加上 <code>go</code> 就能送给调度器运行</li>
+<li>不需要在定义的时候区分时候是<strong>异步</strong>函数(相对于Python)</li>
+<li>调度器在合适点进行切换</li>
+<li>使用 <code>-race</code>来检测数据的冲突
+<br /></li>
+</ul>
+
+<h3 id="goroutine-可能的切换点">goroutine 可能的切换点</h3>
+
+<ol>
+<li>io/select</li>
+<li>channel</li>
+<li>等待锁🔐</li>
+<li>函数调用(有时候)</li>
+<li><code>runtime.Gosched()</code></li>
+</ol>
+
+<p>仅仅是参考,不能保证切换,不能保证其他地方不切换.</p>
+
+<blockquote>
+<p>开了 1000 个 goroutine 只有 4 个线程,会根机器内核数映射到物线程上</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-08-08
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/golang-%E6%B5%8B%E8%AF%95/">
+            <span class="next-text nav-default">Golang-7 测试</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

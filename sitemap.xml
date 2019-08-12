@@ -3,7 +3,44 @@
   
   <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/golang-7channel/</loc>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/</loc>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/</loc>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/</loc>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/golang/</loc>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -12,36 +49,6 @@
     <lastmod>2019-08-08T21:15:30+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/golang/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

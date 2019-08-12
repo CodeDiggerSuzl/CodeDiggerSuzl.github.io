@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Thu, 08 Aug 2019 21:15:30 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2019 19:32:06 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Golang-8Channel</title>
+      <link>http://codedigger.cn/post/golang-7channel/</link>
+      <pubDate>Mon, 12 Aug 2019 19:32:06 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/golang-7channel/</guid>
+      <description>channel channel 是 goroutine 和 goroutine 之间的交互 定义 普通 channel 和 bufferdChannel var c chan int d:=make(chan int ) bufferdChannel:make(chan int,3) channel 是一等公民 可以做参数和返回值 var channels [10]chan&amp;lt;- int channel 还可以使用箭表示 channel 的方向 channel 关闭是发送方关闭的 接</description>
+    </item>
     
     <item>
       <title>Golang-8 Goroutine</title>

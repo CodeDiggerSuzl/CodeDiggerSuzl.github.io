@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-08-13T19:31:43&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-13T19:31:43&#43;08:00" />
-<meta itemprop="wordCount" content="785">
+<meta itemprop="wordCount" content="818">
 
 
 
@@ -127,7 +127,7 @@
         <div class="post-category">
             <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
             </div>
-          <span class="more-meta"> 约 785 字 </span>
+          <span class="more-meta"> 约 818 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -153,7 +153,10 @@
 <li><a href="#广度优先算法">广度优先算法</a>
 <ul>
 <li><a href="#迷宫最短路径">迷宫最短路径</a></li>
-<li><a href="#code">code</a></li>
+<li><a href="#code">code</a>
+<ul>
+<li><a href="#import-tip">import tip</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -213,6 +216,10 @@
 </ol>
 
 <h2 id="code">code</h2>
+
+<h3 id="import-tip">import tip</h3>
+
+<p><strong>在二维 slice 中 上下左右 不是 xy 轴坐标 上下左右 的方向代表 二维 slice 中的移动</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">  1
@@ -375,7 +382,7 @@
 
 <span class="c1">// direction difnition
 </span><span class="c1"></span><span class="kd">var</span> <span class="nx">dirs</span> <span class="p">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="nx">point</span><span class="p">{</span>
-	<span class="c1">// up left down right
+	<span class="c1">// up left down right 
 </span><span class="c1"></span>	<span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}}</span>
 
 <span class="kd">func</span> <span class="nf">walk</span><span class="p">(</span><span class="nx">maze</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">start</span><span class="p">,</span> <span class="nx">end</span> <span class="nx">point</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>

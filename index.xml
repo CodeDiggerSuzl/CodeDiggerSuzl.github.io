@@ -18,7 +18,7 @@
       <pubDate>Wed, 14 Aug 2019 18:53:04 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/%E7%88%AC%E8%99%AB/</guid>
-      <description>爬虫 就像迷宫,要进行判重 单机版爬虫 TODO: 1. 获取打印所有城市第一页用户的详细信息 2. 乱码问题 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2</description>
+      <description>爬虫 就像迷宫,要进行判重 单机版爬虫 TODO: 获取打印所有城市第一页用户的详细信息 乱码问题 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4</description>
     </item>
     
     <item>

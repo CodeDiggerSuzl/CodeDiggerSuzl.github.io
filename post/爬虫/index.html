@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>golang-11 爬虫(单机版) - The Blog of Suzl 🤠</title>
+  <title>golang-11 爬虫-1(单机版) - The Blog of Suzl 🤠</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -38,25 +38,25 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="golang-11 爬虫(单机版)" />
+<meta property="og:title" content="golang-11 爬虫-1(单机版)" />
 <meta property="og:description" content="爬虫 就像迷宫,要进行判重 单机版爬虫 TODO: 获取打印所有城市第一页用户的详细信息 乱码问题 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://codedigger.cn/post/%E7%88%AC%E8%99%AB/" />
 <meta property="article:published_time" content="2019-08-14T18:53:04+08:00" />
 <meta property="article:modified_time" content="2019-08-14T18:53:04+08:00" />
-<meta itemprop="name" content="golang-11 爬虫(单机版)">
+<meta itemprop="name" content="golang-11 爬虫-1(单机版)">
 <meta itemprop="description" content="爬虫 就像迷宫,要进行判重 单机版爬虫 TODO: 获取打印所有城市第一页用户的详细信息 乱码问题 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4">
 
 
 <meta itemprop="datePublished" content="2019-08-14T18:53:04&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-14T18:53:04&#43;08:00" />
-<meta itemprop="wordCount" content="432">
+<meta itemprop="wordCount" content="737">
 
 
 
 <meta itemprop="keywords" content="golang," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="golang-11 爬虫(单机版)"/>
+<meta name="twitter:title" content="golang-11 爬虫-1(单机版)"/>
 <meta name="twitter:description" content="爬虫 就像迷宫,要进行判重 单机版爬虫 TODO: 获取打印所有城市第一页用户的详细信息 乱码问题 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4"/>
 
 <!--[if lte IE 9]>
@@ -120,15 +120,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">golang-11 爬虫(单机版)</h1>
+      <h1 class="post-title">golang-11 爬虫-1(单机版)</h1>
 
       <div class="post-meta">
         <span class="post-time"> 2019-08-14 </span>
         <div class="post-category">
             <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
             </div>
-          <span class="more-meta"> 约 432 字 </span>
-          <span class="more-meta"> 预计阅读 1 分钟 </span>
+          <span class="more-meta"> 约 737 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -265,14 +265,14 @@
 <ul>
 <li>城市列表解析器: 解析城市列表</li>
 <li>城市解析器: 解析城市</li>
-<li>用户解析器: 解析用户</li>
+<li>用户解析器: 解析用户
+TODO PIC
+架构:</li>
+<li>种子(起始 <code>url</code>)放入 <code>engine</code></li>
+<li>engine 放入任务队列,从任务队列中拿任务 <code>request</code></li>
+<li>engine 将 <code>url</code> 放入 <code>fetcher</code> 中返回 文本 <code>text</code></li>
+<li>文本使用解析器 解析 返回 <code>request</code> 列表和 <code>item</code> 列表</li>
 </ul>
-
-<p>架构:
-1. 种子(起始 <code>url</code>)放入 <code>engine</code>
-2. engine 放入任务队列,从任务队列中拿任务 <code>request</code>
-3. engine 将 <code>url</code> 放入 <code>fetcher</code> 中返回 文本 <code>text</code>
-4. 文本使用解析器 解析 返回 <code>request</code> 列表和 <code>item</code> 列表</p>
 
 <h3 id="解析器构建">解析器构建</h3>
 
@@ -280,6 +280,68 @@
 <li>输入 utf-8 文本</li>
 <li>输入 <code>Request{URL:对应 paser}</code>列表,item 列表</li>
 </ol>
+
+<p>TODO 解析城市的时候已经拿到了名字 在 type 中 加入名字字段 或者其他字段 因此要 使用map[string] string
+但是加了字之后的话 又要因为许多函加了这个字但是没有用过 =&gt; 函数闭包的使用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ParseCity</span><span class="p">(</span><span class="nx">contents</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ParseResult</span> <span class="p">{</span>
+	<span class="nx">re</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nf">MustCompile</span><span class="p">(</span><span class="nx">cityRe</span><span class="p">)</span>
+	<span class="c1">// matches := re.FindAll(contents, -1)
+</span><span class="c1"></span>	<span class="nx">matches</span> <span class="o">:=</span> <span class="nx">re</span><span class="p">.</span><span class="nf">FindAllSubmatch</span><span class="p">(</span><span class="nx">contents</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+	<span class="c1">//每一个 request 要生成一个新的 url
+</span><span class="c1"></span>	<span class="nx">result</span> <span class="o">:=</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ParseResult</span><span class="p">{}</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">m</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">matches</span> <span class="p">{</span>
+		<span class="nx">result</span><span class="p">.</span><span class="nx">Items</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">Items</span><span class="p">,</span> <span class="s">&#34;ser &#34;</span><span class="o">+</span><span class="nb">string</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+		<span class="nx">result</span><span class="p">.</span><span class="nx">Requests</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">Requests</span><span class="p">,</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">Request</span><span class="p">{</span>
+			<span class="nx">Url</span><span class="p">:</span> <span class="nb">string</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+			<span class="c1">//ParserFunc: ParseProfile, // 类型不对了 函数式编程
+</span><span class="c1"></span>			<span class="nx">ParserFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">contents</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ParseResult</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nf">ParseProfile</span><span class="p">(</span><span class="nx">contents</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="c1">//太巧妙了  但是会导致名字
+</span><span class="c1"></span>			<span class="p">},</span>
+		<span class="p">})</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">result</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>会导致名字一样
+所有花括号会公用 在 for 循环中
+函数式编程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">ParserFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">contents</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ParseResult</span> <span class="p">{</span>
+				<span class="k">return</span> <span class="nf">ParseProfile</span><span class="p">(</span><span class="nx">contents</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="c1">//太巧妙了  但是会导致名字
+</span><span class="c1"></span>			<span class="p">},</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这段代码是在 循环完全退出之后  在 request 排队到他的时候才进行 不是在 for 循环中 就执行了 for 循环中会公用 m
+ 因此要将 m[2]的值拷贝出来</p>
 
     </div>
 

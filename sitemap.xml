@@ -2,8 +2,52 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://codedigger.cn/post/arrayinjava/</loc>
+    <lastmod>2019-08-27T23:13:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/</loc>
+    <lastmod>2019-08-27T23:13:07+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/</loc>
+    <lastmod>2019-08-27T23:13:07+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2019-08-18T14:21:55+08:00</lastmod>
+    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/golang-12dockerandelasticstack/</loc>
+    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/</loc>
+    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/golang/</loc>
+    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -12,36 +56,6 @@
     <lastmod>2019-08-18T14:21:55+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-08-18T14:21:55+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2019-08-18T14:21:55+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/</loc>
-    <lastmod>2019-08-18T14:21:55+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/golang/</loc>
-    <lastmod>2019-08-18T14:21:55+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-08-18T14:21:55+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

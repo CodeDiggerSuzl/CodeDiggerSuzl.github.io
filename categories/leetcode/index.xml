@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>leetcode on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/categories/leetcode/</link>
+    <description>Recent content in leetcode on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Fri, 11 Oct 2019 00:57:58 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/categories/leetcode/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Leetcode-1 TwoSum</title>
+      <link>http://codedigger.cn/post/leetcode1-two/</link>
+      <pubDate>Fri, 11 Oct 2019 00:57:58 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/leetcode1-two/</guid>
+      <description>TwoSum 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个</description>
+    </item>
+    
+  </channel>
+</rss>

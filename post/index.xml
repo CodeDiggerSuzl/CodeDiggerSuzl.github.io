@@ -7,10 +7,32 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Sat, 21 Sep 2019 00:59:24 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 11 Oct 2019 00:57:58 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Leetcode-1 TwoSum</title>
+      <link>http://codedigger.cn/post/leetcode1-two/</link>
+      <pubDate>Fri, 11 Oct 2019 00:57:58 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/leetcode1-two/</guid>
+      <description>TwoSum 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个</description>
+    </item>
+    
+    <item>
+      <title>Get to know vim</title>
+      <link>http://codedigger.cn/post/vim-1/</link>
+      <pubDate>Fri, 04 Oct 2019 22:38:28 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/vim-1/</guid>
+      <description>Get to Learn Vim  in order to be a an awesome &amp;lsquo;geek&amp;rsquo;, i&amp;rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
+ edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
+ shift + zz
+ :wq write and quit
+  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl + h to delete a char ctrl + w to delete a word crtl + u to delete a line  These three shotcuts also works in shell or a terminal!</description>
+    </item>
     
     <item>
       <title>Thread</title>

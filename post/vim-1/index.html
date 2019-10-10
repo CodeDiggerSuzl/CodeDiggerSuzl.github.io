@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Get to know vim - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="Get to Learn Vim  in order to be a an awesome &amp;lsquo;geek&amp;rsquo;, i&amp;rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
+ edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
+ shift &#43; zz
+ :wq write and quit
+  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/vim-1/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Get to know vim" />
+<meta property="og:description" content="Get to Learn Vim  in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
+ edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
+ shift &#43; zz
+ :wq write and quit
+  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/vim-1/" />
+<meta property="article:published_time" content="2019-10-04T22:38:28+08:00" />
+<meta property="article:modified_time" content="2019-10-04T22:38:28+08:00" />
+<meta itemprop="name" content="Get to know vim">
+<meta itemprop="description" content="Get to Learn Vim  in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
+ edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
+ shift &#43; zz
+ :wq write and quit
+  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!">
+
+
+<meta itemprop="datePublished" content="2019-10-04T22:38:28&#43;08:00" />
+<meta itemprop="dateModified" content="2019-10-04T22:38:28&#43;08:00" />
+<meta itemprop="wordCount" content="390">
+
+
+
+<meta itemprop="keywords" content="vim," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Get to know vim"/>
+<meta name="twitter:description" content="Get to Learn Vim  in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
+ edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
+ shift &#43; zz
+ :wq write and quit
+  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Get to know vim</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2019-10-04 </span>
+        <div class="post-category">
+            <a href="/categories/tools/"> tools </a>
+            </div>
+          <span class="more-meta"> 约 390 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#get-to-learn-vim">Get to Learn Vim</a>
+<ul>
+<li><a href="#edit">edit</a></li>
+<li><a href="#modes">modes</a></li>
+<li><a href="#in-insert-mode">in insert mode</a></li>
+<li><a href="#quick-to-switch-insert-and-normal-mode">quick to switch insert and normal mode</a></li>
+<li><a href="#quick-move">quick move</a></li>
+<li><a href="#serch-in-line">serch in line</a></li>
+<li><a href="#move-in-line">move in line</a></li>
+<li><a href="#move-in-page">move in page</a></li>
+<li><a href="#crud">CRUD</a>
+<ul>
+<li><a href="#insert">INSERT</a></li>
+<li><a href="#delete-d-x">DELETE (d x)</a></li>
+</ul></li>
+<li><a href="#fast-update">fast update</a>
+<ul>
+<li><a href="#r-replace">r (replace)</a></li>
+<li><a href="#c-change">c (change)</a></li>
+<li><a href="#s-substitute">s (substitute)</a></li>
+</ul></li>
+<li><a href="#query">query</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="get-to-learn-vim">Get to Learn Vim</h1>
+
+<blockquote>
+<p>in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool  :D</p>
+</blockquote>
+
+<h2 id="edit">edit</h2>
+
+<ol>
+<li><code>i</code> insert</li>
+<li><code>a</code> append</li>
+<li><code>o</code> open a line below</li>
+<li><code>I</code> INSERT before line</li>
+<li><code>O</code> append before line</li>
+
+<li><p><code>A</code> APPEND AFTER LINE</p></li>
+
+<li><p><code>shift + zz</code></p></li>
+
+<li><p><code>:wq</code> write and quit</p></li>
+</ol>
+
+<h2 id="modes">modes</h2>
+
+<ul>
+<li>normal mode</li>
+<li>insert mode</li>
+<li>command mode</li>
+<li>visual mode</li>
+</ul>
+
+<h2 id="in-insert-mode">in insert mode</h2>
+
+<ul>
+<li><code>ctrl + h</code>  to delete a char</li>
+<li><code>ctrl + w</code>  to delete a word</li>
+<li><code>crtl + u</code>  to delete a line</li>
+</ul>
+
+<p><strong>These three shotcuts also works in shell or a terminal!</strong>
+<code>crtl + a</code> to head
+<code>crtl + e</code> to end
+<code>crtl + b</code> to before
+<code>crtl + f</code> to forward</p>
+
+<h2 id="quick-to-switch-insert-and-normal-mode">quick to switch insert and normal mode</h2>
+
+<ul>
+<li><code>ctrl + c</code> or <code>ctrl + [</code> to quit insert and enter normal mode</li>
+<li><code>gi</code> to get into the last time you edit and enter into insert mode</li>
+</ul>
+
+<h2 id="quick-move">quick move</h2>
+
+<ol>
+<li><code>hjkl</code> to move</li>
+<li><code>w/W</code> to next word/WORD&rsquo;s head</li>
+<li><code>e/E</code> next word/WORD&rsquo;s end</li>
+<li><code>b/B</code> to next word/WORD&rsquo;s head ; backword</li>
+</ol>
+
+<h2 id="serch-in-line">serch in line</h2>
+
+<ul>
+<li><code>f{char}</code> to move to char, <code>t</code> to the before char</li>
+<li>use <code>;</code> or <code>,</code> to get to next / previous</li>
+<li><code>F</code> to search front
+<br /></li>
+</ul>
+
+<h2 id="move-in-line">move in line</h2>
+
+<ul>
+<li>use <code>0</code> to the first char of a line and <code>^</code> to the first char which is not a blank</li>
+<li>user <code>$</code> to the end of a line</li>
+<li><code>0</code> and <code>$</code></li>
+</ul>
+
+<h2 id="move-in-page">move in page</h2>
+
+<ul>
+<li><code>gg/G</code> to the begin/end of a file</li>
+<li>use <code>ctrl + o</code> return back</li>
+<li><code>H/M/L</code> to head middle or lower of a page</li>
+<li><code>ctrl+u/ ctrl+f</code> upword/ forward<br /></li>
+<li><code>zz</code> to put the screen to the middle</li>
+</ul>
+
+<h2 id="crud">CRUD</h2>
+
+<h3 id="insert">INSERT</h3>
+
+<h3 id="delete-d-x">DELETE (d x)</h3>
+
+<p>in normal mode
+- <code>x</code> to delete a char
+- <code>d(delete)</code> to delete a  word <code>daw</code>(d around a word) <code>diw</code>
+- <code>d and x</code> can combine with number to excute many times
+- <code>u</code> undo
+- <code>dd</code> delete a line
+- <code>dt+{char}</code> delete to char
+- <code>d+$</code>
+- <code>2dd</code> means delete 2 lines</p>
+
+<h2 id="fast-update">fast update</h2>
+
+<h3 id="r-replace">r (replace)</h3>
+
+<p>in normal mode use <code>r</code> to replace a char and use <code>s</code> to delete word and enter into insert mode</p>
+
+<h3 id="c-change">c (change)</h3>
+
+<p>c delete and into insert</p>
+
+<h3 id="s-substitute">s (substitute)</h3>
+
+<h2 id="query">query</h2>
+
+<ul>
+<li>use <code>/</code> or <code>?</code> to search backward and forward</li>
+<li>use <code>n/N</code> to jump to the next match</li>
+<li>use <code>*</code> or <code>#</code> to match previous or next</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2019-10-04
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/vim/">vim</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/leetcode1-two/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Leetcode-1 TwoSum</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/thread/">
+            <span class="next-text nav-default">Thread</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

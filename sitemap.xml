@@ -2,6 +2,25 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://codedigger.cn/post/</loc>
+    <lastmod>2019-10-16T20:38:17+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/</loc>
+    <lastmod>2019-10-16T20:38:17+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/tolearnanewprogramminglanguage/</loc>
+    <lastmod>2019-10-16T20:38:17+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>http://codedigger.cn/categories/</loc>
     <lastmod>2019-10-11T00:57:58+08:00</lastmod>
     <priority>0</priority>
@@ -12,18 +31,6 @@
     <lastmod>2019-10-11T00:57:58+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-10-11T00:57:58+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/</loc>
-    <lastmod>2019-10-11T00:57:58+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

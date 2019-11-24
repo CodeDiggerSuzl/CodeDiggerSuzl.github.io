@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Fri, 11 Oct 2019 00:57:58 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 16 Oct 2019 20:38:17 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>ToLearnANewProgrammingLanguage</title>
+      <link>http://codedigger.cn/post/tolearnanewprogramminglanguage/</link>
+      <pubDate>Wed, 16 Oct 2019 20:38:17 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/tolearnanewprogramminglanguage/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Leetcode-1 TwoSum</title>

@@ -62,7 +62,7 @@
     </item>
     
     <item>
-      <title>Golang 12DockerAndElasticStack</title>
+      <title>Golang-13 DockerAndElasticStack</title>
       <link>http://codedigger.cn/post/golang-12dockerandelasticstack/</link>
       <pubDate>Wed, 21 Aug 2019 20:28:52 +0800</pubDate>
       
@@ -86,16 +86,6 @@
       
       <guid>http://codedigger.cn/post/%E7%88%AC%E8%99%AB/</guid>
       <description>单机版爬虫 乱码问题解决 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4 5 6 7 8 9 10 // use x/text to guess encoding of a file func determineEncoding(r io.Reader) encoding.Encoding { // use peek to get bytes bytes, err :=</description>
-    </item>
-    
-    <item>
-      <title>a project of online shopping</title>
-      <link>http://codedigger.cn/post/stroe/</link>
-      <pubDate>Tue, 13 Aug 2019 22:36:44 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/stroe/</guid>
-      <description> A project of online shopping mall  just for practice, practice makes perfect
- springCloud </description>
     </item>
     
     <item>

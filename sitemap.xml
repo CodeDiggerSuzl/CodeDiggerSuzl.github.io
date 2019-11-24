@@ -3,115 +3,115 @@
   
   <url>
     <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-10-16T20:38:17+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/</loc>
-    <lastmod>2019-10-16T20:38:17+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/tolearnanewprogramminglanguage/</loc>
-    <lastmod>2019-10-16T20:38:17+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2019-10-11T00:57:58+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/leetcode1-two/</loc>
-    <lastmod>2019-10-11T00:57:58+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/categories/algorithm/</loc>
-    <lastmod>2019-10-11T00:57:58+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/categories/leetcode/</loc>
-    <lastmod>2019-10-11T00:57:58+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/vim-1/</loc>
-    <lastmod>2019-10-04T22:38:28+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2019-10-04T22:38:28+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/categories/tools/</loc>
-    <lastmod>2019-10-04T22:38:28+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/vim/</loc>
-    <lastmod>2019-10-04T22:38:28+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/thread/</loc>
-    <lastmod>2019-09-21T00:59:24+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/java/</loc>
-    <lastmod>2019-09-21T00:59:24+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-09-21T00:59:24+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2019-09-21T00:59:24+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/arrayinjava/</loc>
-    <lastmod>2019-08-27T23:13:07+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/golang-12dockerandelasticstack/</loc>
-    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/golang/</loc>
-    <lastmod>2019-08-21T20:28:52+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -130,41 +130,22 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/post/stroe/</loc>
-    <lastmod>2019-08-13T22:36:44+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/categories/practice/</loc>
-    <lastmod>2019-08-13T22:36:44+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/projects/</loc>
-    <lastmod>2019-08-13T22:36:44+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://codedigger.cn/post/golang-httpandmaze/</loc>
-    <lastmod>2019-08-13T19:31:43+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/golang-7channel/</loc>
-    <lastmod>2019-08-12T19:32:06+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/golang-goroutine/</loc>
-    <lastmod>2019-08-08T21:15:30+08:00</lastmod>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

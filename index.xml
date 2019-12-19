@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Wed, 16 Oct 2019 20:38:17 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 20 Dec 2019 01:21:31 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GoObject</title>
+      <link>http://codedigger.cn/post/goobject/</link>
+      <pubDate>Fri, 20 Dec 2019 01:21:31 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/goobject/</guid>
+      <description>object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder</description>
+    </item>
+    
+    <item>
+      <title>GoBasic</title>
+      <link>http://codedigger.cn/post/gobasic/</link>
+      <pubDate>Fri, 20 Dec 2019 01:19:17 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/gobasic/</guid>
+      <description>basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp;amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16</description>
+    </item>
     
     <item>
       <title>ToLearnANewProgrammingLanguage</title>

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Fri, 20 Dec 2019 01:21:31 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 22 Dec 2019 22:23:22 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HTTPResponseCodes</title>
+      <link>http://codedigger.cn/post/httpresponsecodes/</link>
+      <pubDate>Sun, 22 Dec 2019 22:23:22 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/httpresponsecodes/</guid>
+      <description>HTTP response status codes https://developer.mozilla.org/en-US/docs/Web/HTTP/Status Mark With 🍀 Means Is Often Seen and Important http status codes 指明了特定的 http 请求是否成功完成。共有 5 类。 information response 100-199 successful response 200-299 redirects 300-399 client errors 400-499 server errors 500-599 如果接受到的相应码不属于这些相应码中</description>
+    </item>
     
     <item>
       <title>GoObject</title>

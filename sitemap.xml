@@ -3,7 +3,44 @@
   
   <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2019-12-22T22:23:22+08:00</lastmod>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/</loc>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/</loc>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/</loc>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/vuefathertosonsummary/</loc>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/frontend/</loc>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/vue/</loc>
+    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -22,24 +59,6 @@
   
   <url>
     <loc>http://codedigger.cn/categories/network/</loc>
-    <lastmod>2019-12-22T22:23:22+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-12-22T22:23:22+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2019-12-22T22:23:22+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/</loc>
     <lastmod>2019-12-22T22:23:22+08:00</lastmod>
     <priority>0</priority>
   </url>

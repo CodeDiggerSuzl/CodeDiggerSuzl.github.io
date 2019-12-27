@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>frontend on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/categories/frontend/</link>
+    <description>Recent content in frontend on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Sat, 28 Dec 2019 01:17:53 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/categories/frontend/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Vue 父组件向子组件传值总结</title>
+      <link>http://codedigger.cn/post/vuefathertosonsummary/</link>
+      <pubDate>Sat, 28 Dec 2019 01:17:53 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/vuefathertosonsummary/</guid>
+      <description>vue 中组件的使用和优化 今天在写 vue 组件中经过专业的前端提示, 发现了 vue 组件使用过程中可以优化的地方和技巧, 兴奋地要总结下. 场景如下 前置环境: 项目使</description>
+    </item>
+    
+  </channel>
+</rss>

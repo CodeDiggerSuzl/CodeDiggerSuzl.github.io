@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-12-28T01:17:53&#43;08:00" />
 <meta itemprop="dateModified" content="2019-12-28T01:17:53&#43;08:00" />
-<meta itemprop="wordCount" content="1228">
+<meta itemprop="wordCount" content="1222">
 
 
 
@@ -127,7 +127,7 @@
         <div class="post-category">
             <a href="/categories/frontend/"> frontend </a>
             </div>
-          <span class="more-meta"> 约 1228 字 </span>
+          <span class="more-meta"> 约 1222 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -146,7 +146,7 @@
 <li><a href="#场景">场景</a></li>
 <li><a href="#origin-shitty-code">origin shitty code</a></li>
 </ul></li>
-<li><a href="#3-解决方法是在点击按钮的时候调用一次子组件的方法">3. 解决方法是在点击按钮的时候调用一次子组件的方法.</a>
+<li><a href="#解决方法是在点击按钮的时候调用一次子组件的方法">解决方法是在点击按钮的时候调用一次子组件的方法.</a>
 <ul>
 <li>
 <ul>
@@ -193,11 +193,15 @@
 
 <h3 id="origin-shitty-code">origin shitty code</h3>
 
-<p>原来的逻辑:
-1. 在 tabclick 中进行调用子组件方法.
-2. 问题是: 按钮弹出的时候并没有调用 tabclick 方法</p>
+<p>原来的逻辑:</p>
 
-<h2 id="3-解决方法是在点击按钮的时候调用一次子组件的方法">3. 解决方法是在点击按钮的时候调用一次子组件的方法.</h2>
+<ol>
+<li><p>在 tabclick 中进行调用子组件方法.</p></li>
+
+<li><p>问题是: 按钮弹出的时候并没有调用 tabclick 方法</p></li>
+
+<li><h2 id="解决方法是在点击按钮的时候调用一次子组件的方法">解决方法是在点击按钮的时候调用一次子组件的方法.</h2></li>
+</ol>
 
 <p>代码如下:</p>
 
@@ -411,7 +415,7 @@
 
 <p>在做 Vue 项目时使用 setTimeout, 在里面调用 this.add() 方法，报错 this.add 不是一个函数</p>
 
-<p>** 使用 settimeout 时，此时的 this 指向 window，为什么 this 指向会变呢？不再指向 data 对象，因为此时运行的代码是脱离了之前的 🍀<a href="https://juejin.im/post/5d2555d46fb9a07eaf2bb889">执行环境</a>**
+<p><strong>使用 settimeout 时，此时的 this 指向 window，为什么 this 指向会变呢？不再指向 data 对象，因为此时运行的代码是脱离了之前的 🍀<a href="https://juejin.im/post/5d2555d46fb9a07eaf2bb889">执行环境</a></strong>
 解决方法：</p>
 
 <ol>

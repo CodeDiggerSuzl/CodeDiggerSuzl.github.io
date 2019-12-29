@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Vim on The Blog of Suzl 🤠</title>
-    <link>http://codedigger.cn/tags/vim/</link>
-    <description>Recent content in Vim on The Blog of Suzl 🤠</description>
+    <title>Coding tools on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/categories/coding-tools/</link>
+    <description>Recent content in Coding tools on The Blog of Suzl 🤠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
     <lastBuildDate>Sun, 29 Dec 2019 23:54:57 +0800</lastBuildDate>
     
-	<atom:link href="http://codedigger.cn/tags/vim/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://codedigger.cn/categories/coding-tools/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -19,19 +19,6 @@
       
       <guid>http://codedigger.cn/post/batchrenamefileusingvim/</guid>
       <description>Multiple Rename &amp;amp; Create Files In Linux multi create files using touch Week{1..4}.md will create 4 files. see The Linux Command Line:chapter 8: see the world from shell:expand {} And I also wanted to rename files without using finder and other GUI tools, I watched a video of LuckSmith which using ranger with it&amp;rsquo;s Bulk renaming feature. However, I installed ranger in my mac, and haven&amp;rsquo;t really to use it,</description>
-    </item>
-    
-    <item>
-      <title>Get to know vim</title>
-      <link>http://codedigger.cn/post/vim-1/</link>
-      <pubDate>Fri, 04 Oct 2019 22:38:28 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/vim-1/</guid>
-      <description>Get to Learn Vim  in order to be a an awesome &amp;lsquo;geek&amp;rsquo;, i&amp;rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift + zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl + h to delete a char ctrl + w to delete a word crtl + u to delete a line  These three shotcuts also works in shell or a terminal!</description>
     </item>
     
   </channel>

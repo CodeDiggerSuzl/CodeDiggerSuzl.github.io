@@ -3,26 +3,45 @@
   
   <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/coding-tools/</loc>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/</loc>
-    <lastmod>2019-12-28T01:17:53+08:00</lastmod>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/vim/</loc>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/batchrenamefileusingvim/</loc>
+    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
@@ -112,12 +131,6 @@
   
   <url>
     <loc>http://codedigger.cn/categories/tools/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/vim/</loc>
     <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>

@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Go 基础语法和数据类型 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp;amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/1_baisc/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Go 基础语法和数据类型" />
+<meta property="og:description" content="basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/1_baisc/" />
+<meta property="article:published_time" content="2020-01-06T01:19:01+08:00" />
+<meta property="article:modified_time" content="2020-01-06T01:19:01+08:00" />
+<meta itemprop="name" content="Go 基础语法和数据类型">
+<meta itemprop="description" content="basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16">
+
+
+<meta itemprop="datePublished" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="wordCount" content="2140">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go 基础语法和数据类型"/>
+<meta name="twitter:description" content="basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Go 基础语法和数据类型</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-06 </span>
+        <div class="post-category">
+            <a href="/categories/programming-language/"> programming Language </a>
+            </div>
+          <span class="more-meta"> 约 2140 字 </span>
+          <span class="more-meta"> 预计阅读 5 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#basic-of-go">basic of go</a>
+<ul>
+<li><a href="#things-to-notice">things to notice</a></li>
+<li><a href="#primitive-type-in-golang">primitive type in golang</a></li>
+<li><a href="#类型转换">类型转换</a>
+<ul>
+<li><a href="#fmt">fmt</a></li>
+<li><a href="#const">const</a></li>
+<li><a href="#字面常量">字面常量?</a></li>
+<li><a href="#iota-枚举">iota 枚举?</a></li>
+</ul></li>
+<li><a href="#运算符">运算符</a></li>
+<li><a href="#流程控制语句">流程控制语句</a>
+<ul>
+<li><a href="#if">if</a></li>
+<li><a href="#switch">switch</a></li>
+<li><a href="#loop-in-go-only-for-type-to-do-loop">loop : in go only for type to do loop</a></li>
+<li><a href="#跳转语句">跳转语句</a></li>
+</ul></li>
+<li><a href="#function">function</a>
+<ul>
+<li><a href="#定义">定义</a>
+<ul>
+<li><a href="#不定参数参数列表">不定参数参数列表</a></li>
+</ul></li>
+<li><a href="#函数的返回值">函数的返回值</a></li>
+</ul></li>
+<li><a href="#函数类型">函数类型</a>
+<ul>
+<li><a href="#变量的作用域">变量的作用域</a></li>
+<li><a href="#匿名函数-为了实现闭包"><strong>匿名函数(为了实现闭包)</strong></a></li>
+<li><a href="#递归函数">递归函数</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#数据格式">数据格式</a>
+<ul>
+<li><a href="#数组">数组</a></li>
+<li><a href="#切片">切片</a></li>
+<li><a href="#字符串-使用strings-包中的值">字符串 使用strings 包中的值</a>
+<ul>
+<li><a href="#字符串转换-strconv">字符串转换  <code>strconv</code></a></li>
+</ul></li>
+<li><a href="#map">map</a>
+<ul>
+<li><a href="#定义-1">定义</a></li>
+<li><a href="#操作">操作</a></li>
+</ul></li>
+<li><a href="#struct">struct</a>
+<ul>
+<li><a href="#定义-2">定义</a></li>
+<li><a href="#初始化">初始化</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#pointer">pointer</a>
+<ul>
+<li><a href="#attention">attention</a></li>
+<li><a href="#使用-new-函数">使用 new() 函数</a>
+<ul>
+<li><a href="#指针作为参数进行传递时-为引用传递-也就是传递的地址">指针作为参数进行传递时，为引用传递，也就是传递的地址。</a></li>
+<li><a href="#数组作为参数传递的时候-是值传递">数组作为参数传递的时候 是值传递</a></li>
+<li><a href="#数组指针-指针数组">数组指针 &amp;&amp; 指针数组</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="basic-of-go">basic of go</h1>
+
+<blockquote>
+<p>try to learn go and vim at the same time</p>
+
+<h2 id="things-to-notice">things to notice</h2>
+
+<ol>
+<li>comments</li>
+</ol>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">`//` &amp; `/* */`</pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><p>variables</p>
+
+<ol>
+<li><code>var age int</code></li>
+<li><code>age := 20</code> auto guess</li>
+<li><code>a,b,c := 1,2,3</code></li>
+<li><code>_ ,1 ,_ = 1,2,4</code></li>
+<li>the first letter is lower or upper case matters, means different in golang</li>
+</ol></li>
+
+<li><p>trading data</p>
+
+<ol>
+<li><code>a,b=b,a</code></li>
+</ol></li>
+</ol>
+
+<h2 id="primitive-type-in-golang">primitive type in golang</h2>
+
+<ol>
+<li>bool</li>
+<li>float32 / float64</li>
+<li>int / uint</li>
+<li>int8 / uint8</li>
+<li>int16 / unit16</li>
+<li>int32 / uint32</li>
+<li>int64 / unit64</li>
+<li>float32 / float64</li>
+
+<li><p>string</p>
+
+<p>string 都隐藏了 <code>'\0'</code> 结束符号, c 中也是这样</p></li>
+
+<li><p>byte</p>
+
+<ol>
+<li><p><code>varc ch byte</code> 声明字符类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">char</span> <span class="kt">byte</span>
+<span class="nx">char</span> <span class="p">=</span> <span class="mi">97</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="s">&#34;char%c&#34;</span><span class="p">,</span><span class="nx">char</span><span class="p">)</span>
+<span class="o">//</span> <span class="nx">out</span> <span class="nx">put</span> <span class="sc">&#39;a&#39;</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>字符 使用 ASCII 码对应</p></li>
+</ol></li>
+</ol>
+
+<h2 id="类型转换">类型转换</h2>
+
+<p>Go语言中不允许隐式转换，所有类型转换必须显式声明（强制转换），而且转换只能发生在两种相互兼容的类型之间</p>
+
+<h3 id="fmt">fmt</h3>
+
+<table>
+<thead>
+<tr>
+<th><strong>格式</strong></th>
+<th>含义</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>%c</td>
+<td>字符型。可以把输入的数字按照 ASCII 码相应转换为对应的字符</td>
+</tr>
+
+<tr>
+<td>%d</td>
+<td>一个十进制数值 (基数为 10)</td>
+</tr>
+
+<tr>
+<td>%f</td>
+<td>以标准记数法表示的浮点数或者复数值</td>
+</tr>
+
+<tr>
+<td>%s</td>
+<td>字符串。输出字符串中的字符直至字符串中的空字符（字符串以&rsquo;\0‘结尾，这个&rsquo;\0&rsquo;即空字符）</td>
+</tr>
+
+<tr>
+<td>%b</td>
+<td>一个二进制整数值 (基数为 2)，或者是一个(高级的) 用科学计数法表示的指数为 2 的浮点数</td>
+</tr>
+
+<tr>
+<td>%t</td>
+<td>以 true 或者 false 输出的布尔值</td>
+</tr>
+
+<tr>
+<td>%T</td>
+<td><strong>使用 Go 语法输出的值的类型</strong></td>
+</tr>
+
+<tr>
+<td>%%</td>
+<td>一个%字面量</td>
+</tr>
+
+<tr>
+<td>%o</td>
+<td>一个以八进制表示的数字(基数为8)</td>
+</tr>
+
+<tr>
+<td>%p</td>
+<td>以十六进制(基数为16)表示的一个值的地址，前缀为0x,字母使用小写的a-f表示</td>
+</tr>
+
+<tr>
+<td>%x(X)</td>
+<td>以十六进制表示的整型值(基数为十六)，数字a-f使用小(大)写表示</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="const">const</h3>
+
+<ol>
+<li>variable 运行期间可以变</li>
+
+<li><p>const 运行期间不可以变化</p>
+
+<h3 id="字面常量">字面常量?</h3></li>
+</ol>
+
+<h3 id="iota-枚举">iota 枚举?</h3>
+
+<p>常量声明可以使用 iota 常量生成器初始化，它用于生成一组以相似规则初始化的常量，但是不用每行都写一遍初始化表达式。
+注意：在一个 const 声明语句中，在第一个声明的常量所在的行，iota 将会被置为 0，然后在每一个有常量声明的行加 1</p>
+
+<h2 id="运算符">运算符</h2>
+
+<p><code>++</code> <code>--</code> 没有前自增</p>
+
+<h2 id="流程控制语句">流程控制语句</h2>
+
+<h3 id="if">if</h3>
+
+<ol>
+<li><p>没有括号</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">a</span> <span class="p">&gt;</span> <span class="nx">b</span> <span class="p">{</span>
+    <span class="nx">then</span> <span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>多个判断条件用<code>;</code>分离</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">a</span> <span class="p">&gt;</span> <span class="nx">b</span><span class="p">;</span> <span class="nx">c</span> <span class="p">&gt;</span> <span class="nx">d</span> <span class="p">{</span>
+    <span class="nx">then</span><span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>if else</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">boolTest</span> <span class="p">{</span>
+
+<span class="p">}</span><span class="k">else</span> <span class="k">if</span> <span class="nx">boolTest</span><span class="p">{</span>
+
+<span class="p">}</span><span class="k">else</span><span class="p">{</span>
+
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h3 id="switch">switch</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">```go
+switch value{
+    case value:
+        then...
+    case value2:
+        then...
+    ...
+    default:
+        then...
+}
+```</pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>if-else if:可以处理范围,switch:一般用于等值比较</p>
+</blockquote>
+
+<h3 id="loop-in-go-only-for-type-to-do-loop">loop : in go only for type to do loop</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">```go
+for i:=1;booltest;i++{
+    循环体
+}
+
+```</pre></td></tr></table>
+</div>
+</div>
+<h3 id="跳转语句">跳转语句</h3>
+
+<ul>
+<li>break 的作用就是跳出本次循环</li>
+<li>continue 的作用是：立即结束本次循环,判断循环条件,如果成立,则进入下一次循环,否则退出循环</li>
+<li>goto (TODO)</li>
+</ul>
+
+<h2 id="function">function</h2>
+
+<h3 id="定义">定义</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">    <span class="kd">func</span> <span class="nf">functionName</span><span class="p">(</span><span class="nx">a</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="kt">float64</span><span class="p">,</span> <span class="nx">d</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">e</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span>
+    <span class="c1">// or
+</span><span class="c1"></span>    <span class="kd">func</span> <span class="nf">MyFunc05</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="kt">float64</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="nx">e</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h4 id="不定参数参数列表">不定参数参数列表</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">    <span class="kd">func</span> <span class="nf">Test</span><span class="p">(</span><span class="nx">args</span> <span class="o">...</span><span class="kt">int</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">a</span> <span class="p">=</span> <span class="nx">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="kd">var</span> <span class="nx">length</span> <span class="p">=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">args</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="nx">i</span><span class="p">,</span><span class="nx">data</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">args</span> <span class="p">{</span>
+            <span class="o">...</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>attention:
+1. 一定（只能）放在形参中的最后一个参数
+2. 在对函数进行调用时，固定参数必须传值，不定参数可以根据需要来决定是否要传值。</p>
+
+<h3 id="函数的返回值">函数的返回值</h3>
+
+<p>基本形式
+- 单个返回值
+    ```go
+    func test() int {</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">}
+//
+func test() sum int{
+
+}
+```</pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li><p>多个返回值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">test</span><span class="p">()(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span> <span class="kt">int</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">test</span><span class="p">()(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span> <span class="kt">int</span><span class="p">){</span>
+    <span class="nx">a</span><span class="p">,</span><span class="nx">b</span><span class="p">,</span><span class="nx">c</span> <span class="p">=</span> <span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span>
+    <span class="k">return</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h2 id="函数类型">函数类型</h2>
+
+<p>所谓的函数类型就是将函数作为一种类型可以用来定义变量</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Function</span> <span class="kd">func</span><span class="p">(</span><span class="nx">a</span> <span class="kt">int</span><span class="p">,</span><span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>注意的是没有函数名字</p>
+
+<h3 id="变量的作用域">变量的作用域</h3>
+
+<ul>
+<li>在函数内部的变量称为局部变量</li>
+<li>全局变量能够在所有的函数中进行访问</li>
+<li>优先使用局部变量</li>
+</ul>
+
+<h3 id="匿名函数-为了实现闭包"><strong>匿名函数(为了实现闭包)</strong></h3>
+
+<p>在一个函数中再定义一个函数可以使用使用匿名函数，所谓匿名函数就是没有名字的函数&rsquo;</p>
+
+<ol>
+<li><p>表示直接调用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span>  <span class="p">{</span>
+    <span class="nx">a</span><span class="o">:=</span><span class="mi">0</span>
+    <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">a</span><span class="o">++</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;a&#34;</span><span class="p">,</span><span class="nx">a</span><span class="p">)</span>
+    <span class="p">}()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+
+<li><p>传值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">f</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="nx">b</span> <span class="kt">int</span><span class="p">){</span>
+
+<span class="p">}(</span><span class="mi">1</span><span class="p">,</span><span class="mi">23</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h3 id="递归函数">递归函数</h3>
+
+<p>调用自己</p>
+
+<h1 id="数据格式">数据格式</h1>
+
+<h2 id="数组">数组</h2>
+
+<ol>
+<li><code>var a [10]int</code></li>
+<li>部分初始化 <code>d := [5]int{2:10,4:10}</code> 指定2和5的元素</li>
+<li><code>b := [...]{1,2,4}</code> 通过初始化确定数组长度</li>
+</ol>
+
+<h2 id="切片">切片</h2>
+
+<p>定义:
+1. 空切片:<code>s:=[]int{}</code>
+2. <code>var s1 []int</code>没有长度
+3. 借助make函数, 格式 make(切片类型, 长度, 容量) <code>s := make([]int ,5,10)</code>
+   1. 切片的长度要小于容量
+   2. <code>len(s)</code> return len
+   3. <code>cap(s)</code> return cap
+4. 循环赋值的结束条件是小于切片的长度，而不是容量
+5. <code>s[low:high:max]</code>
+   1. <code>low</code> startIndex
+   2. <code>high</code> endIndex
+   3. <code>max</code> 所谓容量:是指切片目前可容纳的最多元素个数。通过公式<code>(cap=max-low)</code>计算
+6. 使用 <code>append (s,element)</code>进行添加
+7. <code>copy(slice1,slice2)</code> 将第二个切片里面的元素，拷贝到第一个切片中。</p>
+
+<h2 id="字符串-使用strings-包中的值">字符串 使用strings 包中的值</h2>
+
+<ol>
+<li><p><code>funcContains(s,substrstring)bool</code></p>
+
+<p>功能：字符串s中是否包含substr，返回bool值</p></li>
+
+<li><p><code>funcJoin(a[]string,sepstring)string</code></p>
+
+<p>功能：字符串链接，把slicea通过sep链接起来</p></li>
+
+<li><p><code>funcIndex(s,sepstring)int</code></p>
+
+<p>功能：在字符串s中查找sep所在的位置，返回位置值，找不到返回-1</p></li>
+
+<li><p><code>funcReplace(s,old,newstring,nint)string</code></p>
+
+<p>功能：在s字符串中，把old字符串替换为new字符串，n表示替换的次数，小于0表示全部替换</p></li>
+
+<li><p>funcSplit(s,sepstring)[]string</p>
+
+<p>功能：把s字符串按照sep分割，返回slice</p></li>
+
+<li><p>funcTrim(sstring,cutsetstring)string</p>
+
+<p>功能：在s字符串的头部和尾部去除cutset指定的字符串</p></li>
+
+<li><p>funcRepeat(sstring,countint)string</p>
+
+<p>功能：重复s字符串count次，最后返回重复的字符串</p></li>
+
+<li><p>funcFields(sstring)[]string</p>
+
+<p>功能：去除s字符串的空格符，并且按照空格分割返回slice</p></li>
+</ol>
+
+<h3 id="字符串转换-strconv">字符串转换  <code>strconv</code></h3>
+
+<ol>
+<li><code>strconv.FormatBool(false)</code> &hellip; etc.</li>
+<li><code>Parse</code> 转换为其他类型</li>
+<li><code>Append</code> 系列函数将整数等转换为字符串后，添加到现有的字节数组中。</li>
+</ol>
+
+<h2 id="map">map</h2>
+
+<p>定义字典结构使用map关键字，[ ]中指定的是键(key)的类型,后面紧跟着的是值的类型。
+键的类型，必须是支持==和!=操作符的类型，<strong>切片、函数以及包含切片的结构类型不能作为字典的键</strong>，使用这些类型会造成编</p>
+
+<ul>
+<li><p>map 无序的</p>
+
+<h3 id="定义-1">定义</h3></li>
+
+<li><p><code>var m map[int] string</code></p></li>
+
+<li><p><code>make(map[int]string,4)</code> 长度可选</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">m</span><span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
+<span class="nx">s</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="nx">m</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">if</span> <span class="nx">ok</span> <span class="o">==</span><span class="kc">true</span><span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h3 id="操作">操作</h3>
+
+<ul>
+<li><code>m[1] = &quot;lol&quot;</code></li>
+<li><code>delete(m,1)</code></li>
+
+<li><p>遍历</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">k</span><span class="p">,</span><span class="nx">v</span> <span class="o">:=</span><span class="k">range</span> <span class="nx">m</span><span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h2 id="struct">struct</h2>
+
+<h3 id="定义-2">定义</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Meme</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="kt">string</span> <span class="nx">who</span>
+    <span class="kt">string</span> <span class="nx">what</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="初始化">初始化</h3>
+
+<ol>
+<li>顺序初始化 <code>var CyberTruck meme = Meme{&quot;ElonMask&quot;,&quot;for_the_meme&quot;}</code></li>
+</ol>
+
+<p>顺序初始化，每个成员必须初始化，在初始化时，值的顺序与结构体成员的顺序保持一致。
+2. 使用<code>.</code>进行操作
+3. 结构体比较 <code>==</code> || <code>!=</code>
+4. <code>struct</code> 进行函数传递 是值传递</p>
+
+<h1 id="pointer">pointer</h1>
+
+<ul>
+<li><p><code>var p *int</code></p>
+
+<h2 id="attention">attention</h2></li>
+
+<li><p>默认值为 <code>nil</code></p></li>
+
+<li><p>不要操作没有合法指向的内存</p>
+
+<ul>
+<li>当指针没有指向</li>
+</ul></li>
+</ul>
+
+<h2 id="使用-new-函数">使用 new() 函数</h2>
+
+<p>new(int) 就是创建一个整形大小的内存空间() <strong>放在堆上</strong></p>
+
+<h3 id="指针作为参数进行传递时-为引用传递-也就是传递的地址">指针作为参数进行传递时，为引用传递，也就是传递的地址。</h3>
+
+<h3 id="数组作为参数传递的时候-是值传递">数组作为参数传递的时候 是值传递</h3>
+
+<h3 id="数组指针-指针数组">数组指针 &amp;&amp; 指针数组</h3>
+
+<ul>
+<li>数组指针: 作为参数传递 使用的引用传递</li>
+<li>指针数组: 数组存储的是指针</li>
+</ul>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-06
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/5_channel_advance/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Go channel 和定时器</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/4_channel_goroutine_intro/">
+            <span class="next-text nav-default">Go 并发基础</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

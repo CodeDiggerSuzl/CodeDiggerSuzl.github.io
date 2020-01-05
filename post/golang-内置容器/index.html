@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-04 </span>
         <div class="post-category">
-            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            <a href="/categories/programming-language/"> programming language </a>
             </div>
           <span class="more-meta"> 约 1775 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
@@ -351,7 +351,7 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 删除 slice 元素
 </span><span class="c1"></span><span class="nx">slice1</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
-<span class="c1">// 去掉4  ... 代表参数 
+<span class="c1">// 去掉4  ... 代表参数
 </span><span class="c1"></span><span class="nx">slice1</span> <span class="p">=</span>  <span class="nb">append</span><span class="p">(</span><span class="nx">slice1</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span><span class="nx">slice1</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">...</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
@@ -613,10 +613,10 @@
 </span><span class="c1"></span>	<span class="c1">// 中文在 utf-8 占用 3 个字节
 </span><span class="c1"></span>	<span class="c1">// 英文一个字节
 </span><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="k">range</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span> <span class="p">{</span>
-		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%X &#34;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="c1">// 打印每一个字节 ASCII 码 
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%X &#34;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="c1">// 打印每一个字节 ASCII 码
 </span><span class="c1"></span>	<span class="p">}</span>
-	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span><span class="nx">char</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span> <span class="c1">// char 是 int32 &lt;==&gt;其实就是 rune 
-</span><span class="c1"></span>    <span class="c1">// 将 string 进行了 UTF-8 的解码 然后进行 Unicode 转码,然后放到 rune 中 
+	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span><span class="nx">char</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span> <span class="c1">// char 是 int32 &lt;==&gt;其实就是 rune
+</span><span class="c1"></span>    <span class="c1">// 将 string 进行了 UTF-8 的解码 然后进行 Unicode 转码,然后放到 rune 中
 </span><span class="c1"></span>		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;(%d %X) &#34;</span><span class="p">,</span><span class="nx">i</span><span class="p">,</span><span class="nx">char</span><span class="p">)</span>
 	<span class="p">}</span>
 	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Rune count string&#34;</span><span class="p">,</span>
@@ -628,14 +628,14 @@
 	<span class="p">}</span>
 <span class="o">---------------------------------------------------------------------------</span>
 <span class="c1">// 输出 英文 ASCII 码 中文 E6 88 91 是 utf-8 编码
-</span><span class="c1"></span><span class="mi">79</span> <span class="p">|</span><span class="mi">65</span><span class="p">|</span> <span class="mi">73</span><span class="p">|</span> <span class="nx">E6</span> <span class="mi">88</span> <span class="mi">91</span><span class="p">|</span> <span class="nx">E7</span> <span class="mi">88</span> <span class="nx">B1</span><span class="p">|</span> <span class="nx">E5</span> <span class="nx">A4</span> <span class="nx">A7</span> <span class="p">|</span><span class="nx">E4</span> <span class="nx">B8</span> <span class="nx">AD</span> <span class="p">|</span><span class="nx">E5</span> <span class="mi">9</span><span class="nx">B</span> <span class="nx">BD</span> 
+</span><span class="c1"></span><span class="mi">79</span> <span class="p">|</span><span class="mi">65</span><span class="p">|</span> <span class="mi">73</span><span class="p">|</span> <span class="nx">E6</span> <span class="mi">88</span> <span class="mi">91</span><span class="p">|</span> <span class="nx">E7</span> <span class="mi">88</span> <span class="nx">B1</span><span class="p">|</span> <span class="nx">E5</span> <span class="nx">A4</span> <span class="nx">A7</span> <span class="p">|</span><span class="nx">E4</span> <span class="nx">B8</span> <span class="nx">AD</span> <span class="p">|</span><span class="nx">E5</span> <span class="mi">9</span><span class="nx">B</span> <span class="nx">BD</span>
 <span class="o">---------------------------------------------------------------------------</span>
 <span class="nx">y</span>		<span class="p">|</span><span class="nx">e</span><span class="p">|</span><span class="nx">s</span>	<span class="p">|</span><span class="nx">我</span>				<span class="p">|</span><span class="nx">爱</span>				<span class="p">|</span><span class="nx">大</span>			<span class="p">|</span><span class="nx">中</span>				<span class="p">|</span><span class="nx">国</span>
 <span class="c1">// 爱是从 6 开始的
 </span><span class="c1"></span><span class="o">---------------------------------------------------------------------------</span>
  <span class="c1">// utf-8 转换成了 Unicode 编码 6211
 </span><span class="c1"></span><span class="p">(</span><span class="mi">0</span> <span class="mi">79</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span> <span class="mi">65</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span> <span class="mi">73</span><span class="p">)</span> <span class="p">(</span><span class="mi">3</span> <span class="mi">6211</span><span class="p">)</span> <span class="p">(</span><span class="mi">6</span> <span class="mi">7231</span><span class="p">)</span> <span class="p">(</span><span class="mi">9</span> <span class="mi">5927</span><span class="p">)</span> <span class="p">(</span><span class="mi">12</span> <span class="mf">4E2</span><span class="nx">D</span><span class="p">)</span> <span class="p">(</span><span class="mi">15</span> <span class="mi">56</span><span class="nx">FD</span><span class="p">)</span>
-<span class="nx">下标对应得是字节</span>  <span class="nx">从</span> <span class="mi">3</span> <span class="nx">到</span> <span class="mi">6</span> 
+<span class="nx">下标对应得是字节</span>  <span class="nx">从</span> <span class="mi">3</span> <span class="nx">到</span> <span class="mi">6</span>
 <span class="o">---------------------------------------------------------------------------</span>
 <span class="nx">Rune</span> <span class="nx">count</span> <span class="kt">string</span> <span class="mi">8</span>
 <span class="o">---------------------------------------------------------------------------</span>
@@ -761,7 +761,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

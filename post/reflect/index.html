@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Java 中的反射 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/reflect/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Java 中的反射" />
+<meta property="og:description" content="反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/reflect/" />
+<meta property="article:published_time" content="2020-01-06T01:16:06+08:00" />
+<meta property="article:modified_time" content="2020-01-06T01:16:06+08:00" />
+<meta itemprop="name" content="Java 中的反射">
+<meta itemprop="description" content="反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语">
+
+
+<meta itemprop="datePublished" content="2020-01-06T01:16:06&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-06T01:16:06&#43;08:00" />
+<meta itemprop="wordCount" content="2593">
+
+
+
+<meta itemprop="keywords" content="java," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Java 中的反射"/>
+<meta name="twitter:description" content="反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Java 中的反射</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-06 </span>
+        <div class="post-category">
+            <a href="/categories/programming/"> programming </a>
+            </div>
+          <span class="more-meta"> 约 2593 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#反射">反射</a>
+<ul>
+<li><a href="#静态和动态语言">静态和动态语言</a></li>
+<li><a href="#reflection">reflection</a></li>
+<li><a href="#class-类">Class 类</a>
+<ul>
+<li><a href="#获取-class-类实例">获取 Class 类实例</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#java-内存分析">🍀 java 内存分析</a>
+<ul>
+<li><a href="#类加载过程-todo">🍀类加载过程 TODO:</a></li>
+</ul></li>
+<li><a href="#什么时候发生类的初始化">🍀 什么时候发生类的初始化?</a>
+<ul>
+<li><a href="#类的主动引用-一定会发生类的初始化">类的主动引用: 一定会发生类的初始化</a></li>
+<li><a href="#类的被动引用-不会进行初始化">类的被动引用:不会进行初始化</a></li>
+</ul></li>
+<li><a href="#类加载器">🍀类加载器</a>
+<ul>
+<li><a href="#作用">作用:</a></li>
+<li><a href="#分类">分类</a></li>
+<li><a href="#双亲委派机制-todo">双亲委派机制 TODO</a></li>
+</ul></li>
+<li><a href="#创建建运行时类的对象">创建建运行时类的对象</a>
+<ul>
+<li><a href="#使用获取到的属性">使用获取到的属性</a></li>
+<li><a href="#性能对比分析">性能对比分析</a></li>
+<li><a href="#操作泛型">操作泛型</a></li>
+<li><a href="#获取注解信息">获取注解信息</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="反射">反射</h1>
+
+<ul>
+<li>Class 类 并且获取 Class 实例</li>
+<li>类的加载和 ClassLoader</li>
+<li>创建运行时类的对象</li>
+<li>获取时类的完整结构</li>
+<li>调用运行时类的指定结构</li>
+</ul>
+
+<h2 id="静态和动态语言">静态和动态语言</h2>
+
+<ul>
+<li><p>动态语言</p>
+
+<p>在运行时候可以改变结构的语言:在运行时代码可以根据某些结构改变自身结构</p></li>
+
+<li><p>静态语言</p>
+
+<p>代码运行时不可以改变结构的语言</p>
+
+<p>java 可以根据反射获取类似动态语言的特性 准动态语言</p></li>
+</ul>
+
+<h2 id="reflection">reflection</h2>
+
+<p>java 反射机制允许程序在执行期间借助 <code>Reflection API</code> 获取任何内部类的信息,直接操作任何类的内部属性和方法.</p>
+
+<p>类加载🍀后,在堆内存的方法区产生一个Class类型的对象,包含了类的完整结构信息.</p>
+
+<ul>
+<li><p>normal way : import class <code>=&gt;</code> new class <code>=&gt;</code> get instance</p></li>
+
+<li><p>reflect : get instance <code>=&gt;</code> getClass() <code>=&gt;</code> get class</p></li>
+</ul>
+
+<p>一个类在内存中只用一个 Class 对象</p>
+
+<h2 id="class-类">Class 类</h2>
+
+<p>某个对象进行反射后得到的信息:</p>
+
+<ol>
+<li>类的属性, 方法, 构造器,实现了哪些接口</li>
+<li>对于每个类,JRE 都为其保留了一个不变的 <code>Class</code> 类型的对象</li>
+<li>一个 <code>Class</code>对象包含了特定结构的信息
+
+<ol>
+<li>class</li>
+<li>interface</li>
+<li>enum</li>
+<li>annotation</li>
+<li>primitive type</li>
+<li>void</li>
+<li>[] 数组/二维数据</li>
+<li>Class.class</li>
+</ol></li>
+</ol>
+
+<p>另外:
+1. Class 本身也是对象
+2. Class 对象只能系统建立
+3. 一个加载的类在 JVM 中只有一个 Class 实例
+4. 一个 Class 对象对应到是一个加载到 JVM 中的一个<code>.class</code>对象
+5. 每个类的实例都会记得自己是哪一个 Class 实例所生成的
+6. 通过 Class 可以完整到获取一个类中所有被加载的结构
+7. Class 类是进行反射的前提,任何想动态加载,运行的类 都要先获得 Class 对象</p>
+
+<h3 id="获取-class-类实例">获取 Class 类实例</h3>
+
+<ol>
+<li><p>获取已知的类,通过类的 class 属性获取</p>
+
+<p><code>Class clazz = Person.class</code></p></li>
+
+<li><p>已经拥有实例</p>
+
+<p><code>Class clazz = person.getClass()</code></p></li>
+
+<li><p>通过全类名获取</p>
+
+<p><code>Class&lt;?&gt; c1 = Class.forName(&quot;全类名&quot;);</code></p></li>
+
+<li><p>内置的基本类型的包装类可以使用<code>类名.Type</code></p></li>
+
+<li><p>使用 <code>ClassLoader</code></p></li>
+</ol>
+
+<h1 id="java-内存分析">🍀 java 内存分析</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma"> java 内存
+├── 堆
+│   └── 存放 new 出来的对象和数组
+│   └── 可以被所有的线程共享,不会存放别的对象引用
+├── 栈
+│   └── 存放基本变量类型(包含基本类型的具体数值)
+│   └── 引用对象的变量(会存放引用在堆里的具体地址)
+├── 方法区(特殊的堆)
+    ├── 可以被所用线程共享
+    └── 包含了所有到 class 和 static 变量</pre></td></tr></table>
+</div>
+</div>
+<h2 id="类加载过程-todo">🍀类加载过程 TODO:</h2>
+
+<blockquote>
+<p><a href="https://juejin.im/post/5a810b0e5188257a5c606a85">https://juejin.im/post/5a810b0e5188257a5c606a85</a></p>
+
+<p>深入理解 java 虚拟机 ch7</p>
+</blockquote>
+
+<ol>
+<li><p>Load(类的加载)</p>
+
+<p>加载</p>
+
+<ul>
+<li>将类的 class 文件读入内存,并且将静态数据转换成方法区中运行时的数据结构,并且为之创建一个<code>java.lang.Class</code>对象,由类加载器完成</li>
+</ul></li>
+
+<li><p>Link(类的连接)</p>
+
+<p>将类的二进制数据合并到 JRE 中</p>
+
+<ol>
+<li><p>验证</p>
+
+<p>保证类的信息符合 JVM 规范,没有安全问题</p></li>
+
+<li><p>准备</p>
+
+<p>正式为类变量(static)分配内存并且设置类变量默认初始值的阶段,这些内存都在方法区中进行分配</p></li>
+
+<li><p>解析</p>
+
+<p>虚拟机常量池内符号引用(常量名)替换为直接引用(地址)的过程.</p></li>
+</ol></li>
+
+<li><p>(initialize)类的初始化 (jvm)</p>
+
+<p>JVM 负责类的<strong>初始化</strong></p>
+
+<p>执行类构造器<code>&lt;clinit&gt;()</code>方法的过程. 类构造器<code>&lt;clinit&gt;()</code>方法是由编译器自动收集类中所有类变量的赋值动作和静态代码块中语句合并产生的.(类构造器是构造类信息的,不是构造该类对象到构造器)</p>
+
+<p>初始化一个类的时候,先初始化其父类</p>
+
+<p>虚拟机会保证一个类的<code>&lt;clinit&gt;()</code> 方法在多线程环境中被正确加锁和同步</p>
+
+<p><code>&lt;init&gt;</code> 是 <code>new</code> 对象的方法</p></li>
+</ol>
+
+<h1 id="什么时候发生类的初始化">🍀 什么时候发生类的初始化?</h1>
+
+<h2 id="类的主动引用-一定会发生类的初始化">类的主动引用: 一定会发生类的初始化</h2>
+
+<ol>
+<li>当虚拟机启动,先初始化 main 所在的类</li>
+<li>new 一个对象</li>
+<li>调用类的静态成员(除了 final 常量) 和静态方法</li>
+<li>使用<code>java.lang.reflect</code>包的方法对类进行反射调用</li>
+<li>初始化一个类时,如果父类没有初始化,先初始化父类</li>
+</ol>
+
+<h2 id="类的被动引用-不会进行初始化">类的被动引用:不会进行初始化</h2>
+
+<ol>
+<li>当访问一个静态域的时候,只有真正声明这个域的类才会被初始化,当子类引用父类的静态变量,不会导致子类初始化.</li>
+<li>通过数组定义类的引用,不会定义类的初始化</li>
+<li>引用常量不会触发此类的初始化,常量在连接阶段就存入调用类的常量池了</li>
+</ol>
+
+<h1 id="类加载器">🍀类加载器</h1>
+
+<h2 id="作用">作用:</h2>
+
+<p>将编译器编译好的<code>.class</code>文件的字节码内容加载到内存中去,并将这些静态数据加载换成方法区运行时候的数据结构,然后在堆中生生成一个代表这个类的<code>java.lang.Class</code>对象,作为方法区中类数据的访问入口.</p>
+
+<p>类缓存: 标准 javaSE 类加载器可以按照要求查找类,但是一旦某一个类被加载到类加载器中,将维持加载 (缓存)一段时间,不过 JVM 垃圾回收机制可以回收这这些 Class 对象.</p>
+
+<h2 id="分类">分类</h2>
+
+<ol>
+<li><p>引导类加载器 <code>Bootstrap ClassLoader</code></p>
+
+<p>C++ 编写,jvm 自带的加载器,<strong>负责 java 平台到核心库</strong>,用来转载核心类库,<strong>该加载器无法直接获取</strong></p>
+
+<p><code>rt</code> 包</p></li>
+
+<li><p>扩展类加载器 <code>Extension ClassLoader</code> : 复制 <code>jre/lib/ext</code>目录下 jar 包或者<code>-D java.ext.dirs</code> 指定目录下 jar 包装入工具库</p></li>
+
+<li><p>系统类加载器 <code>System ClassLoader</code> 或者叫<code>App ClassLoader</code> 负责 <code>java -classpath</code>或者 <code>-D java.class.path</code>下指定的目录下的类和 jar 包装入,最常用的加载器.</p></li>
+
+<li><p>自定义加载器</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">ClassLoader</span> <span class="nf">systemClassLoader</span> <span class="o">=</span> <span class="n">ClassLoader</span><span class="p">.</span><span class="na">getSystemClassLoader</span><span class="p">();</span>
+        <span class="o">**</span><span class="n">System</span><span class="o">**</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">systemClassLoader</span><span class="p">);</span>
+        <span class="c1">// get super class loader
+</span><span class="c1"></span>        <span class="n">ClassLoader</span> <span class="nf">parent</span> <span class="o">=</span> <span class="n">systemClassLoader</span><span class="p">.</span><span class="na">getParent</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">parent</span><span class="p">);</span>
+        <span class="n">ClassLoader</span> <span class="nf">loader</span> <span class="o">=</span> <span class="n">parent</span><span class="p">.</span><span class="na">getParent</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">loader</span><span class="p">);</span>
+    <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p>out out</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">sun.misc.Launcher$AppClassLoader@18b4aac2
+sun.misc.Launcher$ExtClassLoader@511d50c0
+null  // bootstrap class loader 获取不到</pre></td></tr></table>
+</div>
+</div>
+<h2 id="双亲委派机制-todo">双亲委派机制 TODO</h2>
+
+<h1 id="创建建运行时类的对象">创建建运行时类的对象</h1>
+
+<p>Filed, Method, Constructor,Superclass,Interface,Annotation</p>
+
+<h2 id="使用获取到的属性">使用获取到的属性</h2>
+
+<p>动态获取对象</p>
+
+<p><code>Son son  = (Son)c1.newInstance();</code></p>
+
+<ol>
+<li>调用了无参构造器</li>
+<li>类的构造器访问权限必须足够</li>
+</ol>
+
+<p>当没有无参构造器的时候可以</p>
+
+<ol>
+<li>使用<code>Class</code>类的<code>getDeclaredConstructor(Class,...parameterTypes)</code> 来取得本类的之指定形参的构造器</li>
+<li>向构造器的形参中传递一个对象数组进去,包含构造器的各个参数</li>
+<li>通过构造器实例化对象</li>
+</ol>
+
+<p>使用方法:</p>
+
+<ul>
+<li><code>invoke(对象,&quot;方法的值&quot;)</code> / <code>Object invoke(Object obj,Object[] args)</code></li>
+</ul>
+
+<ol>
+<li>无返回值 返回 null</li>
+<li>原方法为静态方法 此时 obj 可为 null</li>
+<li>若原方法为参数列表为空,此时<code>Object[] args</code> 为 null</li>
+<li>原方法为 private,则需要在调用方法<code>invoke</code>前设置<code>filed.setAccessable(true)</code></li>
+</ol>
+
+<h2 id="性能对比分析">性能对比分析</h2>
+
+<ul>
+<li>反射方式调用 速度很慢 关闭检测要快一点</li>
+<li>普通方式调用
+速度快</li>
+</ul>
+
+<h2 id="操作泛型">操作泛型</h2>
+
+<p>java 使用泛型擦除机制来引入泛型,泛型是给 javac 使用,确保数据的安全性和免去强制类型转换的问题. 但是一旦编译完成,所有的和泛型有关的类型全部擦除.</p>
+
+<p>为了是反射操作这些类型,java 新增了 <code>ParameterizedType</code>, <code>GenericArray Type</code>,<code>TypeVariable</code> 和 <code>WildcardType</code> 几种类型来<strong>代表不能被归一到 Class类类型但是又和原始类型齐名的类型.</strong></p>
+
+<ul>
+<li><code>ParameterizedType</code>: 表示一种参数化类型,比如 <code>Collection&lt;String&gt;</code></li>
+<li><code>GenericArrayType</code>: 表示一种元素类型类型为参数化类型或者类型变量的数组类型</li>
+<li><code>TypeVariable</code>: 各个变量类型的公共父接口</li>
+
+<li><p><code>WildcardType</code>: 通配符类型表达式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">GetGenericParam</span> <span class="p">{</span>
+<span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
+    <span class="n">Method</span> <span class="nf">test01</span> <span class="o">=</span> <span class="n">GetGenericParam</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;test01&#34;</span><span class="p">,</span> <span class="n">Map</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+    <span class="n">Type</span><span class="p">[]</span> <span class="nf">genericExceptionTypes</span> <span class="o">=</span> <span class="n">test01</span><span class="p">.</span><span class="na">getGenericParameterTypes</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">Type</span> <span class="nf">genericExceptionType</span> <span class="o">:</span> <span class="n">genericExceptionTypes</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;#&#34;</span> <span class="o">+</span> <span class="n">genericExceptionType</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">genericExceptionType</span> <span class="nf">instanceof</span> <span class="n">ParameterizedType</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Type</span><span class="p">[]</span> <span class="nf">actualTypeArguments</span> <span class="o">=</span> <span class="p">((</span><span class="n">ParameterizedType</span><span class="p">)</span> <span class="n">genericExceptionType</span><span class="p">).</span><span class="na">getActualTypeArguments</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">Type</span> <span class="nf">actualTypeArgument</span> <span class="o">:</span> <span class="n">actualTypeArguments</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="n">actualTypeArgument</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">public</span> <span class="nf">void</span> <span class="n">test01</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Son</span><span class="o">&gt;</span> <span class="nf">map</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">list</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;test01&#34;</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<h2 id="获取注解信息">获取注解信息</h2>
+
+<ul>
+<li><code>getAnnotation</code></li>
+<li><code>getAnnotations</code></li>
+</ul>
+
+<p>Orm: Object relationship mapping 就是使用注解来进行操作的</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">)</span>
+<span class="nd">@interface</span> <span class="n">Table</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="nf">dbName</span><span class="p">();</span>
+
+<span class="p">}</span>
+
+<span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">)</span>
+<span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
+<span class="nd">@interface</span> <span class="n">Filed</span> <span class="p">{</span>
+    <span class="n">String</span> <span class="nf">value</span><span class="p">();</span>
+
+    <span class="n">String</span> <span class="nf">type</span><span class="p">();</span>
+
+<span class="p">}</span>
+
+
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">GetAnnoTest</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Annotation</span><span class="p">[]</span> <span class="nf">annotations</span> <span class="o">=</span> <span class="n">Person</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getAnnotations</span><span class="p">();</span>
+        <span class="n">Class</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="nf">c1</span> <span class="o">=</span> <span class="n">Person</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
+        <span class="n">Table</span> <span class="nf">table</span> <span class="o">=</span> <span class="n">c1</span><span class="p">.</span><span class="na">getAnnotation</span><span class="p">(</span><span class="n">Table</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+        <span class="n">String</span> <span class="nf">s</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="na">dbName</span><span class="p">();</span>
+        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">@Table</span><span class="p">(</span><span class="n">dbName</span> <span class="o">=</span> <span class="s">&#34;person&#34;</span><span class="p">)</span>
+<span class="nd">@Data</span>
+<span class="kd">class</span> <span class="nf">Person</span> <span class="p">{</span>
+    <span class="nd">@Filed</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;name&#34;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&#34;String&#34;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-06
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/java/">java</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/6_selectandlock/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Go中的 Select机制 锁 和 条件变量</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/annotation/">
+            <span class="next-text nav-default">Java 中的注解</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

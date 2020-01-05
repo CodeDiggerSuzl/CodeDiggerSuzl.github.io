@@ -7,10 +7,82 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Sun, 29 Dec 2019 23:54:57 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jan 2020 01:19:01 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go channel 和定时器</title>
+      <link>http://codedigger.cn/post/5_channel_advance/</link>
+      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/5_channel_advance/</guid>
+      <description>Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前</description>
+    </item>
+    
+    <item>
+      <title>Go 基础语法和数据类型</title>
+      <link>http://codedigger.cn/post/1_baisc/</link>
+      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/1_baisc/</guid>
+      <description>basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp;amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16</description>
+    </item>
+    
+    <item>
+      <title>Go 并发基础</title>
+      <link>http://codedigger.cn/post/4_channel_goroutine_intro/</link>
+      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/4_channel_goroutine_intro/</guid>
+      <description>Go 并发编程 并发和并行 the diff between parallel and 并行 parallel 1s = 1000ms 1ms = 1000us 1us = 1000ns 同一时刻（在 cpu 量级上），借助多个 cup 实现。 &amp;gt; 并行(parallel)：指在同一时刻，有多</description>
+    </item>
+    
+    <item>
+      <title>Go 文件操作</title>
+      <link>http://codedigger.cn/post/3_file_string_operation/</link>
+      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/3_file_string_operation/</guid>
+      <description>File operation Dir Operation OpenFile Readdir</description>
+    </item>
+    
+    <item>
+      <title>Go 面向对象</title>
+      <link>http://codedigger.cn/post/2_object_oriented/</link>
+      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/2_object_oriented/</guid>
+      <description>object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder</description>
+    </item>
+    
+    <item>
+      <title>Go中的 Select机制 锁 和 条件变量</title>
+      <link>http://codedigger.cn/post/6_selectandlock/</link>
+      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/6_selectandlock/</guid>
+      <description>🍀 select Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。 select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句</description>
+    </item>
+    
+    <item>
+      <title>Java 中的反射</title>
+      <link>http://codedigger.cn/post/reflect/</link>
+      <pubDate>Mon, 06 Jan 2020 01:16:06 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/reflect/</guid>
+      <description>反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语</description>
+    </item>
+    
+    <item>
+      <title>Java 中的注解</title>
+      <link>http://codedigger.cn/post/annotation/</link>
+      <pubDate>Mon, 06 Jan 2020 01:15:58 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/annotation/</guid>
+      <description>What The Hell Annotation ? @since 1.5 作用: 不是程序本身,但是可以对程序作出解释 注释是给 coder 看的 注解是给计算机看的 可以被其他程序,比如编译器读取 一个注解准确意义上来说</description>
+    </item>
     
     <item>
       <title>使用Vim批量更新文件名</title>

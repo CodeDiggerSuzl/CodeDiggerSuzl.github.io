@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-04 </span>
         <div class="post-category">
-            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            <a href="/categories/programming-language/"> programming language </a>
             </div>
           <span class="more-meta"> 约 1439 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
@@ -226,9 +226,9 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-  
+
 <span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
-  
+
 <span class="c1">// 没有参数, 返回一个函数
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">adder</span><span class="p">()</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
 <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span> <span class="c1">// 自由变量
@@ -238,11 +238,11 @@
     <span class="k">return</span> <span class="nx">sum</span>
 <span class="p">}</span>
 <span class="p">}</span>
-  
+
 <span class="c1">// 正统函数式编程
 </span><span class="c1">// 返回当前加完的值 和 下一个的函数 递归定义
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">iAdder</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="nx">iAdder</span><span class="p">)</span>
-  
+
 <span class="kd">func</span> <span class="nf">adder2</span><span class="p">(</span><span class="nx">base</span> <span class="kt">int</span><span class="p">)</span> <span class="nx">iAdder</span> <span class="p">{</span>
 <span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="nx">iAdder</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">base</span> <span class="o">+</span> <span class="nx">v</span><span class="p">,</span> <span class="nf">adder2</span><span class="p">(</span><span class="nx">base</span> <span class="o">+</span> <span class="nx">v</span><span class="p">)</span>
@@ -294,12 +294,12 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">adder</span><span class="p">():</span>
-<span class="nb">sum</span> <span class="o">=</span><span class="mi">0</span>  
+<span class="nb">sum</span> <span class="o">=</span><span class="mi">0</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="n">nonlocal</span> <span class="nb">sum</span>  <span class="c1"># 声明下对 sum 的引用</span>
     <span class="n">sun</span> <span class="o">+=</span> <span class="n">value</span>
     <span class="k">return</span> <span class="nb">sum</span>
-    <span class="k">return</span> <span class="n">f</span> </code></pre></td></tr></table>
+    <span class="k">return</span> <span class="n">f</span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -386,8 +386,8 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 1 1 2 3 5 8 13 
-</span><span class="c1">//   a b 
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 1 1 2 3 5 8 13
+</span><span class="c1">//   a b
 </span><span class="c1">//     a b 每次都讲 a b 向后移动一位
 </span><span class="c1">// 每次返回的是前的数值
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">fibonacci</span><span class="p">()</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
@@ -603,7 +603,7 @@
 <span class="p">}</span>
 <span class="nx">node</span><span class="p">.</span><span class="nx">Left</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
 <span class="nf">f</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="c1">// 3. 此时node 是自由变量 是用这个函数来调用 node 这个函数可以做任何事情 除了打印还可以做其他事情
-</span><span class="c1"></span>    
+</span><span class="c1"></span>
 <span class="nx">node</span><span class="p">.</span><span class="nx">Right</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
@@ -629,7 +629,7 @@
 <span class="nx">node</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">n</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
-    <span class="nx">sum</span><span class="o">++</span> 
+    <span class="nx">sum</span><span class="o">++</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;sum is %d&#34;</span><span class="p">,</span><span class="nx">sum</span><span class="p">)</span>
 <span class="p">})</span>
 <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
@@ -721,7 +721,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

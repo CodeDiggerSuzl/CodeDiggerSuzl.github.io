@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Go channel 和定时器 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/5_channel_advance/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Go channel 和定时器" />
+<meta property="og:description" content="Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/5_channel_advance/" />
+<meta property="article:published_time" content="2020-01-06T01:19:01+08:00" />
+<meta property="article:modified_time" content="2020-01-06T01:19:01+08:00" />
+<meta itemprop="name" content="Go channel 和定时器">
+<meta itemprop="description" content="Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前">
+
+
+<meta itemprop="datePublished" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="wordCount" content="1626">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go channel 和定时器"/>
+<meta name="twitter:description" content="Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Go channel 和定时器</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-06 </span>
+        <div class="post-category">
+            <a href="/categories/programming-language/"> programming Language </a>
+            </div>
+          <span class="more-meta"> 约 1626 字 </span>
+          <span class="more-meta"> 预计阅读 4 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#unbuffered-channel">Unbuffered Channel</a></li>
+<li><a href="#buffered-channel">Buffered Channel</a>
+<ul>
+<li><a href="#关闭-channel">关闭 channel</a></li>
+</ul></li>
+<li><a href="#单行的-channel">单行的 channel</a>
+<ul>
+<li><a href="#单向-chan-特性">单向 chan 特性</a></li>
+<li><a href="#单向-chan-作为函数参数">单向 chan 作为函数参数</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#生产者消费者模型">生产者消费者模型</a>
+<ul>
+<li><a href="#缓冲区的好处">缓冲区的好处</a></li>
+<li><a href="#demo">demo</a></li>
+</ul></li>
+<li><a href="#定时器">定时器</a>
+<ul>
+<li><a href="#time-timer"><code>time.Timer</code></a>
+<ul>
+<li><a href="#计时器停止">计时器停止</a></li>
+<li><a href="#计时器重制">计时器重制</a></li>
+</ul></li>
+<li><a href="#time-after"><code>time.After()</code></a>
+<ul>
+<li><a href="#实现延迟功能">实现延迟功能</a></li>
+<li><a href="#定时器的重置和停止">定时器的重置和停止</a></li>
+<li><a href="#time-ticker"><code>time.Ticker</code></a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h2 id="unbuffered-channel">Unbuffered Channel</h2>
+
+<p>具备<strong>同步</strong>的功能，类似打电话</p>
+
+<ul>
+<li>写端写数据，读的一端不在读取，则阻塞。</li>
+<li>读的一端在读，写的一端不在写，阻塞。</li>
+</ul>
+
+<blockquote>
+<p>阻塞：由于某种原因数据没有到达，当前协程（线程）持续处于等待状态，直到解除件阻塞。</p>
+
+<p>同步：在两个或多个协程（线程）间，保持数据内容一致性的机制。</p>
+</blockquote>
+
+<p>使用<code>len(chan)</code> 返回没有读取的缓冲区元素数量，使用 <code>cap(ch)</code> 返回缓冲区的大小。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;son write&#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+            <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">i</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">read</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;main read&#34;</span><span class="p">,</span> <span class="nx">read</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">// out put:
+</span><span class="c1"></span>    <span class="c1">// --------
+</span><span class="c1"></span>    <span class="c1">// son write 0
+</span><span class="c1"></span>    <span class="c1">// son write 1
+</span><span class="c1"></span>    <span class="c1">// father read 0
+</span><span class="c1"></span>    <span class="c1">// father read 1
+</span><span class="c1"></span>    <span class="c1">// son write 2
+</span><span class="c1"></span>    <span class="c1">// son write 3
+</span><span class="c1"></span>    <span class="c1">// father read 2
+</span><span class="c1"></span>    <span class="c1">// father read 3
+</span><span class="c1"></span>    <span class="c1">// son write 4
+</span><span class="c1"></span>    <span class="c1">// father read 4
+</span><span class="c1"></span>
+    <span class="c1">// Reason:
+</span><span class="c1"></span>    <span class="c1">// the son goroutine print and write to chan
+</span><span class="c1"></span>    <span class="c1">// main goroutine read from chan but the print is an io operation
+</span><span class="c1"></span>    <span class="c1">// main goroutine couldn&#39;t get cpu
+</span><span class="c1"></span>    <span class="o">//</span> <span class="nx">son</span> <span class="nx">goroutine</span> <span class="nx">loops</span> <span class="nx">and</span> <span class="nx">print</span> <span class="nx">again</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="buffered-channel">Buffered Channel</h2>
+
+<ul>
+<li>cap 是正值，具备数据存储的能力。</li>
+
+<li><p>存储到能力上限才阻塞。</p></li>
+
+<li><p>具备<strong>异步</strong>的能力，类似<strong>发短信</strong>。</p></li>
+</ul>
+
+<p>io 延迟导致输出结果不正确,io 延迟很大， <code>chan</code> 读写能同步但是 <code>io</code> 打印和 <code>chan</code> 的读写不是同步的</p>
+
+<h3 id="关闭-channel">关闭 channel</h3>
+
+<p>使用 <code>close()</code> 来关闭 <code>chan</code></p>
+
+<p>另一端判断 <code>chan</code> 是否关闭
+1. 使用 <code>ok</code> 判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">```go
+// ok 为 true 说明 channel 没有关闭，为 false 说明管道已经关闭
+if data, ok := &lt;-c; ok {
+    fmt.Println(data)
+}
+```</pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><p>使用 <code>range</code> 来读取</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">num</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch</span><span class="p">{</span> <span class="c1">// ch 不能为 &lt;-ch
+</span><span class="c1"></span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p>chan 关闭总结：</p>
+
+<ol>
+<li>只有当你确实没有任何发送数据了，或者你想显式的结束 range 循环之类的，才去关闭 channel；</li>
+<li>关闭 channel 后，无法向 channel 再发送数据(引发 panic 错误后导致接收立即返回零值)；</li>
+<li>关闭 channel 后，可以继续从 channel 接收数据；</li>
+</ol>
+
+<p><strong>读到 0，说明写端关闭了,有缓存的chan，关闭后读到数据，数据读完后才会读到 0</strong></p>
+
+<ol>
+<li>对于 nil channel，无论收发都会被阻塞。</li>
+</ol>
+
+<h2 id="单行的-channel">单行的 channel</h2>
+
+<p>单向读 chan
+单向写 chan</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">ch1</span> <span class="kd">chan</span> <span class="kt">int</span>         <span class="c1">// ch1是一个正常的channel，是双向的
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">ch2</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">float64</span>   <span class="c1">// ch2是单向channel，只用于写float64数据
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">ch3</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span>       <span class="o">//</span> <span class="nx">ch3是单向channel</span><span class="err">，</span><span class="nx">只用于读int数据</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="单向-chan-特性">单向 chan 特性</h3>
+
+<p>可以将 channel 隐式转换为单向队列，只收或只发
+不能将单向 channel 转换为普通 channel</p>
+
+<h3 id="单向-chan-作为函数参数">单向 chan 作为函数参数</h3>
+
+<p>传递的是引用</p>
+
+<hr />
+
+<h1 id="生产者消费者模型">生产者消费者模型</h1>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">provider ===&gt; buffer ===&gt; consumer</pre></td></tr></table>
+</div>
+</div>
+<h2 id="缓冲区的好处">缓冲区的好处</h2>
+
+<ol>
+<li><p>降低耦合</p>
+
+<p>假设生产者和消费者分别是两个类。如果让生产者直接调用消费者的某个方法，那么生产者对于消费者就会产生依赖（也就是耦合）。将来如果消费者的代码发生变化，可能会直接影响到生产者。而如果两者都依赖于某个缓冲区，两者之间不直接依赖，耦合度也就相应降低了。</p></li>
+
+<li><p>解决并发</p>
+
+<p>生产者消费由于缓冲区的存在，变成了独立的个体</p></li>
+
+<li><p>缓存</p>
+
+<p>如果生产者制造数据的速度时快时慢，缓冲区的好处就体现出来了。当数据制造快的时候，消费者来不及处理，未处理的数据可以暂时存在缓冲区中。等生产者的制造速度慢下来，消费者再慢慢处理掉。</p></li>
+</ol>
+
+<h2 id="demo">demo</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestProviderAndConsumer</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="nx">buffer</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nf">provider</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+    <span class="nf">consumer</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// provider
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">provider</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">out</span> <span class="o">&lt;-</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">i</span> <span class="o">*</span> <span class="nx">i</span>
+    <span class="p">}</span>
+    <span class="nb">close</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// consumer
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">consumer</span><span class="p">(</span><span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">num</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">in</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;consumer get&#34;</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="nx">result</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="定时器">定时器</h1>
+
+<h2 id="time-timer"><code>time.Timer</code></h2>
+
+<p>Timer 是一个定时器。代表未来的一个单一事件，你可以告诉 <code>timer</code> 你要等待多长时间。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Timer</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">C</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="nx">Time</span>
+    <span class="nx">r</span> <span class="nx">runtimeTimer</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>它提供一个 <code>channel</code> ，在定时时间到达之前，没有数据写入 <code>timer.C</code> 会一直阻塞。直到定时时间到，向 <code>channel</code> 写入值，阻塞解除，可以从中读取数据。</p>
+
+<p>设置定时 2s，2s  后 系统会向 <code>Timer</code> 中写系统当前时间</p>
+
+<h3 id="计时器停止">计时器停止</h3>
+
+<p><code>timer.Stop()</code></p>
+
+<h3 id="计时器重制">计时器重制</h3>
+
+<p><code>timer.Reset()</code></p>
+
+<h2 id="time-after"><code>time.After()</code></h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">func After(d Duration) &lt;-chan Time {
+	return NewTimer(d).C
+}</pre></td></tr></table>
+</div>
+</div>
+<h3 id="实现延迟功能">实现延迟功能</h3>
+
+<ol>
+<li><p><code>&lt;-time.After(2 * time.Second)</code></p>
+
+<p>定时2s，阻塞2s,2s后产生一个事件，往channel写内容</p></li>
+
+<li><p><code>time.Sleep(2 * time.Second)</code></p></li>
+
+<li><p>延时2s后打印一句话</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">timer</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">NewTimer</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+<span class="o">&lt;-</span> <span class="nx">timer</span><span class="p">.</span><span class="nx">C</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;时间到&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h3 id="定时器的重置和停止">定时器的重置和停止</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 1. create timer
+</span><span class="c1">// ⏰
+</span><span class="c1"></span><span class="nx">timer</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">NewTimer</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+<span class="c1">// 2. reset timer
+</span><span class="c1"></span><span class="nx">timer</span><span class="p">.</span><span class="nf">Reset</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+    <span class="o">&lt;-</span><span class="nx">timer</span><span class="p">.</span><span class="nx">C</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;go func timer stop&#34;</span><span class="p">)</span>
+<span class="p">}()</span>
+<span class="c1">// stop timer
+</span><span class="c1"></span><span class="nx">timer</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="time-ticker"><code>time.Ticker</code></h3>
+
+<p>Ticker是一个周期触发定时的计时器，它会按照一个时间间隔往channel发送系统当前时间，而channel的接收者可以以固定的时间间隔从channel中读取事件。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Ticker</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">C</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="nx">Time</span> 	<span class="c1">// The channel on which the ticks are delivered.
+</span><span class="c1"></span>    <span class="nx">r</span> <span class="nx">runtimeTimer</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestTicker</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 🍀flag to to stop the goroutine
+</span><span class="c1"></span>    <span class="nx">quit</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+    <span class="nx">ticker</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">NewTicker</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+    <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="nx">nowTime</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">C</span>
+            <span class="nx">i</span><span class="o">++</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nowTime:&#34;</span><span class="p">,</span> <span class="nx">nowTime</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">8</span> <span class="p">{</span>
+                <span class="nx">quit</span> <span class="o">&lt;-</span> <span class="kc">true</span> <span class="c1">//
+</span><span class="c1"></span>            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+    <span class="o">&lt;-</span><span class="nx">quit</span> <span class="o">//</span> <span class="err">🍀</span><span class="nx">读取</span> <span class="nx">quit</span> <span class="nx">中的数据</span> <span class="nx">阻塞</span> <span class="nx">test</span> <span class="nx">的</span> <span class="nx">goroutine</span></code></pre></td></tr></table>
+</div>
+</div>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-06
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/1_baisc/">
+            <span class="next-text nav-default">Go 基础语法和数据类型</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

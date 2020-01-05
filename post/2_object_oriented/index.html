@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Go 面向对象 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/2_object_oriented/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Go 面向对象" />
+<meta property="og:description" content="object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/2_object_oriented/" />
+<meta property="article:published_time" content="2020-01-06T01:19:01+08:00" />
+<meta property="article:modified_time" content="2020-01-06T01:19:01+08:00" />
+<meta itemprop="name" content="Go 面向对象">
+<meta itemprop="description" content="object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder">
+
+
+<meta itemprop="datePublished" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="wordCount" content="1235">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go 面向对象"/>
+<meta name="twitter:description" content="object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Go 面向对象</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-06 </span>
+        <div class="post-category">
+            <a href="/categories/programming-language/"> programming Language </a>
+            </div>
+          <span class="more-meta"> 约 1235 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#object-oriented">object oriented</a>
+<ul>
+<li><a href="#继承">继承</a>
+<ul>
+<li><a href="#指针类型的同名字段">指针类型的同名字段</a></li>
+</ul></li>
+<li><a href="#方法">方法</a>
+<ul>
+<li><a href="#函数和方法的区别">函数和方法的区别</a></li>
+<li><a href="#给-struct-添加方法">给 struct 添加方法</a></li>
+<li><a href="#注意事项">注意事项</a></li>
+</ul></li>
+<li><a href="#接口">接口</a></li>
+<li><a href="#多态">多态</a>
+<ul>
+<li><a href="#为什么参数是一个接口-却传入了一个对象">为什么参数是一个接口，却传入了一个对象 ？？？</a></li>
+<li><a href="#empty-interface">Empty Interface</a></li>
+</ul></li>
+<li><a href="#type-assert">Type Assert</a>
+<ul>
+<li><a href="#uaage">UAAGE:</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="object-oriented">object oriented</h1>
+
+<h2 id="继承">继承</h2>
+
+<p>使用匿名字段实现继承</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Coder</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">language</span> <span class="kt">string</span>
+    <span class="nx">name</span>     <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">GoCoder</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">Coder</span>
+    <span class="nx">height</span> <span class="kt">float64</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ul>
+<li>使用<code>.</code>进行操作</li>
+<li>同名字段就近原则</li>
+</ul>
+
+<h3 id="指针类型的同名字段">指针类型的同名字段</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">JavaCoder</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="o">*</span><span class="nx">Coder</span>
+    <span class="nx">age</span> <span class="kt">int</span>
+<span class="p">}</span>
+<span class="c1">// use address
+</span><span class="c1"></span><span class="nx">joex</span> <span class="o">:=</span> <span class="nx">JavaCoder</span><span class="p">{</span><span class="o">&amp;</span><span class="nx">Coder</span><span class="p">{</span><span class="s">&#34;java&#34;</span><span class="p">,</span><span class="s">&#34;joex&#34;</span><span class="p">},</span><span class="mi">24</span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>当指针类型匿名字段*Coder没有指向任何一个结构体，所以对象 joex 也就无法操作 Coder 中的成员。</p>
+
+<p><strong>使用 new 来解决</strong></p>
+
+<h2 id="方法">方法</h2>
+
+<p>定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Integer</span> <span class="kt">int</span> <span class="c1">// int类型指定了一个别名叫Integer,别名可以随便起
+</span><span class="c1"></span><span class="kd">func</span><span class="p">(</span><span class="nx">a</span> <span class="nx">Integer</span><span class="p">)</span> <span class="nf">Sum</span><span class="p">(</span><span class="nx">b</span> <span class="nx">Integer</span><span class="p">)</span> <span class="nx">Integer</span><span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="函数和方法的区别">函数和方法的区别</h3>
+
+<ol>
+<li>在关键字后面加上( a Integer), 这个在方法中称之为接收者，所谓的接受者就是接收传递过来的第一个参数，然后复制a， a的类型是Integer ,由于Integer是int的别名，所以a的类型为int</li>
+
+<li><p>在表示参数的类型时，都使用了对应的别名。</p>
+
+<p>通过方法的定义，可以看出方法其实就是给某个类型绑定的函数。在这里，是为整型绑定的函数，只不过在给整型绑定函数(方法)时，一定要通过type来指定一个别名，因为int类型是系统已经规定好了，无法直接绑定函数，所以只能通过别名的方式。</p></li>
+
+<li><p>调用方式不同</p></li>
+</ol>
+
+<p><code>var result Interger=3</code>
+    表示定义一个整型变量 <code>result</code>，并赋值为 3.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">result.Sum(3)
+
+通过result变量，完成方法的调用。因为，Sum( )方法，是为int类型绑定的函数，而result变量为int类型。所以可以调用 Sum( )方法。result变量的值会传递给 Sum( )方法的接受者，也就是参数a,而实参Sum(3),会传递形参b.
+当然，我们也可以将Sum( )方法，理解成是为int类型扩展了，追加了的方法。因为系统在int类型时，是没有改方法的。</pre></td></tr></table>
+</div>
+</div>
+<h3 id="给-struct-添加方法">给 struct 添加方法</h3>
+
+<p>如果要修改对应的值,将方法的接收者，修改成对应的指针类型</p>
+
+<h3 id="注意事项">注意事项</h3>
+
+<ol>
+<li>只要接收者类型不一样，这个方法就算同名，也是不同方法，不会出现重复定义函数的错误,如果接收者类型一样，但是方法的参数不一样，是会出现错误的。</li>
+</ol>
+
+<p>也就是说 go中没有用重载
+2. 关于接收者不能为指针类型。 接受者类型不能为指针类型</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">```go
+type long int
+func (temp *long)test{
+   // 正确
+}
+
+type p *int
+func(tmp pointer)test(){
+    // 错误
+}
+```</pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>接收者为普通变量 值传递</li>
+<li>接收者为指针变量引用传递</li>
+</ol>
+
+<h2 id="接口">接口</h2>
+
+<p><strong>只要类(结构体)实现对应的接口，那么根据该类创建的对象，可以赋值给对应的接口类型。</strong></p>
+
+<p>定义</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// define a interfece with one method
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Code</span> <span class="kd">interface</span><span class="p">{</span>
+    <span class="nf">writeCode</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="c1">// implements the interfece
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">JavaCoder</span> <span class="nx">struch</span><span class="p">{</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+    <span class="nx">id</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">jcoder</span> <span class="o">*</span><span class="nx">JavaCoder</span><span class="p">)</span> <span class="nx">writeCode</span><span class="p">{</span>
+    <span class="c1">// do something
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="多态">多态</h2>
+
+<p>多态多态，多种表示形态。</p>
+
+<p>// TODO：compare  the diff between golang and Java</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// define a interfece with one method
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Code</span> <span class="kd">interface</span><span class="p">{</span>
+    <span class="nf">writeCode</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="c1">// implements the interfece
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">JavaCoder</span> <span class="nx">struch</span><span class="p">{</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+    <span class="nx">id</span> <span class="kt">int</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">jcoder</span> <span class="o">*</span><span class="nx">JavaCoder</span><span class="p">)</span> <span class="nx">writeCode</span><span class="p">{</span>
+    <span class="c1">// do something
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">GoCoder</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">exp</span> <span class="kt">int</span>
+    <span class="nx">name</span> <span class="kt">string</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">GoCoder</span><span class="p">)</span> <span class="nx">writerCode</span><span class="p">{</span>
+    <span class="c1">// do another thing
+</span><span class="c1"></span><span class="p">}</span>
+
+
+<span class="c1">// !! DEFINE A METHOD, WITH INTERFACE AS IT&#39;S PARAM
+</span><span class="c1">// !! ONLY ONE FUNC, WITH DIFF STATUS
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">WriteDiffCode</span><span class="p">(</span><span class="nx">i</span> <span class="nx">Coder</span><span class="p">){</span>
+    <span class="nx">i</span><span class="p">.</span><span class="nf">writeCode</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="nx">j</span> <span class="o">:=&amp;</span><span class="nx">JavaCode</span><span class="p">{</span><span class="s">&#34;rookie&#34;</span><span class="p">,</span><span class="mi">89</span><span class="p">}</span>
+    <span class="nx">g</span> <span class="o">:=&amp;</span><span class="nx">GoCoder</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="s">&#34;master&#34;</span><span class="p">}</span>
+    <span class="nf">WriteDiffCode</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
+    <span class="nf">WriterDiffCode</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="为什么参数是一个接口-却传入了一个对象">为什么参数是一个接口，却传入了一个对象 ？？？</h3>
+
+<p>TODO</p>
+
+<p>在使用面向对象思想解决问题时，一定要先分析，定义哪些类，哪些接口，哪些方法。把这些分析定义出来，然后在考虑具体实现。o</p>
+
+<h3 id="empty-interface">Empty Interface</h3>
+
+<p>空接口(interface{})不包含任何的方法，正因为如此，所有的类型都实现了空接口，因此空接口可以存储任意类型的数值。</p>
+
+<h2 id="type-assert">Type Assert</h2>
+
+<h3 id="uaage">UAAGE:</h3>
+
+<p><code>value,ok = element.(T)</code></p>
+
+<ol>
+<li>value: the value of element</li>
+<li>ok: a bool type value</li>
+<li>element: an interface variable</li>
+<li>T: the type of assert</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-06
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/3_file_string_operation/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Go 文件操作</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/6_selectandlock/">
+            <span class="next-text nav-default">Go中的 Select机制 锁 和 条件变量</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

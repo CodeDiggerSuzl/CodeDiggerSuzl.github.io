@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-14 </span>
         <div class="post-category">
-            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            <a href="/categories/programming-language/"> programming language </a>
             </div>
           <span class="more-meta"> 约 2923 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
@@ -201,9 +201,9 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// use x/text to guess encoding of a  file  
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// use x/text to guess encoding of a  file
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">determineEncoding</span><span class="p">(</span><span class="nx">r</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="nx">encoding</span><span class="p">.</span><span class="nx">Encoding</span> <span class="p">{</span>
-	<span class="c1">// use peek to get bytes 
+	<span class="c1">// use peek to get bytes
 </span><span class="c1"></span>	<span class="nx">bytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">r</span><span class="p">).</span><span class="nf">Peek</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
 	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
@@ -252,8 +252,8 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"> <span class="kd">const</span> <span class="nx">text</span> <span class="p">=</span> <span class="s">`my name is joexsue@gmail.com 
-</span><span class="s">hahha joswx@ddd.com 
+<pre class="chroma"><code class="language-go" data-lang="go"> <span class="kd">const</span> <span class="nx">text</span> <span class="p">=</span> <span class="s">`my name is joexsue@gmail.com
+</span><span class="s">hahha joswx@ddd.com
 </span><span class="s">ddd@foxmail.com
 </span><span class="s">su zailong awesome joex@qq.com.cn`</span>
 
@@ -318,13 +318,13 @@
 ├── fetcher
 │   └── fetcher.go
 ├── main
-│   └── main.go 
+│   └── main.go
 ├── model
-│   └── profile.go 
+│   └── profile.go
 └── zhenai
     └── parser
         ├── city.go # 解析出城市
-        ├── cityList_test.html # for testing 
+        ├── cityList_test.html # for testing
         ├── citylist.go # 城市解析出用户
         ├── parser_test.go
         └── profile.go # 解析用户资料</pre></td></tr></table>
@@ -1194,7 +1194,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

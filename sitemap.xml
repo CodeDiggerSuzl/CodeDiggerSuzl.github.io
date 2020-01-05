@@ -3,30 +3,110 @@
   
   <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://codedigger.cn/categories/coding-tools/</loc>
-    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
-    <priority>0</priority>
+    <loc>http://codedigger.cn/post/5_channel_advance/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/1_baisc/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/4_channel_goroutine_intro/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/3_file_string_operation/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/2_object_oriented/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/6_selectandlock/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2019-12-29T23:54:57+08:00</lastmod>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://codedigger.cn/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/golang/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/programming-language/</loc>
+    <lastmod>2020-01-06T01:19:01+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/reflect/</loc>
+    <lastmod>2020-01-06T01:16:06+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/java/</loc>
+    <lastmod>2020-01-06T01:16:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/programming/</loc>
+    <lastmod>2020-01-06T01:16:06+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/annotation/</loc>
+    <lastmod>2020-01-06T01:15:58+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/coding-tools/</loc>
     <lastmod>2019-12-29T23:54:57+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -111,12 +191,6 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/categories/algorithm/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://codedigger.cn/categories/leetcode/</loc>
     <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
@@ -130,12 +204,6 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/categories/tools/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://codedigger.cn/post/thread/</loc>
     <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -143,19 +211,7 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/tags/java/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/%E7%BA%BF%E7%A8%8B/</loc>
+    <loc>http://codedigger.cn/tags/concurrence/</loc>
     <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -172,12 +228,6 @@
     <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/golang/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -199,6 +249,12 @@
     <lastmod>2019-11-24T22:59:16+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
+    <priority>0</priority>
   </url>
   
   <url>

@@ -50,7 +50,7 @@
 
 <meta itemprop="datePublished" content="2019-08-04T15:53:46&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-04T15:53:46&#43;08:00" />
-<meta itemprop="wordCount" content="1066">
+<meta itemprop="wordCount" content="1059">
 
 
 
@@ -125,9 +125,9 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-04 </span>
         <div class="post-category">
-            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1066 字 </span>
+          <span class="more-meta"> 约 1059 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -224,9 +224,9 @@
 <pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">R</span> <span class="nf">implements</span> <span class="n">Retriever</span><span class="o">&gt;</span>
 <span class="nf">String</span> <span class="n">download</span><span class="p">(</span><span class="n">R</span> <span class="nf">r</span><span class="p">){</span>
 	<span class="k">return</span> <span class="n">r</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;ww.google.com&#34;</span><span class="p">)</span>
-<span class="p">}</span>  
+<span class="p">}</span>
 <span class="n">1</span><span class="p">.</span> <span class="nf">传入参数必须实现</span> <span class="n">Retriver</span> <span class="nf">接口</span>
-<span class="n">2</span><span class="p">.</span> <span class="nf">不是</span> <span class="n">duck</span> <span class="nf">typing</span> 
+<span class="n">2</span><span class="p">.</span> <span class="nf">不是</span> <span class="n">duck</span> <span class="nf">typing</span>
 <span class="n">3</span><span class="p">.</span> <span class="nf">不需要注释</span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -263,7 +263,7 @@
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">Retriever</span> <span class="kd">interface</span> <span class="p">{</span>
 	<span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
 <span class="p">}</span>
-   
+
 <span class="c1">//使用者
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">download</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
@@ -302,7 +302,7 @@
    	<span class="nx">UserAgent</span> <span class="kt">string</span>
    	<span class="nx">TimeOut</span>   <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
    <span class="p">}</span>
-   
+
    <span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
    	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
    	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
@@ -375,11 +375,9 @@
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
-</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">implement</span> <span class="nf">Retriever</span> <span class="p">(</span><span class="nx">Get</span> <span class="nx">method</span> <span class="nx">has</span> <span class="nx">pointer</span> <span class="nx">receiver</span><span class="p">)</span>
-   </code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go">   <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">implement</span> <span class="nf">Retriever</span> <span class="p">(</span><span class="nx">Get</span> <span class="nx">method</span> <span class="nx">has</span> <span class="nx">pointer</span> <span class="nx">receiver</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>改成地址访问的时候:<code>r = &amp;ch4.RealRetriver{}</code></p>
@@ -389,12 +387,10 @@
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
 </span></pre></td>
 <td class="lntd">
 <pre class="chroma">   ch4.Retriver {哈哈哈}
-   *ch4.RealRetriver &amp;{ 0s} 输出的是指针  指向地址  
-   </pre></td></tr></table>
+   *ch4.RealRetriver &amp;{ 0s} 输出的是指针  指向地址</pre></td></tr></table>
 </div>
 </div>
 <p><strong>说明可以是值,也可以是指针</strong></p>
@@ -417,7 +413,6 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">  <span class="kd">func</span> <span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="p">{</span>
@@ -429,8 +424,7 @@
         <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;UserAgent:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
     <span class="p">}</span>
-  <span class="p">}</span>
-      </code></pre></td></tr></table>
+  <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div></li>
 
@@ -439,12 +433,10 @@
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">  <span class="nx">realTypeRetriever</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">realTypeRetriever</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
-      </code></pre></td></tr></table>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">realTypeRetriever</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>加上判断</p>
@@ -455,15 +447,13 @@
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">  <span class="k">if</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span><span class="p">(</span><span class="nx">mock</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">);</span><span class="nx">ko</span><span class="p">{</span>
     <span class="o">...</span>
   <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
     <span class="o">...</span>
-  <span class="p">}</span>
-      </code></pre></td></tr></table>
+  <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div></li>
 
@@ -492,17 +482,15 @@
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
-</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
 	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
-  
-  
+
+
 	<span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
 	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span>
-  </code></pre></td></tr></table>
+	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span></code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
@@ -528,7 +516,6 @@
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
-</span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 是一个 任何类型的 的 slice
@@ -545,8 +532,7 @@
 </span><span class="c1"></span>	<span class="nx">head</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
 	<span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
 	<span class="k">return</span> <span class="nx">head</span><span class="p">.(</span><span class="kt">int</span><span class="p">)</span><span class="c1">// 将 interface{} 强制转换成 int
-</span><span class="c1"></span><span class="p">}</span>
-  </code></pre></td></tr></table>
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div></li>
 
@@ -620,7 +606,7 @@
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nf">session</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">PosterRetriever</span><span class="p">){</span>
   <span class="nx">s</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
   <span class="nx">s</span><span class="p">.</span><span class="nf">Post</span><span class="p">()</span>
-<span class="p">}</span> </code></pre></td></tr></table>
+<span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div>
 <p>接口只管定义方法,使用和声明接口需要什么样子的能力</p>
@@ -726,7 +712,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

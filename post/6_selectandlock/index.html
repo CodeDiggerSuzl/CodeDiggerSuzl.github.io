@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Go中的 Select机制 锁 和 条件变量 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="🍀 select Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。 select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/6_selectandlock/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Go中的 Select机制 锁 和 条件变量" />
+<meta property="og:description" content="🍀 select Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。 select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/6_selectandlock/" />
+<meta property="article:published_time" content="2020-01-06T01:19:01+08:00" />
+<meta property="article:modified_time" content="2020-01-06T01:19:01+08:00" />
+<meta itemprop="name" content="Go中的 Select机制 锁 和 条件变量">
+<meta itemprop="description" content="🍀 select Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。 select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句">
+
+
+<meta itemprop="datePublished" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-06T01:19:01&#43;08:00" />
+<meta itemprop="wordCount" content="4135">
+
+
+
+<meta itemprop="keywords" content="golang," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Go中的 Select机制 锁 和 条件变量"/>
+<meta name="twitter:description" content="🍀 select Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。 select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Go中的 Select机制 锁 和 条件变量</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-01-06 </span>
+        <div class="post-category">
+            <a href="/categories/programming-language/"> programming Language </a>
+            </div>
+          <span class="more-meta"> 约 4135 字 </span>
+          <span class="more-meta"> 预计阅读 9 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#select">🍀 select</a>
+<ul>
+<li><a href="#一般在写-select-的时候不写-default-语句">一般在写 select 的时候不写 default 语句</a></li>
+<li><a href="#总结">总结</a>
+<ul>
+<li><a href="#fibonacci">fibonacci</a></li>
+</ul></li>
+<li><a href="#select-time-after-进行阻塞和超时的处理">select + time.After() 进行阻塞和超时的处理</a></li>
+</ul></li>
+<li><a href="#lock">🍀 lock</a>
+<ul>
+<li><a href="#分类">分类</a></li>
+</ul></li>
+<li><a href="#互斥锁-mutex-互斥量">互斥锁 <code>Mutex</code> 互斥量</a>
+<ul>
+<li><a href="#summary">summary</a></li>
+</ul></li>
+<li><a href="#读写锁">读写锁</a>
+<ul>
+<li><a href="#代码启动但是-无输出">代码启动但是 无输出</a></li>
+<li><a href="#在-go-中尽量不要使用-互斥锁-读写锁和-channel-混用-隐性死锁">在 go 中尽量不要使用 互斥锁,读写锁和 channel 混用 &mdash;隐性死锁</a>
+<ul>
+<li><a href="#数据同步写法-使用-lock-写法">数据同步写法 使用 lock 写法</a></li>
+<li><a href="#总结-1">总结：</a></li>
+<li><a href="#使用-channel-来代替读写锁">使用 channel 来代替读写锁</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#条件变量">条件变量</a></li>
+<li><a href="#wait">wait!</a>
+<ul>
+<li><a href="#注意点">注意点</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="select">🍀 select</h1>
+
+<ul>
+<li><p>Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。</p></li>
+
+<li><p>select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句来描述。</p></li>
+
+<li><p>与 switch 语句相比， select 有比较多的限制，<strong>其中最大的一条限制就是每个 case 语句里必须是一个 IO 操作</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">select</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">chan1</span><span class="p">:</span>
+        <span class="c1">// 如果chan1成功读到数据，则进行该case处理语句
+</span><span class="c1"></span>    <span class="k">case</span> <span class="nx">chan2</span> <span class="o">&lt;-</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1">// 如果成功向chan2写入数据，则进行该case处理语句
+</span><span class="c1"></span>    <span class="k">default</span><span class="p">:</span>
+        <span class="c1">// 如果上面都没有成功，则进入default处理流程
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+
+<ol>
+<li><p>在一个select语句中，Go语言会按顺序从头至尾评估每一个发送和接收的语句。
+如果 <em><strong>其中的任意一语句可以继续执行 (即没有被阻塞)</strong></em> ，那么就从那些可以执行的语句中 <em><strong>任意选择一条</strong></em> 来使用。</p></li>
+
+<li><p>如果没有任意一条语句可以执行(即所有的通道都被阻塞)，那么有两种可能的情况：</p>
+
+<ol>
+<li><p>如果给出了 default 语句，那么就会执行default语句，同时程序的执行会从 select 语句后的语句中恢复。</p></li>
+
+<li><p>如果没有 default 语句，那么 select 语句将被阻塞，直到至少有一个通信可以进行下去。</p></li>
+</ol></li>
+</ol>
+
+<h2 id="一般在写-select-的时候不写-default-语句">一般在写 select 的时候不写 default 语句</h2>
+
+<p>因为可能会出现 <code>盲轮询</code>的情况, 而不写 default 的时候,就会阻塞,相当于进程状态到挂起. 会释放资源,主动出让 cpu.</p>
+
+<h2 id="总结">总结</h2>
+
+<ol>
+<li>case 后边必须为 io 操作，不可以写判断表达式。</li>
+<li>监听 case 中，没有满足到条件会阻塞</li>
+<li>多个 case 条件满足,任选其一执行</li>
+<li>使用 defult 来对所有 case 都不满足的情况进行处理.(!!但是可能会产生盲轮询的情况)</li>
+<li>select 不具备循环机制,需要借助外层到循环来监听</li>
+<li>break 只能调出 select,类似 switch 的用法</li>
+</ol>
+
+<h3 id="fibonacci">fibonacci</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Fibonacci
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">TestFibonacci</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="nx">quit</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+    <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">x</span>
+        <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="p">=</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">x</span><span class="o">+</span><span class="nx">y</span>
+    <span class="p">}</span>
+    <span class="k">go</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="nx">ch</span><span class="p">,</span> <span class="nx">quit</span><span class="p">)</span>
+    <span class="nx">quit</span> <span class="o">&lt;-</span> <span class="kc">true</span>
+
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">fibonacci</span><span class="p">(</span><span class="nx">ch</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">quit</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">{</span>
+
+        <span class="k">select</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">:</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">quit</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// output dead lock  🍀 why？
+</span><span class="c1"></span><span class="o">==</span><span class="p">=</span> <span class="nx">RUN</span>   <span class="nx">TestFibonacci</span>
+<span class="nx">fatal</span> <span class="kt">error</span><span class="p">:</span> <span class="nx">all</span> <span class="nx">goroutines</span> <span class="nx">are</span> <span class="nx">asleep</span> <span class="o">-</span> <span class="nx">deadlock</span><span class="p">!</span>
+
+<span class="nx">goroutine</span> <span class="mi">1</span> <span class="p">[</span><span class="kd">chan</span> <span class="nx">receive</span><span class="p">]:</span>
+<span class="nx">testing</span><span class="p">.(</span><span class="o">*</span><span class="nx">T</span><span class="p">).</span><span class="nf">Run</span><span class="p">(</span><span class="mh">0xc0000ba100</span><span class="p">,</span> <span class="mh">0x113dfed</span><span class="p">,</span> <span class="mh">0xd</span><span class="p">,</span> <span class="mh">0x1145760</span><span class="p">,</span> <span class="mh">0x106b801</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="select-time-after-进行阻塞和超时的处理">select + time.After() 进行阻塞和超时的处理</h2>
+
+<p>as code</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestExpire</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="c1">// like a flag in java
+</span><span class="c1"></span>    <span class="nx">quit</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+
+    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="k">select</span> <span class="p">{</span>
+            <span class="c1">// if select this print num the for loop one time
+</span><span class="c1"></span>            <span class="k">case</span> <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span><span class="p">:</span>
+                <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;num :&#34;</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+            <span class="c1">// Re-timing
+</span><span class="c1"></span>            <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">):</span>
+                <span class="c1">// after 3 seconds write a bool to quit and goto mark
+</span><span class="c1"></span>                <span class="nx">quit</span> <span class="o">&lt;-</span> <span class="kc">true</span> <span class="c1">// true or false is all ok
+</span><span class="c1"></span>
+                <span class="c1">// 1. can&#39;t use break to jump out of for loop
+</span><span class="c1"></span>                <span class="c1">// 2. can use return or runtime.goexit()
+</span><span class="c1"></span>                <span class="c1">// or goto key word: you can goto every 🍀 ONLY INSIDE CURRENT FUNCTION - local variable scope, in this case, we goto outside of for loop
+</span><span class="c1"></span>                <span class="k">goto</span> <span class="nx">mark</span>
+
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="nx">mark</span><span class="p">:</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;go to here&#34;</span><span class="p">)</span>
+    <span class="p">}()</span>
+    <span class="c1">//
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">i</span>
+        <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span> <span class="c1">// write to chan every 3 seconds
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="o">&lt;-</span><span class="nx">quit</span> <span class="c1">// wait for goroutine to notice the test-routine
+</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;all done&#34;</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h1 id="lock">🍀 lock</h1>
+
+<p>为了解决协程同步的问题我们使用了<code>channel</code>，但是GO也提供了传统的同步工具。
+前面我们为了解决协程同步的问题我们使用了<code>channel</code>，但是GO也提供了传统的同步工具。
+它们都在GO的标准库代码包<code>sync</code>和<code>sync/atomic</code>中。</p>
+
+<p>死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，</p>
+
+<h2 id="分类">分类</h2>
+
+<ol>
+<li><p>单 go 程自己死锁</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Test_DeadLock</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">9</span>
+    <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<p><strong>channel 至少应该在两个 goroutine 中通信, 否则死锁.</strong></p>
+
+<ol>
+<li><p>go 程序间 channel 访问顺序导致死锁</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestDL</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+
+    <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span>
+    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="mi">32</span>
+    <span class="p">}()</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>使用 channel 一端读/写,要保证另一端 读/写 同时有机会执行,否则 DL</p></li>
+
+<li><p>多 goroutine 多 channel 交叉死锁</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestDLMultiGoroutine</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ch1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="nx">ch2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="k">select</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch1</span><span class="p">:</span>
+                <span class="nx">ch2</span> <span class="o">&lt;-</span> <span class="nx">num</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="k">select</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ch2</span><span class="p">:</span>
+            <span class="nx">ch1</span> <span class="o">&lt;-</span> <span class="nx">num</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>类似于 两个人都在说,你先给我,我在给你.🍀</p></li>
+
+<li><p>在 go 中尽量不要使用 互斥锁,读写锁和 channel 混用 &mdash;隐性死锁</p></li>
+</ol>
+
+<h1 id="互斥锁-mutex-互斥量">互斥锁 <code>Mutex</code> 互斥量</h1>
+
+<p><strong>每个</strong>资源都对应于一个可称为 &ldquo;互斥锁&rdquo; 的标记，这个标记用来保证在任意时刻，只能有一个协程（线程）访问该资源。其它的协程只能等待。</p>
+
+<p>互斥锁是传统并发编程对共享资源进行访问控制的主要手段，它由标准库 <code>sync</code> 中的 <code>Mutex</code> 结构体类型表示。<code>sync.Mutex</code> 类型只有两个公开的指针方法，Lock 和Unlock。Lock 锁定当前的共享资源，Unlock进行解锁。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Mutex</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">state</span> <span class="kt">int32</span>     <span class="c1">// 状态 0 表示为加锁
+</span><span class="c1"></span>    <span class="nx">sema</span>  <span class="kt">uint32</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>🔐只有一把 建议锁，操作系统提供，建议编程时使用 不是强制使用 上层应用全部都是建议锁</p>
+
+<p>常用方法</p>
+
+<ul>
+<li><code>Lock()</code></li>
+<li><code>Unlock()</code></li>
+</ul>
+
+<h2 id="summary">summary</h2>
+
+<ol>
+<li><p>A 、B go程 共同访问共享数据。 由于cpu调度随机，需要对 共享数据访问顺序加以限定（同步）。</p></li>
+
+<li><p>创建 mutex（互斥锁），访问共享数据之前，加锁，访问结束，解锁。 在Ago程加锁期间，B go程加锁会失败——阻塞。</p></li>
+
+<li><p>直至 A go程 解说mutex，B 从阻塞处。恢复执行</p></li>
+</ol>
+
+<p>都是读操作的时候用互斥锁有点浪费</p>
+
+<h1 id="读写锁">读写锁</h1>
+
+<p>其实，当我们对一个不会变化的数据只做“读”操作的话，是不存在资源竞争的问题的。因为数据是不变的，不管怎么读取，多少goroutine同时读取，都是可以的。</p>
+
+<p>所以问题不是出在“读”上，主要是修改，也就是“写”。修改的数据要同步，这样其他goroutine才可以感知到。所以真正的互斥应该是读取和修改、修改和修改之间，读和读是没有互斥操作的必要的。</p>
+
+<p>锁还是一把锁</p>
+
+<p>使用结构体类型<code>sync.RWMutex</code>表示</p>
+
+<h2 id="代码启动但是-无输出">代码启动但是 无输出</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 锁的粒度问题
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">rwMutex</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+
+<span class="kd">func</span> <span class="nf">Test_RwLock</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// random seed
+</span><span class="c1"></span>    <span class="nx">rand</span><span class="p">.</span><span class="nf">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">UnixNano</span><span class="p">())</span>
+    <span class="nx">quit</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+    <span class="nx">ch</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">go</span> <span class="nf">readGo</span><span class="p">(</span><span class="nx">ch</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">go</span> <span class="nf">writeGo</span><span class="p">(</span><span class="nx">ch</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="c1">// keep running
+</span><span class="c1"></span>    <span class="o">&lt;-</span><span class="nx">quit</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">readGo</span><span class="p">(</span><span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">idx</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">RLock</span><span class="p">()</span> <span class="c1">// 这样写 得到解锁
+</span><span class="c1"></span>        <span class="c1">// 🔐 的粒度问题 readLock
+</span><span class="c1"></span>        <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">in</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;----%d read %d\n&#34;</span><span class="p">,</span> <span class="nx">idx</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+        <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">RUnlock</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">writeGo</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">idx</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="nx">num</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+        <span class="nx">out</span> <span class="o">&lt;-</span> <span class="nx">num</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d write %d\n&#34;</span><span class="p">,</span> <span class="nx">idx</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+        <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span> <span class="o">*</span> <span class="mi">200</span><span class="p">)</span>
+        <span class="nx">rwMutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这是因为</p>
+
+<ol>
+<li>写 go 程因为写锁阻塞</li>
+<li>读 go 程写端没有数据而阻塞</li>
+</ol>
+
+<h2 id="在-go-中尽量不要使用-互斥锁-读写锁和-channel-混用-隐性死锁">在 go 中尽量不要使用 互斥锁,读写锁和 channel 混用 &mdash;隐性死锁</h2>
+
+<h3 id="数据同步写法-使用-lock-写法">数据同步写法 使用 lock 写法</h3>
+
+<p>使用全局变量代替channel 和 读写锁混用</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="p">(</span>
+   <span class="s">&#34;sync&#34;</span>
+   <span class="s">&#34;fmt&#34;</span>
+   <span class="s">&#34;math/rand&#34;</span>
+<span class="p">)</span>
+
+<span class="kd">var</span> <span class="nx">count</span> <span class="kt">int</span>                   <span class="c1">// 全局变量count
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">rwlock</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>         <span class="c1">// 全局读写锁 rwlock
+</span><span class="c1"></span>
+<span class="kd">func</span> <span class="nf">read</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span>  <span class="p">{</span>
+   <span class="nx">rwlock</span><span class="p">.</span><span class="nf">RLock</span><span class="p">()</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;读 goroutine %d 正在读取数据...\n&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+   <span class="nx">num</span> <span class="o">:=</span> <span class="nx">count</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;读 goroutine %d 读取数据结束，读到 %d\n&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+   <span class="k">defer</span> <span class="nx">rwlock</span><span class="p">.</span><span class="nf">RUnlock</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span>  <span class="p">{</span>
+   <span class="nx">rwlock</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;写 goroutine %d 正在写数据...\n&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+   <span class="nx">num</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+   <span class="nx">count</span> <span class="p">=</span> <span class="nx">num</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;写 goroutine %d 写数据结束，写入新值 %d\n&#34;</span><span class="p">,</span> <span class="nx">n</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+   <span class="k">defer</span> <span class="nx">rwlock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span>  <span class="p">{</span>
+   <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="p">&lt;</span><span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+      <span class="k">go</span> <span class="nf">read</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="k">for</span> <span class="nx">i</span><span class="o">:=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="p">&lt;</span><span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+      <span class="k">go</span> <span class="nf">write</span><span class="p">(</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="k">for</span> <span class="p">{</span>
+      <span class="p">;</span>
+   <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>我们在read里使用读锁，也就是RLock和RUnlock，写锁的方法名和我们平时使用的一样，是Lock和Unlock。这样，我们就使用了读写锁，可以并发地读，但是同时只能有一个写，并且写的时候不能进行读操作。</p>
+
+<h3 id="总结-1">总结：</h3>
+
+<ol>
+<li>读写锁控制下的多个写操作之间都是互斥的，并且写操作与读操作之间也都是互斥的。但是，多个读操作之间不存在互斥关系。</li>
+<li>从互斥锁和读写锁的源码可以看出，它们是同源的。读写锁的内部用互斥锁来实现写锁定操作之间的互斥。可以把读写锁看作是互斥锁的一种扩展。</li>
+</ol>
+
+<h3 id="使用-channel-来代替读写锁">使用 channel 来代替读写锁</h3>
+
+<h1 id="条件变量">条件变量</h1>
+
+<p>条件变量的作用并不保证在同一时刻仅有一个协程（线程）访问某个共享的数据资源，而是<strong>🍀在对应的共享数据的状态发生变化时，通知阻塞在某个条件上的协程（线程）</strong>。<strong>条件变量不是锁</strong>，在并发中不能达到同步的目的，因此条件变量总是与锁一块使用。</p>
+
+<p><strong><em>条件变量本身不是锁</em></strong></p>
+
+<p>使用步骤</p>
+
+<ol>
+<li>判断条件变量</li>
+<li>加锁</li>
+<li>访问公共区</li>
+<li>解锁</li>
+<li>唤醒阻塞在条件变量上的对端</li>
+</ol>
+
+<p>GO 标准库中的 <code>sys.Cond</code> 类型代表了条件变量。<strong>条件变量要与锁（互斥锁，或者读写锁）一起使用。</strong>成员变量 <code>L</code> 代表与条件变量搭配使用的锁。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Cond</span> <span class="kd">struct</span> <span class="p">{</span>
+   <span class="nx">noCopy</span> <span class="nx">noCopy</span>
+   <span class="c1">// L is held while observing or changing the condition
+</span><span class="c1"></span>   <span class="nx">L</span> <span class="nx">Locker</span>
+   <span class="nx">notify</span>  <span class="nx">notifyList</span>
+   <span class="nx">checker</span> <span class="nx">copyChecker</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>对应的有3个常用方法，Wait，Signal，Broadcast。</p>
+
+<h1 id="wait">wait!</h1>
+
+<ol>
+<li><p><code>func (c *Cond) Wait()</code> 🍀</p>
+
+<p>🍀该函数的作用可归纳为如下三点：</p>
+
+<ol>
+<li>阻塞,然后等待条件变量满足（谁调用谁阻塞）</li>
+<li>释放已掌握的互斥锁相当于<code>cond.L.Unlock()</code>。<strong>🍀调用 <code>wait</code> 前先加锁。</strong> <strong>注意：ab两步为一个原子操作。</strong></li>
+<li>当被唤醒，<code>Wait()</code>函数返回时，解除阻塞并重新获取互斥锁。相当于<code>cond.L.Lock()</code></li>
+</ol></li>
+</ol>
+
+<p>使用步骤</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go">   <span class="nx">cond</span>
+   <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span> <span class="o">-</span><span class="p">&gt;</span> <span class="nx">mutex</span>
+   <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">lock</span><span class="p">()</span>
+   <span class="k">if</span> <span class="kt">bool</span><span class="p">{</span>
+       <span class="nf">wait</span><span class="p">()</span>
+       <span class="c1">// 1. 阻塞等待条件变量满足
+</span><span class="c1"></span>       <span class="c1">// 2. unlock() 释放锁让其他go程获取资源
+</span><span class="c1"></span>       <span class="c1">// 3. lock()
+</span><span class="c1"></span>   <span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><code>func (c *Cond) Signal()</code></li>
+</ol>
+
+<p>	单发通知，给一个正等待（阻塞）在该条件变量上的goroutine（线程）发送通知。
+3. <code>func (c *Cond) Broadcast()</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">广播通知，给正在等待（阻塞）在该条件变量上的所有goroutine（线程）发送通知。</pre></td></tr></table>
+</div>
+</div>
+<p>使用流程
+1. 创建条件变量</p>
+
+<p><code>var cond sync.Cond</code>
+2. 制定条件变量使用的🔒</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">`cond.L = new(sync.Mutex)`</pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li><code>cond.L.Lock()</code> 给公共区加锁(互斥量)</li>
+
+<li><p>判断是否到达指定条件(缓冲区 满 / 空)</p>
+
+<ol>
+<li><p>使用 for 循环判断</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ch</span><span class="p">)</span> <span class="o">==</span> <span class="nb">cap</span><span class="p">(</span><span class="nx">ch</span><span class="p">){</span>
+<span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+<span class="c1">// 1. 阻塞
+</span><span class="c1">// 2. 解锁 1,2 原子操作
+</span><span class="c1">// 3. 加锁
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol></li>
+
+<li><p>访问公共区 读写 数据</p></li>
+
+<li><p>解锁 <code>cond.L.Unlock()</code></p></li>
+
+<li><p>唤醒阻塞在条件变量的对端</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">cond</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span>             <span class="c1">// 创建全局条件变量
+</span><span class="c1"></span>
+<span class="c1">// 生产者
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">producer</span><span class="p">(</span><span class="nx">out</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">idx</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">for</span> <span class="p">{</span>
+    <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>           	<span class="c1">// 条件变量对应互斥锁加锁
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span> <span class="p">{</span>          	<span class="c1">// 产品区满 等待消费者消费
+</span><span class="c1"></span>        <span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>             	<span class="c1">// 挂起当前协程， 等待条件变量满足，被消费者唤醒
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="nx">num</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> 	<span class="c1">// 产生一个随机数
+</span><span class="c1"></span>    <span class="nx">out</span> <span class="o">&lt;-</span> <span class="nx">num</span>             	<span class="c1">// 写入到 channel 中 （生产）
+</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%dth 生产者，产生数据 %3d, 公共区剩余%d个数据\n&#34;</span><span class="p">,</span> <span class="nx">idx</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">out</span><span class="p">))</span>
+    <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>             	<span class="c1">// 生产结束，解锁互斥锁
+</span><span class="c1"></span>    <span class="nx">cond</span><span class="p">.</span><span class="nf">Signal</span><span class="p">()</span>           	<span class="c1">// 唤醒 阻塞的 消费者
+</span><span class="c1"></span>    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>       <span class="c1">// 生产完休息一会，给其他协程执行机会
+</span><span class="c1"></span><span class="p">}</span>
+<span class="p">}</span>
+<span class="c1">//消费者
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">consumer</span><span class="p">(</span><span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">idx</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">for</span> <span class="p">{</span>
+    <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>           	<span class="c1">// 条件变量对应互斥锁加锁（与生产者是同一个）
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">in</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>      	<span class="c1">// 产品区为空 等待生产者生产
+</span><span class="c1"></span>        <span class="nx">cond</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>             	<span class="c1">// 挂起当前协程， 等待条件变量满足，被生产者唤醒
+</span><span class="c1"></span>    <span class="p">}</span>
+    <span class="nx">num</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">in</span>                	<span class="c1">// 将 channel 中的数据读走 （消费）
+</span><span class="c1"></span>    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;---- %dth 消费者, 消费数据 %3d,公共区剩余%d个数据\n&#34;</span><span class="p">,</span> <span class="nx">idx</span><span class="p">,</span> <span class="nx">num</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">in</span><span class="p">))</span>
+    <span class="nx">cond</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>             	<span class="c1">// 消费结束，解锁互斥锁
+</span><span class="c1"></span>    <span class="nx">cond</span><span class="p">.</span><span class="nf">Signal</span><span class="p">()</span>           	<span class="c1">// 唤醒 阻塞的 生产者
+</span><span class="c1"></span>    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span> <span class="o">*</span> <span class="mi">500</span><span class="p">)</span>    	<span class="c1">//消费完 休息一会，给其他协程执行机会
+</span><span class="c1"></span><span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="nx">rand</span><span class="p">.</span><span class="nf">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nf">Now</span><span class="p">().</span><span class="nf">UnixNano</span><span class="p">())</span>  <span class="c1">// 设置随机数种子
+</span><span class="c1"></span><span class="nx">quit</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>           <span class="c1">// 创建用于结束通信的 channel
+</span><span class="c1"></span>
+<span class="nx">product</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>      <span class="c1">// 产品区（公共区）使用channel 模拟
+</span><span class="c1"></span><span class="nx">cond</span><span class="p">.</span><span class="nx">L</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">)</span>          <span class="c1">// 创建互斥锁和条件变量
+</span><span class="c1"></span>
+<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>          <span class="c1">// 5个消费者
+</span><span class="c1"></span>    <span class="k">go</span> <span class="nf">producer</span><span class="p">(</span><span class="nx">product</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>          <span class="c1">// 3个生产者
+</span><span class="c1"></span>    <span class="k">go</span> <span class="nf">consumer</span><span class="p">(</span><span class="nx">product</span><span class="p">,</span> <span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="o">&lt;-</span><span class="nx">quit</span>                         	<span class="c1">// 主协程阻塞 不结束
+</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+
+<h2 id="注意点">注意点</h2>
+
+<ol>
+<li><p>在 <code>consumer</code> &amp; <code>producer</code> 中的代码写在 <code>for</code> 循环中 ?</p>
+
+<p>不加 for 循环就死锁了,原因是 TODO</p></li>
+
+<li><p><code>wait</code> 写在 <code>for</code> 循环判断中</p></li>
+</ol>
+
+<p>加入写成 if 语句,如下
+   <code>go
+     func consumer(in &lt;-chan int, index int) {
+        for {
+            cond.L.Lock()
+            if len(in) == 0 {
+                cond.Wait()
+            }
+            num := &lt;-in
+            fmt.Println(&quot;C : consumer consume &quot;, num, &quot;with &quot;, len(in), &quot;left&quot;)
+            cond.L.Unlock()
+            cond.Signal()
+            time.Sleep(time.Second)
+        }
+    }
+</code>
+    当多个消费者或者多个生产者在到 if 循环中的时候,当满足<code>len(in) ==0</code>时候, 阻塞自己,然后<code>unlock</code>,其他 goroutine 获取获取,直接在向下执行,而不是在判断一遍条件,可能在 <code>num :=&lt;-in</code> 阻塞,代码会在运行一段时间后进行阻塞.</p>
+
+<blockquote>
+<p>源码: sync/cond.go</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-01-06
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/2_object_oriented/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Go 面向对象</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/reflect/">
+            <span class="next-text nav-default">Java 中的反射</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

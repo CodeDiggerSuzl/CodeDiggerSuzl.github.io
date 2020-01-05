@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-04 </span>
         <div class="post-category">
-            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            <a href="/categories/programming-language/"> programming language </a>
             </div>
           <span class="more-meta"> 约 1180 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
@@ -226,7 +226,7 @@
 <li>byte rune
 
 <ol>
-<li><strong>rune :  means char in java ,  4字节 32位 ? TODO</strong><br /></li>
+<li><strong>rune :  means char in java ,  4字节 32位 ? TODO</strong></li>
 </ol></li>
 <li>float32  float64 complex 64 complex 128
 
@@ -407,7 +407,7 @@
 		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 	<span class="p">}</span>
 	<span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
-	<span class="c1">// 没有起始条件 递增条件 
+	<span class="c1">// 没有起始条件 递增条件
 </span><span class="c1"></span>	<span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nf">Text</span><span class="p">())</span>
 	<span class="p">}</span>
@@ -454,7 +454,7 @@
  <span class="c1">// 也可以这样写 函数体长的时候 不建议
 </span><span class="c1"></span> <span class="nx">q</span> <span class="p">=</span> <span class="nx">a</span><span class="o">/</span><span class="nx">b</span>
  <span class="nx">r</span> <span class="p">=</span> <span class="nx">a</span><span class="o">%</span><span class="nx">b</span>
- <span class="k">return</span> 
+ <span class="k">return</span>
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -506,20 +506,20 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">package</span> <span class="nx">main</span>
-   
+
 <span class="kn">import</span> <span class="p">(</span>
 	<span class="s">&#34;fmt&#34;</span>
 	<span class="s">&#34;math&#34;</span>
 	<span class="s">&#34;reflect&#34;</span>
 	<span class="s">&#34;runtime&#34;</span>
 <span class="p">)</span>
-   
+
 <span class="c1">//重写 pow
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">pow</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">b</span><span class="p">)))</span>
-   
+
 <span class="p">}</span>
-   
+
 <span class="c1">// 函数一公民 可当做参数
 </span><span class="c1">// 接受一个参数类型为 int int 返回值类为int 的函数 和两个int类型的参数 返回为int
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">apply</span><span class="p">(</span><span class="nx">op</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
@@ -537,8 +537,8 @@
 		<span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nf">Pow</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">a</span><span class="p">),</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">b</span><span class="p">)))</span>
 	<span class="p">},</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
 <span class="p">}</span>
-   
-   
+
+
 <span class="nx">main</span><span class="p">.</span><span class="nx">pow</span> <span class="mi">3</span> <span class="mi">4</span>      <span class="nx">打印结果</span> <span class="nx">包名</span><span class="p">.</span><span class="nx">函数名</span>
 <span class="nx">main</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nx">func1</span> <span class="mi">3</span> <span class="mi">4</span> <span class="nx">包名</span><span class="p">.</span><span class="nx">函数名</span><span class="p">.</span><span class="nx">第一个函数</span>
 <span class="mi">81</span></code></pre></td></tr></table>
@@ -709,7 +709,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>programming on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/categories/programming/</link>
+    <description>Recent content in programming on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Mon, 06 Jan 2020 01:16:06 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/categories/programming/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Java 中的反射</title>
+      <link>http://codedigger.cn/post/reflect/</link>
+      <pubDate>Mon, 06 Jan 2020 01:16:06 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/reflect/</guid>
+      <description>反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语</description>
+    </item>
+    
+  </channel>
+</rss>

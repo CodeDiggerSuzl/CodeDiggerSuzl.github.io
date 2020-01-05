@@ -225,7 +225,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">err</span> <span class="kd">interface</span><span class="p">{</span>
-  <span class="nf">Error</span><span class="p">()</span>	<span class="kt">string</span> 
+  <span class="nf">Error</span><span class="p">()</span>	<span class="kt">string</span>
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div>
@@ -411,7 +411,7 @@
 	<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
 		<span class="c1">// 匿名函数 调用这个匿名函数还要加() 在函数体后
 </span><span class="c1"></span>		<span class="nx">f</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">()</span>
-   <span class="c1">// recover 中可以填写任何值 
+   <span class="c1">// recover 中可以填写任何值
 </span><span class="c1"></span>		<span class="k">if</span> <span class="nx">err</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.(</span><span class="kt">error</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
 			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 		<span class="p">}</span><span class="k">else</span><span class="p">{</span>
@@ -419,7 +419,7 @@
 		<span class="p">}</span>
 	<span class="p">}()</span>
 	<span class="nb">panic</span><span class="p">(</span><span class="nx">errors</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;this is an error:🤢&#34;</span><span class="p">))</span>
-   	
+
 <span class="p">}</span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -645,13 +645,13 @@
                      <span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="kt">error</span>
 
 <span class="c1">// 函数式编程: 传入一个函数 返回一个函数对这个函数进行包装后返回 (并不是返回类型函数和传入函数的类型完全一样)
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">errWrapper</span><span class="p">(</span><span class="nx">handler</span> <span class="nx">appHandler</span><span class="p">)</span> <span class="kd">func</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> 
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">errWrapper</span><span class="p">(</span><span class="nx">handler</span> <span class="nx">appHandler</span><span class="p">)</span> <span class="kd">func</span><span class="p">(</span><span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span>
                                          <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
 	<span class="c1">//返回的 error
 </span><span class="c1"></span>	<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">writer</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span><span class="nx">request</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
 		<span class="c1">// panic
 </span><span class="c1"></span>		<span class="k">defer</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-			<span class="c1">// 对 panic 进行保护 
+			<span class="c1">// 对 panic 进行保护
 </span><span class="c1"></span>			<span class="c1">// 使用匿名函数 能够调用 后面加上()
 </span><span class="c1"></span>			<span class="k">if</span> <span class="nx">r</span> <span class="o">:=</span> <span class="nb">recover</span><span class="p">();</span> <span class="nx">r</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
 				<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Panic: %v&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
@@ -793,7 +793,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

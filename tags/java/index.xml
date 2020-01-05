@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Sat, 21 Sep 2019 00:59:24 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jan 2020 01:16:06 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/tags/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Java 中的反射</title>
+      <link>http://codedigger.cn/post/reflect/</link>
+      <pubDate>Mon, 06 Jan 2020 01:16:06 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/reflect/</guid>
+      <description>反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语</description>
+    </item>
+    
+    <item>
+      <title>Java 中的注解</title>
+      <link>http://codedigger.cn/post/annotation/</link>
+      <pubDate>Mon, 06 Jan 2020 01:15:58 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/annotation/</guid>
+      <description>What The Hell Annotation ? @since 1.5 作用: 不是程序本身,但是可以对程序作出解释 注释是给 coder 看的 注解是给计算机看的 可以被其他程序,比如编译器读取 一个注解准确意义上来说</description>
+    </item>
     
     <item>
       <title>Thread</title>
@@ -19,6 +37,15 @@
       
       <guid>http://codedigger.cn/post/thread/</guid>
       <description>线程和进程的区别 每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立</description>
+    </item>
+    
+    <item>
+      <title>ArrayInJava</title>
+      <link>http://codedigger.cn/post/arrayinjava/</link>
+      <pubDate>Tue, 27 Aug 2019 23:13:07 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/arrayinjava/</guid>
+      <description></description>
     </item>
     
   </channel>

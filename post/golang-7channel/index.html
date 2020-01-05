@@ -125,7 +125,7 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-12 </span>
         <div class="post-category">
-            <a href="/categories/%E5%AD%A6%E4%B9%A0/"> 学习 </a>
+            <a href="/categories/programming-language/"> programming language </a>
             </div>
           <span class="more-meta"> 约 1013 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
@@ -214,8 +214,7 @@
 <ol>
 <li><code>Add()</code>有多少个任务</li>
 <li><code>Done()</code> 完成之后</li>
-<li><code>Wait()</code> 等待
-<br /></li>
+<li><code>Wait()</code> 等待</li>
 </ol>
 
 <p>有一个 <code>WaitGroup</code> 就行了,共用一个</p>
@@ -334,7 +333,7 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="k">select</span><span class="p">{</span>
-    <span class="k">case</span> 
+    <span class="k">case</span>
     <span class="k">default</span> <span class="c1">// 则变成了非阻塞式地从 channel 中获取值
 </span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
 </div>
@@ -441,7 +440,7 @@
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Worker %d received %d\n&#34;</span><span class="p">,</span>
 			<span class="nx">id</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
 	<span class="p">}</span>
-<span class="p">}</span> 
+<span class="p">}</span>
 
 <span class="kd">func</span> <span class="nf">createWorker</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">)</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">int</span> <span class="p">{</span>
 	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
@@ -456,7 +455,7 @@
 </span><span class="c1"></span>	<span class="kd">var</span> <span class="nx">worker</span> <span class="p">=</span> <span class="nf">createWorker</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 
 	<span class="kd">var</span> <span class="nx">values</span> <span class="p">[]</span><span class="kt">int</span>
-	
+
 	<span class="nx">tm</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
 	<span class="c1">// 定时器
 </span><span class="c1"></span>	<span class="nx">tick</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">Tick</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
@@ -640,7 +639,8 @@
 
   <span class="copyright-year">
     &copy; 
-    2019
+    2019 - 
+    2020
     <span class="heart">
       <i class="iconfont icon-heart"></i>
     </span>

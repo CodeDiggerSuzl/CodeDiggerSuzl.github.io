@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>programming Language on The Blog of Suzl 🤠</title>
+    <title>programming language on The Blog of Suzl 🤠</title>
     <link>http://codedigger.cn/categories/programming-language/</link>
-    <description>Recent content in programming Language on The Blog of Suzl 🤠</description>
+    <description>Recent content in programming language on The Blog of Suzl 🤠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
@@ -64,6 +64,15 @@
       
       <guid>http://codedigger.cn/post/6_selectandlock/</guid>
       <description>🍀 select Go 里面提供了一个关键字 select，通过 select 可以监听 channel 上的数据流动。 select 的用法与 switch 语言非常类似，由 select 开始一个新的选择块，每个选择条件由 case 语句</description>
+    </item>
+    
+    <item>
+      <title>Java 中的反射</title>
+      <link>http://codedigger.cn/post/reflect/</link>
+      <pubDate>Mon, 06 Jan 2020 01:16:06 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/reflect/</guid>
+      <description>反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语</description>
     </item>
     
     <item>

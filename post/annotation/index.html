@@ -229,14 +229,14 @@
 <li><p><code>@Target</code></p>
 
 <ul>
-<li>ElementType.TYPE：允许被修饰的注解作用在类、接口和枚举上</li>
-<li>ElementType.FIELD：允许作用在属性字段上</li>
-<li>ElementType.METHOD：允许作用在方法上</li>
-<li>ElementType.PARAMETER：允许作用在方法参数上</li>
-<li>ElementType.CONSTRUCTOR：允许作用在构造器上</li>
-<li>ElementType.LOCAL_VARIABLE：允许作用在本地局部变量上</li>
-<li>ElementType.ANNOTATION_TYPE：允许作用在注解上</li>
-<li>ElementType.PACKAGE：允许作用在包上</li>
+<li><code>ElementType.TYPE</code>：允许被修饰的注解作用在类、接口和枚举上</li>
+<li><code>ElementType.FIELD</code>：允许作用在属性字段上</li>
+<li><code>ElementType.METHOD</code>：允许作用在方法上</li>
+<li><code>ElementType.PARAMETER</code>：允许作用在方法参数上</li>
+<li><code>ElementType.CONSTRUCTOR</code>：允许作用在构造器上</li>
+<li><code>ElementType.LOCAL_VARIABLE</code>：允许作用在本地局部变量上</li>
+<li><code>ElementType.ANNOTATION_TYPE</code>：允许作用在注解上</li>
+<li><code>ElementType.PACKAGE</code>：允许作用在包上</li>
 </ul></li>
 
 <li><p><code>@Retention</code></p>
@@ -244,9 +244,9 @@
 <p>表示需要将该注解报保存到什么级别中,描述注解的生命周期(<code>SOURCE&lt;CLASS&lt;RUNTIME</code>),一般都是用 <code>RUNTIME</code></p>
 
 <ul>
-<li>RetentionPolicy.SOURCE：当前注解编译期可见，不会写入 class 文件</li>
-<li>RetentionPolicy.CLASS：类加载阶段丢弃，会写入 class 文件</li>
-<li>RetentionPolicy.RUNTIME：永久保存，<strong>可以反射获取</strong></li>
+<li><code>RetentionPolicy.SOURCE</code>：当前注解编译期可见，不会写入 class 文件</li>
+<li><code>RetentionPolicy.CLASS</code>：类加载阶段丢弃，会写入 class 文件</li>
+<li><code>RetentionPolicy.RUNTIME</code>：永久保存，<strong>可以反射获取</strong></li>
 </ul></li>
 
 <li><p><code>@Document</code></p>

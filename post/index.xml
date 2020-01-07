@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Mon, 06 Jan 2020 01:19:01 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jan 2020 22:49:50 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Mysql实现rank排名和百分比排序(percentileRank)</title>
+      <link>http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/</link>
+      <pubDate>Tue, 07 Jan 2020 22:49:50 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/</guid>
+      <description>mysql 实现rank 排名 实现 rank 排名在 mysql8.0 版本新增了PERCENT_RANK函数 在mysql5.5版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3</description>
+    </item>
     
     <item>
       <title>Go channel 和定时器</title>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Golang-13 DockerAndElasticStack - The Blog of Suzl 🤠</title>
+  <title>Mysql实现rank排名和百分比排序(percentileRank) - The Blog of Suzl 🤠</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="苏子叶" /><meta name="description" content="item 的保存 可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 e.Scheduler.Submit(request) 让其他程序去执行 save 方法. 抽象出 task 的概念, FetchTask,PersistTask 公用同一个" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+<meta name="author" content="苏子叶" /><meta name="description" content="mysql 实现rank 排名 实现 rank 排名在 mysql8.0 版本新增了PERCENT_RANK函数 在mysql5.5版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
 
 
-<link rel="canonical" href="http://codedigger.cn/post/golang-12dockerandelasticstack/" />
+<link rel="canonical" href="http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="Golang-13 DockerAndElasticStack" />
-<meta property="og:description" content="item 的保存 可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 e.Scheduler.Submit(request) 让其他程序去执行 save 方法. 抽象出 task 的概念, FetchTask,PersistTask 公用同一个" />
+<meta property="og:title" content="Mysql实现rank排名和百分比排序(percentileRank)" />
+<meta property="og:description" content="mysql 实现rank 排名 实现 rank 排名在 mysql8.0 版本新增了PERCENT_RANK函数 在mysql5.5版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://codedigger.cn/post/golang-12dockerandelasticstack/" />
-<meta property="article:published_time" content="2019-08-21T20:28:52+08:00" />
-<meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
-<meta itemprop="name" content="Golang-13 DockerAndElasticStack">
-<meta itemprop="description" content="item 的保存 可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 e.Scheduler.Submit(request) 让其他程序去执行 save 方法. 抽象出 task 的概念, FetchTask,PersistTask 公用同一个">
+<meta property="og:url" content="http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/" />
+<meta property="article:published_time" content="2020-01-07T22:49:50+08:00" />
+<meta property="article:modified_time" content="2020-01-07T22:49:50+08:00" />
+<meta itemprop="name" content="Mysql实现rank排名和百分比排序(percentileRank)">
+<meta itemprop="description" content="mysql 实现rank 排名 实现 rank 排名在 mysql8.0 版本新增了PERCENT_RANK函数 在mysql5.5版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3">
 
 
-<meta itemprop="datePublished" content="2019-08-21T20:28:52&#43;08:00" />
-<meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="296">
+<meta itemprop="datePublished" content="2020-01-07T22:49:50&#43;08:00" />
+<meta itemprop="dateModified" content="2020-01-07T22:49:50&#43;08:00" />
+<meta itemprop="wordCount" content="262">
 
 
 
-<meta itemprop="keywords" content="golang," />
+<meta itemprop="keywords" content="mysql," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Golang-13 DockerAndElasticStack"/>
-<meta name="twitter:description" content="item 的保存 可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 e.Scheduler.Submit(request) 让其他程序去执行 save 方法. 抽象出 task 的概念, FetchTask,PersistTask 公用同一个"/>
+<meta name="twitter:title" content="Mysql实现rank排名和百分比排序(percentileRank)"/>
+<meta name="twitter:description" content="mysql 实现rank 排名 实现 rank 排名在 mysql8.0 版本新增了PERCENT_RANK函数 在mysql5.5版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -120,14 +120,14 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">Golang-13 DockerAndElasticStack</h1>
+      <h1 class="post-title">Mysql实现rank排名和百分比排序(percentileRank)</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2019-08-21 </span>
+        <span class="post-time"> 2020-01-07 </span>
         <div class="post-category">
-            <a href="/categories/programming-language/"> programming language </a>
+            <a href="/categories/database/"> database </a>
             </div>
-          <span class="more-meta"> 约 296 字 </span>
+          <span class="more-meta"> 约 262 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -138,18 +138,11 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li>
+<li><a href="#mysql-实现rank-排名">mysql 实现rank 排名</a>
 <ul>
-<li><a href="#item-的保存">item 的保存</a>
-<ul>
-<li><a href="#抽象出-task-的概念">抽象出 task 的概念,</a></li>
-<li><a href="#为每一个-item-创建-goroutine-提交给-itemsaver">为每一个 item 创建 goroutine 提交给 itemsaver</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#docker-and-elasticsearch">docker and elasticsearch</a>
-<ul>
-<li><a href="#docker">docker</a></li>
-<li><a href="#elasticsearch">ElasticSearch</a></li>
+<li><a href="#实现排名">实现排名</a></li>
+<li><a href="#实现百分比函数-领先其他数据多少百分比">实现百分比函数(领先其他数据多少百分比)</a></li>
+<li><a href="#底层原理">底层原理</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -158,64 +151,101 @@
     <div class="post-content">
       
 
-<h2 id="item-的保存">item 的保存</h2>
+<h1 id="mysql-实现rank-排名">mysql 实现rank 排名</h1>
 
-<p>可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 <code>e.Scheduler.Submit(request)</code> 让其他程序去执行 save 方法.</p>
+<p>实现 rank 排名在 mysql8.0 版本新增了<code>PERCENT_RANK</code><a href="https://www.begtut.com/mysql/mysql-percent_rank-function.html">函数</a></p>
 
-<h3 id="抽象出-task-的概念">抽象出 task 的概念,</h3>
+<p>在<code>mysql5.5</code>版本中没有这个函数,需要借助函数实现.</p>
 
-<ul>
-<li>FetchTask,PersistTask 公用同一个 Engine, Scheduler</li>
-<li>还需要创建 FetchWorker,PersitWorker (比较重 太复杂了)</li>
-</ul>
+<h2 id="实现排名">实现排名</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+	<span class="n">t</span><span class="p">.</span><span class="o">*</span>
+<span class="k">FROM</span>
+	<span class="p">(</span>
+	<span class="k">SELECT</span>
+		<span class="o">*</span><span class="p">,</span>
+		<span class="k">IF</span>
+		<span class="p">(</span><span class="o">@</span><span class="n">preRank</span>  <span class="o">=</span> <span class="err">需要排序字段</span><span class="p">,</span><span class="o">@</span><span class="n">curRank</span> <span class="p">,</span><span class="o">@</span><span class="n">incRank</span><span class="p">)</span> <span class="k">as</span> <span class="n">rank</span><span class="p">,</span>
+		<span class="o">@</span><span class="n">incRank</span> <span class="p">:</span><span class="o">=</span> <span class="o">@</span><span class="n">incRank</span> <span class="o">+</span><span class="mi">1</span><span class="p">,</span>
+		<span class="o">@</span><span class="n">prevRank</span>  <span class="p">:</span><span class="o">=</span> <span class="err">需要排序字段</span>
+ 	<span class="k">FROM</span>
+		<span class="err">表名</span><span class="p">,</span>
+		<span class="p">(</span> <span class="k">SELECT</span> <span class="o">@</span><span class="n">curRank</span> <span class="p">:</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span><span class="o">@</span><span class="n">preRank</span> <span class="p">:</span><span class="o">=</span><span class="k">NULL</span><span class="p">,</span><span class="o">@</span><span class="n">incRank</span> <span class="p">:</span><span class="o">=</span><span class="mi">1</span>	<span class="p">)</span> <span class="n">q</span>
+	<span class="k">WHERE</span>
+		<span class="n">RECORD_STATUS</span> <span class="o">=</span> <span class="s1">&#39;4&#39;</span>
+	<span class="k">ORDER</span> <span class="k">BY</span>
+		<span class="n">SYNTHETIC_INDEX</span> <span class="k">DESC</span>
+	<span class="p">)</span> <span class="n">t</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="实现百分比函数-领先其他数据多少百分比">实现百分比函数(领先其他数据多少百分比)</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+	<span class="n">T</span><span class="p">.</span><span class="o">*</span><span class="p">,</span>
+	<span class="n">CONCAT</span><span class="p">(</span> <span class="n">ROUND</span><span class="p">(</span> <span class="p">(</span> <span class="p">(</span> <span class="o">@</span><span class="n">ranking</span> <span class="o">-</span> <span class="n">rank</span> <span class="p">)</span> <span class="o">/</span> <span class="o">@</span><span class="n">ranking</span> <span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">2</span> <span class="p">),</span> <span class="s1">&#39;%&#39;</span> <span class="p">)</span> <span class="k">AS</span> <span class="n">percentileRank</span>
+<span class="k">FROM</span>
+	<span class="p">(</span>
+<span class="k">SELECT</span>
+	<span class="o">*</span><span class="p">,</span>
+	<span class="o">@</span><span class="n">ranking</span> <span class="p">:</span><span class="o">=</span>
+<span class="k">IF</span>
+	<span class="p">(</span> <span class="o">@</span><span class="n">previous</span> <span class="o">=</span> <span class="o">@</span><span class="n">curr</span><span class="p">,</span> <span class="o">@</span><span class="n">ranking</span><span class="p">,</span> <span class="o">@</span><span class="n">ranking</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">)</span> <span class="k">AS</span> <span class="n">rank</span>
+<span class="k">FROM</span>
+    <span class="err">表名</span><span class="p">,</span>
+	<span class="p">(</span> <span class="k">SELECT</span> <span class="o">@</span><span class="n">curr</span> <span class="p">:</span><span class="o">=</span> <span class="k">NULL</span><span class="p">,</span> <span class="o">@</span><span class="n">previous</span> <span class="p">:</span><span class="o">=</span> <span class="k">NULL</span><span class="p">,</span> <span class="o">@</span><span class="n">ranking</span> <span class="p">:</span><span class="o">=</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">)</span> <span class="n">q</span>
+<span class="k">WHERE</span>
+	 <span class="c1">-- condition
+</span><span class="c1"></span><span class="k">ORDER</span> <span class="k">BY</span>
+	<span class="err">需要排序的字段</span> <span class="k">DESC</span>
+	<span class="p">)</span> <span class="n">T</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="底层原理">底层原理</h2>
 
-<h3 id="为每一个-item-创建-goroutine-提交给-itemsaver">为每一个 item 创建 goroutine 提交给 itemsaver</h3>
-
-<ul>
-<li>itemsaver 的速度要比 Fetcher 快</li>
-<li>just like SimpleScheduler</li>
-</ul>
-
-<p>此时的架构图：</p>
-
-<p><img src="http://ww3.sinaimg.cn/large/006y8mN6ly1g67n9hf33bj31ck0ksznf.jpg" alt="" />
-架构：</p>
-
-<h1 id="docker-and-elasticsearch">docker and elasticsearch</h1>
-
-<h2 id="docker">docker</h2>
-
-<ol>
-<li>配置代理 <code>daoCloud</code> 设置镜像</li>
-<li>使用 <code>docker version</code> 查看信息</li>
-<li>使用 <code>docker info</code> 查看更多信息</li>
-<li><code>docker run -it ...</code>
-<code>-it</code> 是一个输入输出的重定向</li>
-<li>使用 <code>docker run -d -p 9200:9200 elasticsearch:6.8.2</code> 来运行
-
-<ol>
-<li><code>-d</code> <a href="https://zh.wikipedia.org/wiki/%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B">daemon</a> 守护进程的方式运行</li>
-<li><code>-p</code> port 端口重定向 inside port =&gt; outside port</li>
-</ol></li>
-<li>使用 <code>docker ps</code> 查看 <code>docker</code> 进程</li>
-<li>docker 运行的顺序
-
-<ol>
-<li>The Docker client contacted the Docker daemon.</li>
-<li>The Docker <strong>daemon</strong> pulled the &ldquo;hello-world&rdquo; <strong>image</strong> from the Docker Hub.(amd64)</li>
-<li>The Docker daemon created a new <strong>container</strong> from that image which runs the executable that produces the output you are currently reading.</li>
-<li>The Docker daemon <strong>streamed</strong> that output to the Docker client, which sent it to your terminal.</li>
-</ol></li>
-</ol>
-
-<h2 id="elasticsearch">ElasticSearch</h2>
-
-<p>BASIC-USE
-1. <server_address>:9200/index/type/id
-   1. index =&gt; databaseName
-   2. type =&gt; tableName
-   3. id =&gt; id
-2. use get/post to get and send data</p>
+<p>todo</p>
 
     </div>
 
@@ -227,8 +257,8 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-01-06
-        <a href="https://github.com/CodeDiggerSuzl/codediggersuzl.github.io.git/commit/c9a82ebfc4ee092828469b93bf508545f0cb07c0" title="🌱 add files">(c9a82eb)</a>
+        2020-01-07
+        
     </span>
   </p>
   
@@ -239,16 +269,12 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/golang/">golang</a>
+          <a href="/tags/mysql/">mysql</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/arrayinjava/">
-            <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">ArrayInJava</span>
-            <span class="prev-text nav-mobile">上一篇</span>
-          </a>
-        <a class="next" href="/post/golang-12%E5%B9%B6%E5%8F%91%E7%89%88%E7%88%AC%E8%99%AB/">
-            <span class="next-text nav-default">Golang-12 并发版爬虫</span>
+        
+        <a class="next" href="/post/5_channel_advance/">
+            <span class="next-text nav-default">Go channel 和定时器</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>curious on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/curious/</link>
+    <description>Recent content in curious on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Tue, 07 Jan 2020 23:23:31 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/curious/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>META-INF 文件夹是干什么的 ?</title>
+      <link>http://codedigger.cn/post/meta-inf-in-java/</link>
+      <pubDate>Tue, 07 Jan 2020 23:23:31 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/meta-inf-in-java/</guid>
+      <description>写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文</description>
+    </item>
+    
+  </channel>
+</rss>

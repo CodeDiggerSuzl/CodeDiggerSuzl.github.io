@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Tue, 07 Jan 2020 22:49:50 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jan 2020 23:23:31 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>curious</title>
+      <link>http://codedigger.cn/categories/curious/</link>
+      <pubDate>Tue, 07 Jan 2020 23:23:31 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/categories/curious/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>database</title>
@@ -22,7 +31,7 @@
     </item>
     
     <item>
-      <title>programming language</title>
+      <title>programming Language</title>
       <link>http://codedigger.cn/categories/programming-language/</link>
       <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
       

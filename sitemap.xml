@@ -265,12 +265,6 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/categories/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2019-11-24T22:59:16+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://codedigger.cn/post/golang-7channel/</loc>
     <lastmod>2020-01-06T01:38:28+08:00</lastmod>
     <changefreq>weekly</changefreq>

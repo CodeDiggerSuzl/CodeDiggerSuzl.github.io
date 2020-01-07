@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>programming Language on The Blog of Suzl 🤠</title>
+    <title>programming language on The Blog of Suzl 🤠</title>
     <link>http://codedigger.cn/categories/programming-language/</link>
-    <description>Recent content in programming Language on The Blog of Suzl 🤠</description>
+    <description>Recent content in programming language on The Blog of Suzl 🤠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
@@ -148,6 +148,15 @@
     </item>
     
     <item>
+      <title>Golang-10 Http 库和广度优先算法</title>
+      <link>http://codedigger.cn/post/golang-httpandmaze/</link>
+      <pubDate>Tue, 13 Aug 2019 19:31:43 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/golang-httpandmaze/</guid>
+      <description>http 库 &amp;amp; 广度优先算法 http 库 常见应用 使用 http 客户端发送请求 使用 http.Client 控制请求头部 使 httputil 来简化工作 http 服务器性能分析 import _ &amp;quot;net/http/pprof&amp;quot; 访问 /debug/pprof 使用 go tool pprof + url 来进行性能分析 获</description>
+    </item>
+    
+    <item>
       <title>Golang-9 Channel</title>
       <link>http://codedigger.cn/post/golang-7channel/</link>
       <pubDate>Mon, 12 Aug 2019 19:32:06 +0800</pubDate>
@@ -172,6 +181,15 @@
       
       <guid>http://codedigger.cn/post/golang-%E6%B5%8B%E8%AF%95/</guid>
       <description>测试 Debugging sucks,Testing rocks 传统测试&amp;amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优</description>
+    </item>
+    
+    <item>
+      <title>Golang-6 资源管理和出错处理</title>
+      <link>http://codedigger.cn/post/golang-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%92%8C%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/</link>
+      <pubDate>Sun, 04 Aug 2019 22:25:22 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/golang-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%92%8C%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86/</guid>
+      <description>资源管理 def 调用实现资源管理 确保在函数结束后发生 err 栈结构 先进后出的结构 在干什么的时候 可能会出错的时候就加上defer 1 2 3 4 5 6 7 8 9 10 11 12 13</description>
     </item>
     
     <item>

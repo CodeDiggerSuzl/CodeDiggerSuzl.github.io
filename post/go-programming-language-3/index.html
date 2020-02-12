@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>面向对象 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="第 3 章: 面向对象编程 (OOP) go 中没有沿用面向对象中的诸多概念, 比如✨继承, 虚函数, 构造函数, 析构函数, 隐藏的 this 指针. 优雅之处在于: 整个类型系统通过" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/go-programming-language-3/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="面向对象" />
+<meta property="og:description" content="第 3 章: 面向对象编程 (OOP) go 中没有沿用面向对象中的诸多概念, 比如✨继承, 虚函数, 构造函数, 析构函数, 隐藏的 this 指针. 优雅之处在于: 整个类型系统通过" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/go-programming-language-3/" />
+<meta property="article:published_time" content="2020-02-12T19:23:27+08:00" />
+<meta property="article:modified_time" content="2020-02-12T19:23:27+08:00" />
+<meta itemprop="name" content="面向对象">
+<meta itemprop="description" content="第 3 章: 面向对象编程 (OOP) go 中没有沿用面向对象中的诸多概念, 比如✨继承, 虚函数, 构造函数, 析构函数, 隐藏的 this 指针. 优雅之处在于: 整个类型系统通过">
+
+
+<meta itemprop="datePublished" content="2020-02-12T19:23:27&#43;08:00" />
+<meta itemprop="dateModified" content="2020-02-12T19:23:27&#43;08:00" />
+<meta itemprop="wordCount" content="3152">
+
+
+
+<meta itemprop="keywords" content="golang,《Go语言编程》," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="面向对象"/>
+<meta name="twitter:description" content="第 3 章: 面向对象编程 (OOP) go 中没有沿用面向对象中的诸多概念, 比如✨继承, 虚函数, 构造函数, 析构函数, 隐藏的 this 指针. 优雅之处在于: 整个类型系统通过"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">面向对象</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-02-12 </span>
+        <div class="post-category">
+            <a href="/categories/reading-notes/"> Reading Notes </a>
+            </div>
+          <span class="more-meta"> 约 3152 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#第-3-章-面向对象编程-oop">第 3 章: 面向对象编程 (OOP)</a>
+<ul>
+<li><a href="#3-1-类型系统">3.1 ✨类型系统</a>
+<ul>
+<li><a href="#3-1-1-为类型添加方法">3.1.1 为类型添加方法</a></li>
+<li><a href="#3-1-2-值语义和引用语义">3.1.2 值语义和引用语义</a></li>
+<li><a href="#3-1-3-结构体">3.1.3 结构体</a></li>
+</ul></li>
+<li><a href="#3-2-初始化">3.2 初始化</a></li>
+<li><a href="#3-3-匿名组合">3.3 匿名组合</a></li>
+<li><a href="#3-4-可见性">3.4 可见性</a></li>
+<li><a href="#3-5-接口">3.5 接口</a>
+<ul>
+<li><a href="#3-5-1-其他语言的接口">3.5.1 其他语言的接口</a></li>
+<li><a href="#3-5-2-非侵入式接口">3.5.2 非侵入式接口</a></li>
+<li><a href="#3-5-3-接口赋值">3.5.3 接口赋值</a></li>
+<li><a href="#3-5-4-接口查询-page77">3.5.4 接口查询 <code>page77</code></a></li>
+<li><a href="#3-5-5-类型查询">3.5.5 类型查询</a></li>
+<li><a href="#3-5-6-接口组合">3.5.6 接口组合</a></li>
+<li><a href="#3-5-7-any-类型">3.5.7 Any 类型</a></li>
+</ul></li>
+<li><a href="#3-6-simple-music-player">3.6 Simple Music Player</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="第-3-章-面向对象编程-oop">第 3 章: 面向对象编程 (OOP)</h1>
+
+<p>go 中没有沿用面向对象中的诸多概念, 比如✨继承, 虚函数, 构造函数, 析构函数, 隐藏的 <code>this</code> 指针.</p>
+
+<p>优雅之处在于: 整个类型系统通过接口类型串联.</p>
+
+<h2 id="3-1-类型系统">3.1 ✨类型系统</h2>
+
+<p>** 类型系统是一个语言的类型体系结构,✨是一门编程语言的地基 **, 典型的类型系统包括:
+1. 基础类型,<code>byte,int,bool,float</code> 等
+2. 符合类型, 数组, 结构体, 指针等
+3. 可以指向任意对象的类型 (Any 类型)
+4. 值语义和引用语义
+5. 面向对象, 即所有面向对象特征 (比如成员方法) 的类型
+6. 接口</p>
+
+<p>类型系统就是描述是这些内容如何在一个语言中被关联.</p>
+
+<p>☕️ 以 Java 为类型讲解类型系, 在 Java 中 2 种类型系统:</p>
+
+<ul>
+<li>一种是值类型: 主要是基本类型 (byte,short,int,char&hellip;);</li>
+<li>✨一种是以 <code>Object</code> 为根的对象类型, 使用 <code>new</code>.
+
+<ul>
+<li>Java 中的 Any 类型就是整个对象类型系统的根  -<code>java.lang.Object</code></li>
+<li>只用对象类型系统的实例才能被 <code>Any</code> 类型引用.</li>
+<li>值类型要想被 <code>Any</code> 引用, 需要 <code>boxing</code>(装箱) 过程.</li>
+<li>只有对象类型系统中的类型才可以实现接口, 具体方法是: 让该类型从要实现的接口继承.</li>
+</ul></li>
+</ul>
+
+<p>🐭 go 语言类型中
+- 大多数系统都是值语义, 都可以包含对应的操作方法. 可以给任何类型 (包括内置系统 * 但是不包括指针类型 *)&ldquo;添加&rdquo; 新方法.
+- 在实现某个接口的时候, 无需从该接口继承, 只需要实现该接口的所有方法.
+- 任何类型都可以被 <code>Any</code> 类型引用. <code>Any</code> 类型就是空接口, 即 <code>interface{}</code></p>
+
+<h3 id="3-1-1-为类型添加方法">3.1.1 为类型添加方法</h3>
+
+<p>为 <code>int</code> 类型添加 <code>Less</code> 方法</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">a</span> <span class="nx">Integer</span> <span class="p">=</span> <span class="mi">1</span>
+	<span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nf">Less</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;a less 2&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">Integer</span> <span class="kt">int</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="nx">Integer</span><span class="p">)</span> <span class="nf">Less</span><span class="p">(</span><span class="nx">b</span> <span class="nx">Integer</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">a</span> <span class="p">&lt;</span> <span class="nx">b</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在 C++ 中, 面向对象的继承和多态知识在 C 语言中的基础上添加的语法糖 (参见 &lt; 深度探索 C++ 对象模型&gt; 真本书)</p>
+
+<p>面向对象的实现方式:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="nx">Integer</span><span class="p">)</span> <span class="nf">Less</span><span class="p">(</span><span class="nx">b</span> <span class="nx">Integer</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">a</span> <span class="p">&lt;</span> <span class="nx">b</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>面向过程</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Integer_Less</span><span class="p">(</span><span class="nx">a</span> <span class="nx">Integer</span><span class="p">,</span><span class="nx">b</span> <span class="nx">Integer</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="p">&lt;</span> <span class="nx">b</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>面向对象的用法: <code>a.Less(2)</code></p>
+
+<p>面向过程的用法: <code>Integer_Less(a,2)</code></p>
+
+<p>🦉面向对象的实现方式: ** 面向对象只是换了一种语法形式而已 **,C++ 之所以让人迷惑就是隐藏了 <code>this</code> 指针, Java 和 C# 中的 <code>this</code> 和 Python 中的 <code>self</code> 作用是完全一样的.</p>
+
+<p>💥在 Go 语言中没有隐藏的 <code>this</code> 指针含义是:
+1. 方法施加的目标 (也就是 &ldquo;对象&rdquo;) 显示传递, 没有被隐藏起来.
+2. 方法施加的目标 (也就是 &ldquo;对象&rdquo;) 不需要非得是指针, 也不用非得叫 <code>this</code></p>
+
+<p>在 Java 中,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">class</span> <span class="nf">Integer</span><span class="p">{</span>
+    <span class="n">paivate</span> <span class="nf">int</span> <span class="n">val</span><span class="p">;</span>
+    <span class="kd">public</span> <span class="nf">boolean</span> <span class="n">Less</span><span class="p">(</span><span class="n">Integer</span> <span class="nf">b</span><span class="p">){</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="na">val</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">.</span><span class="na">val</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>✨ 这个 <code>this</code> 是从哪里来的: 这个主要是因为 <code>Less() 方法隐藏了第一个参数</code>Integer* this`.</p>
+
+<h3 id="3-1-2-值语义和引用语义">3.1.2 值语义和引用语义</h3>
+
+<p>值语义和引用语义真的差别在赋值.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">b</span> <span class="p">=</span> <span class="nx">a</span>
+<span class="nx">b</span><span class="p">.</span><span class="nf">Modify</span><span class="p">()</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>如果 <code>Modify</code> 方法没有修改 a 的值就是值传递, 否则就是引用语义</p>
+
+<p>Go 语言中的大多是值语义:
+1. 基本类型
+2. 符合类型: <code>array</code>,<code>struct</code>(结构体),<code>pointer</code></p>
+
+<p>go 中有 4 个类型特殊
+1. slice: 指向 array 区间</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">数组切内部指向数组的指针, 但是赋值仍是值语义.</pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>map</li>
+</ol>
+
+<p>map 本质是一个字典指针
+3. channel: goroutine 直接的通信设施</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">channel 和 map 类似, 本质上是一个指针. 将他们设计成引用类型而不是值类型的原因是: ** 完整赋值一个 channel 和 map 不是常规需求.**</pre></td></tr></table>
+</div>
+</div>
+<ol>
+<li>✨interface: 对一组满足某个契约的类型的抽象</li>
+</ol>
+
+<h3 id="3-1-3-结构体">3.1.3 结构体</h3>
+
+<p>struct 和其他语言中的 class 含有相同的地位, 但是只保留了 ** 组合 ** 这个最基本的特性.</p>
+
+<h2 id="3-2-初始化">3.2 初始化</h2>
+
+<p>初始化一个 struct: Rect.</p>
+
+<ol>
+<li>使用 <code>new</code></li>
+</ol>
+
+<p><code>var a := new(Rect)</code>
+2. <code>&amp;Rect{}</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt">1
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">全部初始化要顺序初始化</pre></td></tr></table>
+</div>
+</div>
+<p>没有初始化的属性: 会被设置成默认值</p>
+
+<p>go 中没有构造函数: 对象的创建交由一个全局的创建函数来完成, 以 <code>NewXXX</code> 开头, 表示构造函数.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewRect</span><span class="p">(</span><span class="nx">len</span><span class="p">,</span><span class="nx">width</span> <span class="kt">float</span><span class="p">){</span>
+    <span class="k">return</span> <span class="o">&amp;</span><span class="nx">Rect</span><span class="p">{</span><span class="nx">len</span><span class="p">,</span><span class="nx">width</span><span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-3-匿名组合">3.3 匿名组合</h2>
+
+<p>匿名组合: 在 go 中使用组合的文法来实现继承, 称之为匿名组合.</p>
+
+<p>基础 <code>struct</code>, 定义一个 Base 类, 实现了 <code>Foo()</code> 成员方法,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Base</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">Name</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">// Foo 方法
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">a</span> <span class="o">*</span><span class="nx">Base</span><span class="p">)</span> <span class="nf">Foo</span><span class="p">(){</span>
+
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>继承类继承 <code>Base</code>,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">BaseExt</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">Base</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+<span class="kd">func</span><span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">BaseExt</span><span class="p">)</span><span class="nx">Foo</span><span class="p">{</span>
+    <span class="nx">e</span><span class="p">.</span><span class="nx">Base</span><span class="p">.</span><span class="nf">Foo</span><span class="p">()</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>BaseExt</code> 没有改写 <code>Base</code> 成员方法, 这就实现了</p>
+
+<p>另外: <code>BaseExt</code> 中 <code>Base</code> 位置显示了类的内存布局.<code>Base</code> 和其他成员放置的位置显示了内存布局.</p>
+
+<p>&ldquo;🌱派生&rdquo;: 和可以指针的方式从另一个类型 &ldquo;派生&rdquo;:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Foo</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="o">*</span><span class="nx">Base</span>
+    <span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>这个同样可以实现 &ldquo;派生&rdquo; 的效果, 但是在创建 <code>Foo</code> 实例的时候, 需要 ** 提供一个 Base 类的指针 **.</p>
+
+<p>下面的 struct 匿名组合了一个 <code>log.Logger</code> 指针:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Jop</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">Command</span> <span class="kt">string</span>
+    <span class="o">*</span><span class="nx">log</span><span class="p">.</span><span class="nx">Logger</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在合适复制后, 在 Job 类型所有的成员方法都可以使用 log.Logger 提供的方法, 如:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">job</span> <span class="o">*</span><span class="nx">Job</span><span class="p">)</span><span class="nf">Start</span><span class="p">(){</span>
+    <span class="nx">job</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">&#34;do sth&#34;</span><span class="p">)</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>对于 Job 的实现者, 根本就不知道 <code>log.Logger</code> 类型的存在. 这就是匿名组合的魅力.</p>
+
+<p>🍄需要注意的是:
+1. 无论怎么样的组合方法, 被组合类型所包含的方法虽然升级成了外部这个组合类型的方法, 但是其实他们被组合的方法调用时的接收者并没有改变.
+2. 即使调用方法是 <code>job.Log()</code> 但是 <code>Log()</code> 函数的接受者还是 <code>log.Logger</code> 这个指针, 无法访问 <code>Job</code> 中的其他成员变量.(因为被组合的类型不知道自己会被什么类型组合, 也就无法访问那个未知的 &ldquo;组合者&rdquo; 的功能)</p>
+
+<p>🌺 同名问题:
+1. 组合类型和被组合类型都包含同样的名字的成员, 但是所有组合类型只会访问到最外边的成员, 内部成员会被隐藏起来
+2. 当都为指针时</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></pre></td>
+<td class="lntd">
+<pre class="chroma">```go
+type Logger struct{
+    Name string
+}
+type Y struct{
+    *Logger
+    *log.Logger
+    Name string
+}
+```
+这样的话, 会出现问题. ** 因为之前说过, 匿名组合类型相当于以其类型名称 (出去包名) 作为成员变量的名字.** 这样的话, Y 中就包含了两个 `Logger` 成员, 虽然类型不同, 但是预期会受到编译错误.
+
+但是只有当没有使用这两个 `Logger` 任何一个的时候才不会出现问题.</pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-4-可见性">3.4 可见性</h2>
+
+<p>要想使得某个符号对其他包可见 (package) 的话, 需要定义为大写字母开头. 否则小写.</p>
+
+<p>Go 中可访问性是包一级, 而不是类型一级的.</p>
+
+<h2 id="3-5-接口">3.5 接口</h2>
+
+<p>Go 语言接口是整个类型系统的基石.</p>
+
+<h3 id="3-5-1-其他语言的接口">3.5.1 其他语言的接口</h3>
+
+<p>💥 Go 中的接口和其他语言中的接口概念不同.</p>
+
+<p>其他语言中的接口是作为不同组件之间的契约存在的, 对契约的实现是强制的, 必须声明的确实现了某个接口, 这就是 &ldquo;侵入式&rdquo; 接口,</p>
+
+<h3 id="3-5-2-非侵入式接口">3.5.2 非侵入式接口</h3>
+
+<ul>
+<li>其他语言中 (java): 实现一个接口就要实现其全部方法.</li>
+<li>go 中: 实现所有方法就是实现了该接口.</li>
+</ul>
+
+<p>一个类 <code>example</code> 实现了 <code>a()</code>,<code>b()</code>,<code>c()</code> 三个方法, 但是可能 <code>interface1</code> 包含 a,b,<code>interface2</code> 包含 c 方法, 这样 <code>example</code> 就实现了两个接口. 并且可以相互赋值</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">val</span> <span class="nx">ex1</span> <span class="nx">interface1</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">example</span><span class="p">)</span>
+<span class="nx">val</span> <span class="nx">ex2</span> <span class="nx">interface2</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">example</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>好处的三点:
+1. 标准库中不用再写类图的继承树图
+2. 不用纠结接口需要拆的多细, 实现类的时候只需要关系自己应该提供哪些方法.
+3. 不用引包</p>
+
+<h3 id="3-5-3-接口赋值">3.5.3 接口赋值</h3>
+
+<ol>
+<li><p>将对象实例赋值给接口</p>
+
+<p>以上面的 Integer 类型进行举例.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">a</span> <span class="nx">Integer</span> <span class="p">=</span> <span class="mi">1</span>
+<span class="kd">var</span> <span class="nx">b</span> <span class="nx">Interface1</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">a</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>当接口中为指针类型的时候, 使用 <code>&amp;a</code> 进行赋值. 当不是指针的时候,<code>a</code> 或者 <code>&amp;a</code> 都可以. 尽量使用 <code>&amp;a</code> 进行复制.原因见: Page75</p>
+
+<p><strong>🦍 <a href="https://stackoverflow.com/questions/13511203/why-cant-i-assign-a-struct-to-an-interface">为什么可以将接口的实例赋值给接口 ?</a></strong>
+&gt; 当您有一个实现接口的结构时，指向该结构的指针也会自动实现该接口。 这就是为什么在函数原型中永远没有* SomeInterface的原因，因为这不会向SomeInterface添加任何内容，并且在变量声明中不需要这种类型（请参阅此相关问题）。</p>
+
+<blockquote>
+<p>接口值不是具体结构的值（因为它的大小可变，所以不可能），但是它是一种指针（更精确地说，是指向结构的指针和指向类型的指针 ）。 拉斯·考克斯（Russ Cox）正是在这里描述它：<code>https://research.swtch.com/interfaces</code></p>
+</blockquote></li>
+
+<li><p>将一个接口赋值给另一个接口</p></li>
+</ol>
+
+<p>只要两个接口拥有相同的方法, 无论顺序是否相同, 都可以互相赋值.</p>
+
+<p>另外: 并不要求两个接口完全相等, 一个接口是另一个的子集也可以.</p>
+
+<h3 id="3-5-4-接口查询-page77">3.5.4 接口查询 <code>page77</code></h3>
+
+<p>接口查询的语法:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">file</span> <span class="nx">WriterInterface</span> <span class="p">=</span> <span class="o">...</span>
+<span class="k">if</span> <span class="nx">file5</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="nx">file</span><span class="p">.(</span><span class="nx">Interface2</span><span class="p">);</span><span class="nx">ok</span><span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>判断 <code>file</code> 接口指向的实例是否实现了 <code>Interface2</code> 接口.</p>
+
+<p>还可以询问接口它指向的对象是否为某个类型:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">file2</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="nx">file</span><span class="p">.(</span><span class="o">*</span><span class="nx">File</span><span class="p">);</span><span class="nx">ok</span><span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>判读 <code>file</code> 接口它指向的对象是否是为 <code>(*File)</code> 类型.</p>
+
+<p>查询对象类型只是一个接口查询的一个特例.接口是对一组类型的公共特性的抽象.</p>
+
+<h3 id="3-5-5-类型查询">3.5.5 类型查询</h3>
+
+<p>类型查询:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">v1</span>  <span class="kd">interface</span><span class="p">{}</span> <span class="p">=</span> <span class="o">...</span>
+<span class="k">switch</span> <span class="nx">v</span> <span class="o">:=</span> <span class="nx">v1</span><span class="p">.(</span><span class="kd">type</span><span class="p">){</span>
+    <span class="k">case</span> <span class="kt">int</span><span class="p">:</span>
+    <span class="k">case</span> <span class="kt">string</span><span class="p">:</span>
+    <span class="o">...</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<p><code>fmt.Println()</code>中采用的穷举法,对一般的情况判断是否实现了<code>String()</code>方法,否则利用反射功能遍历对象的所用成员变量进行打印.</p>
+
+<h3 id="3-5-6-接口组合">3.5.6 接口组合</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ReadWriter</span> <span class="kd">interface</span><span class="p">{</span>
+    <span class="nx">Reader</span>
+    <span class="nx">Writer</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="3-5-7-any-类型">3.5.7 Any 类型</h3>
+
+<p><code>interface {}</code>,典型类型为 <code>fmt.Println</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Println</span><span class="p">(</span><span class="nx">args</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="3-6-simple-music-player">3.6 Simple Music Player</h2>
+
+<p><a href="https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/GoPLDemo/Mp3Player">SMP 文档</a></p>
+
+<p>实现基本的命令行程序,实现数据 🎵音乐的管理功能.</p>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-02-12
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B/">《Go语言编程》</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/go-programming-language-1/">
+            <span class="next-text nav-default">Go Programming Language 1</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

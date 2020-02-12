@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>META-INF 文件夹是干什么的 ? - The Blog of Suzl 🤠</title>
+  <title>引言-为什么选择 go 语言 - The Blog of Suzl 🤠</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="苏子叶" /><meta name="description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+<meta name="author" content="苏子叶" /><meta name="description" content="Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
 
 
-<link rel="canonical" href="http://codedigger.cn/post/metainfinjava/" />
+<link rel="canonical" href="http://codedigger.cn/post/go-programming-language-0/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="META-INF 文件夹是干什么的 ?" />
-<meta property="og:description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文" />
+<meta property="og:title" content="引言-为什么选择 go 语言" />
+<meta property="og:description" content="Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://codedigger.cn/post/metainfinjava/" />
-<meta property="article:published_time" content="2020-01-07T23:23:31+08:00" />
-<meta property="article:modified_time" content="2020-01-07T23:23:31+08:00" />
-<meta itemprop="name" content="META-INF 文件夹是干什么的 ?">
-<meta itemprop="description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文">
+<meta property="og:url" content="http://codedigger.cn/post/go-programming-language-0/" />
+<meta property="article:published_time" content="2020-02-12T19:19:27+08:00" />
+<meta property="article:modified_time" content="2020-02-12T19:19:27+08:00" />
+<meta itemprop="name" content="引言-为什么选择 go 语言">
+<meta itemprop="description" content="Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么">
 
 
-<meta itemprop="datePublished" content="2020-01-07T23:23:31&#43;08:00" />
-<meta itemprop="dateModified" content="2020-01-07T23:23:31&#43;08:00" />
-<meta itemprop="wordCount" content="623">
+<meta itemprop="datePublished" content="2020-02-12T19:19:27&#43;08:00" />
+<meta itemprop="dateModified" content="2020-02-12T19:19:27&#43;08:00" />
+<meta itemprop="wordCount" content="898">
 
 
 
-<meta itemprop="keywords" content="curious," />
+<meta itemprop="keywords" content="golang,《Go语言编程》," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="META-INF 文件夹是干什么的 ?"/>
-<meta name="twitter:description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文"/>
+<meta name="twitter:title" content="引言-为什么选择 go 语言"/>
+<meta name="twitter:description" content="Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -120,14 +120,14 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">META-INF 文件夹是干什么的 ?</h1>
+      <h1 class="post-title">引言-为什么选择 go 语言</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-01-07 </span>
+        <span class="post-time"> 2020-02-12 </span>
         <div class="post-category">
-            <a href="/categories/curious/"> curious </a>
+            <a href="/categories/reading-notes/"> Reading Notes </a>
             </div>
-          <span class="more-meta"> 约 623 字 </span>
+          <span class="more-meta"> 约 898 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -138,9 +138,23 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li>
+<li><a href="#go-语言的好处">Go 语言的好处</a>
 <ul>
-<li><a href="#summary">Summary</a></li>
+<li><a href="#1-并发和分布式">1.并发和分布式</a>
+<ul>
+<li><a href="#1-1-并发执行体">1.1 并发执行体</a></li>
+<li><a href="#1-2-执行体之间的通信">1.2 执行体之间的通信</a>
+<ul>
+<li><a href="#执行体之间的互斥和同步">执行体之间的互斥和同步</a></li>
+<li><a href="#执行体之间的消息传递">执行体之间的消息传递</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#2-软件工程">2.软件工程</a></li>
+<li><a href="#3-编程哲学上">3. 编程哲学上</a>
+<ul>
+<li><a href="#3-1-反对重载-overload">3.1 反对重载 (overload)</a></li>
+<li><a href="#3-2-interface">3.2 ✨ interface</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -149,70 +163,124 @@
     <div class="post-content">
       
 
-<p>写在前面:</p>
+<h1 id="go-语言的好处">Go 语言的好处</h1>
 
-<p>因为好奇 google 了一下, 发现全部的总结 <code>mete-inf</code> 的文章全部都是指向这个 Stack Overflow 的问题
-<a href="https://stackoverflow.com/questions/70216/whats-the-purpose-of-meta-inf/1609825">What is the purpose of META-INF?</a>, 而且基本雷同, 有的完全一样 (👎👎👎👎👎).</p>
+<p>互联网时代的语言需要考虑的问题:</p>
 
-<p>通过这个文档可以很清楚的知道.</p>
+<ul>
+<li>对并行 (多核化) 和分布式 (集群化) 的支持</li>
+<li>对逐步扩大的软件工程规模的支持.</li>
+<li>编程哲学的重新塑造, 什么样的才是最佳的编程实践 ?</li>
+</ul>
 
-<p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html">JAR File Specification</a></p>
+<h2 id="1-并发和分布式">1.并发和分布式</h2>
 
-<p>manifest file: 清单文件</p>
+<h3 id="1-1-并发执行体">1.1 并发执行体</h3>
+
+<p>这是抽象的概念, 在操作系统中有进程, 线程, 进程中的协程与之对应.</p>
+
+<p>多数语言仅仅通过外部库的形式来支持协程, 但是不完善.</p>
+
+<p>go 在语言级别使用 goroutine 来支持协程</p>
+
+<h3 id="1-2-执行体之间的通信">1.2 执行体之间的通信</h3>
+
+<h4 id="执行体之间的互斥和同步">执行体之间的互斥和同步</h4>
+
+<ul>
+<li>执行体之间存在共享资源的时候 (一般为内存), 为了保证 ram 在逻辑上访问的正确性, 需要对访问该共享资源的执行体进行互斥操作.</li>
+<li>当多个执行体之间的逻辑存在时序上 <strong>依赖</strong>, 也需要在执行体之间进行同步.</li>
+</ul>
+
+<p>互斥和同步是最基础的交互方式.</p>
+
+<h4 id="执行体之间的消息传递">执行体之间的消息传递</h4>
+
+<p>并发编程领域分为两个流派:
+1. 共享内存模型
+2. 消息传递模型</p>
+
+<p>go 保存了第一种, 但是内置 channel 来实现第二种.</p>
+
+<h2 id="2-软件工程">2.软件工程</h2>
+
+<p>软件规模变大后, 在团队协作中, 人们需要建立统一的交互语言来降低沟通的成本. 包含下面几项:
+1. 代码风格规范
+2. 错误处理规范
+3. 包管理
+4. 契约 (接口) 规范
+5. 单元测试规范
+6. 功能开发流程规范</p>
+
+<ul>
+<li><p>代码风格上</p>
+
+<p>go 将代码进风格进行了 <strong>强制规定</strong>, 减少了 &ldquo;大括号应该另起一行还是在行尾&rdquo; 这种无意义问题的争论上</p></li>
+
+<li><p>在错误处理上</p>
+
+<p>go 首创了 <code>defer</code> 和 函数多返回之中的 <code>err</code> 来进行错误处理.</p></li>
+</ul>
+
+<h2 id="3-编程哲学上">3. 编程哲学上</h2>
+
+<p>计算机软件有多重学术流派: 面向过程, 面向对象, 函数式&hellip; 等.</p>
+
+<p>C 面向过程, java 是面向对象的激进派 (典型体现: 不能容忍体系中包含孤立的函数)</p>
+
+<h3 id="3-1-反对重载-overload">3.1 反对重载 (overload)</h3>
+
+<p>go 反对函数和 操作符 重载,重载虽然解决了少数面向对象的问题,但是给语言带来负担很大.</p>
+
+<table>
+<thead>
+<tr>
+<th>支持</th>
+<th>类</th>
+<th>类成员方法</th>
+<th>类的组合</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>反对</td>
+<td>继承</td>
+<td>虚函数</td>
+<td>虚函数重载</td>
+<td>构造函数(constructor)</td>
+<td>析构函数(deconstructor)</td>
+</tr>
+</tbody>
+</table>
 
 <blockquote>
-<p><strong>Introduction</strong></p>
-
-<p>JAR file is a file format based on the popular ZIP file format and is used for aggregating many files into one. A  JAR file is essentially a zip file that contains an optional <code>META-INF</code> directory.</p>
-
-<p>A JAR file can be created by the command-line jar tool, or by using the  <code>java.util.jar</code> API in the Java platform. There is no restriction on the name of a JAR file, it can be any legal file name on a particular platform.</p>
-
-<p>In many cases, JAR files are not just simple archives of java classes files and/or resources. <strong>They are used as building blocks for applications and extensions.</strong> <strong>The <code>META-INF</code> directory, if it exists, is used to store package and extension configuration data, including security, versioning, extension and services.</strong></p>
-
-<ol>
-<li><code>The META-INF directory</code></li>
-</ol>
-
-<ul>
-<li>The following files/directories in the META-INF directory are recognized and interpreted by the Java 2 Platform to configure applications, extensions, class loaders and services:</li>
-
-<li><p><code>MANIFEST.MF</code></p></li>
-
-<li><p>The manifest file that is used to define extension and package related data.</p></li>
-
-<li><p><code>INDEX.LIST</code></p></li>
-
-<li><p>This file is generated by the new &ldquo;-i&rdquo; option of the jar tool, which contains location information for packages defined in an application or extension.  It is part of the JarIndex implementation and used by class loaders to speed up their class loading process.</p></li>
-
-<li><p><code>x.SF</code></p></li>
-
-<li><p>The signature file for the JAR file.  &lsquo;x&rsquo; stands for the base file name.</p></li>
-
-<li><p><code>x.DSA</code></p></li>
-
-<li><p>The signature block file associated with the signature file with the same base file name. This file stores the digital signature of the corresponding signature file.</p></li>
-
-<li><p><code>services/</code></p></li>
-
-<li><p>This directory stores all the service provider configuration files.</p></li>
-</ul>
+<p>如果一个特性并不对解决任何问题有显著价值,那么 go 就不提供它.</p>
 </blockquote>
 
-<h2 id="summary">Summary</h2>
+<h3 id="3-2-interface">3.2 ✨ interface</h3>
 
-<ul>
-<li>To configure applications, extensions, class loaders and services.</li>
-<li>包含 <code>main class</code> jar 包的入口</li>
-<li>产生这个文件夹的方法</li>
-<li><code>A JAR file can be signed by using the command line jarsigner tool or directly through the java.security API. Every file entry, including non-signature related files in the META-INF directory, will be signed if the JAR file is signed by the jarsigner tool.</code></li>
-<li>maven 打包生成 jar 文件后解压会包含这个文件夹</li>
-<li>在 netty 的文件中: <code>Created-By: Apache Maven Bundle Plugin</code>, 也有写 maven 的</li>
-<li>在 <code>Head First Java</code> 中, 第 17 章,<code>把程序放入 jar 中</code> 说明了 <code>manifest</code> 文件主要的作用是告诉 java 虚拟机哪一个类中含有 main 方法.(但是看了很多 <code>META-INF/MANIFEST.MF</code> 文件中都没有包含 <code>main class</code> 的位置. 不得其解</li>
-</ul>
+<p>最大优点: 非侵入式.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">foo</span> <span class="nx">IFoo</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Foo</span><span class="p">)</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>在 go 中,✨只要<code>Foo</code>实现了<code>IFoo</code>的所要求的全部接口,就实现了该接口,就可以进行复制.</p>
 
-<p>通过自己使用 maven 打包一个<code>jar</code>包在解压后包含了 main-class 的配置,但是 spring 和其他大包都不包含这个配置.🤔</p>
+<p>巨大影响:
+1. go 标准库不再需要绘制类库的继承树图. 只需要知道这个类实现了哪些方法,每个方法的含义就行了
+2. 无需纠结接口拆分的粒度
+3. 不用为了实现一个接口而专门引入一个包</p>
 
-<p>猜测: 这些依赖都不是能够独立运行的 <code>jar</code>,否则肯定要有<code>main-class</code>文件路径的配置.</p>
+<blockquote>
+<p>虚函数</p>
+</blockquote>
 
     </div>
 
@@ -224,7 +292,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-01-07
+        2020-02-12
         
     </span>
   </p>
@@ -236,16 +304,17 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/curious/">curious</a>
+          <a href="/tags/golang/">golang</a>
+          <a href="/tags/go%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B/">《Go语言编程》</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/how-to-analyze-an-project/">
+        <a class="prev" href="/post/go-programming-language-1/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">怎么分析一个好的开源项目?</span>
+            <span class="prev-text nav-default">Go Programming Language 1</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/">
-            <span class="next-text nav-default">Mysql 5.x 实现 rank 排名和百分比排序(Percentile Rank)</span>
+        <a class="next" href="/post/config-linux-system/">
+            <span class="next-text nav-default">How to Config A New Linux System</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

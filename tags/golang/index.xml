@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Mon, 06 Jan 2020 01:19:01 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Feb 2020 19:23:27 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/tags/golang/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>面向对象</title>
+      <link>http://codedigger.cn/post/go-programming-language-3/</link>
+      <pubDate>Wed, 12 Feb 2020 19:23:27 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-programming-language-3/</guid>
+      <description>第 3 章: 面向对象编程 (OOP) go 中没有沿用面向对象中的诸多概念, 比如✨继承, 虚函数, 构造函数, 析构函数, 隐藏的 this 指针. 优雅之处在于: 整个类型系统通过</description>
+    </item>
+    
+    <item>
+      <title>Go Programming Language 1</title>
+      <link>http://codedigger.cn/post/go-programming-language-1/</link>
+      <pubDate>Wed, 12 Feb 2020 19:23:18 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-programming-language-1/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>引言-为什么选择 go 语言</title>
+      <link>http://codedigger.cn/post/go-programming-language-0/</link>
+      <pubDate>Wed, 12 Feb 2020 19:19:27 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-programming-language-0/</guid>
+      <description>Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么</description>
+    </item>
     
     <item>
       <title>Go channel 和定时器</title>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>META-INF 文件夹是干什么的 ? - The Blog of Suzl 🤠</title>
+  <title>怎么分析一个好的开源项目? - The Blog of Suzl 🤠</title>
   <meta name="renderer" content="webkit" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="苏子叶" /><meta name="description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+<meta name="author" content="苏子叶" /><meta name="description" content="怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
@@ -26,7 +26,7 @@
 <meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
 
 
-<link rel="canonical" href="http://codedigger.cn/post/metainfinjava/" />
+<link rel="canonical" href="http://codedigger.cn/post/how-to-analyze-an-project/" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -38,26 +38,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
 
 
-<meta property="og:title" content="META-INF 文件夹是干什么的 ?" />
-<meta property="og:description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文" />
+<meta property="og:title" content="怎么分析一个好的开源项目?" />
+<meta property="og:description" content="怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://codedigger.cn/post/metainfinjava/" />
-<meta property="article:published_time" content="2020-01-07T23:23:31+08:00" />
-<meta property="article:modified_time" content="2020-01-07T23:23:31+08:00" />
-<meta itemprop="name" content="META-INF 文件夹是干什么的 ?">
-<meta itemprop="description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文">
+<meta property="og:url" content="http://codedigger.cn/post/how-to-analyze-an-project/" />
+<meta property="article:published_time" content="2020-02-12T19:13:12+08:00" />
+<meta property="article:modified_time" content="2020-02-12T19:13:12+08:00" />
+<meta itemprop="name" content="怎么分析一个好的开源项目?">
+<meta itemprop="description" content="怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:">
 
 
-<meta itemprop="datePublished" content="2020-01-07T23:23:31&#43;08:00" />
-<meta itemprop="dateModified" content="2020-01-07T23:23:31&#43;08:00" />
-<meta itemprop="wordCount" content="623">
+<meta itemprop="datePublished" content="2020-02-12T19:13:12&#43;08:00" />
+<meta itemprop="dateModified" content="2020-02-12T19:13:12&#43;08:00" />
+<meta itemprop="wordCount" content="264">
 
 
 
-<meta itemprop="keywords" content="curious," />
+<meta itemprop="keywords" content="skill," />
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="META-INF 文件夹是干什么的 ?"/>
-<meta name="twitter:description" content="写在前面: 因为好奇 google 了一下, 发现全部的总结 mete-inf 的文章全部都是指向这个 Stack Overflow 的问题 What is the purpose of META-INF?, 而且基本雷同, 有的完全一样 (👎👎👎👎👎). 通过这个文"/>
+<meta name="twitter:title" content="怎么分析一个好的开源项目?"/>
+<meta name="twitter:description" content="怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -120,15 +120,15 @@
           <article class="post">
     
     <header class="post-header">
-      <h1 class="post-title">META-INF 文件夹是干什么的 ?</h1>
+      <h1 class="post-title">怎么分析一个好的开源项目?</h1>
 
       <div class="post-meta">
-        <span class="post-time"> 2020-01-07 </span>
+        <span class="post-time"> 2020-02-12 </span>
         <div class="post-category">
-            <a href="/categories/curious/"> curious </a>
+            <a href="/categories/skill/"> skill </a>
             </div>
-          <span class="more-meta"> 约 623 字 </span>
-          <span class="more-meta"> 预计阅读 2 分钟 </span>
+          <span class="more-meta"> 约 264 字 </span>
+          <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
     </header>
@@ -138,9 +138,13 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
 <ul>
-<li>
+<li><a href="#怎么分析开源项目">怎么分析开源项目?</a>
 <ul>
-<li><a href="#summary">Summary</a></li>
+<li><a href="#观察开源项目">观察开源项目</a></li>
+<li><a href="#下载开源项目">下载开源项目</a></li>
+<li><a href="#尝试运行项目">尝试运行项目</a></li>
+<li><a href="#前后端分离的套路">前后端分离的套路</a></li>
+<li><a href="#how-to-find-good-projects">How to find good projects?</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -149,70 +153,73 @@
     <div class="post-content">
       
 
-<p>写在前面:</p>
+<h1 id="怎么分析开源项目">怎么分析开源项目?</h1>
 
-<p>因为好奇 google 了一下, 发现全部的总结 <code>mete-inf</code> 的文章全部都是指向这个 Stack Overflow 的问题
-<a href="https://stackoverflow.com/questions/70216/whats-the-purpose-of-meta-inf/1609825">What is the purpose of META-INF?</a>, 而且基本雷同, 有的完全一样 (👎👎👎👎👎).</p>
+<h2 id="观察开源项目">观察开源项目</h2>
 
-<p>通过这个文档可以很清楚的知道.</p>
+<p>阅读下列文件中的内容:</p>
 
-<p><a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jar/jar.html">JAR File Specification</a></p>
+<ul>
+<li>查看官网或者文档</li>
+<li>README.md</li>
+<li>使用的协议
+需要获取的信息:</li>
+<li>项目的作用</li>
+<li>项目使用的技术架构</li>
+</ul>
 
-<p>manifest file: 清单文件</p>
+<p>重点关注的文件:
+- sql
+- 是否有 maven 依赖 pom 或者 gradle 的文件</p>
 
-<blockquote>
-<p><strong>Introduction</strong></p>
+<h2 id="下载开源项目">下载开源项目</h2>
 
-<p>JAR file is a file format based on the popular ZIP file format and is used for aggregating many files into one. A  JAR file is essentially a zip file that contains an optional <code>META-INF</code> directory.</p>
+<p>观察项目的目录
+1. 用了什么技术架构
+2. 数据库时候有
+3. 本地环境是否满足需要的环境
+   1. node.js &hellip;
+   2. java maven redis mysql &hellip;</p>
 
-<p>A JAR file can be created by the command-line jar tool, or by using the  <code>java.util.jar</code> API in the Java platform. There is no restriction on the name of a JAR file, it can be any legal file name on a particular platform.</p>
-
-<p>In many cases, JAR files are not just simple archives of java classes files and/or resources. <strong>They are used as building blocks for applications and extensions.</strong> <strong>The <code>META-INF</code> directory, if it exists, is used to store package and extension configuration data, including security, versioning, extension and services.</strong></p>
+<h2 id="尝试运行项目">尝试运行项目</h2>
 
 <ol>
-<li><code>The META-INF directory</code></li>
+<li>前端</li>
+<li>后端
+
+<ol>
+<li>导入项目</li>
+<li>分析 common 通用模块</li>
+<li>查看配置文件
+
+<ol>
+<li>端口</li>
+<li>数据库名字</li>
+</ol></li>
+<li>是否有 api 文件, swagger 描述文件 等</li>
+</ol></li>
 </ol>
 
-<ul>
-<li>The following files/directories in the META-INF directory are recognized and interpreted by the Java 2 Platform to configure applications, extensions, class loaders and services:</li>
+<h2 id="前后端分离的套路">前后端分离的套路</h2>
 
-<li><p><code>MANIFEST.MF</code></p></li>
+<p>重点: 找到接口的调用关系</p>
 
-<li><p>The manifest file that is used to define extension and package related data.</p></li>
+<ol>
+<li>分析前端,打开控制台,点一个接口,分析调用调用条件</li>
+<li>前后端端口调用不一致
 
-<li><p><code>INDEX.LIST</code></p></li>
+<ol>
+<li>封装了接口请求 ajax axios</li>
+</ol></li>
+</ol>
 
-<li><p>This file is generated by the new &ldquo;-i&rdquo; option of the jar tool, which contains location information for packages defined in an application or extension.  It is part of the JarIndex implementation and used by class loaders to speed up their class loading process.</p></li>
+<h2 id="how-to-find-good-projects">How to find good projects?</h2>
 
-<li><p><code>x.SF</code></p></li>
-
-<li><p>The signature file for the JAR file.  &lsquo;x&rsquo; stands for the base file name.</p></li>
-
-<li><p><code>x.DSA</code></p></li>
-
-<li><p>The signature block file associated with the signature file with the same base file name. This file stores the digital signature of the corresponding signature file.</p></li>
-
-<li><p><code>services/</code></p></li>
-
-<li><p>This directory stores all the service provider configuration files.</p></li>
-</ul>
-</blockquote>
-
-<h2 id="summary">Summary</h2>
-
-<ul>
-<li>To configure applications, extensions, class loaders and services.</li>
-<li>包含 <code>main class</code> jar 包的入口</li>
-<li>产生这个文件夹的方法</li>
-<li><code>A JAR file can be signed by using the command line jarsigner tool or directly through the java.security API. Every file entry, including non-signature related files in the META-INF directory, will be signed if the JAR file is signed by the jarsigner tool.</code></li>
-<li>maven 打包生成 jar 文件后解压会包含这个文件夹</li>
-<li>在 netty 的文件中: <code>Created-By: Apache Maven Bundle Plugin</code>, 也有写 maven 的</li>
-<li>在 <code>Head First Java</code> 中, 第 17 章,<code>把程序放入 jar 中</code> 说明了 <code>manifest</code> 文件主要的作用是告诉 java 虚拟机哪一个类中含有 main 方法.(但是看了很多 <code>META-INF/MANIFEST.MF</code> 文件中都没有包含 <code>main class</code> 的位置. 不得其解</li>
-</ul>
-
-<p>通过自己使用 maven 打包一个<code>jar</code>包在解压后包含了 main-class 的配置,但是 spring 和其他大包都不包含这个配置.🤔</p>
-
-<p>猜测: 这些依赖都不是能够独立运行的 <code>jar</code>,否则肯定要有<code>main-class</code>文件路径的配置.</p>
+<ol>
+<li>分类</li>
+<li>star✨</li>
+<li>收藏数</li>
+</ol>
 
     </div>
 
@@ -224,7 +231,7 @@
   <p class="copyright-item">
     <span class="item-title">上次更新</span>
     <span class="item-content">
-        2020-01-07
+        2020-02-12
         
     </span>
   </p>
@@ -236,16 +243,16 @@
 </div>
 <footer class="post-footer">
       <div class="post-tags">
-          <a href="/tags/curious/">curious</a>
+          <a href="/tags/skill/">skill</a>
           </div>
       <nav class="post-nav">
-        <a class="prev" href="/post/how-to-analyze-an-project/">
+        <a class="prev" href="/post/config-linux-system/">
             <i class="iconfont icon-left"></i>
-            <span class="prev-text nav-default">怎么分析一个好的开源项目?</span>
+            <span class="prev-text nav-default">How to Config A New Linux System</span>
             <span class="prev-text nav-mobile">上一篇</span>
           </a>
-        <a class="next" href="/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/">
-            <span class="next-text nav-default">Mysql 5.x 实现 rank 排名和百分比排序(Percentile Rank)</span>
+        <a class="next" href="/post/metainfinjava/">
+            <span class="next-text nav-default">META-INF 文件夹是干什么的 ?</span>
             <span class="next-text nav-mobile">下一篇</span>
             <i class="iconfont icon-right"></i>
           </a>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tcp on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/tcp/</link>
+    <description>Recent content in tcp on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Wed, 12 Feb 2020 20:05:54 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tcp 入门</title>
+      <link>http://codedigger.cn/post/go-tcp/</link>
+      <pubDate>Wed, 12 Feb 2020 20:05:54 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-tcp/</guid>
+      <description>TCP 127.0.0.1 和 192.100.x.xxx 的区别 - 一个是本地回环地址, 只要有网卡, 就能使用, 没有出这台电脑 - 另一个是通过网卡发出去, 再由路由器法返回来到本机, 真正意义上的网络</description>
+    </item>
+    
+  </channel>
+</rss>

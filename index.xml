@@ -7,10 +7,73 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Wed, 12 Feb 2020 19:23:27 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Feb 2020 20:07:33 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Go Http 编程</title>
+      <link>http://codedigger.cn/post/go-httppro/</link>
+      <pubDate>Wed, 12 Feb 2020 20:07:33 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-httppro/</guid>
+      <description>HTTP 编程 Web 的工作方式 DNS(Domain Name System) 服务器 DNS 域名服务器（Domain Name Server）是进行域名 (domain name) 和与之相对应的 IP 地址转换的服务器。DNS 中保存了一张域</description>
+    </item>
+    
+    <item>
+      <title>基于 go 语言实现聊天室</title>
+      <link>http://codedigger.cn/post/go-chatroom/</link>
+      <pubDate>Wed, 12 Feb 2020 20:07:23 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-chatroom/</guid>
+      <description>🪐Concurrent Chat Room 源代码: &amp;gt; https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效</description>
+    </item>
+    
+    <item>
+      <title>基于 go 实现文件传输</title>
+      <link>http://codedigger.cn/post/go-filetransfer/</link>
+      <pubDate>Wed, 12 Feb 2020 20:07:11 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-filetransfer/</guid>
+      <description>File Transfer 命令行参数 作用是: 在 main 函数启动的时候向 main 函数传入参数 语法: go run main.go arg1 arg2 main.go 第 0 个参数 arg1 第 1 个参数 arg2 第 2 个参数 获取文件属性 1 os.Stat(文</description>
+    </item>
+    
+    <item>
+      <title>Go UDP 编程</title>
+      <link>http://codedigger.cn/post/go-tcpudp/</link>
+      <pubDate>Wed, 12 Feb 2020 20:06:27 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-tcpudp/</guid>
+      <description>udp 通信 tcp: 面向连接,可靠数据包的传输 udp: 无连接,不可靠的报文传输 QQ 用的是 udp 加上上层对数据包完整性的校验,来保证数据的完整性. 服务器 由于UDP是“</description>
+    </item>
+    
+    <item>
+      <title>通信协议入门</title>
+      <link>http://codedigger.cn/post/go-tcppro/</link>
+      <pubDate>Wed, 12 Feb 2020 20:06:21 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-tcppro/</guid>
+      <description>协议入门 从应用的角度出发，协议可理解为“规则”，是数据传输和数据的解释的规则。 常见协议 传输层 常见协议有TCP/UDP协议。 TCP传输控制协议</description>
+    </item>
+    
+    <item>
+      <title>Go Scoket 编程</title>
+      <link>http://codedigger.cn/post/go-scoket/</link>
+      <pubDate>Wed, 12 Feb 2020 20:06:07 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-scoket/</guid>
+      <description>Socket Socket，英文含义是【插座、插孔】，一般称之为套接字，用于描述 IP 地址和端口。可以实现不同程序间的数据通信。 通信过程中一定是成对出现的.</description>
+    </item>
+    
+    <item>
+      <title>Tcp 入门</title>
+      <link>http://codedigger.cn/post/go-tcp/</link>
+      <pubDate>Wed, 12 Feb 2020 20:05:54 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-tcp/</guid>
+      <description>TCP 127.0.0.1 和 192.100.x.xxx 的区别 - 一个是本地回环地址, 只要有网卡, 就能使用, 没有出这台电脑 - 另一个是通过网卡发出去, 再由路由器法返回来到本机, 真正意义上的网络</description>
+    </item>
     
     <item>
       <title>Go语言编程-ch3-面向对象</title>

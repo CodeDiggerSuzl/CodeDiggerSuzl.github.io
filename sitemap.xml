@@ -3,7 +3,104 @@
   
   <url>
     <loc>http://codedigger.cn/categories/</loc>
-    <lastmod>2020-02-12T19:23:27+08:00</lastmod>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-httppro/</loc>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/</loc>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/</loc>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/</loc>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/golang/</loc>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/programming-language/</loc>
+    <lastmod>2020-02-12T20:07:33+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-chatroom/</loc>
+    <lastmod>2020-02-12T20:07:23+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-filetransfer/</loc>
+    <lastmod>2020-02-12T20:07:11+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-tcpudp/</loc>
+    <lastmod>2020-02-12T20:06:27+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/categories/network/</loc>
+    <lastmod>2020-02-12T20:06:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/tcp/ip/</loc>
+    <lastmod>2020-02-12T20:06:21+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-tcppro/</loc>
+    <lastmod>2020-02-12T20:06:21+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-scoket/</loc>
+    <lastmod>2020-02-12T20:06:07+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/post/go-tcp/</loc>
+    <lastmod>2020-02-12T20:05:54+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>http://codedigger.cn/tags/tcp/</loc>
+    <lastmod>2020-02-12T20:05:54+08:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -15,31 +112,7 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/post/</loc>
-    <lastmod>2020-02-12T19:23:27+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://codedigger.cn/categories/reading-notes/</loc>
-    <lastmod>2020-02-12T19:23:27+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/</loc>
-    <lastmod>2020-02-12T19:23:27+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/</loc>
-    <lastmod>2020-02-12T19:23:27+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/tags/golang/</loc>
     <lastmod>2020-02-12T19:23:27+08:00</lastmod>
     <priority>0</priority>
   </url>
@@ -177,12 +250,6 @@
   </url>
   
   <url>
-    <loc>http://codedigger.cn/categories/programming-language/</loc>
-    <lastmod>2020-01-06T01:38:28+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://codedigger.cn/post/reflect/</loc>
     <lastmod>2020-01-06T01:38:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -251,12 +318,6 @@
     <lastmod>2020-01-06T01:38:28+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>http://codedigger.cn/categories/network/</loc>
-    <lastmod>2020-01-06T01:38:28+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

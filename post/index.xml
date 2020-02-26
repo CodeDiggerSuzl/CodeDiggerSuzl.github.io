@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Wed, 12 Feb 2020 20:07:33 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 26 Feb 2020 22:10:26 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>代理模式</title>
+      <link>http://codedigger.cn/post/dp-proxy/</link>
+      <pubDate>Wed, 26 Feb 2020 22:10:26 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/dp-proxy/</guid>
+      <description>代理模式 总体作用: 控制和管理访问 和装饰器模式的区别: - 装饰器模式: 包装另一个对象, 提供不同的接口 - 代理模式: 包装另一个对象, 控制对它的访问 角</description>
+    </item>
     
     <item>
       <title>Go Http 编程</title>

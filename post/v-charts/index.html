@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>V Charts - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="vcharts 折线图 ! 数据结构的灵活使用 - 前端 - Java &amp;amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&amp;#39;日期&amp;#3" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/v-charts/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<link href="/dist/even.c2a46f00.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="V Charts" />
+<meta property="og:description" content="vcharts 折线图 ! 数据结构的灵活使用 - 前端 - Java &amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&#39;日期&#3" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/v-charts/" />
+<meta property="article:published_time" content="2020-02-28T23:18:29+08:00" />
+<meta property="article:modified_time" content="2020-02-28T23:18:29+08:00" />
+<meta itemprop="name" content="V Charts">
+<meta itemprop="description" content="vcharts 折线图 ! 数据结构的灵活使用 - 前端 - Java &amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&#39;日期&#3">
+
+
+<meta itemprop="datePublished" content="2020-02-28T23:18:29&#43;08:00" />
+<meta itemprop="dateModified" content="2020-02-28T23:18:29&#43;08:00" />
+<meta itemprop="wordCount" content="1112">
+
+
+
+<meta itemprop="keywords" content="DataStructure," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="V Charts"/>
+<meta name="twitter:description" content="vcharts 折线图 ! 数据结构的灵活使用 - 前端 - Java &amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&#39;日期&#3"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be Awesome ~ ✊</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">V Charts</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-02-28 </span>
+        <div class="post-category">
+            <a href="/categories/worksummary/"> WorkSummary </a>
+            </div>
+          <span class="more-meta"> 约 1112 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+<ul>
+<li><a href="#vcharts-折线图">vcharts 折线图</a>
+<ul>
+<li><a href="#前台需要的数据样式">前台需要的数据样式</a></li>
+<li><a href="#mybatis-接口和-xml">mybatis 接口和 xml</a></li>
+<li><a href="#java-code">Java Code</a>
+<ul>
+<li><a href="#define-an-entity">define an entity</a></li>
+<li><a href="#java-code-1">Java code</a></li>
+<li><a href="#postman-test">postman test</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      
+
+<h1 id="vcharts-折线图">vcharts 折线图</h1>
+
+<p>! 数据结构的灵活使用
+- 前端
+- Java &amp; Mybatis</p>
+
+<h2 id="前台需要的数据样式">前台需要的数据样式</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-JavaScript" data-lang="JavaScript"><span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+    <span class="nx">data</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="nx">chartData</span><span class="o">:</span> <span class="p">{</span>
+          <span class="nx">columns</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;日期&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="p">],</span>
+          <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span>
+            <span class="p">{</span> <span class="s1">&#39;日期&#39;</span><span class="o">:</span> <span class="s1">&#39;1/1&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="o">:</span> <span class="mi">1393</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="o">:</span> <span class="mi">1093</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="o">:</span> <span class="mf">0.32</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s1">&#39;日期&#39;</span><span class="o">:</span> <span class="s1">&#39;1/2&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="o">:</span> <span class="mi">3530</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="o">:</span> <span class="mi">3230</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="o">:</span> <span class="mf">0.26</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s1">&#39;日期&#39;</span><span class="o">:</span> <span class="s1">&#39;1/3&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="o">:</span> <span class="mi">2923</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="o">:</span> <span class="mi">2623</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="o">:</span> <span class="mf">0.76</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s1">&#39;日期&#39;</span><span class="o">:</span> <span class="s1">&#39;1/4&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="o">:</span> <span class="mi">1723</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="o">:</span> <span class="mi">1423</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="o">:</span> <span class="mf">0.49</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s1">&#39;日期&#39;</span><span class="o">:</span> <span class="s1">&#39;1/5&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="o">:</span> <span class="mi">3792</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="o">:</span> <span class="mi">3492</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="o">:</span> <span class="mf">0.323</span> <span class="p">},</span>
+            <span class="p">{</span> <span class="s1">&#39;日期&#39;</span><span class="o">:</span> <span class="s1">&#39;1/6&#39;</span><span class="p">,</span> <span class="s1">&#39;访问用户&#39;</span><span class="o">:</span> <span class="mi">4593</span><span class="p">,</span> <span class="s1">&#39;下单用户&#39;</span><span class="o">:</span> <span class="mi">4293</span><span class="p">,</span> <span class="s1">&#39;下单率&#39;</span><span class="o">:</span> <span class="mf">0.78</span> <span class="p">}</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="mybatis-接口和-xml">mybatis 接口和 xml</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">List</span><span class="o">&lt;</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="nf">getAvgIndexValue</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&#34;year&#34;</span><span class="p">)</span> <span class="n">String</span> <span class="nf">year</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="o">&lt;</span><span class="k">select</span> <span class="n">id</span><span class="o">=</span><span class="s2">&#34;getAvgIndexValue&#34;</span> <span class="n">resultType</span><span class="o">=</span><span class="s2">&#34;java.util.LinkedHashMap&#34;</span><span class="o">&gt;</span>
+    <span class="k">SELECT</span> <span class="k">AVG</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">INDEX_SCORE</span><span class="p">)</span> <span class="k">as</span> <span class="n">value</span><span class="p">,</span>
+            <span class="n">b</span><span class="p">.</span><span class="n">INDEX_NAME</span>      <span class="k">as</span> <span class="n">indexName</span>
+    <span class="k">FROM</span> <span class="n">cp_cr_results_detail</span> <span class="n">a</span><span class="p">,</span>
+            <span class="n">cp_cr_index_sys_detail</span> <span class="n">b</span>
+    <span class="k">WHERE</span> <span class="n">a</span><span class="p">.</span><span class="n">INDEX_CODE</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_CODE</span>
+        <span class="k">AND</span> <span class="n">a</span><span class="p">.</span><span class="n">EVALUAT_DATE</span> <span class="o">=</span> <span class="o">#</span><span class="err">{</span><span class="k">year</span><span class="err">}</span>
+        <span class="k">AND</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_LEVEL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_NAME</span>
+<span class="o">&lt;/</span><span class="k">select</span><span class="o">&gt;</span></code></pre></td></tr></table>
+</div>
+</div>
+<h2 id="java-code">Java Code</h2>
+
+<h3 id="define-an-entity">define an entity</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="cm">/**
+</span><span class="cm"> * v-charts 折线图 &amp; 雷达图 bo
+</span><span class="cm"> * 折线图: https://v-charts.js.org/#/line
+</span><span class="cm"> * 雷达图: https://v-charts.js.org/#/radar
+</span><span class="cm"> * @author suzl
+</span><span class="cm"> */</span>
+<span class="nd">@Data</span>
+<span class="kd">public</span> <span class="nf">class</span> <span class="n">RadarAndInLineBo</span> <span class="p">{</span>
+    <span class="cm">/**
+</span><span class="cm">     * 横坐标
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">columns</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+    <span class="cm">/**
+</span><span class="cm">     * 纵坐标
+</span><span class="cm">     */</span>
+    <span class="kd">public</span> <span class="nf">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="nf">rows</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span>
+	<span class="k">AVG</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">INDEX_SCORE</span><span class="p">),</span>
+	<span class="n">b</span><span class="p">.</span><span class="n">INDEX_NAME</span>
+<span class="k">FROM</span>
+	<span class="n">cp_cr_results_detail</span> <span class="n">a</span><span class="p">,</span>
+	<span class="n">cp_cr_index_sys_detail</span> <span class="n">b</span>
+<span class="k">WHERE</span>
+	<span class="n">a</span><span class="p">.</span><span class="n">INDEX_CODE</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_CODE</span>
+	<span class="k">AND</span> <span class="n">a</span><span class="p">.</span><span class="n">EVALUAT_DATE</span> <span class="o">=</span> <span class="mi">2020</span>
+	<span class="k">AND</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_LEVEL</span> <span class="o">=</span> <span class="mi">1</span>
+	<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_NAME</span></code></pre></td></tr></table>
+</div>
+</div>
+<p>query result</p>
+
+<table>
+<thead>
+<tr>
+<th>60</th>
+<th>信息公开</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>135.3333</td>
+<td>交易管理</td>
+</tr>
+
+<tr>
+<td>70</td>
+<td>结算管理</td>
+</tr>
+
+<tr>
+<td>122</td>
+<td>运行管理</td>
+</tr>
+
+<tr>
+<td>119.3333</td>
+<td>合同管理</td>
+</tr>
+
+<tr>
+<td>23.6667</td>
+<td>市场化交易能力</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="java-code-1">Java code</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="nf">ResultUtil</span> <span class="n">test</span><span class="p">(</span><span class="n">String</span> <span class="nf">taskNo</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">RadarAndInLineBo</span> <span class="nf">inLineBo</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RadarAndInLineBo</span><span class="p">();</span>
+    <span class="c1">// {18,19,20}
+</span><span class="c1"></span>    <span class="k">for</span> <span class="p">(</span><span class="n">String</span> <span class="nf">s</span> <span class="o">:</span> <span class="n">years</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="nf">avgIndexValue</span> <span class="o">=</span> <span class="n">cpCrResultsDetailExtMapper</span><span class="p">.</span><span class="na">getAvgIndexValue</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+        <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">rowElement</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">avgIndexValue</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+            <span class="n">inLineBo</span><span class="p">.</span><span class="na">columns</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">&#34;年份&#34;</span><span class="p">);</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">map</span> <span class="o">:</span> <span class="n">avgIndexValue</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">inLineBo</span><span class="p">.</span><span class="na">columns</span><span class="p">.</span><span class="na">add</span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;indexName&#34;</span><span class="p">));</span>
+                <span class="n">rowElement</span><span class="p">.</span><span class="na">put</span><span class="p">((</span><span class="n">String</span><span class="p">)</span><span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;indexName&#34;</span><span class="p">),</span> <span class="n">map</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;value&#34;</span><span class="p">));</span>
+            <span class="p">}</span>
+            <span class="n">rowElement</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&#34;年份&#34;</span><span class="p">,</span> <span class="n">s</span><span class="p">);</span>
+            <span class="n">inLineBo</span><span class="p">.</span><span class="na">rows</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">rowElement</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">ResultUtil</span><span class="p">.</span><span class="na">success</span><span class="p">(</span><span class="n">inLineBo</span><span class="p">);</span></code></pre></td></tr></table>
+</div>
+</div>
+<h3 id="postman-test">postman test</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&#34;status&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nt">&#34;message&#34;</span><span class="p">:</span> <span class="s2">&#34;Success&#34;</span><span class="p">,</span>
+    <span class="nt">&#34;data&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;columns&#34;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&#34;年份&#34;</span><span class="p">,</span>
+            <span class="s2">&#34;信息公开&#34;</span><span class="p">,</span>
+            <span class="s2">&#34;交易管理&#34;</span><span class="p">,</span>
+            <span class="s2">&#34;结算管理&#34;</span><span class="p">,</span>
+            <span class="s2">&#34;运行管理&#34;</span><span class="p">,</span>
+            <span class="s2">&#34;合同管理&#34;</span><span class="p">,</span>
+            <span class="s2">&#34;市场化交易能力&#34;</span>
+        <span class="p">],</span>
+        <span class="nt">&#34;rows&#34;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&#34;信息公开&#34;</span><span class="p">:</span> <span class="mf">60.0000</span><span class="p">,</span>
+                <span class="nt">&#34;交易管理&#34;</span><span class="p">:</span> <span class="mf">135.3333</span><span class="p">,</span>
+                <span class="nt">&#34;结算管理&#34;</span><span class="p">:</span> <span class="mf">70.0000</span><span class="p">,</span>
+                <span class="nt">&#34;运行管理&#34;</span><span class="p">:</span> <span class="mf">122.0000</span><span class="p">,</span>
+                <span class="nt">&#34;合同管理&#34;</span><span class="p">:</span> <span class="mf">119.3333</span><span class="p">,</span>
+                <span class="nt">&#34;市场化交易能力&#34;</span><span class="p">:</span> <span class="mf">23.6667</span><span class="p">,</span>
+                <span class="nt">&#34;年份&#34;</span><span class="p">:</span> <span class="s2">&#34;2019&#34;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></td></tr></table>
+</div>
+</div>
+<blockquote>
+<p>数据结构的灵活使用 很重要</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-02-28
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/datastructure/">DataStructure</a>
+          </div>
+      <nav class="post-nav">
+        
+        <a class="next" href="/post/dp-proxy/">
+            <span class="next-text nav-default">代理模式</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+<script type="text/javascript" src="/dist/even.26188efa.min.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

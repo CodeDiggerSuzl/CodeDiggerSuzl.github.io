@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/reflect/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Java 中的反射">
 <meta itemprop="description" content="反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语">
-
-
 <meta itemprop="datePublished" content="2020-01-06T01:16:06&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="2593">
+<meta itemprop="wordCount" content="2586">
 
 
 
-<meta itemprop="keywords" content="java," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="java," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java 中的反射"/>
 <meta name="twitter:description" content="反射 Class 类 并且获取 Class 实例 类的加载和 ClassLoader 创建运行时类的对象 获取时类的完整结构 调用运行时类的指定结构 静态和动态语言 动态语言 在运行时候可以改变结构的语"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 2593 字 </span>
+          <span class="more-meta"> 约 2586 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,47 +134,42 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#反射">反射</a>
-<ul>
-<li><a href="#静态和动态语言">静态和动态语言</a></li>
-<li><a href="#reflection">reflection</a></li>
-<li><a href="#class-类">Class 类</a>
-<ul>
-<li><a href="#获取-class-类实例">获取 Class 类实例</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#java-内存分析">🍀 java 内存分析</a>
-<ul>
-<li><a href="#类加载过程-todo">🍀类加载过程 TODO:</a></li>
-</ul></li>
-<li><a href="#什么时候发生类的初始化">🍀 什么时候发生类的初始化?</a>
-<ul>
-<li><a href="#类的主动引用-一定会发生类的初始化">类的主动引用: 一定会发生类的初始化</a></li>
-<li><a href="#类的被动引用-不会进行初始化">类的被动引用:不会进行初始化</a></li>
-</ul></li>
-<li><a href="#类加载器">🍀类加载器</a>
-<ul>
-<li><a href="#作用">作用:</a></li>
-<li><a href="#分类">分类</a></li>
-<li><a href="#双亲委派机制-todo">双亲委派机制 TODO</a></li>
-</ul></li>
-<li><a href="#创建建运行时类的对象">创建建运行时类的对象</a>
-<ul>
-<li><a href="#使用获取到的属性">使用获取到的属性</a></li>
-<li><a href="#性能对比分析">性能对比分析</a></li>
-<li><a href="#操作泛型">操作泛型</a></li>
-<li><a href="#获取注解信息">获取注解信息</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#静态和动态语言">静态和动态语言</a></li>
+    <li><a href="#reflection">reflection</a></li>
+    <li><a href="#class-类">Class 类</a>
+      <ul>
+        <li><a href="#获取-class-类实例">获取 Class 类实例</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#类加载过程-todo">🍀类加载过程 TODO:</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#类的主动引用-一定会发生类的初始化">类的主动引用: 一定会发生类的初始化</a></li>
+    <li><a href="#类的被动引用不会进行初始化">类的被动引用:不会进行初始化</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#作用">作用:</a></li>
+    <li><a href="#分类">分类</a></li>
+    <li><a href="#双亲委派机制-todo">双亲委派机制 TODO</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#使用获取到的属性">使用获取到的属性</a></li>
+    <li><a href="#性能对比分析">性能对比分析</a></li>
+    <li><a href="#操作泛型">操作泛型</a></li>
+    <li><a href="#获取注解信息">获取注解信息</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="反射">反射</h1>
-
+      <h1 id="反射">反射</h1>
 <ul>
 <li>Class 类 并且获取 Class 实例</li>
 <li>类的加载和 ClassLoader</li>
@@ -185,44 +177,36 @@
 <li>获取时类的完整结构</li>
 <li>调用运行时类的指定结构</li>
 </ul>
-
 <h2 id="静态和动态语言">静态和动态语言</h2>
-
 <ul>
-<li><p>动态语言</p>
-
-<p>在运行时候可以改变结构的语言:在运行时代码可以根据某些结构改变自身结构</p></li>
-
-<li><p>静态语言</p>
-
+<li>
+<p>动态语言</p>
+<p>在运行时候可以改变结构的语言:在运行时代码可以根据某些结构改变自身结构</p>
+</li>
+<li>
+<p>静态语言</p>
 <p>代码运行时不可以改变结构的语言</p>
-
-<p>java 可以根据反射获取类似动态语言的特性 准动态语言</p></li>
+<p>java 可以根据反射获取类似动态语言的特性 准动态语言</p>
+</li>
 </ul>
-
 <h2 id="reflection">reflection</h2>
-
 <p>java 反射机制允许程序在执行期间借助 <code>Reflection API</code> 获取任何内部类的信息,直接操作任何类的内部属性和方法.</p>
-
 <p>类加载🍀后,在堆内存的方法区产生一个Class类型的对象,包含了类的完整结构信息.</p>
-
 <ul>
-<li><p>normal way : import class <code>=&gt;</code> new class <code>=&gt;</code> get instance</p></li>
-
-<li><p>reflect : get instance <code>=&gt;</code> getClass() <code>=&gt;</code> get class</p></li>
+<li>
+<p>normal way : import class <code>=&gt;</code> new class <code>=&gt;</code> get instance</p>
+</li>
+<li>
+<p>reflect : get instance <code>=&gt;</code> getClass() <code>=&gt;</code> get class</p>
+</li>
 </ul>
-
 <p>一个类在内存中只用一个 Class 对象</p>
-
 <h2 id="class-类">Class 类</h2>
-
 <p>某个对象进行反射后得到的信息:</p>
-
 <ol>
 <li>类的属性, 方法, 构造器,实现了哪些接口</li>
 <li>对于每个类,JRE 都为其保留了一个不变的 <code>Class</code> 类型的对象</li>
 <li>一个 <code>Class</code>对象包含了特定结构的信息
-
 <ol>
 <li>class</li>
 <li>interface</li>
@@ -232,42 +216,44 @@
 <li>void</li>
 <li>[] 数组/二维数据</li>
 <li>Class.class</li>
-</ol></li>
 </ol>
-
-<p>另外:
-1. Class 本身也是对象
-2. Class 对象只能系统建立
-3. 一个加载的类在 JVM 中只有一个 Class 实例
-4. 一个 Class 对象对应到是一个加载到 JVM 中的一个<code>.class</code>对象
-5. 每个类的实例都会记得自己是哪一个 Class 实例所生成的
-6. 通过 Class 可以完整到获取一个类中所有被加载的结构
-7. Class 类是进行反射的前提,任何想动态加载,运行的类 都要先获得 Class 对象</p>
-
-<h3 id="获取-class-类实例">获取 Class 类实例</h3>
-
+</li>
+</ol>
+<p>另外:</p>
 <ol>
-<li><p>获取已知的类,通过类的 class 属性获取</p>
-
-<p><code>Class clazz = Person.class</code></p></li>
-
-<li><p>已经拥有实例</p>
-
-<p><code>Class clazz = person.getClass()</code></p></li>
-
-<li><p>通过全类名获取</p>
-
-<p><code>Class&lt;?&gt; c1 = Class.forName(&quot;全类名&quot;);</code></p></li>
-
-<li><p>内置的基本类型的包装类可以使用<code>类名.Type</code></p></li>
-
-<li><p>使用 <code>ClassLoader</code></p></li>
+<li>Class 本身也是对象</li>
+<li>Class 对象只能系统建立</li>
+<li>一个加载的类在 JVM 中只有一个 Class 实例</li>
+<li>一个 Class 对象对应到是一个加载到 JVM 中的一个<code>.class</code>对象</li>
+<li>每个类的实例都会记得自己是哪一个 Class 实例所生成的</li>
+<li>通过 Class 可以完整到获取一个类中所有被加载的结构</li>
+<li>Class 类是进行反射的前提,任何想动态加载,运行的类 都要先获得 Class 对象</li>
 </ol>
-
-<h1 id="java-内存分析">🍀 java 内存分析</h1>
+<h3 id="获取-class-类实例">获取 Class 类实例</h3>
+<ol>
+<li>
+<p>获取已知的类,通过类的 class 属性获取</p>
+<p><code>Class clazz = Person.class</code></p>
+</li>
+<li>
+<p>已经拥有实例</p>
+<p><code>Class clazz = person.getClass()</code></p>
+</li>
+<li>
+<p>通过全类名获取</p>
+<p><code>Class&lt;?&gt; c1 = Class.forName(&quot;全类名&quot;);</code></p>
+</li>
+<li>
+<p>内置的基本类型的包装类可以使用<code>类名.Type</code></p>
+</li>
+<li>
+<p>使用 <code>ClassLoader</code></p>
+</li>
+</ol>
+<h1 id="-java-内存分析">🍀 java 内存分析</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -277,9 +263,9 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"> java 内存
+<pre class="chroma"><code class="language-fallback" data-lang="fallback"> java 内存
 ├── 堆
 │   └── 存放 new 出来的对象和数组
 │   └── 可以被所有的线程共享,不会存放别的对象引用
@@ -288,61 +274,53 @@
 │   └── 引用对象的变量(会存放引用在堆里的具体地址)
 ├── 方法区(特殊的堆)
     ├── 可以被所用线程共享
-    └── 包含了所有到 class 和 static 变量</pre></td></tr></table>
+    └── 包含了所有到 class 和 static 变量
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="类加载过程-todo">🍀类加载过程 TODO:</h2>
-
+</div><h2 id="类加载过程-todo">🍀类加载过程 TODO:</h2>
 <blockquote>
 <p><a href="https://juejin.im/post/5a810b0e5188257a5c606a85">https://juejin.im/post/5a810b0e5188257a5c606a85</a></p>
-
+</blockquote>
+<blockquote>
 <p>深入理解 java 虚拟机 ch7</p>
 </blockquote>
-
 <ol>
-<li><p>Load(类的加载)</p>
-
+<li>
+<p>Load(类的加载)</p>
 <p>加载</p>
-
 <ul>
 <li>将类的 class 文件读入内存,并且将静态数据转换成方法区中运行时的数据结构,并且为之创建一个<code>java.lang.Class</code>对象,由类加载器完成</li>
-</ul></li>
-
-<li><p>Link(类的连接)</p>
-
+</ul>
+</li>
+<li>
+<p>Link(类的连接)</p>
 <p>将类的二进制数据合并到 JRE 中</p>
-
 <ol>
-<li><p>验证</p>
-
-<p>保证类的信息符合 JVM 规范,没有安全问题</p></li>
-
-<li><p>准备</p>
-
-<p>正式为类变量(static)分配内存并且设置类变量默认初始值的阶段,这些内存都在方法区中进行分配</p></li>
-
-<li><p>解析</p>
-
-<p>虚拟机常量池内符号引用(常量名)替换为直接引用(地址)的过程.</p></li>
-</ol></li>
-
-<li><p>(initialize)类的初始化 (jvm)</p>
-
-<p>JVM 负责类的<strong>初始化</strong></p>
-
-<p>执行类构造器<code>&lt;clinit&gt;()</code>方法的过程. 类构造器<code>&lt;clinit&gt;()</code>方法是由编译器自动收集类中所有类变量的赋值动作和静态代码块中语句合并产生的.(类构造器是构造类信息的,不是构造该类对象到构造器)</p>
-
-<p>初始化一个类的时候,先初始化其父类</p>
-
-<p>虚拟机会保证一个类的<code>&lt;clinit&gt;()</code> 方法在多线程环境中被正确加锁和同步</p>
-
-<p><code>&lt;init&gt;</code> 是 <code>new</code> 对象的方法</p></li>
+<li>
+<p>验证</p>
+<p>保证类的信息符合 JVM 规范,没有安全问题</p>
+</li>
+<li>
+<p>准备</p>
+<p>正式为类变量(static)分配内存并且设置类变量默认初始值的阶段,这些内存都在方法区中进行分配</p>
+</li>
+<li>
+<p>解析</p>
+<p>虚拟机常量池内符号引用(常量名)替换为直接引用(地址)的过程.</p>
+</li>
 </ol>
-
-<h1 id="什么时候发生类的初始化">🍀 什么时候发生类的初始化?</h1>
-
+</li>
+<li>
+<p>(initialize)类的初始化 (jvm)</p>
+<p>JVM 负责类的<strong>初始化</strong></p>
+<p>执行类构造器<code>&lt;clinit&gt;()</code>方法的过程. 类构造器<code>&lt;clinit&gt;()</code>方法是由编译器自动收集类中所有类变量的赋值动作和静态代码块中语句合并产生的.(类构造器是构造类信息的,不是构造该类对象到构造器)</p>
+<p>初始化一个类的时候,先初始化其父类</p>
+<p>虚拟机会保证一个类的<code>&lt;clinit&gt;()</code> 方法在多线程环境中被正确加锁和同步</p>
+<p><code>&lt;init&gt;</code> 是 <code>new</code> 对象的方法</p>
+</li>
+</ol>
+<h1 id="-什么时候发生类的初始化">🍀 什么时候发生类的初始化?</h1>
 <h2 id="类的主动引用-一定会发生类的初始化">类的主动引用: 一定会发生类的初始化</h2>
-
 <ol>
 <li>当虚拟机启动,先初始化 main 所在的类</li>
 <li>new 一个对象</li>
@@ -350,40 +328,34 @@
 <li>使用<code>java.lang.reflect</code>包的方法对类进行反射调用</li>
 <li>初始化一个类时,如果父类没有初始化,先初始化父类</li>
 </ol>
-
-<h2 id="类的被动引用-不会进行初始化">类的被动引用:不会进行初始化</h2>
-
+<h2 id="类的被动引用不会进行初始化">类的被动引用:不会进行初始化</h2>
 <ol>
 <li>当访问一个静态域的时候,只有真正声明这个域的类才会被初始化,当子类引用父类的静态变量,不会导致子类初始化.</li>
 <li>通过数组定义类的引用,不会定义类的初始化</li>
 <li>引用常量不会触发此类的初始化,常量在连接阶段就存入调用类的常量池了</li>
 </ol>
-
 <h1 id="类加载器">🍀类加载器</h1>
-
 <h2 id="作用">作用:</h2>
-
 <p>将编译器编译好的<code>.class</code>文件的字节码内容加载到内存中去,并将这些静态数据加载换成方法区运行时候的数据结构,然后在堆中生生成一个代表这个类的<code>java.lang.Class</code>对象,作为方法区中类数据的访问入口.</p>
-
 <p>类缓存: 标准 javaSE 类加载器可以按照要求查找类,但是一旦某一个类被加载到类加载器中,将维持加载 (缓存)一段时间,不过 JVM 垃圾回收机制可以回收这这些 Class 对象.</p>
-
 <h2 id="分类">分类</h2>
-
 <ol>
-<li><p>引导类加载器 <code>Bootstrap ClassLoader</code></p>
-
+<li>
+<p>引导类加载器 <code>Bootstrap ClassLoader</code></p>
 <p>C++ 编写,jvm 自带的加载器,<strong>负责 java 平台到核心库</strong>,用来转载核心类库,<strong>该加载器无法直接获取</strong></p>
-
-<p><code>rt</code> 包</p></li>
-
-<li><p>扩展类加载器 <code>Extension ClassLoader</code> : 复制 <code>jre/lib/ext</code>目录下 jar 包或者<code>-D java.ext.dirs</code> 指定目录下 jar 包装入工具库</p></li>
-
-<li><p>系统类加载器 <code>System ClassLoader</code> 或者叫<code>App ClassLoader</code> 负责 <code>java -classpath</code>或者 <code>-D java.class.path</code>下指定的目录下的类和 jar 包装入,最常用的加载器.</p></li>
-
-<li><p>自定义加载器</p>
+<p><code>rt</code> 包</p>
+</li>
+<li>
+<p>扩展类加载器 <code>Extension ClassLoader</code> : 复制 <code>jre/lib/ext</code>目录下 jar 包或者<code>-D java.ext.dirs</code> 指定目录下 jar 包装入工具库</p>
+</li>
+<li>
+<p>系统类加载器 <code>System ClassLoader</code> 或者叫<code>App ClassLoader</code> 负责 <code>java -classpath</code>或者 <code>-D java.class.path</code>下指定的目录下的类和 jar 包装入,最常用的加载器.</p>
+</li>
+<li>
+<p>自定义加载器</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -394,93 +366,76 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">ClassLoader</span> <span class="nf">systemClassLoader</span> <span class="o">=</span> <span class="n">ClassLoader</span><span class="p">.</span><span class="na">getSystemClassLoader</span><span class="p">();</span>
-        <span class="o">**</span><span class="n">System</span><span class="o">**</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">systemClassLoader</span><span class="p">);</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">ClassLoader</span> <span class="n">systemClassLoader</span> <span class="o">=</span> <span class="n">ClassLoader</span><span class="o">.</span><span class="na">getSystemClassLoader</span><span class="o">();</span>
+        <span class="o">**</span><span class="n">System</span><span class="o">**.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">systemClassLoader</span><span class="o">);</span>
         <span class="c1">// get super class loader
-</span><span class="c1"></span>        <span class="n">ClassLoader</span> <span class="nf">parent</span> <span class="o">=</span> <span class="n">systemClassLoader</span><span class="p">.</span><span class="na">getParent</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">parent</span><span class="p">);</span>
-        <span class="n">ClassLoader</span> <span class="nf">loader</span> <span class="o">=</span> <span class="n">parent</span><span class="p">.</span><span class="na">getParent</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">loader</span><span class="p">);</span>
-    <span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span>        <span class="n">ClassLoader</span> <span class="n">parent</span> <span class="o">=</span> <span class="n">systemClassLoader</span><span class="o">.</span><span class="na">getParent</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">parent</span><span class="o">);</span>
+        <span class="n">ClassLoader</span> <span class="n">loader</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="na">getParent</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">loader</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
-
 <p>out out</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">sun.misc.Launcher$AppClassLoader@18b4aac2
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">sun.misc.Launcher$AppClassLoader@18b4aac2
 sun.misc.Launcher$ExtClassLoader@511d50c0
-null  // bootstrap class loader 获取不到</pre></td></tr></table>
+null  // bootstrap class loader 获取不到
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="双亲委派机制-todo">双亲委派机制 TODO</h2>
-
+</div><h2 id="双亲委派机制-todo">双亲委派机制 TODO</h2>
 <h1 id="创建建运行时类的对象">创建建运行时类的对象</h1>
-
 <p>Filed, Method, Constructor,Superclass,Interface,Annotation</p>
-
 <h2 id="使用获取到的属性">使用获取到的属性</h2>
-
 <p>动态获取对象</p>
-
 <p><code>Son son  = (Son)c1.newInstance();</code></p>
-
 <ol>
 <li>调用了无参构造器</li>
 <li>类的构造器访问权限必须足够</li>
 </ol>
-
 <p>当没有无参构造器的时候可以</p>
-
 <ol>
 <li>使用<code>Class</code>类的<code>getDeclaredConstructor(Class,...parameterTypes)</code> 来取得本类的之指定形参的构造器</li>
 <li>向构造器的形参中传递一个对象数组进去,包含构造器的各个参数</li>
 <li>通过构造器实例化对象</li>
 </ol>
-
 <p>使用方法:</p>
-
 <ul>
 <li><code>invoke(对象,&quot;方法的值&quot;)</code> / <code>Object invoke(Object obj,Object[] args)</code></li>
 </ul>
-
 <ol>
 <li>无返回值 返回 null</li>
 <li>原方法为静态方法 此时 obj 可为 null</li>
 <li>若原方法为参数列表为空,此时<code>Object[] args</code> 为 null</li>
 <li>原方法为 private,则需要在调用方法<code>invoke</code>前设置<code>filed.setAccessable(true)</code></li>
 </ol>
-
 <h2 id="性能对比分析">性能对比分析</h2>
-
 <ul>
 <li>反射方式调用 速度很慢 关闭检测要快一点</li>
 <li>普通方式调用
 速度快</li>
 </ul>
-
 <h2 id="操作泛型">操作泛型</h2>
-
 <p>java 使用泛型擦除机制来引入泛型,泛型是给 javac 使用,确保数据的安全性和免去强制类型转换的问题. 但是一旦编译完成,所有的和泛型有关的类型全部擦除.</p>
-
 <p>为了是反射操作这些类型,java 新增了 <code>ParameterizedType</code>, <code>GenericArray Type</code>,<code>TypeVariable</code> 和 <code>WildcardType</code> 几种类型来<strong>代表不能被归一到 Class类类型但是又和原始类型齐名的类型.</strong></p>
-
 <ul>
 <li><code>ParameterizedType</code>: 表示一种参数化类型,比如 <code>Collection&lt;String&gt;</code></li>
 <li><code>GenericArrayType</code>: 表示一种元素类型类型为参数化类型或者类型变量的数组类型</li>
 <li><code>TypeVariable</code>: 各个变量类型的公共父接口</li>
-
-<li><p><code>WildcardType</code>: 通配符类型表达式</p>
+<li><code>WildcardType</code>: 通配符类型表达式</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -501,40 +456,36 @@ null  // bootstrap class loader 获取不到</pre></td></tr></table>
 </span><span class="lnt">19
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">GetGenericParam</span> <span class="p">{</span>
-<span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="kd">throws</span> <span class="nf">NoSuchMethodException</span> <span class="p">{</span>
-    <span class="n">Method</span> <span class="nf">test01</span> <span class="o">=</span> <span class="n">GetGenericParam</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getMethod</span><span class="p">(</span><span class="s">&#34;test01&#34;</span><span class="p">,</span> <span class="n">Map</span><span class="p">.</span><span class="na">class</span><span class="p">,</span> <span class="n">List</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-    <span class="n">Type</span><span class="p">[]</span> <span class="nf">genericExceptionTypes</span> <span class="o">=</span> <span class="n">test01</span><span class="p">.</span><span class="na">getGenericParameterTypes</span><span class="p">();</span>
-    <span class="k">for</span> <span class="p">(</span><span class="n">Type</span> <span class="nf">genericExceptionType</span> <span class="o">:</span> <span class="n">genericExceptionTypes</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;#&#34;</span> <span class="o">+</span> <span class="n">genericExceptionType</span><span class="p">);</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">genericExceptionType</span> <span class="nf">instanceof</span> <span class="n">ParameterizedType</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">Type</span><span class="p">[]</span> <span class="nf">actualTypeArguments</span> <span class="o">=</span> <span class="p">((</span><span class="n">ParameterizedType</span><span class="p">)</span> <span class="n">genericExceptionType</span><span class="p">).</span><span class="na">getActualTypeArguments</span><span class="p">();</span>
-            <span class="k">for</span> <span class="p">(</span><span class="n">Type</span> <span class="nf">actualTypeArgument</span> <span class="o">:</span> <span class="n">actualTypeArguments</span><span class="p">)</span> <span class="p">{</span>
-                <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="n">actualTypeArgument</span><span class="p">);</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetGenericParam</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">NoSuchMethodException</span> <span class="o">{</span>
+        <span class="n">Method</span> <span class="n">test01</span> <span class="o">=</span> <span class="n">GetGenericParam</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="s">&#34;test01&#34;</span><span class="o">,</span> <span class="n">Map</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">List</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">Type</span><span class="o">[]</span> <span class="n">genericExceptionTypes</span> <span class="o">=</span> <span class="n">test01</span><span class="o">.</span><span class="na">getGenericParameterTypes</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Type</span> <span class="n">genericExceptionType</span> <span class="o">:</span> <span class="n">genericExceptionTypes</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;#&#34;</span> <span class="o">+</span> <span class="n">genericExceptionType</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">genericExceptionType</span> <span class="k">instanceof</span> <span class="n">ParameterizedType</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Type</span><span class="o">[]</span> <span class="n">actualTypeArguments</span> <span class="o">=</span> <span class="o">((</span><span class="n">ParameterizedType</span><span class="o">)</span> <span class="n">genericExceptionType</span><span class="o">).</span><span class="na">getActualTypeArguments</span><span class="o">();</span>
+                <span class="k">for</span> <span class="o">(</span><span class="n">Type</span> <span class="n">actualTypeArgument</span> <span class="o">:</span> <span class="n">actualTypeArguments</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-&gt;&#34;</span> <span class="o">+</span> <span class="n">actualTypeArgument</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
 
-<span class="kd">public</span> <span class="nf">void</span> <span class="n">test01</span><span class="p">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">Son</span><span class="o">&gt;</span> <span class="nf">map</span><span class="p">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">list</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;test01&#34;</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test01</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Son</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;test01&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<h2 id="获取注解信息">获取注解信息</h2>
-
+</div><h2 id="获取注解信息">获取注解信息</h2>
 <ul>
 <li><code>getAnnotation</code></li>
 <li><code>getAnnotations</code></li>
 </ul>
-
 <p>Orm: Object relationship mapping 就是使用注解来进行操作的</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -569,39 +520,40 @@ null  // bootstrap class loader 获取不到</pre></td></tr></table>
 </span><span class="lnt">33
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
-<span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">TYPE</span><span class="p">)</span>
-<span class="nd">@interface</span> <span class="n">Table</span> <span class="p">{</span>
-    <span class="n">String</span> <span class="nf">dbName</span><span class="p">();</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">)</span>
+<span class="nd">@interface</span> <span class="n">Table</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="nf">dbName</span><span class="o">();</span>
 
-<span class="p">}</span>
+<span class="o">}</span>
 
-<span class="nd">@Target</span><span class="p">(</span><span class="n">ElementType</span><span class="p">.</span><span class="na">FIELD</span><span class="p">)</span>
-<span class="nd">@Retention</span><span class="p">(</span><span class="n">RetentionPolicy</span><span class="p">.</span><span class="na">RUNTIME</span><span class="p">)</span>
-<span class="nd">@interface</span> <span class="n">Filed</span> <span class="p">{</span>
-    <span class="n">String</span> <span class="nf">value</span><span class="p">();</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">)</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@interface</span> <span class="n">Filed</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="nf">value</span><span class="o">();</span>
 
-    <span class="n">String</span> <span class="nf">type</span><span class="p">();</span>
+    <span class="n">String</span> <span class="nf">type</span><span class="o">();</span>
 
-<span class="p">}</span>
+<span class="o">}</span>
 
 
-<span class="kd">public</span> <span class="nf">class</span> <span class="n">GetAnnoTest</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">Annotation</span><span class="p">[]</span> <span class="nf">annotations</span> <span class="o">=</span> <span class="n">Person</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getAnnotations</span><span class="p">();</span>
-        <span class="n">Class</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="nf">c1</span> <span class="o">=</span> <span class="n">Person</span><span class="p">.</span><span class="na">class</span><span class="p">;</span>
-        <span class="n">Table</span> <span class="nf">table</span> <span class="o">=</span> <span class="n">c1</span><span class="p">.</span><span class="na">getAnnotation</span><span class="p">(</span><span class="n">Table</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-        <span class="n">String</span> <span class="nf">s</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="na">dbName</span><span class="p">();</span>
-        <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GetAnnoTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Annotation</span><span class="o">[]</span> <span class="n">annotations</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getAnnotations</span><span class="o">();</span>
+        <span class="n">Class</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">c1</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="na">class</span><span class="o">;</span>
+        <span class="n">Table</span> <span class="n">table</span> <span class="o">=</span> <span class="n">c1</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">Table</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">dbName</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 
-<span class="nd">@Table</span><span class="p">(</span><span class="n">dbName</span> <span class="o">=</span> <span class="s">&#34;person&#34;</span><span class="p">)</span>
+<span class="nd">@Table</span><span class="o">(</span><span class="n">dbName</span> <span class="o">=</span> <span class="s">&#34;person&#34;</span><span class="o">)</span>
 <span class="nd">@Data</span>
-<span class="kd">class</span> <span class="nf">Person</span> <span class="p">{</span>
-    <span class="nd">@Filed</span><span class="p">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;name&#34;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&#34;String&#34;</span><span class="p">)</span>
-    <span class="kd">private</span> <span class="nf">String</span> <span class="n">name</span><span class="p">;</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    <span class="nd">@Filed</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">&#34;name&#34;</span><span class="o">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&#34;String&#34;</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
 </div>
     </div>

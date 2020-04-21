@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on The Blog of Suzl 🤠</title>
@@ -22,7 +22,7 @@
     </item>
     
     <item>
-      <title>programming language</title>
+      <title>programming Language</title>
       <link>http://codedigger.cn/categories/programming-language/</link>
       <pubDate>Thu, 02 Apr 2020 23:20:04 +0800</pubDate>
       
@@ -58,7 +58,7 @@
     </item>
     
     <item>
-      <title>Network</title>
+      <title>network</title>
       <link>http://codedigger.cn/categories/network/</link>
       <pubDate>Wed, 12 Feb 2020 20:06:21 +0800</pubDate>
       

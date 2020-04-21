@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-%E5%86%85%E7%BD%AE%E5%AE%B9%E5%99%A8/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-08-04T15:53:04+08:00" />
 <meta itemprop="name" content="Golang-2 内置容器">
 <meta itemprop="description" content="内置容器 数组 数量写在类型前 遍历 使用 for i 或者 range 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 func main() { //类型在后面 var arr1 [5]int // := 要有初始值 arr2 := [3]int{1, 2, 3} // 让编译">
-
-
 <meta itemprop="datePublished" content="2019-08-04T15:53:04&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-04T15:53:04&#43;08:00" />
-<meta itemprop="wordCount" content="1775">
+<meta itemprop="wordCount" content="1777">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-2 内置容器"/>
 <meta name="twitter:description" content="内置容器 数组 数量写在类型前 遍历 使用 for i 或者 range 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 func main() { //类型在后面 var arr1 [5]int // := 要有初始值 arr2 := [3]int{1, 2, 3} // 让编译"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1775 字 </span>
+          <span class="more-meta"> 约 1777 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,65 +134,29 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#内置容器">内置容器</a>
-<ul>
-<li><a href="#数组">数组</a>
-<ul>
-<li><a href="#遍历-使用-for-i-或者-range">遍历 使用 <code>for i</code> 或者 <code>range</code></a></li>
-<li><a href="#数组是值类型">数组是值类型</a></li>
-</ul></li>
-<li><a href="#切片">切片</a>
-<ul>
-<li><a href="#slece-扩展-可以向后扩展-但是不可以向前扩展"><strong>slece</strong>扩展 可以向后扩展,但是不可以向前扩展</a></li>
-<li><a href="#slice-的实现">slice 的实现</a></li>
-<li><a href="#向-slice-添加元素-append">向 slice 添加元素. append</a></li>
-<li><a href="#创建-slice">创建 slice</a></li>
-<li><a href="#copy-slice">copy slice</a></li>
-<li><a href="#删除中间的元素-可变参数">删除中间的元素—&gt;  <code>…</code> 可变参数</a></li>
-<li><a href="#删除首尾-使用-reslice">删除首尾 使用 reslice</a></li>
-</ul></li>
-<li><a href="#map">map</a>
-<ul>
-<li><a href="#定义">定义</a></li>
-<li><a href="#遍历">遍历</a></li>
-<li><a href="#当map-中-key-没有的-会接收到-empty-value">当map 中 key 没有的 会接收到 empty value</a></li>
-<li><a href="#删除">删除</a></li>
-<li><a href="#总结">总结</a>
-<ul>
-<li><a href="#map-中的-key">map 中的 key</a></li>
-<li><a href="#example-查找最长不含有重复字符串的字符-leetcode">example 查找最长不含有重复字符串的字符(LeetCode)</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#rune-int32">rune (int32)</a>
-<ul>
-<li><a href="#总结-1">总结:</a></li>
-<li><a href="#rune-相当于-go-中的-char">rune 相当于 go 中的 char</a></li>
-<li><a href="#string-操作在-strings-包中">string 操作在 strings 包中</a></li>
-</ul></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#内置容器">内置容器</a>
+      <ul>
+        <li><a href="#数组">数组</a></li>
+        <li><a href="#切片">切片</a></li>
+        <li><a href="#map">map</a></li>
+        <li><a href="#rune-int32">rune (int32)</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h2 id="内置容器">内置容器</h2>
-
+      <h2 id="内置容器">内置容器</h2>
 <h3 id="数组">数组</h3>
-
 <ol>
 <li>数量写在类型前</li>
 </ol>
-
 <h4 id="遍历-使用-for-i-或者-range">遍历 使用 <code>for i</code> 或者 <code>range</code></h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -234,20 +195,19 @@
 </span><span class="c1"></span>	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">arr3</span> <span class="p">{</span>
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
 	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h4 id="数组是值类型">数组是值类型</h4>
-
+</div><h4 id="数组是值类型">数组是值类型</h4>
 <ul>
 <li>数组的长度代表不同的类型</li>
 <li>调用数组 会拷贝数组(值传递🤠) 改变其中某个值不会变化,</li>
 <li>但是当传入指针的时候原来的值就会变化</li>
-
-<li><p>在go 语言中 一般不直接使用数组,而是使用切片</p>
+<li>在go 语言中 一般不直接使用数组,而是使用切片</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -260,33 +220,30 @@
 	<span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">arr</span> <span class="p">{</span>
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span>
 	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<h3 id="切片">切片</h3>
+</div><h3 id="切片">切片</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">arr</span> <span class="o">:=</span><span class="p">[</span><span class="o">...</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">}</span>
 <span class="nx">a</span> <span class="o">:=</span><span class="nx">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span>
-<span class="o">//</span> <span class="nx">s</span> <span class="nx">的值为</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mf">4.5</span><span class="p">]</span></code></pre></td></tr></table>
+<span class="c1">// s 的值为[2,3,4.5]
+</span></code></pre></td></tr></table>
 </div>
-</div>
-<ul>
-<li><code>slice</code>   是一个 原本数组的<code>view</code>视图  不是值传递</li>
-<li>数组取得 slice  <code>arr[:]</code></li>
+</div><ul>
+<li><code>slice</code>	是一个 原本数组的<code>view </code>视图  不是值传递</li>
+<li>数组取得 slice  <code> arr[:]</code></li>
 </ul>
-
-<h4 id="slece-扩展-可以向后扩展-但是不可以向前扩展"><strong>slece</strong>扩展 可以向后扩展,但是不可以向前扩展</h4>
+<h4 id="slece扩展-可以向后扩展但是不可以向前扩展"><strong>slece</strong>扩展 可以向后扩展,但是不可以向前扩展</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -301,49 +258,38 @@
 </span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s1</span><span class="p">)</span> <span class="c1">// 是由s1[4] 取不出来
 </span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s2</span><span class="p">)</span>
 <span class="c1">// [2 3 4 5]
-</span><span class="c1"></span><span class="o">//</span> <span class="p">[</span><span class="mi">5</span> <span class="mi">6</span><span class="p">]</span></code></pre></td></tr></table>
+</span><span class="c1">// [5 6]
+</span></code></pre></td></tr></table>
 </div>
-</div>
-<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5j8x437a9j317s0luwht.jpg" alt="" /></p>
-
+</div><p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5j8x437a9j317s0luwht.jpg" alt=""></p>
 <h4 id="slice-的实现">slice 的实现</h4>
-
 <p>是数组的一个 视图</p>
-
 <ul>
 <li>ptr 开头的索引</li>
 <li>len 长度</li>
 <li>cap 容量</li>
 </ul>
-
-<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5j98an371j31100jg0uv.jpg" alt="" /></p>
-
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5j98an371j31100jg0uv.jpg" alt=""></p>
 <h4 id="向-slice-添加元素-append">向 slice 添加元素. append</h4>
-
 <ol>
 <li>添加元素超越 <code>cap</code>,系统会重新分配更大的数组 <code>view different array</code> 拷贝原来的数组</li>
 <li>由于值传递的关系,  要接受 append 返回值   <code>s = append(s,val)</code></li>
 </ol>
-
 <h4 id="创建-slice">创建 slice</h4>
-
 <ul>
 <li><code>var s[] int</code>  // zero value for slice is nil</li>
 <li><code>S1 :=[]int{3,4,5,6,9</code></li>
 <li><code>S3 := make([]int 10,32)</code> // len cap</li>
 <li>扩容的时候 cap 在 len 装不下的时候 会自动 <code>x2</code></li>
 </ul>
-
 <h4 id="copy-slice">copy slice</h4>
-
 <ul>
 <li><code>copy( s2, s1)</code>  // 后面的是需要拷贝的元素</li>
 </ul>
-
-<h4 id="删除中间的元素-可变参数">删除中间的元素—&gt;  <code>…</code> 可变参数</h4>
+<h4 id="删除中间的元素---可变参数">删除中间的元素—&gt;  <code>…</code> 可变参数</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -352,13 +298,13 @@
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 删除 slice 元素
 </span><span class="c1"></span><span class="nx">slice1</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
 <span class="c1">// 去掉4  ... 代表参数
-</span><span class="c1"></span><span class="nx">slice1</span> <span class="p">=</span>  <span class="nb">append</span><span class="p">(</span><span class="nx">slice1</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span><span class="nx">slice1</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">...</span><span class="p">)</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="nx">slice1</span> <span class="p">=</span>  <span class="nb">append</span><span class="p">(</span><span class="nx">slice1</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span><span class="nx">slice1</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span><span class="o">...</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h4 id="删除首尾-使用-reslice">删除首尾 使用 reslice</h4>
+</div><h4 id="删除首尾-使用-reslice">删除首尾 使用 reslice</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -369,70 +315,67 @@
 <span class="nx">slice</span> <span class="p">=</span> <span class="nx">slice</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 
 <span class="nx">end</span> <span class="o">:=</span> <span class="nx">slice</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">s2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="nx">slice</span> <span class="p">=</span> <span class="nx">slice</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">s2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></code></pre></td></tr></table>
+<span class="nx">slice</span> <span class="p">=</span> <span class="nx">slice</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">s2</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="map">map</h3>
-
+</div><h3 id="map">map</h3>
 <h4 id="定义">定义</h4>
-
 <ol>
-<li><p>直接定义</p>
+<li>直接定义</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">m</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span>
 		<span class="s">&#34;hah&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-	<span class="p">}</span></code></pre></td></tr></table>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-
-<li><p>使用 make</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">m2</span><span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span> <span class="o">//</span> <span class="nx">m2</span> <span class="o">==</span> <span class="nx">empty</span> <span class="kd">map</span></code></pre></td></tr></table>
-</div>
-</div></li>
-
-<li><p>var</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">m3</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>  <span class="o">//</span><span class="nx">m3</span> <span class="o">==</span> <span class="kc">nil</span></code></pre></td></tr></table>
-</div>
-</div></li>
+</div><ol start="2">
+<li>使用 make</li>
 </ol>
-
-<p>nil  可以参与运算</p>
-
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">m2</span><span class="o">:=</span><span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span> <span class="c1">// m2 == empty map
+</span></code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>var</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">m3</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>  <span class="c1">//m3 == nil
+</span></code></pre></td></tr></table>
+</div>
+</div><p>nil	 可以参与运算</p>
 <h4 id="遍历">遍历</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">k</span><span class="p">,</span><span class="nx">v</span><span class="o">:=</span><span class="k">range</span> <span class="nx">m</span><span class="p">{</span>
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">k</span><span class="p">,</span><span class="nx">v</span><span class="p">)</span>
-	<span class="p">}</span></code></pre></td></tr></table>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><strong>map 中的 key 是无序的,hashmap</strong></p>
-
+</div><p><strong>map 中的 key 是无序的,hashmap</strong></p>
 <h4 id="当map-中-key-没有的-会接收到-empty-value">当map 中 key 没有的 会接收到 empty value</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -443,20 +386,19 @@
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">laugh</span><span class="p">)</span>
 	<span class="p">}</span><span class="k">else</span><span class="p">{</span>
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;key does not exist&#34;</span><span class="p">)</span>
-	<span class="p">}</span></code></pre></td></tr></table>
+	<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h4 id="删除">删除</h4>
+</div><h4 id="删除">删除</h4>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nb">delete</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span><span class="s">&#34;name&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nb">delete</span><span class="p">(</span><span class="nx">m</span><span class="p">,</span><span class="s">&#34;name&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h4 id="总结">总结</h4>
-
+</div><h4 id="总结">总结</h4>
 <ol>
 <li><strong>创建使用 make <code>make (map[string] int)</code></strong></li>
 <li>获取元素 <code>m[key]</code></li>
@@ -467,19 +409,16 @@
 <li>不保证遍历顺序, 无需遍历,需要手动对 key 进行 排序.(将所有的key 放到 slice 中,使用 slice 可以排序)</li>
 <li>使用 <code>len()</code>来获得长度</li>
 </ol>
-
 <h5 id="map-中的-key">map 中的 key</h5>
-
 <ol>
 <li>map 使用 hash 表,必须可以比较相同</li>
 <li>slice  map function 不可以作为 key</li>
 <li>Struct 类型不包含上述类型, 也可以作为 key(编译时检查)</li>
 </ol>
-
-<h5 id="example-查找最长不含有重复字符串的字符-leetcode">example 查找最长不含有重复字符串的字符(LeetCode)</h5>
+<h5 id="example-查找最长不含有重复字符串的字符leetcode">example 查找最长不含有重复字符串的字符(LeetCode)</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -518,13 +457,13 @@
 		<span class="nx">lastOccerd</span><span class="p">[</span><span class="nx">char</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">maxLength</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p><strong>国际版 支持中文</strong></p>
+</div><p><strong>国际版 支持中文</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -563,13 +502,13 @@
 		<span class="nx">lastOccerd</span><span class="p">[</span><span class="nx">char</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">maxLength</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="rune-int32">rune (int32)</h3>
+</div><h3 id="rune-int32">rune (int32)</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -646,43 +585,33 @@
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%c &#34;</span><span class="p">,</span><span class="nx">char</span><span class="p">)</span>
 	<span class="p">}</span>
 <span class="o">---------------------------------------------------------------------------</span>
-<span class="p">(</span><span class="mi">0</span> <span class="nx">y</span><span class="p">)(</span><span class="mi">1</span> <span class="nx">e</span><span class="p">)(</span><span class="mi">2</span> <span class="nx">s</span><span class="p">)(</span><span class="mi">3</span> <span class="nx">我</span><span class="p">)(</span><span class="mi">4</span> <span class="nx">爱</span><span class="p">)(</span><span class="mi">5</span> <span class="nx">大</span><span class="p">)(</span><span class="mi">6</span> <span class="nx">中</span><span class="p">)(</span><span class="mi">7</span> <span class="nx">国</span><span class="p">)</span></code></pre></td></tr></table>
+<span class="p">(</span><span class="mi">0</span> <span class="nx">y</span><span class="p">)(</span><span class="mi">1</span> <span class="nx">e</span><span class="p">)(</span><span class="mi">2</span> <span class="nx">s</span><span class="p">)(</span><span class="mi">3</span> <span class="nx">我</span><span class="p">)(</span><span class="mi">4</span> <span class="nx">爱</span><span class="p">)(</span><span class="mi">5</span> <span class="nx">大</span><span class="p">)(</span><span class="mi">6</span> <span class="nx">中</span><span class="p">)(</span><span class="mi">7</span> <span class="nx">国</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h4 id="总结-1">总结:</h4>
-
+</div><h4 id="总结-1">总结:</h4>
 <ol>
 <li>&ldquo;我爱大中国&rdquo; 是 utf8 编码,<strong>中文 3 个字节,英文一个字节</strong> 对应 ASCII 码中 中文三位 英文一位</li>
 <li>使用 <code>[]byte</code> 将 string 准换成字节 数组?slice</li>
-<li>使用 <code>[]rune (s)</code>将字符转换成字符 slice ,是重新开了一个 rune 数组(还包含 utf-8 转换成 Unicode 的过程)</li>
+<li>使用 <code>[]rune (s) </code>将字符转换成字符 slice ,是重新开了一个 rune 数组(还包含 utf-8 转换成 Unicode 的过程)</li>
 </ol>
-
 <p>// TODO <a href="https://www.cnblogs.com/kingstarspe/p/ASCII.html">ASCII 码 / utf-8/Unicode</a></p>
-
 <h4 id="rune-相当于-go-中的-char">rune 相当于 go 中的 char</h4>
-
 <ol>
 <li>使用 range 对 position 和 rune对, 但是并不是连续的</li>
 <li>使用<code>utf8.RuneCountInString</code>获得 字符数量</li>
 <li>使用<code>len</code>获得字符长度</li>
 <li>使用<code>[]byte</code>获得字节</li>
 </ol>
-
 <h4 id="string-操作在-strings-包中">string 操作在 strings 包中</h4>
-
 <ol>
 <li>Fileds Split Join</li>
 <li>Contains Index</li>
 <li>ToLower ToUpper</li>
 <li>Trim TrimRright TrimLeft</li>
 </ol>
-
 <p>最小的存储单位称为<strong>位（bit）</strong>：</p>
-
 <p>只能容纳两个值（0或1）之一，不能在一个位中存储更多的信息。位是计算机存储的基本单位。</p>
-
-<p><strong>字节(byte)</strong>是常用的计算机存储单位。</p>
-
+<p>**字节(byte)**是常用的计算机存储单位。</p>
 <p>字节的标准定义：一个字节均为8位</p>
 
     </div>

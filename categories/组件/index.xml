@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>组件 on The Blog of Suzl 🤠</title>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 02 Apr 2020 23:23:46 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/redis-ds/</guid>
-      <description>- zset 基础数据结构 string list hash set zset &amp;mdash; install redis docker github 源码编译安装 使用各个操作系统的命令安装 web redis 网页体验 Redis 有 5 种基础数据结构，分别为：string (字符串)、</description>
+      <description>- zset 基础数据结构 string list hash set zset install redis docker github 源码编译安装 使用各个操作系统的命令安装 web redis 网页体验 Redis 有 5 种基础数据结构，分别为：string (字符串)、l</description>
     </item>
     
   </channel>

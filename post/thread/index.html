@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/thread/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Thread">
 <meta itemprop="description" content="线程和进程的区别 每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立">
-
-
 <meta itemprop="datePublished" content="2019-09-21T00:59:24&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="1599">
+<meta itemprop="wordCount" content="1593">
 
 
 
-<meta itemprop="keywords" content="java,concurrence," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="java,concurrence," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Thread"/>
 <meta name="twitter:description" content="线程和进程的区别 每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1599 字 </span>
+          <span class="more-meta"> 约 1593 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,60 +134,50 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#线程和进程的区别">线程和进程的区别</a></li>
-<li><a href="#为什么使用多线程">为什么使用多线程?</a></li>
-<li><a href="#多线程的创建方式">多线程的创建方式</a>
-<ul>
-<li><a href="#继承-thread-类-重写-run-方法">继承 Thread 类 重写 run 方法</a></li>
-<li><a href="#实现-runnable-接口-重写-run-方法">实现 Runnable 接口 重写 run 方法</a></li>
-<li><a href="#匿名内部类方法-jdk-8-中可以使用-lambda-表达式来">匿名内部类方法（jdk 8 中可以使用 lambda 表达式来）</a></li>
-</ul></li>
-<li><a href="#实现-runnable-方法较好">实现 Runnable 方法较好</a></li>
-<li><a href="#启动线程使用的是-start-方法">启动线程使用的是 start 方法</a></li>
-</ul></li>
-<li><a href="#守护线程">守护线程</a>
-<ul>
-<li><a href="#使用-setdaemon-true-设置守护线程">使用 setDaemon(true) 设置守护线程</a></li>
-<li><a href="#线程的状态-6-种">线程的状态 6 种</a>
-<ul>
-<li><a href="#join-方法">join 方法</a></li>
-<li><a href="#优先级">优先级</a></li>
-<li><a href="#yeild-方法">Yeild 方法</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#线程和进程的区别">线程和进程的区别</a></li>
+    <li><a href="#为什么使用多线程">为什么使用多线程?</a></li>
+    <li><a href="#多线程的创建方式">多线程的创建方式</a>
+      <ul>
+        <li><a href="#继承-thread-类-重写-run-方法">继承 Thread 类 重写 run 方法</a></li>
+        <li><a href="#实现-runnable-接口-重写-run-方法">实现 Runnable 接口 重写 run 方法</a></li>
+        <li><a href="#匿名内部类方法jdk-8-中可以使用-lambda-表达式来">匿名内部类方法（jdk 8 中可以使用 lambda 表达式来）</a></li>
+      </ul>
+    </li>
+    <li><a href="#实现-runnable-方法较好">实现 Runnable 方法较好</a></li>
+    <li><a href="#启动线程使用的是-start-方法">启动线程使用的是 start 方法</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#使用-setdaemontrue-设置守护线程">使用 setDaemon(true) 设置守护线程</a></li>
+    <li><a href="#线程的状态-6-种">线程的状态 6 种</a>
+      <ul>
+        <li><a href="#join-方法">join 方法</a></li>
+        <li><a href="#优先级">优先级</a></li>
+        <li><a href="#yeild-方法">Yeild 方法</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h2 id="线程和进程的区别">线程和进程的区别</h2>
-
+      <h2 id="线程和进程的区别">线程和进程的区别</h2>
 <p>每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。<strong>线程是一组指令的集合</strong>，或者是程序的特殊段，它可以在程序里独立执行。<strong>也可以把它理解为代码运行的上下文。所以线程基本上是轻量级的进程</strong>，它负责在单个程序里执行多任务。通常由<strong>操作系统</strong>负责多个线程的调度和执行。</p>
-
 <ol>
 <li>如果有大量的线程,会影响性能，因为操作系统需要在它们之间切换</li>
 <li>更多的线程需要更多的内存空间</li>
 <li>线程的终止需要考虑其他程序的影响</li>
 <li>通常<strong>块模型</strong>数据是在多个线程间共享的，需要防止线程死锁情况的发生。</li>
 </ol>
-
 <p><strong>进程是所有线程的集合，每一个线程是进程中的一条执行路径。</strong></p>
-
 <h2 id="为什么使用多线程">为什么使用多线程?</h2>
-
 <p>提高程序的执行效率</p>
-
 <h2 id="多线程的创建方式">多线程的创建方式</h2>
-
 <h3 id="继承-thread-类-重写-run-方法">继承 Thread 类 重写 run 方法</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -212,32 +199,32 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nf">CreateThread</span> <span class="kd">extends</span> <span class="nf">Thread</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">CreateThread</span> <span class="kd">extends</span> <span class="n">Thread</span> <span class="o">{</span>
 	<span class="c1">// run方法中编写 多线程需要执行的代码
-</span><span class="c1"></span>	<span class="n">publicvoid</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span> <span class="p">(</span><span class="n">inti</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="nf">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-			<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;i:&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
+</span><span class="c1"></span>	<span class="n">publicvoid</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span> <span class="o">(</span><span class="n">inti</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;i:&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
 
-<span class="n">publicclass</span> <span class="nf">ThreadDemo</span> <span class="p">{</span>
-	<span class="n">publicstaticvoid</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-----多线程创建开始-----&#34;</span><span class="p">);</span>
+<span class="n">publicclass</span> <span class="n">ThreadDemo</span> <span class="o">{</span>
+	<span class="n">publicstaticvoid</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----多线程创建开始-----&#34;</span><span class="o">);</span>
 		<span class="c1">// 1.创建一个线程
-</span><span class="c1"></span>		<span class="n">CreateThread</span> <span class="nf">createThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CreateThread</span><span class="p">();</span>
+</span><span class="c1"></span>		<span class="n">CreateThread</span> <span class="n">createThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CreateThread</span><span class="o">();</span>
 		<span class="c1">// 2.开始执行线程 注意 开启线程不是调用run方法，而是start方法
-</span><span class="c1"></span>		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-----多线程创建启动-----&#34;</span><span class="p">);</span>
-		<span class="n">createThread</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-----多线程创建结束-----&#34;</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span>		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----多线程创建启动-----&#34;</span><span class="o">);</span>
+		<span class="n">createThread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----多线程创建结束-----&#34;</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="实现-runnable-接口-重写-run-方法">实现 Runnable 接口 重写 run 方法</h3>
+</div><h3 id="实现-runnable-接口-重写-run-方法">实现 Runnable 接口 重写 run 方法</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -259,32 +246,32 @@
 </span><span class="lnt">20
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nf">CreateRunnable</span> <span class="kd">implements</span> <span class="nf">Runnable</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">class</span> <span class="nc">CreateRunnable</span> <span class="kd">implements</span> <span class="n">Runnable</span> <span class="o">{</span>
 	<span class="nd">@Override</span>
-	<span class="n">publicvoid</span> <span class="nf">run</span><span class="p">()</span> <span class="p">{</span>
-		<span class="k">for</span> <span class="p">(</span><span class="n">inti</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="nf">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-			<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;i:&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span>
-<span class="n">publicclass</span> <span class="nf">ThreadDemo2</span> <span class="p">{</span>
-	<span class="n">publicstaticvoid</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-----多线程创建开始-----&#34;</span><span class="p">);</span>
+	<span class="n">publicvoid</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">for</span> <span class="o">(</span><span class="n">inti</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;i:&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+<span class="n">publicclass</span> <span class="n">ThreadDemo2</span> <span class="o">{</span>
+	<span class="n">publicstaticvoid</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----多线程创建开始-----&#34;</span><span class="o">);</span>
 		<span class="c1">// 1.创建一个线程
-</span><span class="c1"></span>		<span class="n">CreateRunnable</span> <span class="nf">createThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CreateRunnable</span><span class="p">();</span>
+</span><span class="c1"></span>		<span class="n">CreateRunnable</span> <span class="n">createThread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CreateRunnable</span><span class="o">();</span>
 		<span class="c1">// 2.开始执行线程 注意 开启线程不是调用run方法，而是start方法
-</span><span class="c1"></span>		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-----多线程创建启动-----&#34;</span><span class="p">);</span>
-		<span class="n">Thread</span> <span class="nf">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="n">createThread</span><span class="p">);</span>
-		<span class="n">thread</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;-----多线程创建结束-----&#34;</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span>		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----多线程创建启动-----&#34;</span><span class="o">);</span>
+		<span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="n">createThread</span><span class="o">);</span>
+		<span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;-----多线程创建结束-----&#34;</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="匿名内部类方法-jdk-8-中可以使用-lambda-表达式来">匿名内部类方法（jdk 8 中可以使用 lambda 表达式来）</h3>
+</div><h3 id="匿名内部类方法jdk-8-中可以使用-lambda-表达式来">匿名内部类方法（jdk 8 中可以使用 lambda 表达式来）</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -298,36 +285,30 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"> <span class="n">Thread</span> <span class="nf">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="p">()</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"> <span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
 
-  <span class="kd">public</span> <span class="nf">void</span> <span class="n">run</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
 
-    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="nf">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
 
-    <span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;i:&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">});</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;i:&#34;</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+<span class="o">});</span>
 
- <span class="n">thread</span><span class="p">.</span><span class="na">start</span><span class="p">();</span></code></pre></td></tr></table>
+ <span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="实现-runnable-方法较好">实现 Runnable 方法较好</h2>
-
+</div><h2 id="实现-runnable-方法较好">实现 Runnable 方法较好</h2>
 <h2 id="启动线程使用的是-start-方法">启动线程使用的是 start 方法</h2>
-
 <h1 id="守护线程">守护线程</h1>
-
 <p>Java中有两种线程，一种是用户线程，另一种是守护线程。</p>
-
 <p><strong>用户线程</strong> 是指用户自定义创建的线程，<strong>主线程停止，用户线程不会停止</strong></p>
-
 <p><strong>守护线程</strong> 当进程不存在或主线程停止，<strong>守护线程也会被停止</strong>。</p>
-
-<h2 id="使用-setdaemon-true-设置守护线程">使用 setDaemon(true) 设置守护线程</h2>
+<h2 id="使用-setdaemontrue-设置守护线程">使用 setDaemon(true) 设置守护线程</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -355,58 +336,52 @@
 </span><span class="lnt">26
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">class</span> <span class="n">DaemonThread</span> <span class="p">{</span>
-	<span class="kd">public</span> <span class="nf">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="p">[]</span> <span class="nf">args</span><span class="p">)</span> <span class="p">{</span>
-		<span class="n">Thread</span> <span class="nf">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="p">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="p">()</span> <span class="p">{</span>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DaemonThread</span> <span class="o">{</span>
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="n">Thread</span> <span class="n">thread</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Thread</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
 			<span class="nd">@Override</span>
-			<span class="kd">public</span> <span class="nf">void</span> <span class="n">run</span><span class="p">()</span> <span class="p">{</span>
-				<span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
-					<span class="k">try</span> <span class="p">{</span>
-						<span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">100</span><span class="p">);</span>
-					<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="nf">e</span><span class="p">)</span> <span class="p">{</span>
-					<span class="p">}</span>
-					<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;我是子线程...&#34;</span><span class="p">);</span>
-				<span class="p">}</span>
-			<span class="p">}</span>
-		<span class="p">});</span>
-		<span class="n">thread</span><span class="p">.</span><span class="na">setDaemon</span><span class="p">(</span><span class="kc">true</span><span class="p">);</span>
-		<span class="n">thread</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
-		<span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nf">i</span> <span class="o">=</span> <span class="n">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-			<span class="k">try</span> <span class="p">{</span>
-				<span class="n">Thread</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="n">100</span><span class="p">);</span>
-			<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="nf">e</span><span class="p">)</span> <span class="p">{</span>
-			<span class="p">}</span>
-			<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;我是主线程&#34;</span><span class="p">);</span>
-		<span class="p">}</span>
-		<span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&#34;主线程执行完毕!&#34;</span><span class="p">);</span>
-	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+			<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+				<span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
+					<span class="k">try</span> <span class="o">{</span>
+						<span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">100</span><span class="o">);</span>
+					<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+					<span class="o">}</span>
+					<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;我是子线程...&#34;</span><span class="o">);</span>
+				<span class="o">}</span>
+			<span class="o">}</span>
+		<span class="o">});</span>
+		<span class="n">thread</span><span class="o">.</span><span class="na">setDaemon</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+		<span class="n">thread</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+		<span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="k">try</span> <span class="o">{</span>
+				<span class="n">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">100</span><span class="o">);</span>
+			<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+			<span class="o">}</span>
+			<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;我是主线程&#34;</span><span class="o">);</span>
+		<span class="o">}</span>
+		<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;主线程执行完毕!&#34;</span><span class="o">);</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="线程的状态-6-种">线程的状态 6 种</h2>
-
+</div><h2 id="线程的状态-6-种">线程的状态 6 种</h2>
 <blockquote>
-<p>Core Java Volume 1 &ndash;page 635
-1. New（新创建）
-2. Runnable（可运行）
-3. Blocked（阻塞）
-4. Wating （等待）
-5. Timed waiting（计时等待）
-6. Terminated （被终止）</p>
+<p>Core Java Volume 1 &ndash;page 635</p>
 </blockquote>
-
-<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g76g89b90cj30se0ey4qq.jpg" alt="" /></p>
-
+<ol>
+<li>New（新创建）</li>
+<li>Runnable（可运行）</li>
+<li>Blocked（阻塞）</li>
+<li>Wating （等待）</li>
+<li>Timed waiting（计时等待）</li>
+<li>Terminated （被终止）</li>
+</ol>
+<p><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g76g89b90cj30se0ey4qq.jpg" alt=""></p>
 <h3 id="join-方法">join 方法</h3>
-
 <p>当在主线程当中执行到t1.join()方法时，就认为主线程应该把执行权让给t1</p>
-
 <h3 id="优先级">优先级</h3>
-
 <p>在JAVA线程中，通过一个int priority来控制优先级，<strong>范围为1-10，其中10最高，默认值为5</strong></p>
-
 <h3 id="yeild-方法">Yeild 方法</h3>
-
 <p>Thread.yield()方法的作用：<strong>暂停当前正在执行的线程，并执行其他线程</strong>。（可能没有效果）
 yield()让当前正在<strong>运行的线程回到可运行状态</strong>，以允许具有相同优先级的其他线程获得运行的机会。因此，使用yield()的目的是让具有相同优先级的线程之间能够适当的轮换执行。但是，实际中无法保证yield()达到让步的目的，因为，让步的线程可能被线程调度程序再次选中。
 结论：大多数情况下，yield()将导致线程从运行状态转到可运行状态，但有可能没有效果。</p>

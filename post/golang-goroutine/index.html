@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-goroutine/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Golang-8 Goroutine">
 <meta itemprop="description" content="Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因">
-
-
 <meta itemprop="datePublished" content="2019-08-08T21:15:30&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="849">
+<meta itemprop="wordCount" content="845">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-8 Goroutine"/>
 <meta name="twitter:description" content="Goroutine 并发编程 原生支持 使用 go 关键字 函数体 =&gt; 匿名函数 协程 1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现 协程 Coroutine 轻量级的线程 因"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 849 字 </span>
+          <span class="more-meta"> 约 845 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,58 +134,50 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#goroutine-并发编程">Goroutine 并发编程</a>
-<ul>
-<li><a href="#使用-go-关键字">使用 go 关键字</a></li>
-<li><a href="#协程-coroutine">协程 Coroutine</a>
-<ul>
-<li><a href="#轻量级的线程">轻量级的线程</a></li>
-<li><a href="#非抢占式多任务处理"><strong>非抢占式多任务处理</strong></a></li>
-<li><a href="#goroutine-中的-i">goroutine 中的 i</a></li>
-</ul></li>
-<li><a href="#协程">协程</a>
-<ul>
-<li><a href="#普通函数和协程的对比">普通函数和协程的对比</a></li>
-<li><a href="#其他语言">其他语言</a></li>
-<li><a href="#调度器">调度器</a></li>
-<li><a href="#goroutine-的定义">goroutine 的定义</a></li>
-<li><a href="#goroutine-可能的切换点">goroutine 可能的切换点</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#使用-go-关键字">使用 go 关键字</a></li>
+    <li><a href="#协程-coroutine">协程 Coroutine</a>
+      <ul>
+        <li><a href="#轻量级的线程">轻量级的线程</a></li>
+        <li><a href="#非抢占式多任务处理"><strong>非抢占式多任务处理</strong></a></li>
+        <li><a href="#goroutine-中的-i">goroutine 中的 i</a></li>
+      </ul>
+    </li>
+    <li><a href="#协程">协程</a>
+      <ul>
+        <li><a href="#普通函数和协程的对比">普通函数和协程的对比</a></li>
+        <li><a href="#其他语言">其他语言</a></li>
+        <li><a href="#调度器">调度器</a></li>
+        <li><a href="#goroutine-的定义">goroutine 的定义</a></li>
+        <li><a href="#goroutine-可能的切换点">goroutine 可能的切换点</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="goroutine-并发编程">Goroutine 并发编程</h1>
-
+      <h1 id="goroutine-并发编程">Goroutine 并发编程</h1>
 <p>原生支持</p>
-
 <h2 id="使用-go-关键字">使用 go 关键字</h2>
-
 <ol>
 <li>函数体 =&gt; 匿名函数</li>
 <li>协程</li>
 <li>1000 个同时执行在其他语言中的话要使用异步 io 来进行 但是 go 可以使用协程来实现</li>
 </ol>
-
 <h2 id="协程-coroutine">协程 Coroutine</h2>
-
 <h3 id="轻量级的线程">轻量级的线程</h3>
-
-<p>因为:
-1. <strong>非抢占式</strong>多任务处理,由协程主动交出控制权
-2. 线程是抢占式任务处理
-3. 是<strong>编译器(go)/解释器/虚拟机</strong>层面的多任务,而不是操作系统层面的多任务
-4. 多个协程可能在一或多个线程上运行 由调度器决定的这是</p>
-
+<p>因为:</p>
+<ol>
+<li><strong>非抢占式</strong>多任务处理,由协程主动交出控制权</li>
+<li>线程是抢占式任务处理</li>
+<li>是<strong>编译器(go)/解释器/虚拟机</strong>层面的多任务,而不是操作系统层面的多任务</li>
+<li>多个协程可能在一或多个线程上运行 由调度器决定的这是</li>
+</ol>
 <h3 id="非抢占式多任务处理"><strong>非抢占式多任务处理</strong></h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -217,21 +206,20 @@
 	<span class="p">}</span>
 	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
 	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<blockquote>
+</div><blockquote>
 <ol>
 <li>main 函数也是一个 goroutine</li>
 <li>a[i]++  没有进行协程的切换 会抢掉控制权 没有交出控制权</li>
 <li>main 函数也是一个 goroutine 进入睡眠,没法获得控制权,导致 main 无法获取控制权 就会一直睡 然后就死机了</li>
 </ol>
 </blockquote>
-
 <h3 id="goroutine-中的-i">goroutine 中的 i</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -258,16 +246,18 @@
 	<span class="p">}</span>
 	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
 	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<ul>
-<li>这样会报错 <code>index out of range</code></li>
-
-<li><p>使用 <code>go run -race goroutine.go</code> 来查看数据冲突</p>
+</div><ul>
+<li>
+<p>这样会报错 <code>index out of range</code></p>
+</li>
+<li>
+<p>使用 <code>go run -race goroutine.go</code> 来查看数据冲突</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -276,20 +266,21 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">Read</span> <span class="nx">at</span> <span class="mh">0x00c00001a0a8</span> <span class="nx">by</span> <span class="nx">goroutine</span> <span class="mi">6</span><span class="p">:</span>
-<span class="nx">main</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nf">func1</span><span class="p">()</span>
- <span class="nx">goroutine</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">14</span> <span class="o">+</span><span class="mh">0x70</span>
+<pre class="chroma"><code class="language-go" data-lang="go">  <span class="nx">Read</span> <span class="nx">at</span> <span class="mh">0x00c00001a0a8</span> <span class="nx">by</span> <span class="nx">goroutine</span> <span class="mi">6</span><span class="p">:</span>
+  <span class="nx">main</span><span class="p">.</span><span class="nx">main</span><span class="p">.</span><span class="nf">func1</span><span class="p">()</span>
+   <span class="nx">goroutine</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">14</span> <span class="o">+</span><span class="mh">0x70</span>
 
-<span class="nx">Previous</span> <span class="nx">write</span> <span class="nx">at</span> <span class="mh">0x00c00001a0a8</span> <span class="nx">by</span> <span class="nx">main</span> <span class="nx">goroutine</span><span class="p">:</span>
-<span class="nx">main</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span>
-  <span class="nx">goroutine</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">11</span> <span class="o">+</span><span class="mh">0x11b</span></code></pre></td></tr></table>
+  <span class="nx">Previous</span> <span class="nx">write</span> <span class="nx">at</span> <span class="mh">0x00c00001a0a8</span> <span class="nx">by</span> <span class="nx">main</span> <span class="nx">goroutine</span><span class="p">:</span>
+  <span class="nx">main</span><span class="p">.</span><span class="nf">main</span><span class="p">()</span>
+    <span class="nx">goroutine</span><span class="p">.</span><span class="k">go</span><span class="p">:</span><span class="mi">11</span> <span class="o">+</span><span class="mh">0x11b</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>这是因为当不加 <code>i</code> 时候,这是一闭包,最后循环的时候,i 为 10,此时调出循环,但是 这是 数组读到的也是 10 就会越界了</p>
+<li>
+<p>这是因为当不加 <code>i</code> 时候,这是一闭包,最后循环的时候,i 为 10,此时调出循环,但是 这是 数组读到的也是 10 就会越界了</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -306,68 +297,54 @@
             <span class="nx">runtime</span><span class="p">.</span><span class="nf">Gosched</span><span class="p">()</span>
         <span class="p">}</span>
     <span class="p">}(</span><span class="nx">i</span><span class="p">)</span> <span class="c1">// from loop i
-</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
-
 <h2 id="协程">协程</h2>
-
 <h3 id="普通函数和协程的对比">普通函数和协程的对比</h3>
-
 <blockquote>
 <p>子程序是协程的一个特例</p>
 </blockquote>
-
 <ul>
 <li>普通函数
-
 <ol>
 <li>在一个线程内</li>
 <li>方法执行完之后才会将控制权交还给 main 函数</li>
-</ol></li>
+</ol>
+</li>
 <li>协程
-
 <ol>
 <li>可能运行在同一个线程中里</li>
 <li>main 函数和其他函之间有一个通道</li>
 <li>数据可以相互流通 控制权亦可以流通</li>
-</ol></li>
+</ol>
+</li>
 </ul>
-
 <h3 id="其他语言">其他语言</h3>
-
 <ul>
 <li>C++ 使用 Boost.Coroutine 支持</li>
 <li>java 不支持</li>
 <li>Python 使用 <code>yield</code> 关键字实现协程 -&gt; Python 3.5 后加入了<code>async def</code>对协程原生支持</li>
 </ul>
-
 <h3 id="调度器">调度器</h3>
-
 <p>当开一个 go 进程</p>
-
-<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5so56s1mnj31am0ps41z.jpg" alt="" /></p>
-
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5so56s1mnj31am0ps41z.jpg" alt=""></p>
 <ol>
 <li>有一个调度器</li>
 <li>有可能一个协程放在一个线程中</li>
 <li>有可能多个协程放在一个线程中</li>
 </ol>
-
 <p>这是由调度器来决定的</p>
-
 <h3 id="goroutine-的定义">goroutine 的定义</h3>
-
 <ul>
 <li>任何函加上 <code>go</code> 就能送给调度器运行</li>
 <li>不需要在定义的时候区分时候是<strong>异步</strong>函数(相对于Python)</li>
 <li>调度器在合适点进行切换</li>
 <li>使用 <code>-race</code>来检测数据的冲突</li>
 </ul>
-
 <h3 id="goroutine-可能的切换点">goroutine 可能的切换点</h3>
-
 <ol>
 <li>io/select</li>
 <li>channel</li>
@@ -375,9 +352,7 @@
 <li>函数调用(有时候)</li>
 <li><code>runtime.Gosched()</code></li>
 </ol>
-
 <p>仅仅是参考,不能保证切换,不能保证其他地方不切换.</p>
-
 <blockquote>
 <p>开了 1000 个 goroutine 只有 4 个线程,会根机器内核数映射到物理线程上</p>
 </blockquote>

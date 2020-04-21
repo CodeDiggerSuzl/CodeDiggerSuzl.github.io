@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/goobject/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="GoObject">
 <meta itemprop="description" content="object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder">
-
-
 <meta itemprop="datePublished" content="2019-12-20T01:21:31&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="1235">
+<meta itemprop="wordCount" content="1226">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="GoObject"/>
 <meta name="twitter:description" content="object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1235 字 </span>
+          <span class="more-meta"> 约 1226 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,45 +134,42 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#object-oriented">object oriented</a>
-<ul>
-<li><a href="#继承">继承</a>
-<ul>
-<li><a href="#指针类型的同名字段">指针类型的同名字段</a></li>
-</ul></li>
-<li><a href="#方法">方法</a>
-<ul>
-<li><a href="#函数和方法的区别">函数和方法的区别</a></li>
-<li><a href="#给-struct-添加方法">给 struct 添加方法</a></li>
-<li><a href="#注意事项">注意事项</a></li>
-</ul></li>
-<li><a href="#接口">接口</a></li>
-<li><a href="#多态">多态</a>
-<ul>
-<li><a href="#为什么参数是一个接口-却传入了一个对象">为什么参数是一个接口，却传入了一个对象 ？？？</a></li>
-<li><a href="#empty-interface">Empty Interface</a></li>
-</ul></li>
-<li><a href="#type-assert">Type Assert</a>
-<ul>
-<li><a href="#uaage">UAAGE:</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#继承">继承</a>
+      <ul>
+        <li><a href="#指针类型的同名字段">指针类型的同名字段</a></li>
+      </ul>
+    </li>
+    <li><a href="#方法">方法</a>
+      <ul>
+        <li><a href="#函数和方法的区别">函数和方法的区别</a></li>
+        <li><a href="#给-struct-添加方法">给 struct 添加方法</a></li>
+        <li><a href="#注意事项">注意事项</a></li>
+      </ul>
+    </li>
+    <li><a href="#接口">接口</a></li>
+    <li><a href="#多态">多态</a>
+      <ul>
+        <li><a href="#为什么参数是一个接口却传入了一个对象-">为什么参数是一个接口，却传入了一个对象 ？？？</a></li>
+        <li><a href="#empty-interface">Empty Interface</a></li>
+      </ul>
+    </li>
+    <li><a href="#type-assert">Type Assert</a>
+      <ul>
+        <li><a href="#uaage">UAAGE:</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="object-oriented">object oriented</h1>
-
+      <h1 id="object-oriented">object oriented</h1>
 <h2 id="继承">继承</h2>
-
 <p>使用匿名字段实现继承</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -194,18 +188,17 @@
 <span class="kd">type</span> <span class="nx">GoCoder</span> <span class="kd">struct</span><span class="p">{</span>
     <span class="nx">Coder</span>
     <span class="nx">height</span> <span class="kt">float64</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<ul>
+</div><ul>
 <li>使用<code>.</code>进行操作</li>
 <li>同名字段就近原则</li>
 </ul>
-
 <h3 id="指针类型的同名字段">指针类型的同名字段</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -218,19 +211,16 @@
     <span class="nx">age</span> <span class="kt">int</span>
 <span class="p">}</span>
 <span class="c1">// use address
-</span><span class="c1"></span><span class="nx">joex</span> <span class="o">:=</span> <span class="nx">JavaCoder</span><span class="p">{</span><span class="o">&amp;</span><span class="nx">Coder</span><span class="p">{</span><span class="s">&#34;java&#34;</span><span class="p">,</span><span class="s">&#34;joex&#34;</span><span class="p">},</span><span class="mi">24</span><span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="nx">joex</span> <span class="o">:=</span> <span class="nx">JavaCoder</span><span class="p">{</span><span class="o">&amp;</span><span class="nx">Coder</span><span class="p">{</span><span class="s">&#34;java&#34;</span><span class="p">,</span><span class="s">&#34;joex&#34;</span><span class="p">},</span><span class="mi">24</span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>当指针类型匿名字段*Coder没有指向任何一个结构体，所以对象 joex 也就无法操作 Coder 中的成员。</p>
-
+</div><p>当指针类型匿名字段*Coder没有指向任何一个结构体，所以对象 joex 也就无法操作 Coder 中的成员。</p>
 <p><strong>使用 new 来解决</strong></p>
-
 <h2 id="方法">方法</h2>
-
 <p>定义</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -239,90 +229,75 @@
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Integer</span> <span class="kt">int</span> <span class="c1">// int类型指定了一个别名叫Integer,别名可以随便起
 </span><span class="c1"></span><span class="kd">func</span><span class="p">(</span><span class="nx">a</span> <span class="nx">Integer</span><span class="p">)</span> <span class="nf">Sum</span><span class="p">(</span><span class="nx">b</span> <span class="nx">Integer</span><span class="p">)</span> <span class="nx">Integer</span><span class="p">{</span>
     <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="函数和方法的区别">函数和方法的区别</h3>
-
+</div><h3 id="函数和方法的区别">函数和方法的区别</h3>
 <ol>
-<li>在关键字后面加上( a Integer), 这个在方法中称之为接收者，所谓的接受者就是接收传递过来的第一个参数，然后复制a， a的类型是Integer ,由于Integer是int的别名，所以a的类型为int</li>
-
-<li><p>在表示参数的类型时，都使用了对应的别名。</p>
-
-<p>通过方法的定义，可以看出方法其实就是给某个类型绑定的函数。在这里，是为整型绑定的函数，只不过在给整型绑定函数(方法)时，一定要通过type来指定一个别名，因为int类型是系统已经规定好了，无法直接绑定函数，所以只能通过别名的方式。</p></li>
-
-<li><p>调用方式不同</p></li>
-</ol>
-
+<li>
+<p>在关键字后面加上( a Integer), 这个在方法中称之为接收者，所谓的接受者就是接收传递过来的第一个参数，然后复制a， a的类型是Integer ,由于Integer是int的别名，所以a的类型为int</p>
+</li>
+<li>
+<p>在表示参数的类型时，都使用了对应的别名。</p>
+<p>通过方法的定义，可以看出方法其实就是给某个类型绑定的函数。在这里，是为整型绑定的函数，只不过在给整型绑定函数(方法)时，一定要通过type来指定一个别名，因为int类型是系统已经规定好了，无法直接绑定函数，所以只能通过别名的方式。</p>
+</li>
+<li>
+<p>调用方式不同</p>
 <p><code>var result Interger=3</code>
-    表示定义一个整型变量 <code>result</code>，并赋值为 3.</p>
+表示定义一个整型变量 <code>result</code>，并赋值为 3.</p>
+<p>result.Sum(3)</p>
+<p>通过result变量，完成方法的调用。因为，Sum( )方法，是为int类型绑定的函数，而result变量为int类型。所以可以调用 Sum( )方法。result变量的值会传递给 Sum( )方法的接受者，也就是参数a,而实参Sum(3),会传递形参b.
+当然，我们也可以将Sum( )方法，理解成是为int类型扩展了，追加了的方法。因为系统在int类型时，是没有改方法的。</p>
+</li>
+</ol>
+<h3 id="给-struct-添加方法">给 struct 添加方法</h3>
+<p>如果要修改对应的值,将方法的接收者，修改成对应的指针类型</p>
+<h3 id="注意事项">注意事项</h3>
+<ol>
+<li>
+<p>只要接收者类型不一样，这个方法就算同名，也是不同方法，不会出现重复定义函数的错误,如果接收者类型一样，但是方法的参数不一样，是会出现错误的。</p>
+<p>也就是说 go中没有用重载</p>
+</li>
+<li>
+<p>关于接收者不能为指针类型。 接受者类型不能为指针类型</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span></pre></td>
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">result.Sum(3)
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">long</span> <span class="kt">int</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">temp</span> <span class="o">*</span><span class="nx">long</span><span class="p">)</span><span class="nx">test</span><span class="p">{</span>
+   <span class="c1">// 正确
+</span><span class="c1"></span><span class="p">}</span>
 
-通过result变量，完成方法的调用。因为，Sum( )方法，是为int类型绑定的函数，而result变量为int类型。所以可以调用 Sum( )方法。result变量的值会传递给 Sum( )方法的接受者，也就是参数a,而实参Sum(3),会传递形参b.
-当然，我们也可以将Sum( )方法，理解成是为int类型扩展了，追加了的方法。因为系统在int类型时，是没有改方法的。</pre></td></tr></table>
+<span class="kd">type</span> <span class="nx">p</span> <span class="o">*</span><span class="kt">int</span>
+<span class="kd">func</span><span class="p">(</span><span class="nx">tmp</span> <span class="nx">pointer</span><span class="p">)</span><span class="nf">test</span><span class="p">(){</span>
+    <span class="c1">// 错误
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="给-struct-添加方法">给 struct 添加方法</h3>
-
-<p>如果要修改对应的值,将方法的接收者，修改成对应的指针类型</p>
-
-<h3 id="注意事项">注意事项</h3>
-
-<ol>
-<li>只要接收者类型不一样，这个方法就算同名，也是不同方法，不会出现重复定义函数的错误,如果接收者类型一样，但是方法的参数不一样，是会出现错误的。</li>
+</div></li>
+<li>
+<p>接收者为普通变量 值传递</p>
+</li>
+<li>
+<p>接收者为指针变量引用传递</p>
+</li>
 </ol>
-
-<p>也就是说 go中没有用重载
-2. 关于接收者不能为指针类型。 接受者类型不能为指针类型</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">```go
-type long int
-func (temp *long)test{
-   // 正确
-}
-
-type p *int
-func(tmp pointer)test(){
-    // 错误
-}
-```</pre></td></tr></table>
-</div>
-</div>
-<ol>
-<li>接收者为普通变量 值传递</li>
-<li>接收者为指针变量引用传递</li>
-</ol>
-
 <h2 id="接口">接口</h2>
-
 <p><strong>只要类(结构体)实现对应的接口，那么根据该类创建的对象，可以赋值给对应的接口类型。</strong></p>
-
 <p>定义</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -349,17 +324,15 @@ func(tmp pointer)test(){
 
 <span class="kd">func</span> <span class="p">(</span><span class="nx">jcoder</span> <span class="o">*</span><span class="nx">JavaCoder</span><span class="p">)</span> <span class="nx">writeCode</span><span class="p">{</span>
     <span class="c1">// do something
-</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="多态">多态</h2>
-
+</div><h2 id="多态">多态</h2>
 <p>多态多态，多种表示形态。</p>
-
 <p>// TODO：compare  the diff between golang and Java</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -428,25 +401,17 @@ func(tmp pointer)test(){
     <span class="nx">g</span> <span class="o">:=&amp;</span><span class="nx">GoCoder</span><span class="p">{</span><span class="mi">3</span><span class="p">,</span><span class="s">&#34;master&#34;</span><span class="p">}</span>
     <span class="nf">WriteDiffCode</span><span class="p">(</span><span class="nx">j</span><span class="p">)</span>
     <span class="nf">WriterDiffCode</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="为什么参数是一个接口-却传入了一个对象">为什么参数是一个接口，却传入了一个对象 ？？？</h3>
-
+</div><h3 id="为什么参数是一个接口却传入了一个对象-">为什么参数是一个接口，却传入了一个对象 ？？？</h3>
 <p>TODO</p>
-
 <p>在使用面向对象思想解决问题时，一定要先分析，定义哪些类，哪些接口，哪些方法。把这些分析定义出来，然后在考虑具体实现。o</p>
-
 <h3 id="empty-interface">Empty Interface</h3>
-
 <p>空接口(interface{})不包含任何的方法，正因为如此，所有的类型都实现了空接口，因此空接口可以存储任意类型的数值。</p>
-
 <h2 id="type-assert">Type Assert</h2>
-
 <h3 id="uaage">UAAGE:</h3>
-
 <p><code>value,ok = element.(T)</code></p>
-
 <ol>
 <li>value: the value of element</li>
 <li>ok: a bool type value</li>

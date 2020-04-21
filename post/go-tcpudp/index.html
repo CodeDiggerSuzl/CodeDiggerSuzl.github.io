@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/go-tcpudp/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-02-28T23:36:47+08:00" />
 <meta itemprop="name" content="Go UDP 编程">
 <meta itemprop="description" content="udp 通信 tcp: 面向连接,可靠数据包的传输 udp: 无连接,不可靠的报文传输 QQ 用的是 udp 加上上层对数据包完整性的校验,来保证数据的完整性. 服务器 由于UDP是“">
-
-
 <meta itemprop="datePublished" content="2020-02-12T20:06:27&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:36:47&#43;08:00" />
 <meta itemprop="wordCount" content="736">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go UDP 编程"/>
 <meta name="twitter:description" content="udp 通信 tcp: 面向连接,可靠数据包的传输 udp: 无连接,不可靠的报文传输 QQ 用的是 udp 加上上层对数据包完整性的校验,来保证数据的完整性. 服务器 由于UDP是“"/>
 
@@ -137,85 +134,74 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#udp-通信">udp 通信</a>
-<ul>
-<li><a href="#服务器">服务器</a></li>
-<li><a href="#客户端">客户端</a></li>
-<li><a href="#summary">summary</a>
-<ul>
-<li><a href="#server">server</a></li>
-<li><a href="#client">client</a></li>
-</ul></li>
-<li><a href="#diff">diff</a></li>
-<li><a href="#使用场景">使用场景</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#服务器">服务器</a></li>
+    <li><a href="#客户端">客户端</a></li>
+    <li><a href="#summary">summary</a>
+      <ul>
+        <li><a href="#server">server</a></li>
+        <li><a href="#client">client</a></li>
+      </ul>
+    </li>
+    <li><a href="#diff">diff</a></li>
+    <li><a href="#使用场景">使用场景</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="udp-通信">udp 通信</h1>
-
+      <h1 id="udp-通信">udp 通信</h1>
 <p>tcp: 面向连接,可靠数据包的传输</p>
-
 <p>udp: 无连接,不可靠的报文传输</p>
-
 <p>QQ 用的是 udp 加上上层对数据包完整性的校验,来保证数据的完整性.</p>
-
 <h2 id="服务器">服务器</h2>
-
 <p>由于UDP是“无连接”的，所以，<strong>服务器端不需要额外创建监听套接字</strong>，只需要指定好IP和port，然后监听该地址，等待客户端与之建立连接，即可通信。</p>
-
 <ol>
 <li>创建用于通信的 socket</li>
 <li>阻塞读 socket</li>
 <li>处理读到的数据</li>
 <li>写数据给客户端</li>
 </ol>
-
 <p>创建监听地址：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ResolveUDPAddr</span><span class="p">(</span><span class="nx">network</span><span class="p">,</span> <span class="nx">address</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">UDPAddr</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ResolveUDPAddr</span><span class="p">(</span><span class="nx">network</span><span class="p">,</span> <span class="nx">address</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">UDPAddr</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>创建用于通信的 socket：</p>
+</div><p>创建用于通信的 socket：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ListenUDP</span><span class="p">(</span><span class="nx">network</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">laddr</span> <span class="o">*</span><span class="nx">UDPAddr</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">UDPConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">ListenUDP</span><span class="p">(</span><span class="nx">network</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">laddr</span> <span class="o">*</span><span class="nx">UDPAddr</span><span class="p">)</span> <span class="p">(</span><span class="o">*</span><span class="nx">UDPConn</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>接收udp数据</p>
+</div><p>接收udp数据</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">UDPConn</span><span class="p">)</span> <span class="nf">ReadFromUDP</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="o">*</span><span class="nx">UDPAddr</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">UDPConn</span><span class="p">)</span> <span class="nf">ReadFromUDP</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="o">*</span><span class="nx">UDPAddr</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>写出数据到 udp：</p>
+</div><p>写出数据到 udp：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">UDPConn</span><span class="p">)</span> <span class="nf">WriteToUDP</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">addr</span> <span class="o">*</span><span class="nx">UDPAddr</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">UDPConn</span><span class="p">)</span> <span class="nf">WriteToUDP</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">addr</span> <span class="o">*</span><span class="nx">UDPAddr</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="客户端">客户端</h2>
+</div><h2 id="客户端">客户端</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -260,13 +246,11 @@
         <span class="k">return</span>
     <span class="p">}</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;read from udp server&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">]))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="summary">summary</h2>
-
+</div><h2 id="summary">summary</h2>
 <h3 id="server">server</h3>
-
 <ol>
 <li>创建地址结构: <code>net.ResolveUDPAddr()</code></li>
 <li>创建用于通信的 socket 绑定地址结构, <code>net.ListenUDP()</code></li>
@@ -274,13 +258,9 @@
 <li><code>readFromUDP</code> 返回 n ,cltAddr, err</li>
 <li><code>WriteToUDP(待写数据,cltAddr)</code></li>
 </ol>
-
 <h3 id="client">client</h3>
-
 <p>类似 tcp client</p>
-
 <h2 id="diff">diff</h2>
-
 <table>
 <thead>
 <tr>
@@ -288,61 +268,55 @@
 <th>udp</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>面向连接</td>
 <td>面向无连接</td>
 </tr>
-
 <tr>
 <td>系统要求资源较多</td>
 <td>系统要求资源较少</td>
 </tr>
-
 <tr>
 <td>TCP 程序结构较为复杂</td>
 <td>UDP 程序结构较为简单</td>
 </tr>
-
 <tr>
 <td>使用流式传输</td>
 <td>使用数据包式传输</td>
 </tr>
-
 <tr>
 <td>保证数据的正确性</td>
 <td>不能保证数据的准确性</td>
 </tr>
-
 <tr>
 <td>保证数据顺序</td>
 <td>不保证数据顺序</td>
 </tr>
-
 <tr>
 <td>通讯速度慢</td>
 <td>通讯速度快</td>
 </tr>
 </tbody>
 </table>
-
 <ul>
-<li><p>TCP 面向链接的可靠的<strong>数据包</strong>传输,对不稳定的网络层进行弥补操作.</p></li>
-
-<li><p>UDP 面向无链接的不可靠<strong>报文</strong>传输,对不稳定的网络层,不作为.可能会发生数据包丢失的情况.不同的数据包可能走的不同的通路.</p></li>
+<li>
+<p>TCP 面向链接的可靠的<strong>数据包</strong>传输,对不稳定的网络层进行弥补操作.</p>
+</li>
+<li>
+<p>UDP 面向无链接的不可靠<strong>报文</strong>传输,对不稳定的网络层,不作为.可能会发生数据包丢失的情况.不同的数据包可能走的不同的通路.</p>
+</li>
 </ul>
-
 <p>所谓<strong>链接</strong>就是在数据传输过程中需要建立通路,即 3 次握手,以后发送数据都是按照这个通路进行传输.</p>
-
 <p>go 是设计是面向<strong>网络</strong>和<strong>并发</strong>的.</p>
-
 <h2 id="使用场景">使用场景</h2>
-
 <ul>
-<li><p>tcp: 数据传输安全性要求较高的场合,网络文件传输/下载/上传.</p></li>
-
-<li><p>udp: 实时数据传输要求较高,直播/在线电话会议/游戏.</p></li>
+<li>
+<p>tcp: 数据传输安全性要求较高的场合,网络文件传输/下载/上传.</p>
+</li>
+<li>
+<p>udp: 实时数据传输要求较高,直播/在线电话会议/游戏.</p>
+</li>
 </ul>
 
     </div>

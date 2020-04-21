@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/%E7%88%AC%E8%99%AB/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-08-14T18:53:04+08:00" />
 <meta itemprop="name" content="golang-11 单机版爬虫">
 <meta itemprop="description" content="单机版爬虫 乱码问题解决 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4 5 6 7 8 9 10 // use x/text to guess encoding of a file func determineEncoding(r io.Reader) encoding.Encoding { // use peek to get bytes bytes, err :=">
-
-
 <meta itemprop="datePublished" content="2019-08-14T18:53:04&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-14T18:53:04&#43;08:00" />
-<meta itemprop="wordCount" content="2923">
+<meta itemprop="wordCount" content="2919">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="golang-11 单机版爬虫"/>
 <meta name="twitter:description" content="单机版爬虫 乱码问题解决 gopm get -g -v golang.org/x/text `获取包 获取网页编码的库:gopm get -g -v golang.org/x/net/html 1 2 3 4 5 6 7 8 9 10 // use x/text to guess encoding of a file func determineEncoding(r io.Reader) encoding.Encoding { // use peek to get bytes bytes, err :="/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 2923 字 </span>
+          <span class="more-meta"> 约 2919 字 </span>
           <span class="more-meta"> 预计阅读 6 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,59 +134,56 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#单机版爬虫">单机版爬虫</a>
-<ul>
-<li>
-<ul>
-<li><a href="#乱码问题解决">乱码问题解决</a></li>
-</ul></li>
-<li><a href="#正则表达式">正则表达式</a>
-<ul>
-<li><a href="#例子">例子</a></li>
-</ul></li>
-<li><a href="#爬虫架构">爬虫架构</a>
-<ul>
-<li><a href="#main-go-主函数">main.go 主函数</a></li>
-<li><a href="#engine-go-解析-url">engine.go  解析 url</a></li>
-<li><a href="#types-go-编码需要的-types">types.go 编码需要的 types</a></li>
-<li><a href="#fetcher-go">fetcher.go</a></li>
-<li><a href="#profile-go">profile.go</a></li>
-<li><a href="#city-go">city.go</a></li>
-<li><a href="#citylist-go">cityList.go</a></li>
-<li><a href="#profile-go-1">profile.go</a></li>
-<li><a href="#tips">Tips</a></li>
-<li><a href="#parser-test-go">parser_test.go</a></li>
-</ul></li>
-<li><a href="#总结">总结</a>
-<ul>
-<li><a href="#获网页内容">获网页内容</a></li>
-<li><a href="#获取城市和链接">获取城市和链接</a></li>
-<li><a href="#爬虫整体算法">爬虫整体算法</a></li>
-<li><a href="#解析器">解析器</a></li>
-<li><a href="#架构图">架构图</a></li>
-<li><a href="#目前很慢">目前很慢</a></li>
-</ul></li>
-<li><a href="#tip"><strong>tip</strong></a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#乱码问题解决">乱码问题解决</a></li>
+      </ul>
+    </li>
+    <li><a href="#正则表达式">正则表达式</a>
+      <ul>
+        <li><a href="#例子">例子</a></li>
+      </ul>
+    </li>
+    <li><a href="#爬虫架构">爬虫架构</a>
+      <ul>
+        <li><a href="#maingo-主函数">main.go 主函数</a></li>
+        <li><a href="#enginego--解析-url">engine.go  解析 url</a></li>
+        <li><a href="#typesgo-编码需要的-types">types.go 编码需要的 types</a></li>
+        <li><a href="#fetchergo">fetcher.go</a></li>
+        <li><a href="#profilego">profile.go</a></li>
+        <li><a href="#citygo">city.go</a></li>
+        <li><a href="#citylistgo">cityList.go</a></li>
+        <li><a href="#profilego-1">profile.go</a></li>
+        <li><a href="#tips">Tips</a></li>
+        <li><a href="#parser_testgo">parser_test.go</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#获网页内容">获网页内容</a></li>
+        <li><a href="#获取城市和链接">获取城市和链接</a></li>
+        <li><a href="#爬虫整体算法">爬虫整体算法</a></li>
+        <li><a href="#解析器">解析器</a></li>
+        <li><a href="#架构图">架构图</a></li>
+        <li><a href="#目前很慢">目前很慢</a></li>
+      </ul>
+    </li>
+    <li><a href="#tip"><strong>tip</strong></a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="单机版爬虫">单机版爬虫</h1>
-
+      <h1 id="单机版爬虫">单机版爬虫</h1>
 <h3 id="乱码问题解决">乱码问题解决</h3>
-
 <ol>
 <li><code>gopm get -g -v golang.org/x/text</code> `获取包</li>
-
-<li><p>获取网页编码的库:<code>gopm get -g -v golang.org/x/net/html</code></p>
+<li>获取网页编码的库:<code>gopm get -g -v golang.org/x/net/html</code></li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -210,30 +204,26 @@
 	<span class="p">}</span>
 	<span class="nx">e</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">charset</span><span class="p">.</span><span class="nf">DetermineEncoding</span><span class="p">(</span><span class="nx">bytes</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 	<span class="k">return</span> <span class="nx">e</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
+</div><h2 id="正则表达式">正则表达式</h2>
+<p>获取网页获取信息的方式</p>
+<ol>
+<li>css 选择器</li>
+<li>使用 xpath</li>
+<li>使用正则表达式</li>
 </ol>
-
-<h2 id="正则表达式">正则表达式</h2>
-
-<p>获取网页获取信息的方式
-1. css 选择器
-2. 使用 xpath
-3. 使用正则表达式</p>
-
 <h3 id="例子">例子</h3>
-
 <ol>
 <li><code>.+</code>  : <code>.</code>匹配任何一个字符 <code>+</code> 一个或者多个 <code>*</code>  0 个或多个</li>
 <li>[a-zA-Z0-9]数字或者字母</li>
 <li>go 语言中 使用 `` 就不会会转义</li>
 </ol>
-
 <p>code</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -252,47 +242,45 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"> <span class="kd">const</span> <span class="nx">text</span> <span class="p">=</span> <span class="s">`my name is joexsue@gmail.com
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="nx">text</span> <span class="p">=</span> <span class="s">`my name is joexsue@gmail.com
 </span><span class="s">hahha joswx@ddd.com
 </span><span class="s">ddd@foxmail.com
 </span><span class="s">su zailong awesome joex@qq.com.cn`</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-	<span class="nx">re</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nf">MustCompile</span><span class="p">(</span><span class="s">`([a-zA-Z0-9]+)@([a-zA-Z0-9]+)(\.[a-zA-Z0-9.]+)`</span><span class="p">)</span>
-	<span class="c1">// find one
-</span><span class="c1"></span>	<span class="c1">// match := re.FindString(text)
-</span><span class="c1"></span>	<span class="c1">// find all
-</span><span class="c1"></span>	<span class="nx">matchAll</span> <span class="o">:=</span> <span class="nx">re</span><span class="p">.</span><span class="nf">FindAllString</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-	<span class="c1">// 提取功能 需提取的地方加上括号 返回的是二维slice
-</span><span class="c1"></span>	<span class="nx">findAllSub</span> <span class="o">:=</span> <span class="nx">re</span><span class="p">.</span><span class="nf">FindAllStringSubmatch</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+   <span class="nx">re</span> <span class="o">:=</span> <span class="nx">regexp</span><span class="p">.</span><span class="nf">MustCompile</span><span class="p">(</span><span class="s">`([a-zA-Z0-9]+)@([a-zA-Z0-9]+)(\.[a-zA-Z0-9.]+)`</span><span class="p">)</span>
+   <span class="c1">// find one
+</span><span class="c1"></span>   <span class="c1">// match := re.FindString(text)
+</span><span class="c1"></span>   <span class="c1">// find all
+</span><span class="c1"></span>   <span class="nx">matchAll</span> <span class="o">:=</span> <span class="nx">re</span><span class="p">.</span><span class="nf">FindAllString</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+   <span class="c1">// 提取功能 需提取的地方加上括号 返回的是二维slice
+</span><span class="c1"></span>   <span class="nx">findAllSub</span> <span class="o">:=</span> <span class="nx">re</span><span class="p">.</span><span class="nf">FindAllStringSubmatch</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">matchAll</span><span class="p">)</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">findAllSub</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">matchAll</span><span class="p">)</span>
+   <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">findAllSub</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="爬虫架构">爬虫架构</h2>
-
+</div><h2 id="爬虫架构">爬虫架构</h2>
 <p>使用不同的解析器来解析不同层级的信息</p>
-
 <ul>
 <li>城市列表解析器: 解析城市列表</li>
 <li>城市解析器: 解析城市</li>
 <li>用户解析器: 解析用户
-<img src="https://ask.qcloudimg.com/http-save/yehe-2511396/af25wvft4m.jpeg?imageView2/2/w/1620" alt="架构图" /></li>
+<img src="https://ask.qcloudimg.com/http-save/yehe-2511396/af25wvft4m.jpeg?imageView2/2/w/1620" alt="架构图"></li>
 </ul>
-
-<p><strong>架构</strong>:
-1. 种子(起始 <code>url</code>)放入 <code>engine</code>
-2. engine 放入任务队列,从任务队列中拿任务 <code>request</code>
-3. engine 将 <code>url</code> 放入 <code>fetcher</code> 中返回 文本 <code>text</code>
-4. 文本使用解析器 解析 返回 <code>request</code> 列表和 <code>item</code> 列表
-<img src="https://ask.qcloudimg.com/http-save/yehe-2511396/cytz3tepsl.jpeg?imageView2/2/w/1620" alt="架构图 2" /></p>
-
+<p><strong>架构</strong>:</p>
+<ol>
+<li>种子(起始 <code>url</code>)放入 <code>engine</code></li>
+<li>engine 放入任务队列,从任务队列中拿任务 <code>request</code></li>
+<li>engine 将 <code>url</code> 放入 <code>fetcher</code> 中返回 文本 <code>text</code></li>
+<li>文本使用解析器 解析 返回 <code>request</code> 列表和 <code>item</code> 列表
+<img src="https://ask.qcloudimg.com/http-save/yehe-2511396/cytz3tepsl.jpeg?imageView2/2/w/1620" alt="架构图 2"></li>
+</ol>
 <p><strong>代码目录</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -309,9 +297,9 @@
 </span><span class="lnt">15
 </span><span class="lnt">16
 </span><span class="lnt">17
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">.
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">.
 ├── engine
 │   ├── engine.go
 │   └── types.go
@@ -327,13 +315,13 @@
         ├── cityList_test.html # for testing
         ├── citylist.go # 城市解析出用户
         ├── parser_test.go
-        └── profile.go # 解析用户资料</pre></td></tr></table>
+        └── profile.go # 解析用户资料
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="main-go-主函数">main.go 主函数</h3>
+</div><h3 id="maingo-主函数">main.go 主函数</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -358,13 +346,13 @@
 		<span class="nx">ParserFunc</span><span class="p">:</span> <span class="nx">parser</span><span class="p">.</span><span class="nx">ParseCityList</span><span class="p">,</span>
 	<span class="p">})</span>
 
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="engine-go-解析-url">engine.go  解析 url</h3>
+</div><h3 id="enginego--解析-url">engine.go  解析 url</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -421,13 +409,13 @@
 			<span class="nx">log</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Got items %v&#34;</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="types-go-编码需要的-types">types.go 编码需要的 types</h3>
+</div><h3 id="typesgo-编码需要的-types">types.go 编码需要的 types</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -441,6 +429,7 @@
 </span><span class="lnt">12
 </span><span class="lnt">13
 </span><span class="lnt">14
+</span><span class="lnt">15
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Request</span> <span class="kd">struct</span> <span class="p">{</span>
@@ -456,13 +445,14 @@
 
 <span class="kd">func</span> <span class="nf">NilParser</span><span class="p">([]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">ParseResult</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="nx">ParseResult</span><span class="p">{}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="fetcher-go">fetcher.go</h3>
+</div><h3 id="fetchergo">fetcher.go</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -563,13 +553,13 @@
 	<span class="p">}</span>
 	<span class="nx">e</span><span class="p">,</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">charset</span><span class="p">.</span><span class="nf">DetermineEncoding</span><span class="p">(</span><span class="nx">bytes</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
 	<span class="k">return</span> <span class="nx">e</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="profile-go">profile.go</h3>
+</div><h3 id="profilego">profile.go</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -600,13 +590,13 @@
 	<span class="nx">Area</span>          <span class="kt">string</span> <span class="c1">// 籍贯
 </span><span class="c1"></span>	<span class="nx">Constellation</span> <span class="kt">string</span> <span class="c1">// 星座
 </span><span class="c1"></span>	<span class="c1">// ...
-</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="city-go">city.go</h3>
+</div><h3 id="citygo">city.go</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -689,13 +679,13 @@
 		<span class="p">})</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="citylist-go">cityList.go</h3>
+</div><h3 id="citylistgo">cityList.go</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -754,13 +744,13 @@
 		<span class="p">}</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="profile-go-1">profile.go</h3>
+</div><h3 id="profilego-1">profile.go</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -805,6 +795,7 @@
 </span><span class="lnt">43
 </span><span class="lnt">44
 </span><span class="lnt">45
+</span><span class="lnt">46
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kn">import</span> <span class="p">(</span>
@@ -851,16 +842,16 @@
 	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 		<span class="k">return</span> <span class="s">&#34;&#34;</span>
 	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
-</div>
-</div>
-<h3 id="tips">Tips</h3>
+<span class="p">}</span>
 
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="tips">Tips</h3>
 <p>解析城市的时候已经拿到了名字 在 type 中 加入名字字段 或者其他字段 因此要 使用map[string] string
 但是加了字段之后的话 又要因为许函数加了这个字段但是没有用过所以使用 <strong>函数闭包</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -897,31 +888,30 @@
 		<span class="p">})</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>会导致名字一样
+</div><p>会导致名字一样
 所有花括号会公用 在 for 循环中
 函数式编程</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">ParserFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">contents</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ParseResult</span> <span class="p">{</span>
 				<span class="k">return</span> <span class="nf">ParseProfile</span><span class="p">(</span><span class="nx">contents</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span> <span class="c1">//太巧妙了  但是会导致名字一样
-</span><span class="c1"></span>			<span class="p">},</span></code></pre></td></tr></table>
+</span><span class="c1"></span>			<span class="p">},</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>这段代码是在 循环完全退出之后  在 request 排队到他的时候才进行 不是在 for 循环中 就执行了 for 循环中会公用 m
- 因此要将 m[2]的值拷贝出来</p>
-
+</div><p>这段代码是在 循环完全退出之后  在 request 排队到他的时候才进行 不是在 for 循环中 就执行了 for 循环中会公用 m
+因此要将 m[2]的值拷贝出来</p>
 <p>因为名字还有许多字段都可以在解析城市的时候就拿到 =&gt; 将 使用了一个 profile 来使用闭包</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -952,13 +942,13 @@
 </span><span class="c1"></span>			<span class="nx">ParserFunc</span><span class="p">:</span> <span class="kd">func</span><span class="p">(</span><span class="nx">contents</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">engine</span><span class="p">.</span><span class="nx">ParseResult</span> <span class="p">{</span>
 				<span class="k">return</span> <span class="nf">ParseProfile</span><span class="p">(</span><span class="nx">contents</span><span class="p">,</span> <span class="nx">profile</span><span class="p">)</span> <span class="c1">//太巧妙了  但是会导致名字
 </span><span class="c1"></span>			<span class="p">},</span>
-		<span class="p">})</span></code></pre></td></tr></table>
+		<span class="p">})</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="parser-test-go">parser_test.go</h3>
+</div><h3 id="parser_testgo">parser_test.go</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1037,18 +1027,17 @@
 			<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;expected url #%d:%s ,but find %s &#34;</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">city</span><span class="p">,</span> <span class="nx">result</span><span class="p">.</span><span class="nx">Items</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="总结">总结</h2>
-
+</div><h2 id="总结">总结</h2>
 <h3 id="获网页内容">获网页内容</h3>
-
 <ol>
-<li><p>使用<code>http.Get()</code>获取内容 但可能为 403 要使用 client</p>
+<li>
+<p>使用<code>http.Get()</code>获取内容 但可能为 403 要使用 client</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1075,45 +1064,36 @@
     <span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;Error: http Get, err is %v\n&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="k">defer</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span></code></pre></td></tr></table>
+<span class="k">defer</span> <span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-
-<li><p>使用<code>Encoding</code> 来进行转码 : gbk =&gt; utf8</p></li>
-
-<li><p>使用 <code>charset.DetermineEncoding</code>来判断编码</p></li>
+</div><p>``</p>
+</li>
+<li>
+<p>使用<code>Encoding</code> 来进行转码 : gbk =&gt; utf8</p>
+</li>
+<li>
+<p>使用 <code>charset.DetermineEncoding</code>来判断编码</p>
+</li>
 </ol>
-
 <h3 id="获取城市和链接">获取城市和链接</h3>
-
 <ol>
 <li>使用 css选择器</li>
 <li>使用 xpath</li>
-
-<li><p>使用正则表达式</p>
-
-<h3 id="爬虫整体算法">爬虫整体算法</h3>
-
-<p>一层一层解析,不同的层级使用不同的解析来来进行解析</p></li>
+<li>使用正则表达式</li>
 </ol>
-
+<h3 id="爬虫整体算法">爬虫整体算法</h3>
+<p>一层一层解析,不同的层级使用不同的解析来来进行解析</p>
 <h3 id="解析器">解析器</h3>
-
 <ul>
 <li>输入 utf8编码的文本</li>
 <li>输出 <code>Request{Url,对应的 Parser}</code>和<code>Item</code>列表</li>
 </ul>
-
 <h3 id="架构图">架构图</h3>
-
-<p><img src="https://ask.qcloudimg.com/http-save/yehe-2511396/cytz3tepsl.jpeg?imageView2/2/w/1620" alt="架构图 2" /></p>
-
+<p><img src="https://ask.qcloudimg.com/http-save/yehe-2511396/cytz3tepsl.jpeg?imageView2/2/w/1620" alt="架构图 2"></p>
 <h3 id="目前很慢">目前很慢</h3>
-
 <p>慢在了 engine 中一个一个的 fetche</p>
-
 <h2 id="tip"><strong>tip</strong></h2>
-
 <ul>
 <li>函数式编程中闭包的使用 <code>***</code></li>
 </ul>

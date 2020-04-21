@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>WorkSummary on The Blog of Suzl 🤠</title>
@@ -18,7 +18,7 @@
       <pubDate>Fri, 28 Feb 2020 23:18:29 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/v-charts/</guid>
-      <description>vcharts 折线图 ! 数据结构的灵活使用 - 前端 - Java &amp;amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&amp;#39;日期&amp;#3</description>
+      <description>vcharts 折线图 ! 数据结构的灵活使用 前端 Java &amp;amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&amp;#39;日期&amp;#39;</description>
     </item>
     
   </channel>

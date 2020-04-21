@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/5_channel_advance/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Go channel 和定时器">
 <meta itemprop="description" content="Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前">
-
-
 <meta itemprop="datePublished" content="2020-01-06T01:19:01&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="1626">
+<meta itemprop="wordCount" content="1623">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go channel 和定时器"/>
 <meta name="twitter:description" content="Unbuffered Channel 具备同步的功能，类似打电话 写端写数据，读的一端不在读取，则阻塞。 读的一端在读，写的一端不在写，阻塞。 阻塞：由于某种原因数据没有到达，当前"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming Language </a>
             </div>
-          <span class="more-meta"> 约 1626 字 </span>
+          <span class="more-meta"> 约 1623 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,65 +134,59 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#unbuffered-channel">Unbuffered Channel</a></li>
-<li><a href="#buffered-channel">Buffered Channel</a>
-<ul>
-<li><a href="#关闭-channel">关闭 channel</a></li>
-</ul></li>
-<li><a href="#单行的-channel">单行的 channel</a>
-<ul>
-<li><a href="#单向-chan-特性">单向 chan 特性</a></li>
-<li><a href="#单向-chan-作为函数参数">单向 chan 作为函数参数</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#生产者消费者模型">生产者消费者模型</a>
-<ul>
-<li><a href="#缓冲区的好处">缓冲区的好处</a></li>
-<li><a href="#demo">demo</a></li>
-</ul></li>
-<li><a href="#定时器">定时器</a>
-<ul>
-<li><a href="#time-timer"><code>time.Timer</code></a>
-<ul>
-<li><a href="#计时器停止">计时器停止</a></li>
-<li><a href="#计时器重制">计时器重制</a></li>
-</ul></li>
-<li><a href="#time-after"><code>time.After()</code></a>
-<ul>
-<li><a href="#实现延迟功能">实现延迟功能</a></li>
-<li><a href="#定时器的重置和停止">定时器的重置和停止</a></li>
-<li><a href="#time-ticker"><code>time.Ticker</code></a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#unbuffered-channel">Unbuffered Channel</a></li>
+    <li><a href="#buffered-channel">Buffered Channel</a>
+      <ul>
+        <li><a href="#关闭-channel">关闭 channel</a></li>
+      </ul>
+    </li>
+    <li><a href="#单行的-channel">单行的 channel</a>
+      <ul>
+        <li><a href="#单向-chan-特性">单向 chan 特性</a></li>
+        <li><a href="#单向-chan-作为函数参数">单向 chan 作为函数参数</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#缓冲区的好处">缓冲区的好处</a></li>
+    <li><a href="#demo">demo</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#timetimer"><code>time.Timer</code></a>
+      <ul>
+        <li><a href="#计时器停止">计时器停止</a></li>
+        <li><a href="#计时器重制">计时器重制</a></li>
+      </ul>
+    </li>
+    <li><a href="#timeafter"><code>time.After()</code></a>
+      <ul>
+        <li><a href="#实现延迟功能">实现延迟功能</a></li>
+        <li><a href="#定时器的重置和停止">定时器的重置和停止</a></li>
+        <li><a href="#timeticker"><code>time.Ticker</code></a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h2 id="unbuffered-channel">Unbuffered Channel</h2>
-
+      <h2 id="unbuffered-channel">Unbuffered Channel</h2>
 <p>具备<strong>同步</strong>的功能，类似打电话</p>
-
 <ul>
 <li>写端写数据，读的一端不在读取，则阻塞。</li>
 <li>读的一端在读，写的一端不在写，阻塞。</li>
 </ul>
-
 <blockquote>
 <p>阻塞：由于某种原因数据没有到达，当前协程（线程）持续处于等待状态，直到解除件阻塞。</p>
-
 <p>同步：在两个或多个协程（线程）间，保持数据内容一致性的机制。</p>
 </blockquote>
-
 <p>使用<code>len(chan)</code> 返回没有读取的缓冲区元素数量，使用 <code>cap(ch)</code> 返回缓冲区的大小。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -258,131 +249,124 @@
 </span><span class="c1"></span>    <span class="c1">// the son goroutine print and write to chan
 </span><span class="c1"></span>    <span class="c1">// main goroutine read from chan but the print is an io operation
 </span><span class="c1"></span>    <span class="c1">// main goroutine couldn&#39;t get cpu
-</span><span class="c1"></span>    <span class="o">//</span> <span class="nx">son</span> <span class="nx">goroutine</span> <span class="nx">loops</span> <span class="nx">and</span> <span class="nx">print</span> <span class="nx">again</span></code></pre></td></tr></table>
+</span><span class="c1"></span>    <span class="c1">// son goroutine loops and print again
+</span></code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="buffered-channel">Buffered Channel</h2>
-
+</div><h2 id="buffered-channel">Buffered Channel</h2>
 <ul>
-<li>cap 是正值，具备数据存储的能力。</li>
-
-<li><p>存储到能力上限才阻塞。</p></li>
-
-<li><p>具备<strong>异步</strong>的能力，类似<strong>发短信</strong>。</p></li>
+<li>
+<p>cap 是正值，具备数据存储的能力。</p>
+</li>
+<li>
+<p>存储到能力上限才阻塞。</p>
+</li>
+<li>
+<p>具备<strong>异步</strong>的能力，类似<strong>发短信</strong>。</p>
+</li>
 </ul>
-
 <p>io 延迟导致输出结果不正确,io 延迟很大， <code>chan</code> 读写能同步但是 <code>io</code> 打印和 <code>chan</code> 的读写不是同步的</p>
-
 <h3 id="关闭-channel">关闭 channel</h3>
-
 <p>使用 <code>close()</code> 来关闭 <code>chan</code></p>
-
-<p>另一端判断 <code>chan</code> 是否关闭
-1. 使用 <code>ok</code> 判断</p>
+<p>另一端判断 <code>chan</code> 是否关闭</p>
+<ol>
+<li>
+<p>使用 <code>ok</code> 判断</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">```go
-// ok 为 true 说明 channel 没有关闭，为 false 说明管道已经关闭
-if data, ok := &lt;-c; ok {
-    fmt.Println(data)
-}
-```</pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// ok 为 true 说明 channel 没有关闭，为 false 说明管道已经关闭
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">c</span><span class="p">;</span> <span class="nx">ok</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<ol>
-<li><p>使用 <code>range</code> 来读取</p>
+</div></li>
+<li>
+<p>使用 <code>range</code> 来读取</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">num</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ch</span><span class="p">{</span> <span class="c1">// ch 不能为 &lt;-ch
 </span><span class="c1"></span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
-
 <p>chan 关闭总结：</p>
-
 <ol>
-<li>只有当你确实没有任何发送数据了，或者你想显式的结束 range 循环之类的，才去关闭 channel；</li>
-<li>关闭 channel 后，无法向 channel 再发送数据(引发 panic 错误后导致接收立即返回零值)；</li>
-<li>关闭 channel 后，可以继续从 channel 接收数据；</li>
-</ol>
-
+<li>
+<p>只有当你确实没有任何发送数据了，或者你想显式的结束 range 循环之类的，才去关闭 channel；</p>
+</li>
+<li>
+<p>关闭 channel 后，无法向 channel 再发送数据(引发 panic 错误后导致接收立即返回零值)；</p>
+</li>
+<li>
+<p>关闭 channel 后，可以继续从 channel 接收数据；</p>
 <p><strong>读到 0，说明写端关闭了,有缓存的chan，关闭后读到数据，数据读完后才会读到 0</strong></p>
-
-<ol>
-<li>对于 nil channel，无论收发都会被阻塞。</li>
+</li>
+<li>
+<p>对于 nil channel，无论收发都会被阻塞。</p>
+</li>
 </ol>
-
 <h2 id="单行的-channel">单行的 channel</h2>
-
 <p>单向读 chan
 单向写 chan</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">ch1</span> <span class="kd">chan</span> <span class="kt">int</span>         <span class="c1">// ch1是一个正常的channel，是双向的
 </span><span class="c1"></span><span class="kd">var</span> <span class="nx">ch2</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">float64</span>   <span class="c1">// ch2是单向channel，只用于写float64数据
-</span><span class="c1"></span><span class="kd">var</span> <span class="nx">ch3</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span>       <span class="o">//</span> <span class="nx">ch3是单向channel</span><span class="err">，</span><span class="nx">只用于读int数据</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">ch3</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">int</span>       <span class="c1">// ch3是单向channel，只用于读int数据
+</span></code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="单向-chan-特性">单向 chan 特性</h3>
-
+</div><h3 id="单向-chan-特性">单向 chan 特性</h3>
 <p>可以将 channel 隐式转换为单向队列，只收或只发
 不能将单向 channel 转换为普通 channel</p>
-
 <h3 id="单向-chan-作为函数参数">单向 chan 作为函数参数</h3>
-
 <p>传递的是引用</p>
-
-<hr />
-
+<hr>
 <h1 id="生产者消费者模型">生产者消费者模型</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span></pre></td>
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">provider ===&gt; buffer ===&gt; consumer</pre></td></tr></table>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">provider ===&gt; buffer ===&gt; consumer
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="缓冲区的好处">缓冲区的好处</h2>
-
+</div><h2 id="缓冲区的好处">缓冲区的好处</h2>
 <ol>
-<li><p>降低耦合</p>
-
-<p>假设生产者和消费者分别是两个类。如果让生产者直接调用消费者的某个方法，那么生产者对于消费者就会产生依赖（也就是耦合）。将来如果消费者的代码发生变化，可能会直接影响到生产者。而如果两者都依赖于某个缓冲区，两者之间不直接依赖，耦合度也就相应降低了。</p></li>
-
-<li><p>解决并发</p>
-
-<p>生产者消费由于缓冲区的存在，变成了独立的个体</p></li>
-
-<li><p>缓存</p>
-
-<p>如果生产者制造数据的速度时快时慢，缓冲区的好处就体现出来了。当数据制造快的时候，消费者来不及处理，未处理的数据可以暂时存在缓冲区中。等生产者的制造速度慢下来，消费者再慢慢处理掉。</p></li>
+<li>
+<p>降低耦合</p>
+<p>假设生产者和消费者分别是两个类。如果让生产者直接调用消费者的某个方法，那么生产者对于消费者就会产生依赖（也就是耦合）。将来如果消费者的代码发生变化，可能会直接影响到生产者。而如果两者都依赖于某个缓冲区，两者之间不直接依赖，耦合度也就相应降低了。</p>
+</li>
+<li>
+<p>解决并发</p>
+<p>生产者消费由于缓冲区的存在，变成了独立的个体</p>
+</li>
+<li>
+<p>缓存</p>
+<p>如果生产者制造数据的速度时快时慢，缓冲区的好处就体现出来了。当数据制造快的时候，消费者来不及处理，未处理的数据可以暂时存在缓冲区中。等生产者的制造速度慢下来，消费者再慢慢处理掉。</p>
+</li>
 </ol>
-
 <h2 id="demo">demo</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -405,6 +389,8 @@ if data, ok := &lt;-c; ok {
 </span><span class="lnt">21
 </span><span class="lnt">22
 </span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestProviderAndConsumer</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
@@ -429,17 +415,17 @@ if data, ok := &lt;-c; ok {
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="o">//</span> <span class="nx">result</span></code></pre></td></tr></table>
-</div>
-</div>
-<h1 id="定时器">定时器</h1>
+<span class="c1">// result
+</span><span class="c1"></span>
 
-<h2 id="time-timer"><code>time.Timer</code></h2>
-
+</code></pre></td></tr></table>
+</div>
+</div><h1 id="定时器">定时器</h1>
+<h2 id="timetimer"><code>time.Timer</code></h2>
 <p>Timer 是一个定时器。代表未来的一个单一事件，你可以告诉 <code>timer</code> 你要等待多长时间。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -448,62 +434,57 @@ if data, ok := &lt;-c; ok {
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Timer</span> <span class="kd">struct</span> <span class="p">{</span>
     <span class="nx">C</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="nx">Time</span>
     <span class="nx">r</span> <span class="nx">runtimeTimer</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>它提供一个 <code>channel</code> ，在定时时间到达之前，没有数据写入 <code>timer.C</code> 会一直阻塞。直到定时时间到，向 <code>channel</code> 写入值，阻塞解除，可以从中读取数据。</p>
-
+</div><p>它提供一个 <code>channel</code> ，在定时时间到达之前，没有数据写入 <code>timer.C</code> 会一直阻塞。直到定时时间到，向 <code>channel</code> 写入值，阻塞解除，可以从中读取数据。</p>
 <p>设置定时 2s，2s  后 系统会向 <code>Timer</code> 中写系统当前时间</p>
-
 <h3 id="计时器停止">计时器停止</h3>
-
 <p><code>timer.Stop()</code></p>
-
 <h3 id="计时器重制">计时器重制</h3>
-
 <p><code>timer.Reset()</code></p>
-
-<h2 id="time-after"><code>time.After()</code></h2>
+<h2 id="timeafter"><code>time.After()</code></h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">func After(d Duration) &lt;-chan Time {
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">func After(d Duration) &lt;-chan Time {
 	return NewTimer(d).C
-}</pre></td></tr></table>
+}
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="实现延迟功能">实现延迟功能</h3>
-
+</div><h3 id="实现延迟功能">实现延迟功能</h3>
 <ol>
-<li><p><code>&lt;-time.After(2 * time.Second)</code></p>
-
-<p>定时2s，阻塞2s,2s后产生一个事件，往channel写内容</p></li>
-
-<li><p><code>time.Sleep(2 * time.Second)</code></p></li>
-
-<li><p>延时2s后打印一句话</p>
+<li>
+<p><code>&lt;-time.After(2 * time.Second) </code></p>
+<p>定时2s，阻塞2s,2s后产生一个事件，往channel写内容</p>
+</li>
+<li>
+<p><code>time.Sleep(2 * time.Second)</code></p>
+</li>
+<li>
+<p>延时2s后打印一句话</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">timer</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nf">NewTimer</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
 <span class="o">&lt;-</span> <span class="nx">timer</span><span class="p">.</span><span class="nx">C</span>
-<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;时间到&#34;</span><span class="p">)</span></code></pre></td></tr></table>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;时间到&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
-
 <h3 id="定时器的重置和停止">定时器的重置和停止</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -526,15 +507,14 @@ if data, ok := &lt;-c; ok {
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;go func timer stop&#34;</span><span class="p">)</span>
 <span class="p">}()</span>
 <span class="c1">// stop timer
-</span><span class="c1"></span><span class="nx">timer</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="nx">timer</span><span class="p">.</span><span class="nf">Stop</span><span class="p">()</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="time-ticker"><code>time.Ticker</code></h3>
-
+</div><h3 id="timeticker"><code>time.Ticker</code></h3>
 <p>Ticker是一个周期触发定时的计时器，它会按照一个时间间隔往channel发送系统当前时间，而channel的接收者可以以固定的时间间隔从channel中读取事件。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -543,11 +523,12 @@ if data, ok := &lt;-c; ok {
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Ticker</span> <span class="kd">struct</span> <span class="p">{</span>
     <span class="nx">C</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="nx">Time</span> 	<span class="c1">// The channel on which the ticks are delivered.
 </span><span class="c1"></span>    <span class="nx">r</span> <span class="nx">runtimeTimer</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -580,7 +561,8 @@ if data, ok := &lt;-c; ok {
 </span><span class="c1"></span>            <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}()</span>
-    <span class="o">&lt;-</span><span class="nx">quit</span> <span class="o">//</span> <span class="err">🍀</span><span class="nx">读取</span> <span class="nx">quit</span> <span class="nx">中的数据</span> <span class="nx">阻塞</span> <span class="nx">test</span> <span class="nx">的</span> <span class="nx">goroutine</span></code></pre></td></tr></table>
+    <span class="o">&lt;-</span><span class="nx">quit</span> <span class="c1">// 🍀读取 quit 中的数据 阻塞 test 的 goroutine
+</span></code></pre></td></tr></table>
 </div>
 </div>
     </div>

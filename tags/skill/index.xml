@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>skill on The Blog of Suzl 🤠</title>
@@ -20,8 +20,8 @@
       <guid>http://codedigger.cn/post/config-linux-system/</guid>
       <description>Config Manjaro(Brand New Linux System)  For future config back and other intentions.
 Not hand by hand, just url Config in Manjaro
-First of all ：git config  git config &amp;ndash;gloable user.name &amp;ldquo;username&amp;rdquo; git config &amp;ndash;gloable user.email &amp;ldquo;email&amp;rdquo; using ssh-keygen -t ras to generate ssh pub-keys, paste in to github settings in order to pull&amp;amp;&amp;amp;push code.   Shell Config  zsh &amp;amp;&amp;amp; oh-my-zsh
- using curl
+ First of all ：git config  git config &amp;ndash;gloable user.name &amp;ldquo;username&amp;rdquo; git config &amp;ndash;gloable user.email &amp;ldquo;email&amp;rdquo; using ssh-keygen -t ras to generate ssh pub-keys, paste in to github settings in order to pull&amp;amp;&amp;amp;push code.  Shell Config   zsh &amp;amp;&amp;amp; oh-my-zsh
+  using curl
 sh -c &amp;quot;$(curl -fsSL https://raw.</description>
     </item>
     

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/annotation/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Java 中的注解">
 <meta itemprop="description" content="What The Hell Annotation ? @since 1.5 作用: 不是程序本身,但是可以对程序作出解释 注释是给 coder 看的 注解是给计算机看的 可以被其他程序,比如编译器读取 一个注解准确意义上来说">
-
-
 <meta itemprop="datePublished" content="2020-01-06T01:15:58&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="1866">
+<meta itemprop="wordCount" content="1860">
 
 
 
-<meta itemprop="keywords" content="java," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="java," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Java 中的注解"/>
 <meta name="twitter:description" content="What The Hell Annotation ? @since 1.5 作用: 不是程序本身,但是可以对程序作出解释 注释是给 coder 看的 注解是给计算机看的 可以被其他程序,比如编译器读取 一个注解准确意义上来说"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1866 字 </span>
+          <span class="more-meta"> 约 1860 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,97 +134,87 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#what-the-hell-annotation">What The Hell Annotation ?</a>
-<ul>
-<li><a href="#内置注解">内置注解</a></li>
-<li><a href="#元注解-meta-annotation">元注解 meta-annotation</a></li>
-<li><a href="#自定义注解">自定义注解</a></li>
-<li><a href="#注解的属性">注解的属性</a></li>
-</ul></li>
-<li><a href="#注解只是定义-使用注解要靠-反射-来使用">注解只是定义 使用注解要靠<strong>反射</strong>来使用</a></li>
-</ul>
+  <ul>
+    <li><a href="#内置注解">内置注解</a></li>
+    <li><a href="#元注解-meta-annotation">元注解 meta-annotation</a></li>
+    <li><a href="#自定义注解">自定义注解</a></li>
+    <li><a href="#注解的属性">注解的属性</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="what-the-hell-annotation">What The Hell Annotation ?</h1>
-
+      <h1 id="what-the-hell-annotation-">What The Hell Annotation ?</h1>
 <blockquote>
 <p>@since 1.5</p>
 </blockquote>
-
 <ul>
-<li><p>作用:</p>
-
+<li>
+<p>作用:</p>
 <ol>
 <li>不是程序本身,但是可以对程序作出解释
-
 <ol>
 <li>注释是给 coder 看的</li>
 <li>注解是给计算机看的</li>
-</ol></li>
+</ol>
+</li>
 <li>可以被其他程序,比如编译器读取</li>
 <li>一个注解准确意义上来说，只不过是一种特殊的注释而已，如果没有解析它的代码，它可能连注释都不如。</li>
-</ol></li>
-
-<li><p>格式</p>
-
-<p>格式是<code>@AnnotationName</code>在代码中存在的,还可以添加参数值,比如<code>@SuppressWarnings(value=&quot;unchecked&quot;)</code></p></li>
-
-<li><p>注解可以使用在<code>package</code>,<code>class</code>,<code>method</code>,<code>filed</code>上,相当于添加了额外的注释信息</p></li>
-
-<li><p><strong>可以通过反射完成对元数据的访问</strong></p></li>
+</ol>
+</li>
+<li>
+<p>格式</p>
+<p>格式是<code>@AnnotationName</code>在代码中存在的,还可以添加参数值,比如<code>@SuppressWarnings(value=&quot;unchecked&quot;)</code></p>
+</li>
+<li>
+<p>注解可以使用在<code>package</code>,<code>class</code>,<code>method</code>,<code>filed</code>上,相当于添加了额外的注释信息</p>
+</li>
+<li>
+<p><strong>可以通过反射完成对元数据的访问</strong></p>
+</li>
 </ul>
-
 <blockquote>
 <p>没错，注解的本质就是一个继承了 Annotation 接口的接口。有关这一点，你可以去反编译任意一个注解类，你会得到结果的。</p>
-
 <p>一个注解准确意义上来说，只不过是一种特殊的注释而已，如果没有解析它的代码，它可能连注释都不如。
 而解析一个类或者方法的注解往往有两种形式，一种是编译期直接的扫描，一种是运行期反射。</p>
-
+</blockquote>
+<blockquote>
 <p>反射的事情我们待会说，而编译器的扫描指的是编译器在对 java 代码编译字节码的过程中会检测到某个类或者方法被一些注解修饰，这时它就会对于这些注解进行某些处理。</p>
-
+</blockquote>
+<blockquote>
 <p>典型的就是注解 <code>@Override</code>，一旦编译器检测到某个方法被修饰了 <code>@Override</code> 注解，编译器就会检查当前方法的方法签名是否真正重写了父类的某个方法，也就是比较父类中是否具有一个同样的方法签名。</p>
-
+</blockquote>
+<blockquote>
 <p>这一种情况只适用于那些编译器已经熟知的注解类，比如 JDK 内置的几个注解，而你自定义的注解，编译器是不知道你这个注解的作用的，当然也不知道该如何处理，往往只是会根据该注解的作用范围来选择是否编译进字节码文件，仅此而已。</p>
 </blockquote>
-
 <h2 id="内置注解">内置注解</h2>
-
 <ol>
-<li><p><code>@Override</code></p></li>
-
-<li><p><code>@Deprecated</code></p></li>
-</ol>
-
+<li>
+<p><code>@Override</code></p>
+</li>
+<li>
+<p><code>@Deprecated</code></p>
 <p>已过时,不推荐使用</p>
-
-<ol>
-<li><p><code>@SuppressWarning</code></p>
-
-<p>扼制警告的作用</p></li>
-
-<li><p><code>@SafeVarargs</code></p>
-
-<p>参数安全类型注解。它的目的是提醒开发者不要用参数做一些不安全的操作,它的存在会阻止编译器产生 unchecked 这样的警告。它是在 Java 1.7 的版本中加入的。</p></li>
-
-<li><p><code>@FunctionalInterface</code></p>
-
+</li>
+<li>
+<p><code>@SuppressWarning</code></p>
+<p>扼制警告的作用</p>
+</li>
+<li>
+<p><code>@SafeVarargs</code></p>
+<p>参数安全类型注解。它的目的是提醒开发者不要用参数做一些不安全的操作,它的存在会阻止编译器产生 unchecked 这样的警告。它是在 Java 1.7 的版本中加入的。</p>
+</li>
+<li>
+<p><code>@FunctionalInterface</code></p>
 <p>函数式接口注解，这个是 Java 1.8 版本引入的新特性。函数式编程很火，所以 Java 8 也及时添加了这个特性</p>
-
-<h2 id="元注解-meta-annotation">元注解 meta-annotation</h2></li>
+</li>
 </ol>
-
+<h2 id="元注解-meta-annotation">元注解 meta-annotation</h2>
 <p>『元注解』一般用于指定某个注解生命周期以及作用目标等信息。</p>
-
 <p>元注解就是负责注解其他注解, <del>4+1</del> 5 个,用来提供对其他注解类型进行说明的作用.在<code>java.lang.annotation</code>包下.</p>
-
 <ol>
-<li><p><code>@Target</code></p>
-
+<li>
+<p><code>@Target</code></p>
 <ul>
 <li><code>ElementType.TYPE</code>：允许被修饰的注解作用在类、接口和枚举上</li>
 <li><code>ElementType.FIELD</code>：允许作用在属性字段上</li>
@@ -237,43 +224,33 @@
 <li><code>ElementType.LOCAL_VARIABLE</code>：允许作用在本地局部变量上</li>
 <li><code>ElementType.ANNOTATION_TYPE</code>：允许作用在注解上</li>
 <li><code>ElementType.PACKAGE</code>：允许作用在包上</li>
-</ul></li>
-
-<li><p><code>@Retention</code></p>
-
+</ul>
+</li>
+<li>
+<p><code>@Retention</code></p>
 <p>表示需要将该注解报保存到什么级别中,描述注解的生命周期(<code>SOURCE&lt;CLASS&lt;RUNTIME</code>),一般都是用 <code>RUNTIME</code></p>
-
 <ul>
 <li><code>RetentionPolicy.SOURCE</code>：当前注解编译期可见，不会写入 class 文件</li>
 <li><code>RetentionPolicy.CLASS</code>：类加载阶段丢弃，会写入 class 文件</li>
 <li><code>RetentionPolicy.RUNTIME</code>：永久保存，<strong>可以反射获取</strong></li>
-</ul></li>
-
-<li><p><code>@Document</code></p>
-
-<p>它的作用是能够将注解中的元素包含到 Javadoc 中去</p></li>
-
-<li><p><code>@Inherited</code></p></li>
-</ol>
-
+</ul>
+</li>
+<li>
+<p><code>@Document</code></p>
+<p>它的作用是能够将注解中的元素包含到 Javadoc 中去</p>
+</li>
+<li>
+<p><code>@Inherited</code></p>
 <p>说明子类可以继承父类中的注解</p>
-
-<p>Inherited 是继承的意思，但是它并不是说注解本身可以继承，而是说如果一个超类被 @Inherited 注解过的注解进行注解的话，那么如果它的子类没有被任何注解应用的话，那么这个子类就继承了超类的注解。
-5. <code>@Repeatable</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></pre></td>
-<td class="lntd">
-<pre class="chroma">Repeatable 自然是可重复的意思。`@Repeatable` 是 Java 1.8 才加进来的，所以算是一个新的特性。
-
-通常是注解的值可以同时取多个。</pre></td></tr></table>
-</div>
-</div>
+<p>Inherited 是继承的意思，但是它并不是说注解本身可以继承，而是说如果一个超类被 @Inherited 注解过的注解进行注解的话，那么如果它的子类没有被任何注解应用的话，那么这个子类就继承了超类的注解。</p>
+</li>
+<li>
+<p><code>@Repeatable</code></p>
+<p>Repeatable 自然是可重复的意思。<code>@Repeatable</code> 是 Java 1.8 才加进来的，所以算是一个新的特性。</p>
+<p>通常是注解的值可以同时取多个。</p>
+</li>
+</ol>
 <h2 id="自定义注解">自定义注解</h2>
-
 <ol>
 <li>自动继承了<code>java.lang.Annotation</code>接口</li>
 <li>格式 : <code>public @interface anno{ content}</code></li>
@@ -283,20 +260,13 @@
 <li>如果只有一个参数值,一般参数为 value</li>
 <li>注解元素必须有值,定义注解时候,经常使用空字符串,0,作为默认值</li>
 </ol>
-
 <h2 id="注解的属性">注解的属性</h2>
-
 <p>注解的属性也叫做成员变量。注解只有成员变量，没有方法。</p>
-
 <p>注解的成员变量在注解的定义中以“无形参的方法”形式来声明，其方法名定义了该成员变量的名字，其返回值定义了该成员变量的类型。</p>
-
 <p><strong>在注解中定义属性时它的类型必须是 8 种基本数据类型外加 类、接口、注解及它们的数组</strong></p>
-
-<h1 id="注解只是定义-使用注解要靠-反射-来使用">注解只是定义 使用注解要靠<strong>反射</strong>来使用</h1>
-
+<h1 id="注解只是定义-使用注解要靠反射来使用">注解只是定义 使用注解要靠<strong>反射</strong>来使用</h1>
 <blockquote>
 <p>参考链接:</p>
-
 <ol>
 <li><a href="https://juejin.im/post/5b45bd715188251b3a1db54f">Java 注解的基本原理</a></li>
 <li><a href="https://blog.csdn.net/briblue/article/details/73824058">秒懂，Java 注解 （Annotation）你可以这样学</a></li>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-12%E5%B9%B6%E5%8F%91%E7%89%88%E7%88%AC%E8%99%AB/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-08-18T14:21:55+08:00" />
 <meta itemprop="name" content="Golang-12 并发版爬虫">
 <meta itemprop="description" content="并发版爬虫 架构 单机版爬虫的慢点在 fetcher 中 提取 worker 将 engine中的代出来,组成 worker worker 也是耗时间最长的 1 2 3 4 5 6 7 8 9 10 11 // 将原来的 engine 中的部分代码提">
-
-
 <meta itemprop="datePublished" content="2019-08-18T14:21:55&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-18T14:21:55&#43;08:00" />
 <meta itemprop="wordCount" content="527">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-12 并发版爬虫"/>
 <meta name="twitter:description" content="并发版爬虫 架构 单机版爬虫的慢点在 fetcher 中 提取 worker 将 engine中的代出来,组成 worker worker 也是耗时间最长的 1 2 3 4 5 6 7 8 9 10 11 // 将原来的 engine 中的部分代码提"/>
 
@@ -137,50 +134,36 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#并发版爬虫">并发版爬虫</a>
-<ul>
-<li><a href="#架构">架构</a>
-<ul>
-<li><a href="#提取-worker">提取 worker</a></li>
-</ul></li>
-<li><a href="#加入-scheduler-来进行任务的调度-关键">加入 Scheduler 来进行任务的调度 关键</a>
-<ul>
-<li><a href="#scheduler-实现-1-所有-worker-共用一个输入">Scheduler 实现 1 - 所有 worker 共用一个输入</a>
-<ul>
-<li><a href="#循环等待问题">循环等待问题:</a></li>
-<li><a href="#解决循环等待">解决循环等待</a></li>
-</ul></li>
-<li><a href="#实际解决方法-实现-2">实际解决方法 实现 2</a></li>
-<li><a href="#实现-3-实现控制">实现 3 实现控制</a></li>
-<li><a href="#tips">tips</a></li>
-<li><a href="#更多-city">更多 city</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#todo">TODO</a></li>
-</ul>
+  <ul>
+    <li><a href="#架构">架构</a>
+      <ul>
+        <li><a href="#提取-worker">提取 worker</a></li>
+      </ul>
+    </li>
+    <li><a href="#加入-scheduler-来进行任务的调度-关键">加入 Scheduler 来进行任务的调度 关键</a>
+      <ul>
+        <li><a href="#scheduler-实现-1---所有-worker-共用一个输入">Scheduler 实现 1 - 所有 worker 共用一个输入</a></li>
+        <li><a href="#实际解决方法-实现-2">实际解决方法 实现 2</a></li>
+        <li><a href="#实现-3-实现控制">实现 3 实现控制</a></li>
+        <li><a href="#tips">tips</a></li>
+        <li><a href="#更多-city">更多 city</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="并发版爬虫">并发版爬虫</h1>
-
+      <h1 id="并发版爬虫">并发版爬虫</h1>
 <h2 id="架构">架构</h2>
-
 <p>单机版爬虫的慢点在 fetcher 中</p>
-
 <h3 id="提取-worker">提取 worker</h3>
-
 <p>将 engine中的代出来,组成 worker</p>
-
 <p>worker 也是耗时间最长的</p>
-
-<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g63x04kczmj31ay0ou78f.jpg" alt="work" /></p>
+<p><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g63x04kczmj31ay0ou78f.jpg" alt="work"></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -203,33 +186,25 @@
 		<span class="k">return</span> <span class="nx">ParseResult</span><span class="p">{},</span> <span class="nx">err</span>
 	<span class="p">}</span>
 	<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">ParserFunc</span><span class="p">(</span><span class="nx">body</span><span class="p">),</span> <span class="kc">nil</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="加入-scheduler-来进行任务的调度-关键">加入 Scheduler 来进行任务的调度 关键</h2>
-
+</div><h2 id="加入-scheduler-来进行任务的调度-关键">加入 Scheduler 来进行任务的调度 关键</h2>
 <p>此时的箭头是的输入和输出都是 channel</p>
-
-<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g63x4t687mj316k0pkdj0.jpg" alt="并发" /></p>
-
-<h3 id="scheduler-实现-1-所有-worker-共用一个输入">Scheduler 实现 1 - 所有 worker 共用一个输入</h3>
-
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g63x4t687mj316k0pkdj0.jpg" alt="并发"></p>
+<h3 id="scheduler-实现-1---所有-worker-共用一个输入">Scheduler 实现 1 - 所有 worker 共用一个输入</h3>
 <p>worker 谁抢到谁处理</p>
-
-<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g63x7vy1jgj30ue0ksq4e.jpg" alt="1" /></p>
-
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g63x7vy1jgj30ue0ksq4e.jpg" alt="1"></p>
 <h4 id="循环等待问题">循环等待问题:</h4>
-
 <ol>
 <li>送出 <code>result</code> 的前提是有 <code>worker</code> 在接收</li>
 <li>当所有 <code>worker</code> 都在忙的时候就没有办送出 <code>result</code></li>
 <li><code>worker</code> 忙完的前提是将 <code>requests</code> 和 <code>item</code> 送给 <code>Engine</code>,<code>Engine</code> 再将 <code>request</code> 给 <code>Schedule</code></li>
 </ol>
-
 <p>就造成循环等待的问题</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -254,15 +229,14 @@
 			<span class="nx">out</span> <span class="o">&lt;-</span> <span class="nx">result</span> <span class="c1">// 问题出现 循环等待
 </span><span class="c1"></span>		<span class="p">}</span>
 	<span class="p">}()</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h4 id="解决循环等待">解决循环等待</h4>
-
+</div><h4 id="解决循环等待">解决循环等待</h4>
 <p>在 Scheduler 中加入 goroutine</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -275,40 +249,28 @@
 </span><span class="c1"></span>	<span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
 		<span class="nx">s</span><span class="p">.</span><span class="nx">workerChan</span> <span class="o">&lt;-</span> <span class="nx">r</span>
 	<span class="p">}()</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="实际解决方法-实现-2">实际解决方法 实现 2</h3>
-
-<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g63zl0ucmcj314q0jkq67.jpg" alt="实际" /></p>
-
+</div><h3 id="实际解决方法-实现-2">实际解决方法 实现 2</h3>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79ly1g63zl0ucmcj314q0jkq67.jpg" alt="实际"></p>
 <ol>
 <li>为每个 request 创建一个 goroutine 往 worker 统一的 发送 request</li>
 </ol>
-
 <p>也就是上面的解决方法</p>
-
 <h3 id="实现-3-实现控制">实现 3 实现控制</h3>
-
-<p><img src="https://github.com/dcg123/carwler/raw/master/src/AdConcurrentCarwler/ad.png" alt="" /></p>
-
+<p><img src="https://github.com/dcg123/carwler/raw/master/src/AdConcurrentCarwler/ad.png" alt=""></p>
 <ol>
 <li>将 Request 放入 Request 对列中 Request 分发给 worker</li>
 <li>Worker 对列 从 worker 中选择想要的 worker</li>
 <li>当 Request 队列和 Worker 对列都有,就将我们想要的 Request 发给想要的 Worker</li>
 </ol>
-
 <h3 id="tips">tips</h3>
-
 <p>每个 worker 共用一个 channel 还是有独立的 channel, 这一点不确定 ,这是 scheduler 来掌握的
 交给 scheduler 处理后,两个 scheduler 就能统一起来了,统一一个 interface 去</p>
-
 <h3 id="更多-city">更多 city</h3>
-
 <p>同样适用正则表达式来 获取下一页</p>
-
 <h1 id="todo">TODO</h1>
-
 <blockquote>
 <p>对 chan 和 goroutine 的理解还不够清晰 看完书的部分后再 回来梳理代码</p>
 </blockquote>

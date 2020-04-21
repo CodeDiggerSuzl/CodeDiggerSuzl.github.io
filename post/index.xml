@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on The Blog of Suzl 🤠</title>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 02 Apr 2020 23:23:46 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/redis-ds/</guid>
-      <description>- zset 基础数据结构 string list hash set zset &amp;mdash; install redis docker github 源码编译安装 使用各个操作系统的命令安装 web redis 网页体验 Redis 有 5 种基础数据结构，分别为：string (字符串)、</description>
+      <description>- zset 基础数据结构 string list hash set zset install redis docker github 源码编译安装 使用各个操作系统的命令安装 web redis 网页体验 Redis 有 5 种基础数据结构，分别为：string (字符串)、l</description>
     </item>
     
     <item>
@@ -36,7 +36,7 @@
       <pubDate>Fri, 28 Feb 2020 23:18:29 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/v-charts/</guid>
-      <description>vcharts 折线图 ! 数据结构的灵活使用 - 前端 - Java &amp;amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&amp;#39;日期&amp;#3</description>
+      <description>vcharts 折线图 ! 数据结构的灵活使用 前端 Java &amp;amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&amp;#39;日期&amp;#39;</description>
     </item>
     
     <item>
@@ -45,7 +45,7 @@
       <pubDate>Wed, 26 Feb 2020 22:10:26 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/dp-proxy/</guid>
-      <description>代理模式 总体作用: 控制和管理访问 和装饰器模式的区别: - 装饰器模式: 包装另一个对象, 提供不同的接口 - 代理模式: 包装另一个对象, 控制对它的访问 角</description>
+      <description>代理模式 总体作用: 控制和管理访问 和装饰器模式的区别: 装饰器模式: 包装另一个对象, 提供不同的接口 代理模式: 包装另一个对象, 控制对它的访问 角色分</description>
     </item>
     
     <item>
@@ -63,7 +63,7 @@
       <pubDate>Wed, 12 Feb 2020 20:07:23 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/go-chatroom/</guid>
-      <description>🪐Concurrent Chat Room 源代码: &amp;gt; https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效</description>
+      <description>🪐Concurrent Chat Room 源代码: https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效。</description>
     </item>
     
     <item>
@@ -72,7 +72,7 @@
       <pubDate>Wed, 12 Feb 2020 20:07:11 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/go-filetransfer/</guid>
-      <description>File Transfer 命令行参数 作用是: 在 main 函数启动的时候向 main 函数传入参数 语法: go run main.go arg1 arg2 main.go 第 0 个参数 arg1 第 1 个参数 arg2 第 2 个参数 获取文件属性 1 os.Stat(文</description>
+      <description>File Transfer 命令行参数 作用是: 在 main 函数启动的时候向 main 函数传入参数 语法: go run main.go arg1 arg2 main.go 第 0 个参数 arg1 第 1 个参数 arg2 第 2 个参数 获取文件属性 1 2 os.Stat(</description>
     </item>
     
     <item>
@@ -108,7 +108,7 @@
       <pubDate>Wed, 12 Feb 2020 20:05:54 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/go-tcp/</guid>
-      <description>TCP 127.0.0.1 和 192.100.x.xxx 的区别 - 一个是本地回环地址, 只要有网卡, 就能使用, 没有出这台电脑 - 另一个是通过网卡发出去, 再由路由器法返回来到本机, 真正意义上的网络</description>
+      <description>TCP 127.0.0.1 和 192.100.x.xxx 的区别 一个是本地回环地址, 只要有网卡, 就能使用, 没有出这台电脑 另一个是通过网卡发出去, 再由路由器法返回来到本机, 真正意义上的网络通信</description>
     </item>
     
     <item>
@@ -146,8 +146,8 @@
       <guid>http://codedigger.cn/post/config-linux-system/</guid>
       <description>Config Manjaro(Brand New Linux System)  For future config back and other intentions.
 Not hand by hand, just url Config in Manjaro
-First of all ：git config  git config &amp;ndash;gloable user.name &amp;ldquo;username&amp;rdquo; git config &amp;ndash;gloable user.email &amp;ldquo;email&amp;rdquo; using ssh-keygen -t ras to generate ssh pub-keys, paste in to github settings in order to pull&amp;amp;&amp;amp;push code.   Shell Config  zsh &amp;amp;&amp;amp; oh-my-zsh
- using curl
+ First of all ：git config  git config &amp;ndash;gloable user.name &amp;ldquo;username&amp;rdquo; git config &amp;ndash;gloable user.email &amp;ldquo;email&amp;rdquo; using ssh-keygen -t ras to generate ssh pub-keys, paste in to github settings in order to pull&amp;amp;&amp;amp;push code.  Shell Config   zsh &amp;amp;&amp;amp; oh-my-zsh
+  using curl
 sh -c &amp;quot;$(curl -fsSL https://raw.</description>
     </item>
     
@@ -193,7 +193,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/1_baisc/</guid>
-      <description>basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp;amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16</description>
+      <description>basic of go try to learn go and vim at the same time things to notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
     </item>
     
     <item>
@@ -202,7 +202,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/4_channel_goroutine_intro/</guid>
-      <description>Go 并发编程 并发和并行 the diff between parallel and 并行 parallel 1s = 1000ms 1ms = 1000us 1us = 1000ns 同一时刻（在 cpu 量级上），借助多个 cup 实现。 &amp;gt; 并行(parallel)：指在同一时刻，有多</description>
+      <description>Go 并发编程 并发和并行 the diff between parallel and 并行 parallel 1s = 1000ms 1ms = 1000us 1us = 1000ns 同一时刻（在 cpu 量级上），借助多个 cup 实现。 并行(parallel)：指在同一时刻，有多条</description>
     </item>
     
     <item>
@@ -292,7 +292,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Fri, 20 Dec 2019 01:19:17 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/gobasic/</guid>
-      <description>basic of go try to learn go and vim at the same time things to notice comments 1 `//` &amp;amp; `/* */` variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16</description>
+      <description>basic of go try to learn go and vim at the same time things to notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
     </item>
     
     <item>
@@ -320,10 +320,14 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       
       <guid>http://codedigger.cn/post/vim-1/</guid>
       <description>Get to Learn Vim  in order to be a an awesome &amp;lsquo;geek&amp;rsquo;, i&amp;rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift + zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl + h to delete a char ctrl + w to delete a word crtl + u to delete a line  These three shotcuts also works in shell or a terminal!</description>
+ edit   i insert
+  a append
+  o open a line below
+  I INSERT before line
+  O append before line
+  A APPEND AFTER LINE
+  shift + zz
+  :wq write and quit</description>
     </item>
     
     <item>
@@ -404,7 +408,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Tue, 06 Aug 2019 22:31:28 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/golang-%E6%B5%8B%E8%AF%95/</guid>
-      <description>测试 Debugging sucks,Testing rocks 传统测试&amp;amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优</description>
+      <description>测试 Debugging sucks,Testing rocks 传统测试&amp;amp;表格测试 传统测试 缺点: 测试数据和测试逻辑混在一起 出错信息不明确 一旦一个数据出错,测试全部结束 表格驱动测试 优点: 分</description>
     </item>
     
     <item>
@@ -422,7 +426,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Sun, 04 Aug 2019 16:29:12 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/golang-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</guid>
-      <description>函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&amp;gt; 闭包 &amp;ldquo;正统&amp;rdquo;的函</description>
+      <description>函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&amp;gt; 闭包 &amp;ldquo;正统&amp;quot;的函数</description>
     </item>
     
     <item>

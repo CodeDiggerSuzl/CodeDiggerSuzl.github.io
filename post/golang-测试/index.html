@@ -16,14 +16,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="苏子叶" /><meta name="description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+<meta name="author" content="苏子叶" /><meta name="description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;amp;表格测试 传统测试 缺点: 测试数据和测试逻辑混在一起 出错信息不明确 一旦一个数据出错,测试全部结束 表格驱动测试 优点: 分" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-%E6%B5%8B%E8%AF%95/" />
@@ -39,25 +39,22 @@
 
 
 <meta property="og:title" content="Golang-7 测试" />
-<meta property="og:description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优" />
+<meta property="og:description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;表格测试 传统测试 缺点: 测试数据和测试逻辑混在一起 出错信息不明确 一旦一个数据出错,测试全部结束 表格驱动测试 优点: 分" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://codedigger.cn/post/golang-%E6%B5%8B%E8%AF%95/" />
 <meta property="article:published_time" content="2019-08-06T22:31:28+08:00" />
 <meta property="article:modified_time" content="2019-08-06T22:31:28+08:00" />
 <meta itemprop="name" content="Golang-7 测试">
-<meta itemprop="description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优">
-
-
+<meta itemprop="description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;表格测试 传统测试 缺点: 测试数据和测试逻辑混在一起 出错信息不明确 一旦一个数据出错,测试全部结束 表格驱动测试 优点: 分">
 <meta itemprop="datePublished" content="2019-08-06T22:31:28&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-06T22:31:28&#43;08:00" />
-<meta itemprop="wordCount" content="558">
+<meta itemprop="wordCount" content="556">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-7 测试"/>
-<meta name="twitter:description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;表格测试 传统测试 缺点: - 测试数据和测试逻辑混在一起 - 出错信息不明确 - 一旦一个数据出错,测试全部结束 表格驱动测试 优"/>
+<meta name="twitter:description" content="测试 Debugging sucks,Testing rocks 传统测试&amp;表格测试 传统测试 缺点: 测试数据和测试逻辑混在一起 出错信息不明确 一旦一个数据出错,测试全部结束 表格驱动测试 优点: 分"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 558 字 </span>
+          <span class="more-meta"> 约 556 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,61 +134,53 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#测试">测试</a>
-<ul>
-<li><a href="#传统测试-表格测试">传统测试&amp;表格测试</a>
-<ul>
-<li><a href="#传统测试">传统测试</a></li>
-<li><a href="#表格驱动测试">表格驱动测试</a></li>
-</ul></li>
-<li><a href="#example-code">example code</a>
-<ul>
-<li><a href="#代码覆盖率和性能测试">代码覆盖率和性能测试</a></li>
-<li><a href="#性能提升">性能提升</a></li>
-<li><a href="#http-测试">http 测试(🤢)</a></li>
-<li><a href="#文档">文档</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#传统测试表格测试">传统测试&amp;表格测试</a>
+      <ul>
+        <li><a href="#传统测试">传统测试</a></li>
+        <li><a href="#表格驱动测试">表格驱动测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#example-code">example code</a>
+      <ul>
+        <li><a href="#代码覆盖率和性能测试">代码覆盖率和性能测试</a></li>
+        <li><a href="#性能提升">性能提升</a></li>
+        <li><a href="#http-测试">http 测试(🤢)</a></li>
+        <li><a href="#文档">文档</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="测试">测试</h1>
-
+      <h1 id="测试">测试</h1>
 <blockquote>
 <p>Debugging sucks,Testing rocks</p>
 </blockquote>
-
-<h2 id="传统测试-表格测试">传统测试&amp;表格测试</h2>
-
+<h2 id="传统测试表格测试">传统测试&amp;表格测试</h2>
 <h3 id="传统测试">传统测试</h3>
-
-<p>缺点:
-- 测试数据和测试逻辑混在一起
-- 出错信息不明确
-- 一旦一个数据出错,测试全部结束</p>
-
+<p>缺点:</p>
+<ul>
+<li>测试数据和测试逻辑混在一起</li>
+<li>出错信息不明确</li>
+<li>一旦一个数据出错,测试全部结束</li>
+</ul>
 <h3 id="表格驱动测试">表格驱动测试</h3>
-
-<p>优点:
-- 分离了测试逻辑和数据,在写测试的时候只用思考数据
-- 明确了出错的信息
-- 可以部分失败
-- go 语法更容易实现表格驱动程序</p>
-
+<p>优点:</p>
+<ul>
+<li>分离了测试逻辑和数据,在写测试的时候只用思考数据</li>
+<li>明确了出错的信息</li>
+<li>可以部分失败</li>
+<li>go 语法更容易实现表格驱动程序</li>
+</ul>
 <h2 id="example-code">example code</h2>
-
 <ol>
 <li>测试文件的名字格式 <code>testingmethod_test1</code></li>
-
-<li><p>测试方法</p>
+<li>测试方法
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -207,60 +196,57 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">TestMethodName</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">){</span>
-   <span class="nx">tests</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">struct</span><span class="p">{</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span> <span class="kt">int</span> <span class="p">}{</span>
-		<span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span>
-		<span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">},</span>
-		<span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">},</span>
-		<span class="p">{</span><span class="mi">30000</span><span class="p">,</span><span class="mi">40000</span><span class="p">,</span><span class="mi">50000</span><span class="p">},</span>
-	<span class="p">}</span>
-	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">tt</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">tests</span> <span class="p">{</span>
-		<span class="k">if</span> <span class="nx">actual</span> <span class="o">:=</span><span class="nf">calcTriangle</span><span class="p">(</span><span class="nx">tt</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span><span class="nx">actual</span><span class="o">!=</span><span class="nx">tt</span><span class="p">.</span><span class="nx">c</span><span class="p">{</span>
-			<span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;%d,%d got %d,expect %d&#34;</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">b</span><span class="p">,</span><span class="nx">actual</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">c</span><span class="p">)</span>
-		<span class="p">}</span>
-	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+    <span class="nx">tests</span> <span class="o">:=</span> <span class="p">[]</span><span class="kd">struct</span><span class="p">{</span> <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">c</span> <span class="kt">int</span> <span class="p">}{</span>
+     <span class="p">{</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span>
+     <span class="p">{</span><span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">},</span>
+     <span class="p">{</span><span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">},</span>
+     <span class="p">{</span><span class="mi">30000</span><span class="p">,</span><span class="mi">40000</span><span class="p">,</span><span class="mi">50000</span><span class="p">},</span>
+ <span class="p">}</span>
+ <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">tt</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">tests</span> <span class="p">{</span>
+     <span class="k">if</span> <span class="nx">actual</span> <span class="o">:=</span><span class="nf">calcTriangle</span><span class="p">(</span><span class="nx">tt</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">b</span><span class="p">);</span><span class="nx">actual</span><span class="o">!=</span><span class="nx">tt</span><span class="p">.</span><span class="nx">c</span><span class="p">{</span>
+         <span class="nx">t</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;%d,%d got %d,expect %d&#34;</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">b</span><span class="p">,</span><span class="nx">actual</span><span class="p">,</span><span class="nx">tt</span><span class="p">.</span><span class="nx">c</span><span class="p">)</span>
+     <span class="p">}</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
+</div></li>
+</ol>
 <h3 id="代码覆盖率和性能测试">代码覆盖率和性能测试</h3>
-
-<ol>
-<li>不用写很多 test 例子,只用写最难的例子</li>
-<li>使用<code>func funcName(b *testing.B){}</code> 来进行性能测试</li>
-</ol></li>
-
-<li><p>命令行</p>
-
+<pre><code>1.  不用写很多 test 例子,只用写最难的例子
+2.  使用`func funcName(b *testing.B){}` 来进行性能测试
+</code></pre>
+<ol start="3">
+<li>命令行
 <ol>
 <li>中使用<code>go test .</code> 来进行测试</li>
 <li>使用<code>go test -coverprofile=c.out</code>查看<strong>代码覆盖率</strong></li>
 <li>使用<code>go test -bench .</code> 来进行性测试</li>
 <li>使用<code>go tool -cover=html</code>来在浏览器中查看代码覆盖率</li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <h3 id="性能提升">性能提升</h3>
-
 <ol>
 <li>使用<code>go test -bench . -cpuprofile cup.out</code>生成 cpuprofile 的文件.(二进文件)</li>
 <li>使用<code>go tool pprof cpu.out</code> 然后使用 web 来使用浏览器查看(使用<code>brew install graphviz</code>来安装模块)</li>
 <li>可以简单的查看代码慢在哪里</li>
 </ol>
-
 <h3 id="http-测试">http 测试(🤢)</h3>
-
-<p>两种方法:
-1. 使用假的 Request 和 Response 来进行测试 类似单元测试
-2. 通过起一个服务器 测试覆盖面广</p>
-
+<p>两种方法:</p>
+<ol>
+<li>使用假的 Request 和 Response 来进行测试 类似单元测试</li>
+<li>通过起一个服务器 测试覆盖面广</li>
+</ol>
 <h3 id="文档">文档</h3>
-
-<p>在方法的时候加入注释再使用 <code>go doc/godoc</code> 来查看/生成文档
-1. 使用<code>go doc</code>或者<code>go doc 文件名</code>
-2. <code>go doc -http:port</code>
-3. 可以 随意的写文档
-4. 实例代码 也会生成文档
-   ``<code>func ExampleMethodName() {}</code> 注释中加上 <code>Output:</code> 加入 output 代码运行结果相同的话就会生成文档.</p>
-
+<p>在方法的时候加入注释再使用 <code>go doc/godoc</code> 来查看/生成文档</p>
+<ol>
+<li>使用<code>go doc</code>或者<code>go doc 文件名</code></li>
+<li><code>go doc -http:port</code></li>
+<li>可以 随意的写文档</li>
+<li>实例代码 也会生成文档
+```func ExampleMethodName() {}<code>注释中加上</code>Output:` 加入 output 代码运行结果相同的话就会生成文档.</li>
+</ol>
 <blockquote>
 <p>测试需要巩固</p>
 </blockquote>

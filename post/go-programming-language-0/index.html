@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/go-programming-language-0/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-02-28T23:36:47+08:00" />
 <meta itemprop="name" content="Go语言编程-ch0-为什么选择 go 语言">
 <meta itemprop="description" content="Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么">
-
-
 <meta itemprop="datePublished" content="2020-02-12T19:19:27&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:36:47&#43;08:00" />
-<meta itemprop="wordCount" content="898">
+<meta itemprop="wordCount" content="887">
 
 
 
-<meta itemprop="keywords" content="golang,《Go语言编程》," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang,《Go语言编程》," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go语言编程-ch0-为什么选择 go 语言"/>
 <meta name="twitter:description" content="Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/reading-notes/"> Reading Notes </a>
             </div>
-          <span class="more-meta"> 约 898 字 </span>
+          <span class="more-meta"> 约 887 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,101 +134,76 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#go-语言的好处">Go 语言的好处</a>
-<ul>
-<li><a href="#1-并发和分布式">1.并发和分布式</a>
-<ul>
-<li><a href="#1-1-并发执行体">1.1 并发执行体</a></li>
-<li><a href="#1-2-执行体之间的通信">1.2 执行体之间的通信</a>
-<ul>
-<li><a href="#执行体之间的互斥和同步">执行体之间的互斥和同步</a></li>
-<li><a href="#执行体之间的消息传递">执行体之间的消息传递</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#2-软件工程">2.软件工程</a></li>
-<li><a href="#3-编程哲学上">3. 编程哲学上</a>
-<ul>
-<li><a href="#3-1-反对重载-overload">3.1 反对重载 (overload)</a></li>
-<li><a href="#3-2-interface">3.2 ✨ interface</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#1并发和分布式">1.并发和分布式</a>
+      <ul>
+        <li><a href="#11-并发执行体">1.1 并发执行体</a></li>
+        <li><a href="#12-执行体之间的通信">1.2 执行体之间的通信</a></li>
+      </ul>
+    </li>
+    <li><a href="#2软件工程">2.软件工程</a></li>
+    <li><a href="#3-编程哲学上">3. 编程哲学上</a>
+      <ul>
+        <li><a href="#31-反对重载-overload">3.1 反对重载 (overload)</a></li>
+        <li><a href="#32--interface">3.2 ✨ interface</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="go-语言的好处">Go 语言的好处</h1>
-
+      <h1 id="go-语言的好处">Go 语言的好处</h1>
 <p>互联网时代的语言需要考虑的问题:</p>
-
 <ul>
 <li>对并行 (多核化) 和分布式 (集群化) 的支持</li>
 <li>对逐步扩大的软件工程规模的支持.</li>
 <li>编程哲学的重新塑造, 什么样的才是最佳的编程实践 ?</li>
 </ul>
-
-<h2 id="1-并发和分布式">1.并发和分布式</h2>
-
-<h3 id="1-1-并发执行体">1.1 并发执行体</h3>
-
+<h2 id="1并发和分布式">1.并发和分布式</h2>
+<h3 id="11-并发执行体">1.1 并发执行体</h3>
 <p>这是抽象的概念, 在操作系统中有进程, 线程, 进程中的协程与之对应.</p>
-
 <p>多数语言仅仅通过外部库的形式来支持协程, 但是不完善.</p>
-
 <p>go 在语言级别使用 goroutine 来支持协程</p>
-
-<h3 id="1-2-执行体之间的通信">1.2 执行体之间的通信</h3>
-
+<h3 id="12-执行体之间的通信">1.2 执行体之间的通信</h3>
 <h4 id="执行体之间的互斥和同步">执行体之间的互斥和同步</h4>
-
 <ul>
 <li>执行体之间存在共享资源的时候 (一般为内存), 为了保证 ram 在逻辑上访问的正确性, 需要对访问该共享资源的执行体进行互斥操作.</li>
 <li>当多个执行体之间的逻辑存在时序上 <strong>依赖</strong>, 也需要在执行体之间进行同步.</li>
 </ul>
-
 <p>互斥和同步是最基础的交互方式.</p>
-
 <h4 id="执行体之间的消息传递">执行体之间的消息传递</h4>
-
-<p>并发编程领域分为两个流派:
-1. 共享内存模型
-2. 消息传递模型</p>
-
+<p>并发编程领域分为两个流派:</p>
+<ol>
+<li>共享内存模型</li>
+<li>消息传递模型</li>
+</ol>
 <p>go 保存了第一种, 但是内置 channel 来实现第二种.</p>
-
-<h2 id="2-软件工程">2.软件工程</h2>
-
-<p>软件规模变大后, 在团队协作中, 人们需要建立统一的交互语言来降低沟通的成本. 包含下面几项:
-1. 代码风格规范
-2. 错误处理规范
-3. 包管理
-4. 契约 (接口) 规范
-5. 单元测试规范
-6. 功能开发流程规范</p>
-
+<h2 id="2软件工程">2.软件工程</h2>
+<p>软件规模变大后, 在团队协作中, 人们需要建立统一的交互语言来降低沟通的成本. 包含下面几项:</p>
+<ol>
+<li>代码风格规范</li>
+<li>错误处理规范</li>
+<li>包管理</li>
+<li>契约 (接口) 规范</li>
+<li>单元测试规范</li>
+<li>功能开发流程规范</li>
+</ol>
 <ul>
-<li><p>代码风格上</p>
-
-<p>go 将代码进风格进行了 <strong>强制规定</strong>, 减少了 &ldquo;大括号应该另起一行还是在行尾&rdquo; 这种无意义问题的争论上</p></li>
-
-<li><p>在错误处理上</p>
-
-<p>go 首创了 <code>defer</code> 和 函数多返回之中的 <code>err</code> 来进行错误处理.</p></li>
+<li>
+<p>代码风格上</p>
+<p>go 将代码进风格进行了 <strong>强制规定</strong>, 减少了 &ldquo;大括号应该另起一行还是在行尾&rdquo; 这种无意义问题的争论上</p>
+</li>
+<li>
+<p>在错误处理上</p>
+<p>go 首创了 <code>defer</code> 和 函数多返回之中的 <code>err</code> 来进行错误处理.</p>
+</li>
 </ul>
-
 <h2 id="3-编程哲学上">3. 编程哲学上</h2>
-
 <p>计算机软件有多重学术流派: 面向过程, 面向对象, 函数式&hellip; 等.</p>
-
 <p>C 面向过程, java 是面向对象的激进派 (典型体现: 不能容忍体系中包含孤立的函数)</p>
-
-<h3 id="3-1-反对重载-overload">3.1 反对重载 (overload)</h3>
-
+<h3 id="31-反对重载-overload">3.1 反对重载 (overload)</h3>
 <p>go 反对函数和 操作符 重载,重载虽然解决了少数面向对象的问题,但是给语言带来负担很大.</p>
-
 <table>
 <thead>
 <tr>
@@ -243,7 +215,6 @@
 <th></th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>反对</td>
@@ -255,29 +226,26 @@
 </tr>
 </tbody>
 </table>
-
 <blockquote>
 <p>如果一个特性并不对解决任何问题有显著价值,那么 go 就不提供它.</p>
 </blockquote>
-
-<h3 id="3-2-interface">3.2 ✨ interface</h3>
-
+<h3 id="32--interface">3.2 ✨ interface</h3>
 <p>最大优点: 非侵入式.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">foo</span> <span class="nx">IFoo</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Foo</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">foo</span> <span class="nx">IFoo</span> <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">Foo</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>在 go 中,✨只要<code>Foo</code>实现了<code>IFoo</code>的所要求的全部接口,就实现了该接口,就可以进行复制.</p>
-
-<p>巨大影响:
-1. go 标准库不再需要绘制类库的继承树图. 只需要知道这个类实现了哪些方法,每个方法的含义就行了
-2. 无需纠结接口拆分的粒度
-3. 不用为了实现一个接口而专门引入一个包</p>
-
+</div><p>在 go 中,✨只要<code>Foo</code>实现了<code>IFoo</code>的所要求的全部接口,就实现了该接口,就可以进行复制.</p>
+<p>巨大影响:</p>
+<ol>
+<li>go 标准库不再需要绘制类库的继承树图. 只需要知道这个类实现了哪些方法,每个方法的含义就行了</li>
+<li>无需纠结接口拆分的粒度</li>
+<li>不用为了实现一个接口而专门引入一个包</li>
+</ol>
 <blockquote>
 <p>虚函数</p>
 </blockquote>

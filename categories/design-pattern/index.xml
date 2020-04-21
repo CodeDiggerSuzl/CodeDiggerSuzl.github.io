@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>design pattern on The Blog of Suzl 🤠</title>
@@ -18,7 +18,7 @@
       <pubDate>Wed, 26 Feb 2020 22:10:26 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/dp-proxy/</guid>
-      <description>代理模式 总体作用: 控制和管理访问 和装饰器模式的区别: - 装饰器模式: 包装另一个对象, 提供不同的接口 - 代理模式: 包装另一个对象, 控制对它的访问 角</description>
+      <description>代理模式 总体作用: 控制和管理访问 和装饰器模式的区别: 装饰器模式: 包装另一个对象, 提供不同的接口 代理模式: 包装另一个对象, 控制对它的访问 角色分</description>
     </item>
     
   </channel>

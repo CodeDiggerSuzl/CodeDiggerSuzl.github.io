@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/go-scoket/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-02-28T23:36:47+08:00" />
 <meta itemprop="name" content="Go Scoket 编程">
 <meta itemprop="description" content="Socket Socket，英文含义是【插座、插孔】，一般称之为套接字，用于描述 IP 地址和端口。可以实现不同程序间的数据通信。 通信过程中一定是成对出现的.">
-
-
 <meta itemprop="datePublished" content="2020-02-12T20:06:07&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:36:47&#43;08:00" />
-<meta itemprop="wordCount" content="1863">
+<meta itemprop="wordCount" content="1852">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go Scoket 编程"/>
 <meta name="twitter:description" content="Socket Socket，英文含义是【插座、插孔】，一般称之为套接字，用于描述 IP 地址和端口。可以实现不同程序间的数据通信。 通信过程中一定是成对出现的."/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1863 字 </span>
+          <span class="more-meta"> 约 1852 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,111 +134,94 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#socket">Socket</a>
-<ul>
-<li>
-<ul>
-<li><a href="#todo">TODO</a></li>
-</ul></li>
-<li><a href="#通信模型">通信模型</a>
-<ul>
-<li><a href="#c-s">C/S</a></li>
-<li><a href="#b-s">B/S</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#go-network-programming">go network programming</a>
-<ul>
-<li><a href="#tcp-c-s-架构">TCP C/S 架构</a></li>
-<li><a href="#tcp-一个-server-listen-一次-多个-connection-多个通信socket-使用-accept-来产生-conn">tcp 一个 server, Listen 一次,多个 connection 多个通信socket, 使用 <code>Accept()</code> 来产生 <code>conn</code></a></li>
-<li><a href="#tcp-server">tcp server</a></li>
-<li><a href="#tcp-client">tcp client</a></li>
-<li><a href="#流程">流程</a></li>
-</ul></li>
-<li><a href="#并发服务器">并发服务器</a>
-<ul>
-<li>
-<ul>
-<li><a href="#client">client</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#todo">TODO</a></li>
+      </ul>
+    </li>
+    <li><a href="#通信模型">通信模型</a>
+      <ul>
+        <li><a href="#cs">C/S</a></li>
+        <li><a href="#bs">B/S</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#tcp-cs-架构">TCP C/S 架构</a></li>
+    <li><a href="#tcp-一个-server-listen-一次多个-connection-多个通信socket-使用-accept-来产生-conn">tcp 一个 server, Listen 一次,多个 connection 多个通信socket, 使用 <code>Accept()</code> 来产生 <code>conn</code></a></li>
+    <li><a href="#tcp-server">tcp server</a></li>
+    <li><a href="#tcp-client">tcp client</a></li>
+    <li><a href="#流程">流程</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#client">client</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="socket">Socket</h1>
-
+      <h1 id="socket">Socket</h1>
 <p>Socket，英文含义是【插座、插孔】，一般称之为套接字，用于描述 <strong>IP 地址和端口</strong>。可以实现不同程序间的数据通信。</p>
-
 <p>通信过程中一定是成对出现的.</p>
-
 <p>Socket 起源于 Unix，而 Unix 基本哲学之一就是 “一切皆文件”，都可以用 <code>“打开 open –&gt; 读写 write/read –&gt; 关闭 close”</code> 模式来操作。Socket 就是该模式的一个实现，网络的 Socket 数据传输是一种特殊的 I/O，Socket 也是一种文件描述符。Socket 也具有一个类似于打开文件的函数调用：<code>Socket()</code>，该函数返回一个整型的 Socket 描述符，随后的连接建立、数据传输等操作都是通过该 Socket 实现的。</p>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavew6vbpij30s008ywfa.jpg" alt="" /></p>
-
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavew6vbpij30s008ywfa.jpg" alt=""></p>
 <p>在 <code>TCP/IP</code> 协议中，“<code>IP 地址 + TCP 或 UDP 端口号</code>” 唯一标识网络通讯中的一个进程。“<code>IP 地址 + 端口号</code>” 就对应一个 socket。欲建立连接的两个进程各自有一个 socket 来标识，那么这两个 socket 组成的 socket pair 就唯一标识一个连接。因此可以用 Socket 来描述网络连接的一对一关系。</p>
-
-<p>常用的 Socket 类型有两种：
-1. 流式 Socket（<code>SOCK_STREAM</code>）和数据报式 Socket（<code>SOCK_DGRAM</code>）。流式是<strong>一种面向连接</strong>的 Socket，针对于面向连接的 TCP 服务应用；
-2. 数据报式 Socket 是<strong>一种无连接</strong>的 Socket，对应于无连接的 UDP 服务应用。</p>
-
+<p>常用的 Socket 类型有两种：</p>
+<ol>
+<li>流式 Socket（<code>SOCK_STREAM</code>）和数据报式 Socket（<code>SOCK_DGRAM</code>）。流式是<strong>一种面向连接</strong>的 Socket，针对于面向连接的 TCP 服务应用；</li>
+<li>数据报式 Socket 是<strong>一种无连接</strong>的 Socket，对应于无连接的 UDP 服务应用。</li>
+</ol>
 <h3 id="todo">TODO</h3>
-
 <p>？单项半双工: 对讲机</p>
-
 <p>？双向全双共: 电话 socket</p>
-
 <h2 id="通信模型">通信模型</h2>
-
-<h3 id="c-s">C/S</h3>
-
-<p>优点:
-1. 可以将数据放到 client 端,进行缓存
-2. 使用协议比较灵活</p>
-
-<p>确点:
-1. 工作量大
-2. 对用户主机造成威胁</p>
-
-<h3 id="b-s">B/S</h3>
-
-<p>优点:
-1. 开发量小
-2. 不受平台限制</p>
-
-<p>缺点:
-1. 网络应用支持受限
-2. 缓存不能令人满意
-3. 协议选择不灵活</p>
-
+<h3 id="cs">C/S</h3>
+<p>优点:</p>
+<ol>
+<li>可以将数据放到 client 端,进行缓存</li>
+<li>使用协议比较灵活</li>
+</ol>
+<p>确点:</p>
+<ol>
+<li>工作量大</li>
+<li>对用户主机造成威胁</li>
+</ol>
+<h3 id="bs">B/S</h3>
+<p>优点:</p>
+<ol>
+<li>开发量小</li>
+<li>不受平台限制</li>
+</ol>
+<p>缺点:</p>
+<ol>
+<li>网络应用支持受限</li>
+<li>缓存不能令人满意</li>
+<li>协议选择不灵活</li>
+</ol>
 <h1 id="go-network-programming">go network programming</h1>
-
 <p>mostly in c/s mode</p>
-
 <p>tcp 就像打电话 udp 就像发短信</p>
-
-<h2 id="tcp-c-s-架构">TCP C/S 架构</h2>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gawfqh7x9lj30im0i43zx.jpg" alt="" /></p>
-
+<h2 id="tcp-cs-架构">TCP C/S 架构</h2>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gawfqh7x9lj30im0i43zx.jpg" alt=""></p>
 <p>attention:</p>
-
 <ol>
 <li><code>net.Listen()</code> 不是监听的意思,而是<strong>设置服务器监听的资源</strong>.指定 ip 和端口号. 创建用于监听的 <code>socket</code></li>
 <li><code>Accept()</code>是监听的意思.等待 <code>Listen()</code> 设置好资源后.</li>
 <li>服务器读取<code>Read()</code></li>
 <li>共有三个 socket,第一个是 <code>Listen()</code>创建的 socket,用于产生服务器中的 <code>socket</code>,第 2,3 个是服务器和客户端中的 socket.</li>
 </ol>
-
-<h2 id="tcp-一个-server-listen-一次-多个-connection-多个通信socket-使用-accept-来产生-conn">tcp 一个 server, Listen 一次,多个 connection 多个通信socket, 使用 <code>Accept()</code> 来产生 <code>conn</code></h2>
-
+<h2 id="tcp-一个-server-listen-一次多个-connection-多个通信socket-使用-accept-来产生-conn">tcp 一个 server, Listen 一次,多个 connection 多个通信socket, 使用 <code>Accept()</code> 来产生 <code>conn</code></h2>
 <h2 id="tcp-server">tcp server</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -290,15 +270,14 @@
         <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err during reading bytes&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;read from clients&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">read</span><span class="p">]))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>使用 <code>nc</code>:<code>netcat</code> 去进行测试.</p>
-
+</div><p>使用 <code>nc</code>:<code>netcat</code> 去进行测试.</p>
 <h2 id="tcp-client">tcp client</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -329,23 +308,19 @@
         <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;err during reading from server&#34;</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;read from server: &#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">buffer</span><span class="p">[:</span><span class="nx">read</span><span class="p">]))</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="流程">流程</h2>
-
+</div><h2 id="流程">流程</h2>
 <p>如图，在整个通信过程中，服务器端有两个 socket 参与进来，但用于通信的只有 conn 这个 socket。它是由 listener 接口 创建的。隶属于服务器端</p>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gawhs8z7y1j30t20920tl.jpg" alt="" /></p>
-
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gawhs8z7y1j30t20920tl.jpg" alt=""></p>
 <h1 id="并发服务器">并发服务器</h1>
-
 <p><code>Accept()</code>函数的作用是等待客户端的链接，如果客户端没有链接，该方法会阻塞。如果有客户端链接，那么该方法返回一个 <code>Socket</code> 负责与客户端进行通信。**所以，每来一个客户端，该方法就应该返回一个 <code>Socket</code> 与其通信，因此，可以使用一个死循环，将<code>Accept()</code>调用过程包裹起来。
 **
 ✨需要注意的是，实现并发处理多个客户端数据的服务器，就需要针对每一个客户端连接，单独产生一个 <code>Socket</code>，并创建一个单独的 <code>goroutine</code> 与之完成通信。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -468,13 +443,13 @@
         <span class="p">}</span>
         <span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nf">ToUpper</span><span class="p">(</span><span class="nx">strFromClient</span><span class="p">)))</span>
     <span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="client">client</h3>
+</div><h3 id="client">client</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -563,7 +538,8 @@
       <span class="p">}</span>
       <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;服务器回发：%s\n&#34;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">]))</span>
    <span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div>
     </div>

@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/batchrenamefileusingvim/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="使用Vim批量更新文件名">
 <meta itemprop="description" content="Multiple Rename &amp; Create Files In Linux multi create files using touch Week{1..4}.md will create 4 files. see The Linux Command Line:chapter 8: see the world from shell:expand {} And I also wanted to rename files without using finder and other GUI tools, I watched a video of LuckSmith which using ranger with it&rsquo;s Bulk renaming feature. However, I installed ranger in my mac, and haven&rsquo;t really to use it,">
-
-
 <meta itemprop="datePublished" content="2019-12-29T23:54:57&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
 <meta itemprop="wordCount" content="278">
 
 
 
-<meta itemprop="keywords" content="Vim," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="Vim," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="使用Vim批量更新文件名"/>
 <meta name="twitter:description" content="Multiple Rename &amp; Create Files In Linux multi create files using touch Week{1..4}.md will create 4 files. see The Linux Command Line:chapter 8: see the world from shell:expand {} And I also wanted to rename files without using finder and other GUI tools, I watched a video of LuckSmith which using ranger with it&rsquo;s Bulk renaming feature. However, I installed ranger in my mac, and haven&rsquo;t really to use it,"/>
 
@@ -136,59 +133,43 @@
     <div class="post-toc" id="post-toc">
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
-    <nav id="TableOfContents">
-<ul>
-<li><a href="#multiple-rename-create-files-in-linux">Multiple Rename &amp; Create Files In Linux</a></li>
-</ul>
-</nav>
+    <nav id="TableOfContents"></nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="multiple-rename-create-files-in-linux">Multiple Rename &amp; Create Files In Linux</h1>
-
+      <h1 id="multiple-rename--create-files-in-linux">Multiple Rename &amp; Create Files In Linux</h1>
 <p>multi create files using <code>touch Week{1..4}.md</code> will create 4 files.</p>
-
 <blockquote>
 <p>see <em><code>The Linux Command Line:chapter 8: see the world from shell:expand {}</code></em></p>
 </blockquote>
-
 <p>And I also wanted to rename files without using finder and other GUI tools, I watched a video of LuckSmith which using <a href="https://github.com/ranger/ranger">ranger</a> with it&rsquo;s Bulk renaming feature.</p>
-
-<iframe width="876" height="493" src="https://www.youtube.com/embed/NzD2UdQl5Gc?list=PLODvgegnEpcm3jliTs-jmPqBnG4sgYErr" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
+<!-- raw HTML omitted -->
 <p>However, I installed ranger in my mac, and haven&rsquo;t really to use it, the a saw a post in <a href="https://www.reddit.com/r/vim/comments/b14wef/bulk_renaming_with_rangervim_short_video_tutorial/">reddit</a>, I saw a comment below.</p>
-
 <blockquote>
 <p>Fuck off with that neonazi bullshit.</p>
-
 <p>Also, for others in this sub (particularly so we have no need to give this piece of shit views), vim can easily do this natively (from :h rename-files):</p>
-
 <ol>
-<li><p><code>:r !ls foo</code></p></li>
-
-<li><p><code>&lt;C-v&gt;Imv&lt;Space&gt;&lt;Esc&gt;</code></p></li>
-
-<li><p>Make another column with whatever changes you want to each existing filename (can use :s, etc and combine this step with step 2)</p></li>
-
-<li><p><code>:w !sh</code></p></li>
+<li>
+<p><code>:r !ls foo</code></p>
+</li>
+<li>
+<p><code>&lt;C-v&gt;Imv&lt;Space&gt;&lt;Esc&gt;</code></p>
+</li>
+<li>
+<p>Make another column with whatever changes you want to each existing filename (can use :s, etc and combine this step with step 2)</p>
+</li>
+<li>
+<p><code>:w !sh</code></p>
+</li>
 </ol>
-
 <p>This reads the directory into the buffer, prepends the mv command, and once you&rsquo;ve done your renames, executes the contents of your buffer as shell commands.</p>
 </blockquote>
-
 <p>This comment is using vim.</p>
-
 <p>In vim we can access shell in normal mode, using <code>:! + command you want to execute</code>.</p>
-
 <p>Using <code>:r</code> to to <a href="https://vim.fandom.com/wiki/Insert_a_file">insert a file</a>,we can also read a output of a linux command.
 e.g. <code>:r !ls</code> will read the all file names in current directory.</p>
-
 <p>the use visual block mode in vim and insert <code>mv</code> at each beginning. When we want to batch rename files, they tend to have certain rules. like have the same prefix.</p>
-
 <p>Then we append the file name we want to be, like we trim the prefix.</p>
-
 <p>then we use <code>:w !sh</code> to write the text in shell.</p>
 
     </div>

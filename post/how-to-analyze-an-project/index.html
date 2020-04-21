@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/how-to-analyze-an-project/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-02-28T23:36:47+08:00" />
 <meta itemprop="name" content="怎么分析一个好的开源项目?">
 <meta itemprop="description" content="怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:">
-
-
 <meta itemprop="datePublished" content="2020-02-12T19:13:12&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:36:47&#43;08:00" />
-<meta itemprop="wordCount" content="264">
+<meta itemprop="wordCount" content="257">
 
 
 
-<meta itemprop="keywords" content="skill," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="skill," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="怎么分析一个好的开源项目?"/>
 <meta name="twitter:description" content="怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/skill/"> skill </a>
             </div>
-          <span class="more-meta"> 约 264 字 </span>
+          <span class="more-meta"> 约 257 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,28 +134,20 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#怎么分析开源项目">怎么分析开源项目?</a>
-<ul>
-<li><a href="#观察开源项目">观察开源项目</a></li>
-<li><a href="#下载开源项目">下载开源项目</a></li>
-<li><a href="#尝试运行项目">尝试运行项目</a></li>
-<li><a href="#前后端分离的套路">前后端分离的套路</a></li>
-<li><a href="#how-to-find-good-projects">How to find good projects?</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#观察开源项目">观察开源项目</a></li>
+    <li><a href="#下载开源项目">下载开源项目</a></li>
+    <li><a href="#尝试运行项目">尝试运行项目</a></li>
+    <li><a href="#前后端分离的套路">前后端分离的套路</a></li>
+    <li><a href="#how-to-find-good-projects">How to find good projects?</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="怎么分析开源项目">怎么分析开源项目?</h1>
-
+      <h1 id="怎么分析开源项目">怎么分析开源项目?</h1>
 <h2 id="观察开源项目">观察开源项目</h2>
-
 <p>阅读下列文件中的内容:</p>
-
 <ul>
 <li>查看官网或者文档</li>
 <li>README.md</li>
@@ -167,54 +156,51 @@
 <li>项目的作用</li>
 <li>项目使用的技术架构</li>
 </ul>
-
-<p>重点关注的文件:
-- sql
-- 是否有 maven 依赖 pom 或者 gradle 的文件</p>
-
+<p>重点关注的文件:</p>
+<ul>
+<li>sql</li>
+<li>是否有 maven 依赖 pom 或者 gradle 的文件</li>
+</ul>
 <h2 id="下载开源项目">下载开源项目</h2>
-
-<p>观察项目的目录
-1. 用了什么技术架构
-2. 数据库时候有
-3. 本地环境是否满足需要的环境
-   1. node.js &hellip;
-   2. java maven redis mysql &hellip;</p>
-
+<p>观察项目的目录</p>
+<ol>
+<li>用了什么技术架构</li>
+<li>数据库时候有</li>
+<li>本地环境是否满足需要的环境
+<ol>
+<li>node.js &hellip;</li>
+<li>java maven redis mysql &hellip;</li>
+</ol>
+</li>
+</ol>
 <h2 id="尝试运行项目">尝试运行项目</h2>
-
 <ol>
 <li>前端</li>
 <li>后端
-
 <ol>
 <li>导入项目</li>
 <li>分析 common 通用模块</li>
 <li>查看配置文件
-
 <ol>
 <li>端口</li>
 <li>数据库名字</li>
-</ol></li>
-<li>是否有 api 文件, swagger 描述文件 等</li>
-</ol></li>
 </ol>
-
+</li>
+<li>是否有 api 文件, swagger 描述文件 等</li>
+</ol>
+</li>
+</ol>
 <h2 id="前后端分离的套路">前后端分离的套路</h2>
-
 <p>重点: 找到接口的调用关系</p>
-
 <ol>
 <li>分析前端,打开控制台,点一个接口,分析调用调用条件</li>
 <li>前后端端口调用不一致
-
 <ol>
 <li>封装了接口请求 ajax axios</li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <h2 id="how-to-find-good-projects">How to find good projects?</h2>
-
 <ol>
 <li>分类</li>
 <li>star✨</li>

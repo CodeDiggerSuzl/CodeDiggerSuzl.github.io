@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Coding tools on The Blog of Suzl 🤠</title>
@@ -28,10 +28,14 @@
       
       <guid>http://codedigger.cn/post/vim-1/</guid>
       <description>Get to Learn Vim  in order to be a an awesome &amp;lsquo;geek&amp;rsquo;, i&amp;rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift + zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl + h to delete a char ctrl + w to delete a word crtl + u to delete a line  These three shotcuts also works in shell or a terminal!</description>
+ edit   i insert
+  a append
+  o open a line below
+  I INSERT before line
+  O append before line
+  A APPEND AFTER LINE
+  shift + zz
+  :wq write and quit</description>
     </item>
     
   </channel>

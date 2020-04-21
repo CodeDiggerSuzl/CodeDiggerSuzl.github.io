@@ -17,17 +17,21 @@
 
 
 <meta name="author" content="苏子叶" /><meta name="description" content="Get to Learn Vim  in order to be a an awesome &amp;lsquo;geek&amp;rsquo;, i&amp;rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift &#43; zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+ edit   i insert
+  a append
+  o open a line below
+  I INSERT before line
+  O append before line
+  A APPEND AFTER LINE
+  shift &#43; zz
+  :wq write and quit" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/vim-1/" />
@@ -44,36 +48,45 @@
 
 <meta property="og:title" content="Get to know vim" />
 <meta property="og:description" content="Get to Learn Vim  in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift &#43; zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!" />
+ edit   i insert
+  a append
+  o open a line below
+  I INSERT before line
+  O append before line
+  A APPEND AFTER LINE
+  shift &#43; zz
+  :wq write and quit" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://codedigger.cn/post/vim-1/" />
 <meta property="article:published_time" content="2019-10-04T22:38:28+08:00" />
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Get to know vim">
 <meta itemprop="description" content="Get to Learn Vim  in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift &#43; zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!">
-
-
+ edit   i insert
+  a append
+  o open a line below
+  I INSERT before line
+  O append before line
+  A APPEND AFTER LINE
+  shift &#43; zz
+  :wq write and quit">
 <meta itemprop="datePublished" content="2019-10-04T22:38:28&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="390">
+<meta itemprop="wordCount" content="382">
 
 
 
-<meta itemprop="keywords" content="vim," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="vim," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Get to know vim"/>
 <meta name="twitter:description" content="Get to Learn Vim  in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool :D
- edit  i insert a append o open a line below I INSERT before line O append before line A APPEND AFTER LINE
- shift &#43; zz
- :wq write and quit
-  modes  normal mode insert mode command mode visual mode  in insert mode  ctrl &#43; h to delete a char ctrl &#43; w to delete a word crtl &#43; u to delete a line  These three shotcuts also works in shell or a terminal!"/>
+ edit   i insert
+  a append
+  o open a line below
+  I INSERT before line
+  O append before line
+  A APPEND AFTER LINE
+  shift &#43; zz
+  :wq write and quit"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -143,7 +156,7 @@
         <div class="post-category">
             <a href="/categories/coding-tools/"> coding tools </a>
             </div>
-          <span class="more-meta"> 约 390 字 </span>
+          <span class="more-meta"> 约 382 字 </span>
           <span class="more-meta"> 预计阅读 2 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -153,116 +166,108 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#get-to-learn-vim">Get to Learn Vim</a>
-<ul>
-<li><a href="#edit">edit</a></li>
-<li><a href="#modes">modes</a></li>
-<li><a href="#in-insert-mode">in insert mode</a></li>
-<li><a href="#quick-to-switch-insert-and-normal-mode">quick to switch insert and normal mode</a></li>
-<li><a href="#quick-move">quick move</a></li>
-<li><a href="#serch-in-line">serch in line</a></li>
-<li><a href="#move-in-line">move in line</a></li>
-<li><a href="#move-in-page">move in page</a></li>
-<li><a href="#crud">CRUD</a>
-<ul>
-<li><a href="#insert">INSERT</a></li>
-<li><a href="#delete-d-x">DELETE (d x)</a></li>
-</ul></li>
-<li><a href="#fast-update">fast update</a>
-<ul>
-<li><a href="#r-replace">r (replace)</a></li>
-<li><a href="#c-change">c (change)</a></li>
-<li><a href="#s-substitute">s (substitute)</a></li>
-</ul></li>
-<li><a href="#query">query</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#edit">edit</a></li>
+    <li><a href="#modes">modes</a></li>
+    <li><a href="#in-insert-mode">in insert mode</a></li>
+    <li><a href="#quick-to-switch-insert-and-normal-mode">quick to switch insert and normal mode</a></li>
+    <li><a href="#quick-move">quick move</a></li>
+    <li><a href="#serch-in-line">serch in line</a></li>
+    <li><a href="#move-in-line">move in line</a></li>
+    <li><a href="#move-in-page">move in page</a></li>
+    <li><a href="#crud">CRUD</a>
+      <ul>
+        <li><a href="#insert">INSERT</a></li>
+        <li><a href="#delete-d-x">DELETE (d x)</a></li>
+      </ul>
+    </li>
+    <li><a href="#fast-update">fast update</a>
+      <ul>
+        <li><a href="#r-replace">r (replace)</a></li>
+        <li><a href="#c-change">c (change)</a></li>
+        <li><a href="#s-substitute">s (substitute)</a></li>
+      </ul>
+    </li>
+    <li><a href="#query">query</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="get-to-learn-vim">Get to Learn Vim</h1>
-
+      <h1 id="get-to-learn-vim">Get to Learn Vim</h1>
 <blockquote>
 <p>in order to be a an awesome &lsquo;geek&rsquo;, i&rsquo;d like to learn the ancient editor. :/ this is gonna be cool  :D</p>
 </blockquote>
-
 <h2 id="edit">edit</h2>
-
 <ol>
-<li><code>i</code> insert</li>
-<li><code>a</code> append</li>
-<li><code>o</code> open a line below</li>
-<li><code>I</code> INSERT before line</li>
-<li><code>O</code> append before line</li>
-
-<li><p><code>A</code> APPEND AFTER LINE</p></li>
-
-<li><p><code>shift + zz</code></p></li>
-
-<li><p><code>:wq</code> write and quit</p></li>
+<li>
+<p><code>i</code> insert</p>
+</li>
+<li>
+<p><code>a</code> append</p>
+</li>
+<li>
+<p><code>o</code> open a line below</p>
+</li>
+<li>
+<p><code>I</code> INSERT before line</p>
+</li>
+<li>
+<p><code>O</code> append before line</p>
+</li>
+<li>
+<p><code>A</code> APPEND AFTER LINE</p>
+</li>
+<li>
+<p><code>shift + zz</code></p>
+</li>
+<li>
+<p><code>:wq</code> write and quit</p>
+</li>
 </ol>
-
 <h2 id="modes">modes</h2>
-
 <ul>
 <li>normal mode</li>
 <li>insert mode</li>
 <li>command mode</li>
 <li>visual mode</li>
 </ul>
-
 <h2 id="in-insert-mode">in insert mode</h2>
-
 <ul>
 <li><code>ctrl + h</code>  to delete a char</li>
 <li><code>ctrl + w</code>  to delete a word</li>
 <li><code>crtl + u</code>  to delete a line</li>
 </ul>
-
 <p><strong>These three shotcuts also works in shell or a terminal!</strong>
 <code>crtl + a</code> to head
 <code>crtl + e</code> to end
 <code>crtl + b</code> to before
 <code>crtl + f</code> to forward</p>
-
 <h2 id="quick-to-switch-insert-and-normal-mode">quick to switch insert and normal mode</h2>
-
 <ul>
 <li><code>ctrl + c</code> or <code>ctrl + [</code> to quit insert and enter normal mode</li>
 <li><code>gi</code> to get into the last time you edit and enter into insert mode</li>
 </ul>
-
 <h2 id="quick-move">quick move</h2>
-
 <ol>
 <li><code>hjkl</code> to move</li>
 <li><code>w/W</code> to next word/WORD&rsquo;s head</li>
 <li><code>e/E</code> next word/WORD&rsquo;s end</li>
 <li><code>b/B</code> to next word/WORD&rsquo;s head ; backword</li>
 </ol>
-
 <h2 id="serch-in-line">serch in line</h2>
-
 <ul>
 <li><code>f{char}</code> to move to char, <code>t</code> to the before char</li>
 <li>use <code>;</code> or <code>,</code> to get to next / previous</li>
 <li><code>F</code> to search front</li>
 </ul>
-
 <h2 id="move-in-line">move in line</h2>
-
 <ul>
 <li>use <code>0</code> to the first char of a line and <code>^</code> to the first char which is not a blank</li>
 <li>user <code>$</code> to the end of a line</li>
 <li><code>0</code> and <code>$</code></li>
 </ul>
-
 <h2 id="move-in-page">move in page</h2>
-
 <ul>
 <li><code>gg/G</code> to the begin/end of a file</li>
 <li>use <code>ctrl + o</code> return back</li>
@@ -270,37 +275,27 @@
 <li><code>ctrl+u/ ctrl+f</code> upword/ forward</li>
 <li><code>zz</code> to put the screen to the middle</li>
 </ul>
-
 <h2 id="crud">CRUD</h2>
-
 <h3 id="insert">INSERT</h3>
-
 <h3 id="delete-d-x">DELETE (d x)</h3>
-
-<p>in normal mode
-- <code>x</code> to delete a char
-- <code>d(delete)</code> to delete a  word <code>daw</code>(d around a word) <code>diw</code>
-- <code>d and x</code> can combine with number to excute many times
-- <code>u</code> undo
-- <code>dd</code> delete a line
-- <code>dt+{char}</code> delete to char
-- <code>d+$</code>
-- <code>2dd</code> means delete 2 lines</p>
-
+<p>in normal mode</p>
+<ul>
+<li><code>x</code> to delete a char</li>
+<li><code>d(delete)</code> to delete a  word <code>daw</code>(d around a word) <code>diw</code></li>
+<li><code>d and x</code> can combine with number to excute many times</li>
+<li><code>u</code> undo</li>
+<li><code>dd</code> delete a line</li>
+<li><code>dt+{char}</code> delete to char</li>
+<li><code>d+$</code></li>
+<li><code>2dd</code> means delete 2 lines</li>
+</ul>
 <h2 id="fast-update">fast update</h2>
-
 <h3 id="r-replace">r (replace)</h3>
-
 <p>in normal mode use <code>r</code> to replace a char and use <code>s</code> to delete word and enter into insert mode</p>
-
 <h3 id="c-change">c (change)</h3>
-
 <p>c delete and into insert</p>
-
 <h3 id="s-substitute">s (substitute)</h3>
-
 <h2 id="query">query</h2>
-
 <ul>
 <li>use <code>/</code> or <code>?</code> to search backward and forward</li>
 <li>use <code>n/N</code> to jump to the next match</li>

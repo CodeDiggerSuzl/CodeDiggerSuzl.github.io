@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-07T22:49:50+08:00" />
 <meta itemprop="name" content="Mysql 5.x 实现 rank 排名和百分比排序(Percentile Rank)">
 <meta itemprop="description" content="mysql 实现 rank 排名 实现 rank 排名在 mysql8.0 版本新增了 PERCENT_RANK 函数链接在此 在 mysql5.5 版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 SELECT t.*">
-
-
 <meta itemprop="datePublished" content="2020-01-07T22:49:50&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-07T22:49:50&#43;08:00" />
 <meta itemprop="wordCount" content="291">
 
 
 
-<meta itemprop="keywords" content="mysql," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="mysql," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Mysql 5.x 实现 rank 排名和百分比排序(Percentile Rank)"/>
 <meta name="twitter:description" content="mysql 实现 rank 排名 实现 rank 排名在 mysql8.0 版本新增了 PERCENT_RANK 函数链接在此 在 mysql5.5 版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 SELECT t.*"/>
 
@@ -137,30 +134,22 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#mysql-实现-rank-排名">mysql 实现 rank 排名</a>
-<ul>
-<li><a href="#实现排名">实现排名</a></li>
-<li><a href="#实现百分比函数-领先其他数据多少百分比">实现百分比函数(领先其他数据多少百分比)</a></li>
-<li><a href="#底层原理">底层原理</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#实现排名">实现排名</a></li>
+    <li><a href="#实现百分比函数领先其他数据多少百分比">实现百分比函数(领先其他数据多少百分比)</a></li>
+    <li><a href="#底层原理">底层原理</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="mysql-实现-rank-排名">mysql 实现 rank 排名</h1>
-
+      <h1 id="mysql-实现-rank-排名">mysql 实现 rank 排名</h1>
 <p>实现 rank 排名在 mysql8.0 版本新增了 <code>PERCENT_RANK</code> 函数<a href="https://www.begtut.com/mysql/mysql-percent_rank-function.html">链接在此</a></p>
-
 <p>在 <code>mysql5.5</code> 版本中没有这个函数,需要借助函数实现.</p>
-
 <h2 id="实现排名">实现排名</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -197,13 +186,13 @@
 		<span class="n">RECORD_STATUS</span> <span class="o">=</span> <span class="s1">&#39;4&#39;</span>
 	<span class="k">ORDER</span> <span class="k">BY</span>
 		<span class="n">SYNTHETIC_INDEX</span> <span class="k">DESC</span>
-	<span class="p">)</span> <span class="n">t</span></code></pre></td></tr></table>
+	<span class="p">)</span> <span class="n">t</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="实现百分比函数-领先其他数据多少百分比">实现百分比函数(领先其他数据多少百分比)</h2>
+</div><h2 id="实现百分比函数领先其他数据多少百分比">实现百分比函数(领先其他数据多少百分比)</h2>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -240,27 +229,25 @@
 	 <span class="c1">-- condition
 </span><span class="c1"></span><span class="k">ORDER</span> <span class="k">BY</span>
 	<span class="err">需要排序的字段</span> <span class="k">DESC</span>
-	<span class="p">)</span> <span class="n">T</span></code></pre></td></tr></table>
+	<span class="p">)</span> <span class="n">T</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h2 id="底层原理">底层原理</h2>
-
+</div><h2 id="底层原理">底层原理</h2>
 <p>TODO</p>
-
-<hr />
-
+<hr>
 <p>ps: <strong>stackoverflow</strong> 真的神奇,只要输入关键的 key-words, you gonna get the answer you <strong>REALLY</strong> want~~ 👍👍👍👍👍 好用指数 <code>MAX</code></p>
-
-<hr />
-
+<hr>
 <p>参考链接(感恩的心)</p>
-
 <ul>
-<li><p><a href="https://stackoverflow.com/questions/1057027/calculating-percentile-rank-in-mysql">https://stackoverflow.com/questions/1057027/calculating-percentile-rank-in-mysql</a></p></li>
-
-<li><p><a href="https://www.jianshu.com/p/bb1b72a1623e">https://www.jianshu.com/p/bb1b72a1623e</a></p></li>
-
-<li><p><a href="https://blog.csdn.net/dzy21/article/details/52121750">https://blog.csdn.net/dzy21/article/details/52121750</a></p></li>
+<li>
+<p><a href="https://stackoverflow.com/questions/1057027/calculating-percentile-rank-in-mysql">https://stackoverflow.com/questions/1057027/calculating-percentile-rank-in-mysql</a></p>
+</li>
+<li>
+<p><a href="https://www.jianshu.com/p/bb1b72a1623e">https://www.jianshu.com/p/bb1b72a1623e</a></p>
+</li>
+<li>
+<p><a href="https://blog.csdn.net/dzy21/article/details/52121750">https://blog.csdn.net/dzy21/article/details/52121750</a></p>
+</li>
 </ul>
 
     </div>

@@ -16,14 +16,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="苏子叶" /><meta name="description" content="🪐Concurrent Chat Room 源代码: &amp;gt; https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+<meta name="author" content="苏子叶" /><meta name="description" content="🪐Concurrent Chat Room 源代码: https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效。" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/go-chatroom/" />
@@ -39,25 +39,22 @@
 
 
 <meta property="og:title" content="基于 go 语言实现聊天室" />
-<meta property="og:description" content="🪐Concurrent Chat Room 源代码: &gt; https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效" />
+<meta property="og:description" content="🪐Concurrent Chat Room 源代码: https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://codedigger.cn/post/go-chatroom/" />
 <meta property="article:published_time" content="2020-02-12T20:07:23+08:00" />
 <meta property="article:modified_time" content="2020-02-28T23:36:47+08:00" />
 <meta itemprop="name" content="基于 go 语言实现聊天室">
-<meta itemprop="description" content="🪐Concurrent Chat Room 源代码: &gt; https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效">
-
-
+<meta itemprop="description" content="🪐Concurrent Chat Room 源代码: https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效。">
 <meta itemprop="datePublished" content="2020-02-12T20:07:23&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:36:47&#43;08:00" />
-<meta itemprop="wordCount" content="1963">
+<meta itemprop="wordCount" content="1950">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="基于 go 语言实现聊天室"/>
-<meta name="twitter:description" content="🪐Concurrent Chat Room 源代码: &gt; https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效"/>
+<meta name="twitter:description" content="🪐Concurrent Chat Room 源代码: https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效。"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1963 字 </span>
+          <span class="more-meta"> 约 1950 字 </span>
           <span class="more-meta"> 预计阅读 4 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,145 +134,127 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#concurrent-chat-room">🪐Concurrent Chat Room</a>
-<ul>
-<li><a href="#聊天室模块">聊天室模块</a>
-<ul>
-<li><a href="#主-go-程-服务器">主 go 程 (服务器)</a></li>
-<li><a href="#处理用户连接协程-handleconnect">处理用户连接协程 <code>HandleConnect</code></a></li>
-<li><a href="#用户消息广播协程-manager">用户消息广播协程 <code>Manager</code></a></li>
-<li><a href="#通信需要使用的结构">通信需要使用的结构</a></li>
-</ul></li>
-<li><a href="#聊天室通信流程">聊天室通信流程</a>
-<ul>
-<li><a href="#广播用户上线">广播用户上线</a></li>
-<li><a href="#广播用户消息">广播用户消息</a></li>
-<li><a href="#修改自己的名字">修改自己的名字</a></li>
-<li><a href="#用户退出">用户退出</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#注意-goroutine-嵌套创建退出的特性">注意 goroutine 嵌套创建退出的特性</a>
-<ul>
-<li><a href="#扩展">扩展</a>
-<ul>
-<li><a href="#和某个用户-chat-其他用户收不到消息">和某个用户 chat,其他用户收不到消息</a></li>
-<li><a href="#创建群组-用户同意后加入群组-开始聊天">创建群组,用户同意后加入群组,开始聊天</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#聊天室模块">聊天室模块</a>
+      <ul>
+        <li><a href="#主-go-程-服务器">主 go 程 (服务器)</a></li>
+        <li><a href="#处理用户连接协程-handleconnect">处理用户连接协程 <code>HandleConnect</code></a></li>
+        <li><a href="#用户消息广播协程-manager">用户消息广播协程 <code>Manager</code></a></li>
+        <li><a href="#通信需要使用的结构">通信需要使用的结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#聊天室通信流程">聊天室通信流程</a>
+      <ul>
+        <li><a href="#广播用户上线">广播用户上线</a></li>
+        <li><a href="#广播用户消息">广播用户消息</a></li>
+        <li><a href="#修改自己的名字">修改自己的名字</a></li>
+        <li><a href="#用户退出">用户退出</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#扩展">扩展</a>
+      <ul>
+        <li><a href="#和某个用户-chat其他用户收不到消息">和某个用户 chat,其他用户收不到消息</a></li>
+        <li><a href="#创建群组用户同意后加入群组开始聊天">创建群组,用户同意后加入群组,开始聊天</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="concurrent-chat-room">🪐Concurrent Chat Room</h1>
-
-<p>源代码:
-&gt; <a href="https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom">https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom</a></p>
-
+      <h1 id="concurrent-chat-room">🪐Concurrent Chat Room</h1>
+<p>源代码:</p>
+<blockquote>
+<p><a href="https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom">https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom</a></p>
+</blockquote>
 <p>并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 <strong>并发</strong> 和 <strong>网络编程</strong> 都变的简洁而高效。</p>
-
 <h2 id="聊天室模块">聊天室模块</h2>
-
 <ol>
 <li>使用 <code>netcat</code> 代替 <code>client</code></li>
 <li><code>TCP</code> 连接</li>
 </ol>
-
 <h3 id="主-go-程-服务器">主 go 程 (服务器)</h3>
-
 <p>负责监听、接收用户（客户端）连接请求，建立通信关系。同时启动相应的协程处理任务。</p>
-
 <h3 id="处理用户连接协程-handleconnect">处理用户连接协程 <code>HandleConnect</code></h3>
-
 <p>负责新上线用户的存储，用户消息读取、发送，用户改名、下线处理及超时处理。</p>
-
 <p>为了提高并发效率，同时给一个用户维护多个协程来并行处理上述任务。</p>
-
 <h3 id="用户消息广播协程-manager">用户消息广播协程 <code>Manager</code></h3>
-
 <p>在线用户遍历, 用户消息广播.</p>
-
 <p>需要与 <code>HandleConnect</code> 协程及用户子协程协作完成。</p>
-
 <h3 id="通信需要使用的结构">通信需要使用的结构</h3>
-
 <ul>
 <li><code>map</code>：存储所有登录聊天室的用户信息， <code>key</code>：用户的 <code>ip+port</code>。<code>Value</code>：<code>Client</code>结构体。</li>
 <li><code>Client</code> 结构体：包含成员：<code>用户名 Name</code>，网络地址 <code>Addr（ip+port）</code>，发送消息的通道 <code>C（channel）</code></li>
 <li>通道 <code>message</code>：协调并发协程间消息的传递。</li>
 </ul>
-
 <h2 id="聊天室通信流程">聊天室通信流程</h2>
-
 <p>client 登录,和 server 创建连接,写入 message 和维护用户列表的 map 中,Manager 读取 message,然后从 map 中维护的列表中的用户 <code>struct</code> 中的 channel 写数据.</p>
-
 <h3 id="广播用户上线">广播用户上线</h3>
-
 <ol>
-<li><p>定义全局结构体</p>
+<li>
+<p>定义全局结构体</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
-	    <span class="nx">C</span>    <span class="kd">chan</span> <span class="kt">string</span>
-	    <span class="nx">Name</span> <span class="kt">string</span>
-	    <span class="nx">Addr</span> <span class="kt">string</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"> <span class="kd">type</span> <span class="nx">Client</span> <span class="kd">struct</span> <span class="p">{</span>
+     <span class="nx">C</span>    <span class="kd">chan</span> <span class="kt">string</span>
+     <span class="nx">Name</span> <span class="kt">string</span>
+     <span class="nx">Addr</span> <span class="kt">string</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>创建全局 map,用来储存线上用户.<code>var onLineUserMap = make(map[string]Client)</code></p></li>
-
-<li><p>创建全局 channel</p></li>
-
-<li><p>主 go 程中创建监听套接字 <code>net.Listen()</code> 记得 <code>defer</code></p></li>
-
-<li><p><strong>循环</strong>监听客户端连接请求. <code>listener.Accept()</code></p></li>
-
-<li><p>创建 Manager 程管理 go 程.</p>
-
+<li>
+<p>创建全局 map,用来储存线上用户.<code>var onLineUserMap = make(map[string]Client)</code></p>
+</li>
+<li>
+<p>创建全局 channel</p>
+</li>
+<li>
+<p>主 go 程中创建监听套接字 <code>net.Listen()</code> 记得 <code>defer</code></p>
+</li>
+<li>
+<p><strong>循环</strong>监听客户端连接请求. <code>listener.Accept()</code></p>
+</li>
+<li>
+<p>创建 Manager 程管理 go 程.</p>
 <ol>
 <li><strong>循环</strong> 监听 message 从中获取消息 无数据则阻塞</li>
 <li>遍历在线用户 map,写入到每一个的 client 的 channel 中</li>
-</ol></li>
-
-<li><p>有一个客户端链接,就创建一个go 程来处理客户端数据 <code>HandlerConnect(conn)</code> <code>defer</code></p>
-
+</ol>
+</li>
+<li>
+<p>有一个客户端链接,就创建一个go 程来处理客户端数据 <code>HandlerConnect(conn)</code> <code>defer</code></p>
 <ol>
 <li>获取 client 的 ip 和端口.</li>
 <li>初始结构体信息</li>
 <li>放入 map 中  key:addr value : Clint</li>
 <li>创建 <code>Write2Client(clnt,conn)</code> 写数据
 1.监听 clnt 中的 channel 是否有数据 写回去</li>
-</ol></li>
 </ol>
-
+</li>
+</ol>
 <p>首先，服务器启动，等待用户建立通信连接。当有用户连接上来，将其存储到 map 中，这样就维护了一个“在线用户”的列表。当再有新用户连接上来时，应向该列表中所有用户进行广播通知，提示xxx用户上线。</p>
-
 <p>当然，简单实现手法可以循环读取列表中的用户，依次向其发送消息通知新用户上线。但这种方式无疑是一种串行的通信手段，实现简单，但执行效率较低。(go 的优点)</p>
-
 <p>✨在 go 语言中，我们利用协程轻便、高效、并发性好的特性，给每个登录用户维护多个协程来进行数据通信，借助 channel 不需要使用同步锁，就可以实现高效的并发通信。</p>
-
 <p>下图充分利用goroutine和channel实现了新用户登录，向所有在线用户进行广播通知：</p>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gbg9teyulnj30t00hetbb.jpg" alt="" /></p>
-
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gbg9teyulnj30t00hetbb.jpg" alt=""></p>
 <h3 id="广播用户消息">广播用户消息</h3>
-
 <ol>
-<li><p>封装函数来广播,用户消息</p>
+<li>封装函数来广播,用户消息</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -283,15 +262,16 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// produce message
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">produceMsg</span><span class="p">(</span><span class="nx">clnt</span> <span class="nx">Client</span><span class="p">,</span> <span class="nx">msg</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-<span class="k">return</span> <span class="s">&#34;[ 📣 \a #&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span> <span class="o">+</span> <span class="s">&#34; @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34;] says: \n&#34;</span> <span class="o">+</span> <span class="nx">msg</span> <span class="o">+</span> <span class="s">&#34;--------------------------&#34;</span>
-<span class="p">}</span></code></pre></td></tr></table>
+ <span class="k">return</span> <span class="s">&#34;[ 📣 \a #&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span> <span class="o">+</span> <span class="s">&#34; @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34;] says: \n&#34;</span> <span class="o">+</span> <span class="nx">msg</span> <span class="o">+</span> <span class="s">&#34;--------------------------&#34;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-
-<li><p><code>HandlerConnect</code> 中创建 go 程或者匿名 go 程 注意使用循环来读取客户端消息,</p>
+</div><ol start="2">
+<li>
+<p><code>HandlerConnect</code> 中创建 go 程或者匿名 go 程 注意使用循环来读取客户端消息,</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -313,48 +293,55 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 一个匿名 go 程,用,来发用户的消息
-</span><span class="c1"></span><span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// 循环读取消息
-</span><span class="c1"></span>    <span class="nx">buf</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>
-    <span class="k">for</span> <span class="p">{</span>
-        <span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nx">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-            <span class="nf">p</span><span class="p">(</span><span class="s">&#34;[ 📢  Detected @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span><span class="p">)</span>
-            <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-            <span class="nf">p</span><span class="p">(</span><span class="s">&#34;err during conn.Read&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="c1">// send msg to all clnts
-</span><span class="c1"></span>        <span class="nx">message</span> <span class="o">&lt;-</span> <span class="nf">produceMsg</span><span class="p">(</span><span class="nx">clnt</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">]))</span>
-    <span class="p">}</span>
-<span class="p">}()</span></code></pre></td></tr></table>
+</span><span class="c1"></span> <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+     <span class="c1">// 循环读取消息
+</span><span class="c1"></span>     <span class="nx">buf</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">4096</span><span class="p">)</span>
+     <span class="k">for</span> <span class="p">{</span>
+         <span class="nx">n</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">conn</span><span class="p">.</span><span class="nf">Read</span><span class="p">(</span><span class="nx">buf</span><span class="p">)</span>
+         <span class="k">if</span> <span class="nx">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+             <span class="nf">p</span><span class="p">(</span><span class="s">&#34;[ 📢  Detected @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span><span class="p">)</span>
+             <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span>
+             <span class="k">return</span>
+         <span class="p">}</span>
+         <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+             <span class="nf">p</span><span class="p">(</span><span class="s">&#34;err during conn.Read&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+             <span class="k">return</span>
+         <span class="p">}</span>
+         <span class="c1">// send msg to all clnts
+</span><span class="c1"></span>         <span class="nx">message</span> <span class="o">&lt;-</span> <span class="nf">produceMsg</span><span class="p">(</span><span class="nx">clnt</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">buf</span><span class="p">[:</span><span class="nx">n</span><span class="p">]))</span>
+     <span class="p">}</span>
+<span class="p">}()</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>列出 client 列表</p></li>
-
-<li><p>msg 去掉<code>\n</code></p></li>
-</ol>
-
-<p><code>msg := string(buf[:n])</code> =&gt; 变成 <code>msg := string(buf[:n-1])</code> 因为末尾会有 <code>\n</code> escape sequence.
-2. 判断是否为<code>WHO</code> 命令
-   1. 是的话 遍历 <code>map</code> 从<code>conn</code>中写回去
-   2. 不是写给全局 <code>message</code></p>
-
-<h3 id="修改自己的名字">修改自己的名字</h3>
-
-<p>TODO: 使用指针来直接修改名字?</p>
-
+<li>
+<p>列出 client 列表</p>
+</li>
+<li>
+<p>msg 去掉<code>\n</code></p>
+<p><code>msg := string(buf[:n])</code> =&gt; 变成 <code>msg := string(buf[:n-1])</code> 因为末尾会有 <code>\n</code> escape sequence.</p>
+</li>
+<li>
+<p>判断是否为<code>WHO</code> 命令</p>
 <ol>
-<li><p>判断输入为 <code>RENAME2:</code>指令</p></li>
-
-<li><p>修改名字</p>
+<li>是的话 遍历 <code>map</code> 从<code>conn</code>中写回去</li>
+<li>不是写给全局 <code>message</code></li>
+</ol>
+</li>
+</ol>
+<h3 id="修改自己的名字">修改自己的名字</h3>
+<p>TODO: 使用指针来直接修改名字?</p>
+<ol>
+<li>
+<p>判断输入为 <code>RENAME2:</code>指令</p>
+</li>
+<li>
+<p>修改名字</p>
+</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -363,69 +350,70 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// rename
 </span><span class="c1"></span><span class="k">case</span> <span class="nb">len</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">9</span> <span class="o">&amp;&amp;</span> <span class="nx">msg</span><span class="p">[:</span><span class="mi">8</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#34;RENAME2:&#34;</span><span class="p">:</span>
-<span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">msg</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>             <span class="c1">// 修改结构体成员name
-</span><span class="c1"></span><span class="nx">onLineUserMap</span><span class="p">[</span><span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">]</span> <span class="p">=</span> <span class="nx">clnt</span> <span class="c1">// 更新 onLineUserMap
-</span><span class="c1"></span><span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;✅  Rename successfully\n&#34;</span><span class="p">))</span></code></pre></td></tr></table>
+   <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">msg</span><span class="p">[</span><span class="mi">8</span><span class="p">:]</span>             <span class="c1">// 修改结构体成员name
+</span><span class="c1"></span>   <span class="nx">onLineUserMap</span><span class="p">[</span><span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">]</span> <span class="p">=</span> <span class="nx">clnt</span> <span class="c1">// 更新 onLineUserMap
+</span><span class="c1"></span>   <span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;✅  Rename successfully\n&#34;</span><span class="p">))</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ol>
-
-<p>Wired Shit:</p>
-
+</div><p>Wired Shit:</p>
 <p>当直接这样改名字的时候,似乎可以</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">RENAME2:W
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">RENAME2:W
 ✅  Rename successfully
 LS
 [ 📣  #127.0.0.1:51153 @W] says:
-LS</pre></td></tr></table>
+LS
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>但是当我提取出一个 func 时候, 使用 <code>WHO</code>时似乎管用,但是:</p>
+</div><p>但是当我提取出一个 func 时候, 使用 <code>WHO</code>时似乎管用,但是:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
-</span></pre></td>
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">RENAME2:W
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">RENAME2:W
 ✅  Rename successfully
 LS
 [ 📣  #127.0.0.1:51127 @127.0.0.1:51127] says:
-LS</pre></td></tr></table>
+LS
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>仍然没有改名成功.  SO WTF ?</p>
-
+</div><p>仍然没有改名成功.  SO WTF ?</p>
 <blockquote>
 <p>bug: broken pipe</p>
 </blockquote>
-
 <h3 id="用户退出">用户退出</h3>
-
-<p>Function:
-1. 广播退出
-2. 消除该 go 程
-3. 消除 map 中的</p>
-
-<p>Process:
-1.  after the client logging in, create a channel for watching the client is quit or not
-2. when <code>conn.Read == 0</code>, write to the channel
-3. 💥Add <code>select</code> at the end of <code>HandlerConnect</code>,when the channel has data flow, delete client from current-client-map and broadcast current client has log out.</p>
+<p>Function:</p>
+<ol>
+<li>广播退出</li>
+<li>消除该 go 程</li>
+<li>消除 map 中的</li>
+</ol>
+<p>Process:</p>
+<ol>
+<li>
+<p>after the client logging in, create a channel for watching the client is quit or not</p>
+</li>
+<li>
+<p>when <code>conn.Read == 0</code>, write to the channel</p>
+</li>
+<li>
+<p>💥Add <code>select</code> at the end of <code>HandlerConnect</code>,when the channel has data flow, delete client from current-client-map and broadcast current client has log out.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -437,56 +425,51 @@ LS</pre></td></tr></table>
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="c1">// use loop to watch the quitStat has data flow or not
-</span><span class="c1"></span>    <span class="k">for</span> <span class="p">{</span>
-        <span class="k">select</span> <span class="p">{</span>
-        <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">quitStat</span><span class="p">:</span>
-            <span class="c1">// delete clnt in map
-</span><span class="c1"></span>            <span class="nb">delete</span><span class="p">(</span><span class="nx">onLineUserMap</span><span class="p">,</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
-            <span class="c1">// broadcast clint
-</span><span class="c1"></span>            <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span>
-        <span class="p">}</span>
-   <span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// use loop to watch the quitStat has data flow or not
+</span><span class="c1"></span> <span class="k">for</span> <span class="p">{</span>
+     <span class="k">select</span> <span class="p">{</span>
+     <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">quitStat</span><span class="p">:</span>
+         <span class="c1">// delete clnt in map
+</span><span class="c1"></span>         <span class="nb">delete</span><span class="p">(</span><span class="nx">onLineUserMap</span><span class="p">,</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
+         <span class="c1">// broadcast clint
+</span><span class="c1"></span>         <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span>
+     <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<ol>
-<li>add exit for client.</li>
-</ol>
-
+</div></li>
+<li>
+<p>add exit for client.</p>
 <p><strong>net.Listen</strong></p>
-
 <p><strong>Listene.Accpet()</strong> one connect,one socket.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="k">case</span> <span class="nx">msg</span> <span class="o">==</span> <span class="s">&#34;EXIT&#34;</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
-      <span class="nx">quitStat</span> <span class="o">&lt;-</span> <span class="kc">true</span>
-      <span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;bye~ \n&#34;</span><span class="p">))</span>
-      <span class="nx">conn</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-      <span class="k">return</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">case</span> <span class="nx">msg</span> <span class="o">==</span> <span class="s">&#34;EXIT&#34;</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+   <span class="nx">quitStat</span> <span class="o">&lt;-</span> <span class="kc">true</span>
+   <span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;bye~ \n&#34;</span><span class="p">))</span>
+   <span class="nx">conn</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+   <span class="k">return</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<ol>
-<li>Time_expire and kick</li>
-</ol>
-
+</div></li>
+<li>
+<p>Time_expire and kick</p>
 <p>超时强制踢出用户</p>
-
 <p>使用<code>select</code>超时机制来进行实现.</p>
-
 <ol>
 <li>Select 监听 <code>time.After(60 * time.Second)</code>通道上的数据流动,60s 没有输入的时候的时候就踢出, 广播用户被踢出,</li>
-
-<li><p>加入另外一条 <code>channel</code> :<code>hasData</code> 来判断是否有数据发送,让 <code>Select</code> 也来监听这个<code>channel</code>,有数据的时候, 不做任何事情,相应的 <code>case</code> 得以执行,<code>case</code> 60s 得以重置时间</p>
+<li>加入另外一条 <code>channel</code> :<code>hasData</code> 来判断是否有数据发送,让 <code>Select</code> 也来监听这个<code>channel</code>,有数据的时候, 不做任何事情,相应的 <code>case</code> 得以执行,<code>case</code> 60s 得以重置时间</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -509,33 +492,33 @@ LS</pre></td></tr></table>
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="p">{</span>
-    <span class="k">select</span> <span class="p">{</span>
-  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">quitStat</span><span class="p">:</span>
+     <span class="k">select</span> <span class="p">{</span>
+   <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">quitStat</span><span class="p">:</span>
 
-        <span class="c1">// delete clnt in map
-</span><span class="c1"></span>        <span class="nb">delete</span><span class="p">(</span><span class="nx">onLineUserMap</span><span class="p">,</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
-        <span class="c1">// broadcast clint
-</span><span class="c1"></span>        <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span>
-        <span class="k">return</span>
-    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">hasData</span><span class="p">:</span>
-        <span class="c1">// doing nothing; refresh next case
-</span><span class="c1"></span>    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Minute</span><span class="p">):</span>
-        <span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;You have been kicked out,due to 120s time expire.Bye ~&#34;</span><span class="p">))</span>
-        <span class="c1">// ❌ the code bellow doesn&#39;t work
-</span><span class="c1"></span>        <span class="nx">clnt</span><span class="p">.</span><span class="nx">C</span> <span class="o">&lt;-</span> <span class="s">&#34;You have been kicked out,due to 120s time expire.Bye ~&#34;</span>
-        <span class="nb">delete</span><span class="p">(</span><span class="nx">onLineUserMap</span><span class="p">,</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
-        <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has been kick out,due to 120s time expire ⤵️ ] \n&#34;</span>
-        <span class="k">return</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+         <span class="c1">// delete clnt in map
+</span><span class="c1"></span>         <span class="nb">delete</span><span class="p">(</span><span class="nx">onLineUserMap</span><span class="p">,</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
+         <span class="c1">// broadcast clint
+</span><span class="c1"></span>         <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has disconnected ⤵️ ] \n&#34;</span>
+         <span class="k">return</span>
+     <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">hasData</span><span class="p">:</span>
+         <span class="c1">// doing nothing; refresh next case
+</span><span class="c1"></span>     <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nf">After</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Minute</span><span class="p">):</span>
+         <span class="nx">conn</span><span class="p">.</span><span class="nf">Write</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&#34;You have been kicked out,due to 120s time expire.Bye ~&#34;</span><span class="p">))</span>
+         <span class="c1">// ❌ the code bellow doesn&#39;t work
+</span><span class="c1"></span>         <span class="nx">clnt</span><span class="p">.</span><span class="nx">C</span> <span class="o">&lt;-</span> <span class="s">&#34;You have been kicked out,due to 120s time expire.Bye ~&#34;</span>
+         <span class="nb">delete</span><span class="p">(</span><span class="nx">onLineUserMap</span><span class="p">,</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Addr</span><span class="p">)</span>
+         <span class="nx">message</span> <span class="o">&lt;-</span> <span class="s">&#34;[ 📢 \a @&#34;</span> <span class="o">+</span> <span class="nx">clnt</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; has been kick out,due to 120s time expire ⤵️ ] \n&#34;</span>
+         <span class="k">return</span>
+     <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
-
 <h1 id="注意-goroutine-嵌套创建退出的特性">注意 goroutine 嵌套创建退出的特性</h1>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -550,19 +533,18 @@ LS</pre></td></tr></table>
    <span class="k">for</span><span class="p">{</span>
 
    <span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>当 a <code>return</code> 后 b 会不会也会终止 ?
-1. 当 a 为进程的时候,b 会终止(皮之不存毛将焉附)
-2. 使用<code>go.exit()</code> 退出的是主 goroutine
-3. b 不会退出</p>
-
+</div><p>当 a <code>return</code> 后 b 会不会也会终止 ?</p>
+<ol>
+<li>当 a 为进程的时候,b 会终止(皮之不存毛将焉附)</li>
+<li>使用<code>go.exit()</code> 退出的是主 goroutine</li>
+<li>b 不会退出</li>
+</ol>
 <h2 id="扩展">扩展</h2>
-
-<h3 id="和某个用户-chat-其他用户收不到消息">和某个用户 chat,其他用户收不到消息</h3>
-
-<h3 id="创建群组-用户同意后加入群组-开始聊天">创建群组,用户同意后加入群组,开始聊天</h3>
+<h3 id="和某个用户-chat其他用户收不到消息">和某个用户 chat,其他用户收不到消息</h3>
+<h3 id="创建群组用户同意后加入群组开始聊天">创建群组,用户同意后加入群组,开始聊天</h3>
 
     </div>
 

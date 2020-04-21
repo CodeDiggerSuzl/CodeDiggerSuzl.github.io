@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/go-tcppro/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-02-28T23:36:47+08:00" />
 <meta itemprop="name" content="通信协议入门">
 <meta itemprop="description" content="协议入门 从应用的角度出发，协议可理解为“规则”，是数据传输和数据的解释的规则。 常见协议 传输层 常见协议有TCP/UDP协议。 TCP传输控制协议">
-
-
 <meta itemprop="datePublished" content="2020-02-12T20:06:21&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:36:47&#43;08:00" />
 <meta itemprop="wordCount" content="2928">
 
 
 
-<meta itemprop="keywords" content="golang,tcp/ip," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang,tcp/ip," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="通信协议入门"/>
 <meta name="twitter:description" content="协议入门 从应用的角度出发，协议可理解为“规则”，是数据传输和数据的解释的规则。 常见协议 传输层 常见协议有TCP/UDP协议。 TCP传输控制协议"/>
 
@@ -137,86 +134,62 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#协议入门">协议入门</a>
-<ul>
-<li><a href="#常见协议">常见协议</a>
-<ul>
-<li><a href="#传输层">传输层</a></li>
-<li><a href="#应用层">应用层</a></li>
-<li><a href="#网络层">网络层</a></li>
-<li><a href="#网络接口层">网络接口层</a></li>
-</ul></li>
-<li><a href="#网络分层">网络分层</a></li>
-<li><a href="#层和协议">层和协议</a></li>
-<li><a href="#协议功能">协议功能</a>
-<ul>
-<li><a href="#链路层-arp-rarp-协议">链路层 | <code>ARP</code>/<code>RARP</code> 协议</a></li>
-<li><a href="#网络层-ip-协议">网络层  | <code>IP</code> 协议</a></li>
-<li><a href="#传输层-tcp-udp">传输层 |TCP &amp; UDP</a></li>
-<li><a href="#应用层-ftp-http">应用层 | FTP  &amp; HTTP</a></li>
-</ul></li>
-<li><a href="#summary">Summary</a></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#常见协议">常见协议</a>
+      <ul>
+        <li><a href="#传输层">传输层</a></li>
+        <li><a href="#应用层">应用层</a></li>
+        <li><a href="#网络层">网络层</a></li>
+        <li><a href="#网络接口层">网络接口层</a></li>
+      </ul>
+    </li>
+    <li><a href="#网络分层">网络分层</a></li>
+    <li><a href="#层和协议">层和协议</a></li>
+    <li><a href="#协议功能">协议功能</a>
+      <ul>
+        <li><a href="#链路层--arprarp-协议">链路层 | <code>ARP</code>/<code>RARP</code> 协议</a></li>
+        <li><a href="#网络层---ip-协议">网络层  | <code>IP</code> 协议</a></li>
+        <li><a href="#传输层-tcp--udp">传输层 |TCP &amp; UDP</a></li>
+        <li><a href="#应用层--ftp---http">应用层 | FTP  &amp; HTTP</a></li>
+      </ul>
+    </li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="协议入门">协议入门</h1>
-
+      <h1 id="协议入门">协议入门</h1>
 <p>从应用的角度出发，协议可理解为“规则”，是数据传输和数据的解释的规则。</p>
-
 <h2 id="常见协议">常见协议</h2>
-
 <h3 id="传输层">传输层</h3>
-
 <p>常见协议有TCP/UDP协议。</p>
-
 <p>TCP传输控制协议（Transmission Control Protocol）是一种面向连接的、可靠的、基于字节流的传输层通信协议。</p>
-
 <p>UDP用户数据报协议（User Datagram Protocol）是OSI参考模型中一种无连接的传输层协议，提供面向事务的简单不可靠信息传送服务。</p>
-
 <h3 id="应用层">应用层</h3>
-
 <p>常见的协议有HTTP协议，FTP协议。
 HTTP超文本传输协议（Hyper Text Transfer Protocol）是互联网上应用最为广泛的一种网络协议。
 FTP文件传输协议（File Transfer Protocol）</p>
-
 <h3 id="网络层">网络层</h3>
-
 <p>常见协议有IP协议、ICMP协议、IGMP协议。</p>
-
 <p>IP协议是因特网互联协议（Internet Protocol）</p>
-
 <p>ICMP协议是Internet控制报文协议（Internet Control Message Protocol）它是TCP/IP协议族的一个子协议，用于在IP主机、路由器之间传递控制消息。</p>
-
 <p>IGMP协议是 Internet 组管理协议（Internet Group Management Protocol），是因特网协议家族中的一个组播协议。该协议运行在主机和组播路由器之间。</p>
-
 <h3 id="网络接口层">网络接口层</h3>
-
 <p>常见协议有ARP协议、RARP协议。</p>
-
 <p>ARP协议是正向地址解析协议（Address Resolution Protocol），通过已知的IP，寻找对应主机的MAC地址。</p>
-
 <p>RARP是反向地址转换协议，通过MAC地址确定IP地址。</p>
-
 <h2 id="网络分层">网络分层</h2>
-
 <p>为了减少协议设计的复杂性，大多数网络模型均采用分层的方式来组织。每一层都有自己的功能，就像建筑物一样，每一层都靠下一层支持。<strong>✨每一层利用下一层提供的服务来为上一层提供服务，本层服务的实现细节对上层屏蔽。</strong></p>
-
-<p>业内普遍的分层方式有两种。OSI七层模型 和TCP/IP四层模型。可以通过背诵两个口诀来快速记忆：
-- OSI七层模型：<strong>物、数、网、传、会、表、应</strong>
-- TCP/IP四层模型：<strong>链、网、传、应</strong></p>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavavutrazj30i809at9g.jpg" alt="" /></p>
-
+<p>业内普遍的分层方式有两种。OSI七层模型 和TCP/IP四层模型。可以通过背诵两个口诀来快速记忆：</p>
+<ul>
+<li>OSI七层模型：<strong>物、数、网、传、会、表、应</strong></li>
+<li>TCP/IP四层模型：<strong>链、网、传、应</strong></li>
+</ul>
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavavutrazj30i809at9g.jpg" alt=""></p>
 <blockquote>
 <p><a href="https://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html">互联网协议入门（一）</a></p>
 </blockquote>
-
 <ol>
 <li><strong>物</strong>理层：主要定义物理设备标准，如网线的接口类型、光纤的接口类型、各种传输介质的传输速率等。它的主要作用是传输<strong>比特流</strong>（就是由 1、0 转化为电流强弱来进行传输，到达目的地后再转化为1、0，也就是我们常说的数模转换与模数转换）。这一层的数据叫做比特。</li>
 <li><strong>数</strong>据链路层：定义了如何让格式化数据以<strong>帧</strong>为单位进行传输，以及如何让控制对物理介质的访问。这一层通常还提供错误检测和纠正，以确保数据的可靠传输。如：串口通信中使用到的 115200、8、N、1</li>
@@ -226,76 +199,56 @@ FTP文件传输协议（File Transfer Protocol）</p>
 <li><strong>表</strong>示层：可确保一个系统的应用层所发送的信息可以被另一个系统的应用层读取。例如，PC 程序与另一台计算机进行通信，其中一台计算机使用扩展二一十进制交换码 (EBCDIC)，而另一台则使用美国信息交换标准码（ASCII）来表示相同的字符。<strong>如有必要，表示层会通过使用一种通格式来实现多种数据格式之间的转换。</strong></li>
 <li><strong>应</strong>用层：是最靠近用户的 OSI 层。这一层为用户的应用程序（例如电子邮件、文件传输和终端仿真）提供网络服务。</li>
 </ol>
-
 <h2 id="层和协议">层和协议</h2>
-
 <p>每一层都是为了完成一种功能，为了实现这些功能，就需要大家都遵守共同的规则。大家都遵守这规则，就叫做“协议”（protocol）。</p>
-
 <p>网络的每一层，都定义了很多协议。这些协议的总称，叫“TCP/IP 协议”。TCP/IP 协议是一个大家族，不仅仅只有 TCP 和 IP 协议，它还包括其它的协议，如下图</p>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavawirwk7j30au0b2my0.jpg" alt="" /></p>
-
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavawirwk7j30au0b2my0.jpg" alt=""></p>
 <h2 id="协议功能">协议功能</h2>
-
-<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavb39sc27j30c407ejrx.jpg" alt="" /></p>
-
-<h3 id="链路层-arp-rarp-协议">链路层 | <code>ARP</code>/<code>RARP</code> 协议</h3>
-
+<p><img src="https://tva1.sinaimg.cn/large/006tNbRwly1gavb39sc27j30c407ejrx.jpg" alt=""></p>
+<h3 id="链路层--arprarp-协议">链路层 | <code>ARP</code>/<code>RARP</code> 协议</h3>
 <p>主要协议:</p>
-
 <ul>
-<li><p><strong>ARP 主要功能</strong>: 借助 ip 地址使得源 mac 获取目标 mac 地址 (原来的问题: ARP 网络风暴 ARP 网络攻击)</p></li>
-
-<li><p><code>RARP</code>: 已知 ip 地址获取目标的 mac 地址.</p></li>
+<li>
+<p><strong>ARP 主要功能</strong>: 借助 ip 地址使得源 mac 获取目标 mac 地址 (原来的问题: ARP 网络风暴 ARP 网络攻击)</p>
+</li>
+<li>
+<p><code>RARP</code>: 已知 ip 地址获取目标的 mac 地址.</p>
+</li>
 </ul>
-
-<p><strong>以太网规定，连入网络的所有设备，都必须具有“网卡”接口。</strong>数据包必须是从一块网卡，传送到另一块网卡。通过网卡能够使不同的计算机之间连接，从而完成数据通信等功能。<strong>网卡的地址—— MAC 地址，就是数据包的物理发送地址和物理接收地址。</strong></p>
-
-<p>使用 ARP 协议来获取 mac 地址.
-1. ARP 请求包包含原来 mac 地址,目的 mac 地址(刚开始不知道写 000000000),原来的 IP 地址,目的 ip 地址
-2. 从网卡发出 <code>ARP</code> 请求包
-3. 路由器拿到 <code>ARP</code> 请求包,<strong>在局域网(Local Area Net work LAN <a href="https://zh.wikipedia.org/wiki/%E5%B1%80%E5%9F%9F%E7%BD%91">详细定义</a>)</strong>中进行广播,获取包的主机拿到 <code>ARP</code> 请求包后获取其中的目的 IP 地址和自己的 IP 地址进行匹配, 如果相同恢复 <code>ARP</code> 应答包
-4. 返回原来的 IP 主机,获取到 mac 地址.</p>
-
-<h3 id="网络层-ip-协议">网络层  | <code>IP</code> 协议</h3>
-
+<p>**以太网规定，连入网络的所有设备，都必须具有“网卡”接口。**数据包必须是从一块网卡，传送到另一块网卡。通过网卡能够使不同的计算机之间连接，从而完成数据通信等功能。<strong>网卡的地址—— MAC 地址，就是数据包的物理发送地址和物理接收地址。</strong></p>
+<p>使用 ARP 协议来获取 mac 地址.</p>
+<ol>
+<li>ARP 请求包包含原来 mac 地址,目的 mac 地址(刚开始不知道写 000000000),原来的 IP 地址,目的 ip 地址</li>
+<li>从网卡发出 <code>ARP</code> 请求包</li>
+<li>路由器拿到 <code>ARP</code> 请求包,**在局域网(Local Area Net work LAN <a href="https://zh.wikipedia.org/wiki/%E5%B1%80%E5%9F%9F%E7%BD%91">详细定义</a>)**中进行广播,获取包的主机拿到 <code>ARP</code> 请求包后获取其中的目的 IP 地址和自己的 IP 地址进行匹配, 如果相同恢复 <code>ARP</code> 应答包</li>
+<li>返回原来的 IP 主机,获取到 mac 地址.</li>
+</ol>
+<h3 id="网络层---ip-协议">网络层  | <code>IP</code> 协议</h3>
 <ul>
 <li>IP 协议: 在网络环境中唯一标识一台主机.</li>
 </ul>
-
 <p>Internet Protocol Address,点分十进制表示,原来为二进制数,</p>
-
 <p>网络层的作用是引进一套新的地址，使得我们能够区分不同的计算机是否属于同一个子网络。这套地址就叫做“网络地址”，这是我们平时所说的 IP 地址。这个 IP 地址好比我们的手机号码，通过手机号码可以得到用户所在的归属地。</p>
-
 <p>网络地址帮助我们确定计算机所在的子网络，MAC 地址则将数据包送到该子网络中的目标网卡。网络层协议包含的主要信息是源IP和目的IP。</p>
-
 <p>于是，“网络层”出现以后，每台计算机有了两种地址，一种是 MAC 地址，另一种是网络地址。两种地址之间没有任何联系，MAC 地址是绑定在网卡上的，网络地址则是管理员分配的，它们只是随机组合在一起。
 网络地址帮助我们确定计算机所在的子网络，MAC 地址则将数据包送到该子网络中的目标网卡。因此，从逻辑上可以推断，必定是先处理网络地址，然后再处理 MAC 地址。</p>
-
-<h3 id="传输层-tcp-udp">传输层 |TCP &amp; UDP</h3>
-
+<h3 id="传输层-tcp--udp">传输层 |TCP &amp; UDP</h3>
 <ul>
 <li>TCP&amp;UDP: 唯一表示一个端口号</li>
 </ul>
-
 <p>当我们一边聊QQ，一边聊微信，当一个数据包从互联网上发来的时候，我们怎么知道，它是来自QQ的内容，还是来自微信的内容？</p>
-
 <p>也就是说，我们还需要一个参数，表示这个数据包到底供哪个程序（进程）使用。<strong>✨这个参数就叫做“端口”（port），它其实是每一个使用网卡的程序的编号</strong>。每个数据包都发到主机的特定端口，所以不同的程序就能取到自己所需要的数据。</p>
-
-<p>端口特点：
-1. 对于同一个端口，在不同系统中对应着不同的进程
-2. 对于同一个系统，一个端口只能被一个进程拥有</p>
-
-<h3 id="应用层-ftp-http">应用层 | FTP  &amp; HTTP</h3>
-
+<p>端口特点：</p>
+<ol>
+<li>对于同一个端口，在不同系统中对应着不同的进程</li>
+<li>对于同一个系统，一个端口只能被一个进程拥有</li>
+</ol>
+<h3 id="应用层--ftp---http">应用层 | FTP  &amp; HTTP</h3>
 <ul>
 <li>FTP&amp;HTTP: 规定数据格式,尽心封装</li>
 </ul>
-
 <p>应用程序收到“传输层”的数据，接下来就要进行解读。由于互联网是开放架构，数据来源五花八门，必须事先规定好格式，否则根本无法解读。<strong>✨“应用层”的作用，就是规定应用程序的数据格式。</strong></p>
-
 <h2 id="summary">Summary</h2>
-
 <table>
 <thead>
 <tr>
@@ -305,7 +258,6 @@ FTP文件传输协议（File Transfer Protocol）</p>
 <th align="center">层</th>
 </tr>
 </thead>
-
 <tbody>
 <tr>
 <td>mac 地址</td>
@@ -313,14 +265,12 @@ FTP文件传输协议（File Transfer Protocol）</p>
 <td align="left">get mac by ip</td>
 <td align="center">链路层</td>
 </tr>
-
 <tr>
 <td>ip 地址</td>
 <td align="center">需要</td>
 <td align="left">确定主机</td>
 <td align="center">网络层</td>
 </tr>
-
 <tr>
 <td>port</td>
 <td align="center">不需要</td>
@@ -329,23 +279,23 @@ FTP文件传输协议（File Transfer Protocol）</p>
 </tr>
 </tbody>
 </table>
-
 <p>⚠️ 注意:</p>
-
 <ol>
 <li>不能使用系统占用的端口
-
 <ol>
 <li>80 为 <code>http</code> 协议预留端口</li>
 <li>8080 web 服务器端口</li>
-</ol></li>
+</ol>
+</li>
+</ol>
+<ul>
 <li>使用 5000+ 的端口</li>
 <li>小于 65535 <a href="https://superuser.com/questions/1078309/why-do-computers-have-65-535-tcp-ports">端口上限 why ?</a>
-
 <ul>
 <li>在TCP、UDP协议的开头，会分别有16位来存储源端口号和目标端口号，所以端口个数是2^16-1=65535个。(在书中肯定有)</li>
-</ul></li>
-</ol>
+</ul>
+</li>
+</ul>
 
     </div>
 

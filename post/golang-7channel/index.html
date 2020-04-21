@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-7channel/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2020-01-06T01:38:28+08:00" />
 <meta itemprop="name" content="Golang-9 Channel">
 <meta itemprop="description" content="channel channel 是 goroutine 和 goroutine 之间的交互 定义 普通 channel 和 bufferdChannel var c chan int d:=make(chan int ) bufferdChannel:make(chan int,3) channel 是一等公民 可以做参数和返回值 var channels [10]chan&lt;- int channel 还可以使用箭表示 channel 的方向 channel 关闭是发送方关闭的 接">
-
-
 <meta itemprop="datePublished" content="2019-08-12T19:32:06&#43;08:00" />
 <meta itemprop="dateModified" content="2020-01-06T01:38:28&#43;08:00" />
-<meta itemprop="wordCount" content="1013">
+<meta itemprop="wordCount" content="1014">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-9 Channel"/>
 <meta name="twitter:description" content="channel channel 是 goroutine 和 goroutine 之间的交互 定义 普通 channel 和 bufferdChannel var c chan int d:=make(chan int ) bufferdChannel:make(chan int,3) channel 是一等公民 可以做参数和返回值 var channels [10]chan&lt;- int channel 还可以使用箭表示 channel 的方向 channel 关闭是发送方关闭的 接"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1013 字 </span>
+          <span class="more-meta"> 约 1014 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,90 +134,69 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#channel">channel</a>
-<ul>
-<li><a href="#channel-是-goroutine-和-goroutine-之间的交互">channel 是 goroutine 和 goroutine 之间的交互</a>
-<ul>
-<li><a href="#channel-是一等公民-可以做参数和返回值">channel 是一等公民 可以做参数和返回值</a>
-<ul>
-<li><a href="#channel-还可以使用箭表示-channel-的方向">channel 还可以使用箭表示 <code>channel</code> 的方向</a></li>
-<li><a href="#channel-关闭是发送方关闭的-接受者的要进行判断-有两种方法">channel 关闭是发送方关闭的 接受者的要进行判断 有两种方法</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#channel-的理论基础-csp-模型">channel 的理论基础 CSP 模型</a>
-<ul>
-<li><a href="#等待多人完成任务可以-go-内置了解决方法">等待多人完成任务可以 go 内置了解决方法</a>
-<ul>
-<li><a href="#waitgroup">WaitGroup</a></li>
-</ul></li>
-<li><a href="#使用-select来进行调度">使用 select来进行调度</a></li>
-</ul></li>
-<li><a href="#go-中传统的同步机制">go 中传统的同步机制</a>
-<ul>
-<li><a href="#互斥量">互斥量</a></li>
-</ul></li>
-<li><a href="#总结">总结</a>
-<ul>
-<li><a href="#协程">协程</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#channel-是-goroutine-和-goroutine-之间的交互">channel 是 goroutine 和 goroutine 之间的交互</a>
+      <ul>
+        <li><a href="#channel-是一等公民-可以做参数和返回值">channel 是一等公民 可以做参数和返回值</a></li>
+      </ul>
+    </li>
+    <li><a href="#channel-的理论基础-csp-模型">channel 的理论基础 CSP 模型</a>
+      <ul>
+        <li><a href="#等待多人完成任务可以-go-内置了解决方法">等待多人完成任务可以 go 内置了解决方法</a></li>
+        <li><a href="#使用-select来进行调度">使用 select来进行调度</a></li>
+      </ul>
+    </li>
+    <li><a href="#go-中传统的同步机制">go 中传统的同步机制</a>
+      <ul>
+        <li><a href="#互斥量">互斥量</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a>
+      <ul>
+        <li><a href="#协程">协程</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="channel">channel</h1>
-
+      <h1 id="channel">channel</h1>
 <h2 id="channel-是-goroutine-和-goroutine-之间的交互">channel 是 goroutine 和 goroutine 之间的交互</h2>
-
 <ul>
-<li><p>定义 普通 channel 和 bufferdChannel</p>
-
+<li>
+<p>定义 普通 channel 和 bufferdChannel</p>
 <ul>
 <li><code>var c chan int</code></li>
 <li><code>d:=make(chan  int )</code></li>
 <li>bufferdChannel:<code>make(chan int,3)</code></li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="channel-是一等公民-可以做参数和返回值">channel 是一等公民 可以做参数和返回值</h3>
-
 <p><code>var channels [10]chan&lt;- int</code></p>
-
 <h4 id="channel-还可以使用箭表示-channel-的方向">channel 还可以使用箭表示 <code>channel</code> 的方向</h4>
-
 <h4 id="channel-关闭是发送方关闭的-接受者的要进行判断-有两种方法">channel 关闭是发送方关闭的 接受者的要进行判断 有两种方法</h4>
-
 <ol>
 <li>使用 <code>range</code></li>
 <li>使用 <code>if ok</code> 进行判断</li>
 </ol>
-
 <h2 id="channel-的理论基础-csp-模型">channel 的理论基础 CSP 模型</h2>
-
 <blockquote>
 <p>Communication Sequential Process</p>
-
 <p>不用通过共享内存来进行通信,通过通信来共享内存</p>
 </blockquote>
-
 <h3 id="等待多人完成任务可以-go-内置了解决方法">等待多人完成任务可以 go 内置了解决方法</h3>
-
 <h4 id="waitgroup">WaitGroup</h4>
-
 <ol>
 <li><code>Add()</code>有多少个任务</li>
 <li><code>Done()</code> 完成之后</li>
 <li><code>Wait()</code> 等待</li>
 </ol>
-
 <p>有一个 <code>WaitGroup</code> 就行了,共用一个</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -267,9 +243,11 @@
 </span><span class="lnt">45
 </span><span class="lnt">46
 </span><span class="lnt">47
+</span><span class="lnt">48
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">doWork</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">,</span>
+<pre class="chroma"><code class="language-go" data-lang="go">
+<span class="kd">func</span> <span class="nf">doWork</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">,</span>
 	<span class="nx">w</span> <span class="nx">worker</span><span class="p">)</span> <span class="p">{</span>
 	<span class="k">for</span> <span class="nx">n</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">w</span><span class="p">.</span><span class="nx">in</span> <span class="p">{</span>
 		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;Worker %d received %c\n&#34;</span><span class="p">,</span>
@@ -315,18 +293,17 @@
 	<span class="p">}</span>
 
 	<span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h3 id="使用-select来进行调度">使用 select来进行调度</h3>
-
+</div><h3 id="使用-select来进行调度">使用 select来进行调度</h3>
 <ul>
-<li><p>选择较快的 channel</p>
-
+<li>
+<p>选择较快的 channel</p>
 <p>使用 来进行判读</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -335,14 +312,17 @@
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="k">select</span><span class="p">{</span>
     <span class="k">case</span>
     <span class="k">default</span> <span class="c1">// 则变成了非阻塞式地从 channel 中获取值
-</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>在 select 中可使用 nil channel</p>
+<li>
+<p>在 select 中可使用 nil channel</p>
+</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -489,27 +469,21 @@
 			<span class="k">return</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<p><strong>没有用到锁等待 只用到了 channel 通过通信来进行数据的共享</strong></p>
-
+</div><p><strong>没有用到锁等待 只用到了 channel 通过通信来进行数据的共享</strong></p>
 <h2 id="go-中传统的同步机制">go 中传统的同步机制</h2>
-
 <ul>
 <li>WaitGroup 看起来像传统的同步机制</li>
 <li>Mutex 互斥量</li>
 <li>Cond Condition Variable</li>
 </ul>
-
 <h3 id="互斥量">互斥量</h3>
-
 <p>使用 mutex 实现</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -544,15 +518,12 @@
     <span class="k">defer</span> <span class="nx">a</span><span class="p">.</span><span class="nx">lock</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
     <span class="nx">a</span><span class="p">.</span><span class="nx">value</span><span class="o">++</span>
     <span class="p">}()</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>传统同步机制很少使用 尽量使用 channel</p>
-
+</div><p>传统同步机制很少使用 尽量使用 channel</p>
 <h2 id="总结">总结</h2>
-
 <h3 id="协程">协程</h3>
-
 <ul>
 <li>轻量级线程</li>
 <li><strong>非抢占式的</strong>多任务处理,由协程主动交出控制权</li>

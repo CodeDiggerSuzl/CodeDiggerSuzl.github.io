@@ -23,7 +23,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-%E6%8E%A5%E5%8F%A3/" />
@@ -46,16 +46,13 @@
 <meta property="article:modified_time" content="2019-08-04T15:53:46+08:00" />
 <meta itemprop="name" content="Golang-4 接口">
 <meta itemprop="description" content="接口 ducktyping ? 描述事物的外部行为 而非内部结构 &ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&#34;www.google.com&#34;) } 1. 运行时才知">
-
-
 <meta itemprop="datePublished" content="2019-08-04T15:53:46&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-04T15:53:46&#43;08:00" />
-<meta itemprop="wordCount" content="1059">
+<meta itemprop="wordCount" content="1057">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-4 接口"/>
 <meta name="twitter:description" content="接口 ducktyping ? 描述事物的外部行为 而非内部结构 &ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&#34;www.google.com&#34;) } 1. 运行时才知"/>
 
@@ -127,7 +124,7 @@
         <div class="post-category">
             <a href="/categories/programming-language/"> programming language </a>
             </div>
-          <span class="more-meta"> 约 1059 字 </span>
+          <span class="more-meta"> 约 1057 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -137,43 +134,36 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#接口">接口</a>
-<ul>
-<li><a href="#ducktyping">ducktyping ?</a></li>
-<li><a href="#接口的定义">接口的定义</a></li>
-<li><a href="#接口中变量的-r-是什么">接口中变量的 r 是什么?</a>
-<ul>
-<li><a href="#获取接口的具体类型">获取接口的具体类型</a></li>
-<li><a href="#接口变量里有什么">接口变量里有什么?</a></li>
-</ul></li>
-<li><a href="#查看接口变量">查看接口变量:</a></li>
-<li><a href="#使用者定义接口的方法">使用者定义接口的方法</a></li>
-<li><a href="#go-中的标准接口">go 中的标准接口</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#接口">接口</a>
+      <ul>
+        <li><a href="#ducktyping-">ducktyping ?</a></li>
+        <li><a href="#接口的定义">接口的定义</a></li>
+        <li><a href="#接口中变量的-r-是什么">接口中变量的 r 是什么?</a></li>
+        <li><a href="#查看接口变量">查看接口变量:</a></li>
+        <li><a href="#使用者定义接口的方法">使用者定义接口的方法</a></li>
+        <li><a href="#go-中的标准接口">go 中的标准接口</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h2 id="接口">接口</h2>
-
-<h3 id="ducktyping">ducktyping ?</h3>
-
+      <h2 id="接口">接口</h2>
+<h3 id="ducktyping-">ducktyping ?</h3>
 <ul>
-<li><p>描述事物的外部行为 而非内部结构</p></li>
-
-<li><p>&ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo;</p></li>
-
-<li><p>Python 中的 duck typing</p>
+<li>
+<p>描述事物的外部行为 而非内部结构</p>
+</li>
+<li>
+<p>&ldquo;像鸭子走路,走路像鸭子,那就是🦆&rdquo;</p>
+</li>
+<li>
+<p>Python 中的 duck typing</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-Python" data-lang="Python"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -181,17 +171,18 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-Python" data-lang="Python"><span class="k">def</span> <span class="nf">download</span><span class="p">(</span><span class="n">retriver</span><span class="p">){</span>
-	<span class="k">return</span> <span class="n">retriver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;www.google.com&#34;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">retriver</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;www.google.com&#34;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="mf">1.</span> <span class="err">运行时才知道传入的</span> <span class="n">retriever</span> <span class="err">有没有</span> <span class="n">get</span>
-<span class="mf">2.</span> <span class="err">需要注释来说明接口</span></code></pre></td></tr></table>
+<span class="mf">2.</span> <span class="err">需要注释来说明接口</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>c++</p>
+<li>
+<p>c++</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -199,20 +190,20 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span><span class="err"> </span><span class="nc">R</span><span class="o">&gt;</span>
+<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">R</span><span class="o">&gt;</span>
 <span class="n">string</span> <span class="n">download</span><span class="p">(</span><span class="k">const</span> <span class="n">R</span><span class="o">&amp;</span> <span class="n">retriver</span><span class="p">){</span>
-	<span class="k">return</span> <span class="n">retriver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#34;www.google.com&#34;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">retriver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#34;www.google.com&#34;</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="mf">1.</span> <span class="err">编译时才知道传入的</span> <span class="n">retriver</span> <span class="err">有没有</span> <span class="n">get</span>
 <span class="mf">2.</span> <span class="err">需要注释来说明</span>
 </code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>Java</p>
+<li>
+<p>Java</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -221,34 +212,33 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">R</span> <span class="nf">implements</span> <span class="n">Retriever</span><span class="o">&gt;</span>
-<span class="nf">String</span> <span class="n">download</span><span class="p">(</span><span class="n">R</span> <span class="nf">r</span><span class="p">){</span>
-	<span class="k">return</span> <span class="n">r</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&#34;ww.google.com&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="n">1</span><span class="p">.</span> <span class="nf">传入参数必须实现</span> <span class="n">Retriver</span> <span class="nf">接口</span>
-<span class="n">2</span><span class="p">.</span> <span class="nf">不是</span> <span class="n">duck</span> <span class="nf">typing</span>
-<span class="n">3</span><span class="p">.</span> <span class="nf">不需要注释</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="o">&lt;</span><span class="n">R</span> <span class="kd">implements</span> <span class="n">Retriever</span><span class="o">&gt;</span>
+<span class="n">String</span> <span class="nf">download</span><span class="o">(</span><span class="n">R</span> <span class="n">r</span><span class="o">){</span>
+  <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;ww.google.com&#34;</span><span class="o">)</span>
+<span class="o">}</span>
+<span class="n">1</span><span class="o">.</span> <span class="n">传入参数必须实现</span> <span class="n">Retriver</span> <span class="n">接口</span>
+<span class="n">2</span><span class="o">.</span> <span class="n">不是</span> <span class="n">duck</span> <span class="n">typing</span>
+<span class="n">3</span><span class="o">.</span> <span class="n">不需要注释</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>go</p>
-
+<li>
+<p>go</p>
 <ul>
 <li>duck typing 的灵活性</li>
 <li>同时需要两个接口</li>
 <li>具有 java 的类型检查</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h3 id="接口的定义">接口的定义</h3>
-
 <p><strong>go语言中的接口由 使用者定义</strong></p>
-
 <ol>
-<li><p>接口</p>
+<li>
+<p>接口</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -261,25 +251,23 @@
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 接口
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">Retriever</span> <span class="kd">interface</span> <span class="p">{</span>
-	<span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
+ <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
 <span class="p">}</span>
 
 <span class="c1">//使用者
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">download</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-	<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+ <span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>接口的实现</p></li>
-</ol>
-
+<li>
+<p>接口的实现</p>
 <p>实现是隐式的</p>
-
 <p>只要实现里面的方法</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -298,52 +286,51 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="kd">type</span> <span class="nx">RealRetriver</span> <span class="kd">struct</span> <span class="p">{</span>
-   	<span class="nx">UserAgent</span> <span class="kt">string</span>
-   	<span class="nx">TimeOut</span>   <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
-   <span class="p">}</span>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">RealRetriver</span> <span class="kd">struct</span> <span class="p">{</span>
+ <span class="nx">UserAgent</span> <span class="kt">string</span>
+ <span class="nx">TimeOut</span>   <span class="nx">time</span><span class="p">.</span><span class="nx">Duration</span>
+<span class="p">}</span>
 
-   <span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-   	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
-   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-   	<span class="p">}</span>
-   	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">httputil</span><span class="p">.</span><span class="nf">DumpResponse</span><span class="p">(</span><span class="nx">resp</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
-   	<span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-   	<span class="p">}</span>
-   	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
-   <span class="p">}</span></code></pre></td></tr></table>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+ <span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+ <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+     <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+ <span class="p">}</span>
+ <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">httputil</span><span class="p">.</span><span class="nf">DumpResponse</span><span class="p">(</span><span class="nx">resp</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+ <span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+ <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+     <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
+</div></li>
+</ol>
 <h3 id="接口中变量的-r-是什么">接口中变量的 r 是什么?</h3>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="kd">var</span> <span class="nx">r</span> <span class="nx">Retriever</span>
-   	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;哈哈哈&#34;</span><span class="p">}</span>
-   	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">r</span><span class="p">)</span>
-   	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span>
-   	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">r</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">r</span> <span class="nx">Retriever</span>
+ <span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;哈哈哈&#34;</span><span class="p">}</span>
+ <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">r</span><span class="p">)</span>
+ <span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span>
+ <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span><span class="nx">r</span><span class="p">,</span><span class="nx">r</span><span class="p">)</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>输出 类型 和值</p>
-
+</div><p>输出 类型 和值</p>
 <p>ch4.Retriver {哈哈哈} //</p>
-
 <p>ch4.RealRetriver { 0s}  // content 是 空格 time 是 0s</p>
-
 <p>当变成指针的时候</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -357,53 +344,54 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-   	<span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
-   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-   	<span class="p">}</span>
-   	<span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">httputil</span><span class="p">.</span><span class="nf">DumpResponse</span><span class="p">(</span><span class="nx">resp</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
-   	<span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
-   	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-   		<span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-   	<span class="p">}</span>
-   	<span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
-   <span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">RealRetriver</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+ <span class="nx">resp</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">url</span><span class="p">)</span>
+ <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+     <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+ <span class="p">}</span>
+ <span class="nx">result</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">httputil</span><span class="p">.</span><span class="nf">DumpResponse</span><span class="p">(</span><span class="nx">resp</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+ <span class="nx">resp</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+ <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+     <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+ <span class="p">}</span>
+ <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>打印出结果:</p>
+</div><p>打印出结果:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">   <span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">implement</span> <span class="nf">Retriever</span> <span class="p">(</span><span class="nx">Get</span> <span class="nx">method</span> <span class="nx">has</span> <span class="nx">pointer</span> <span class="nx">receiver</span><span class="p">)</span></code></pre></td></tr></table>
-</div>
-</div>
-<p>改成地址访问的时候:<code>r = &amp;ch4.RealRetriver{}</code></p>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span> <span class="nx">does</span> <span class="nx">not</span> <span class="nx">implement</span> <span class="nf">Retriever</span> <span class="p">(</span><span class="nx">Get</span> <span class="nx">method</span> <span class="nx">has</span> <span class="nx">pointer</span> <span class="nx">receiver</span><span class="p">)</span>
 
+</code></pre></td></tr></table>
+</div>
+</div><p>改成地址访问的时候:<code>r = &amp;ch4.RealRetriver{}</code></p>
 <p>打印结果</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span></pre></td>
+</span><span class="lnt">3
+</span></code></pre></td>
 <td class="lntd">
-<pre class="chroma">   ch4.Retriver {哈哈哈}
-   *ch4.RealRetriver &amp;{ 0s} 输出的是指针  指向地址</pre></td></tr></table>
-</div>
-</div>
-<p><strong>说明可以是值,也可以是指针</strong></p>
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">ch4.Retriver {哈哈哈}
+*ch4.RealRetriver &amp;{ 0s} 输出的是指针  指向地址
 
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>说明可以是值,也可以是指针</strong></p>
 <p>通常接口用值,不用指针 接口内通常有一个指针</p>
-
 <h4 id="获取接口的具体类型">获取接口的具体类型</h4>
-
 <ol>
-<li><p>switch</p>
+<li>
+<p>switch</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -413,95 +401,106 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">  <span class="kd">func</span> <span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">switch</span> <span class="nx">v</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">case</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Contents:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">Contents</span><span class="p">)</span>
-    <span class="k">case</span> <span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">:</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;UserAgent:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
-    <span class="p">}</span>
-  <span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">switch</span> <span class="nx">v</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">case</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">:</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;Contents:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">Contents</span><span class="p">)</span>
+  <span class="k">case</span> <span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">:</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;UserAgent:&#34;</span><span class="p">,</span> <span class="nx">v</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p><strong>Type assertion  通过<code>r.(类型)</code>获取到接口肚子里的类型.</strong></p>
+<li>
+<p><strong>Type assertion  通过<code>r.(类型)</code>获取到接口肚子里的类型.</strong></p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">  <span class="nx">realTypeRetriever</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">realTypeRetriever</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">realTypeRetriever</span> <span class="o">:=</span> <span class="nx">r</span><span class="p">.(</span><span class="o">*</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">)</span>
+  <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">realTypeRetriever</span><span class="p">.</span><span class="nx">UserAgent</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>加上判断</p>
+</div><p>加上判断</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
+</span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">  <span class="k">if</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span><span class="p">(</span><span class="nx">mock</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">);</span><span class="nx">ko</span><span class="p">{</span>
-    <span class="o">...</span>
-  <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
-    <span class="o">...</span>
-  <span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="k">if</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span><span class="p">(</span><span class="nx">mock</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">);</span><span class="nx">ko</span><span class="p">{</span>
+  <span class="o">...</span>
+<span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+  <span class="o">...</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>接口里出了类型还有值</p></li>
+<li>
+<p>接口里出了类型还有值</p>
+</li>
 </ol>
-
 <h4 id="接口变量里有什么">接口变量里有什么?</h4>
-
 <ol>
 <li>实现者的类型</li>
 <li>实现者的值(也可以说是实现者的指针)</li>
 </ol>
-
 <ul>
-<li><p>接口变量自带指针</p></li>
-
-<li><p>接口变量同样采取值传递,几乎不需要使用接口的指针</p></li>
-
-<li><p>指针接收者实现只能以指针方式使用; 值接收者都可以</p>
+<li>
+<p>接口变量自带指针</p>
+</li>
+<li>
+<p>接口变量同样采取值传递,几乎不需要使用接口的指针</p>
+</li>
+<li>
+<p>指针接收者实现只能以指针方式使用; 值接收者都可以</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span><span class="lnt">6
 </span><span class="lnt">7
+</span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go">	<span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
-	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
+<pre class="chroma"><code class="language-go" data-lang="go">  <span class="nx">r</span> <span class="p">=</span> <span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
+  <span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">Retriver</span><span class="p">{</span><span class="s">&#34;lol&#34;</span><span class="p">}</span>
 
 
-	<span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
-	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-	<span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span></code></pre></td></tr></table>
+  <span class="nf">inspect</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+  <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%T %v\n&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
+  <span class="nx">r</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">ch4</span><span class="p">.</span><span class="nx">RealRetriver</span><span class="p">{}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ul>
-
 <h3 id="查看接口变量">查看接口变量:</h3>
-
 <ul>
-<li><p>表示任何类型: <code>interface{}</code>花括号</p>
+<li>
+<p>表示任何类型: <code>interface{} </code>花括号</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -516,37 +515,41 @@
 </span><span class="lnt">13
 </span><span class="lnt">14
 </span><span class="lnt">15
+</span><span class="lnt">16
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 是一个 任何类型的 的 slice
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">Queue</span> <span class="p">[]</span><span class="kd">interface</span><span class="p">{}</span>
 <span class="c1">// 限定为 int
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">Queue</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-	<span class="c1">//*q = append(*q, v)
-</span><span class="c1">// 或者为 但是在运行的时候才会出错
-</span><span class="c1"></span><span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">,</span><span class="nx">v</span><span class="p">.(</span><span class="kt">int</span><span class="p">))</span>
+  <span class="c1">//*q = append(*q, v)
+</span><span class="c1"></span>  <span class="c1">// 或者为 但是在运行的时候才会出错
+</span><span class="c1"></span>  <span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">,</span><span class="nx">v</span><span class="p">.(</span><span class="kt">int</span><span class="p">))</span>
 <span class="p">}</span>
 <span class="c1">// 限制为 int
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">Queue</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-	<span class="c1">// TODO 为什么要加()
-</span><span class="c1"></span>	<span class="nx">head</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-	<span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
-	<span class="k">return</span> <span class="nx">head</span><span class="p">.(</span><span class="kt">int</span><span class="p">)</span><span class="c1">// 将 interface{} 强制转换成 int
-</span><span class="c1"></span><span class="p">}</span></code></pre></td></tr></table>
+  <span class="c1">// TODO 为什么要加()
+</span><span class="c1"></span>  <span class="nx">head</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+  <span class="o">*</span><span class="nx">q</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">q</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+  <span class="k">return</span> <span class="nx">head</span><span class="p">.(</span><span class="kt">int</span><span class="p">)</span><span class="c1">// 将 interface{} 强制转换成 int
+</span><span class="c1"></span><span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>Type Assertion</p></li>
-
-<li><p>Type Switch</p></li>
+<li>
+<p>Type Assertion</p>
+</li>
+<li>
+<p>Type Switch</p>
+</li>
 </ul>
-
 <h3 id="使用者定义接口的方法">使用者定义接口的方法</h3>
-
 <ol>
-<li><div class="highlight"><div class="chroma">
+<li>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -556,19 +559,20 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Retriever</span> <span class="kd">interface</span> <span class="p">{</span>
- <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">,</span>
-     <span class="nx">form</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
+  <span class="nf">Get</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span><span class="p">,</span>
+      <span class="nx">form</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span> <span class="kt">string</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nf">download</span><span class="p">(</span><span class="nx">r</span> <span class="nx">Retriever</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
-<span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+ <span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="s">&#34;http://www.codedigger.cn&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>使用接口的组合</p>
+<li>
+<p>使用接口的组合</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -581,23 +585,23 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Poster</span> <span class="kd">interface</span><span class="p">{</span>
- <span class="nf">Post</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span> <span class="p">,</span><span class="kd">map</span><span class="p">[])</span>
+  <span class="nf">Post</span><span class="p">(</span><span class="nx">url</span> <span class="kt">string</span> <span class="p">,</span><span class="kd">map</span><span class="p">[])</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="nx">poster</span> <span class="nx">Poster</span><span class="p">){</span>
- <span class="nx">poster</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="s">&#34;http://www.google.com&#34;</span><span class="p">,</span>
-             <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
-               <span class="s">&#34;name&#34;</span><span class="p">:</span><span class="s">&#34;suzl&#34;</span><span class="p">,</span>
-             <span class="p">}</span>
-            <span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+  <span class="nx">poster</span><span class="p">.</span><span class="nf">Post</span><span class="p">(</span><span class="s">&#34;http://www.google.com&#34;</span><span class="p">,</span>
+              <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+                <span class="s">&#34;name&#34;</span><span class="p">:</span><span class="s">&#34;suzl&#34;</span><span class="p">,</span>
+              <span class="p">}</span>
+             <span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
 </ol>
-
 <p>在定义一个接口实行<strong>组合</strong>:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -606,23 +610,20 @@
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nf">session</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">PosterRetriever</span><span class="p">){</span>
   <span class="nx">s</span><span class="p">.</span><span class="nf">Get</span><span class="p">()</span>
   <span class="nx">s</span><span class="p">.</span><span class="nf">Post</span><span class="p">()</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>接口只管定义方法,使用和声明接口需要什么样子的能力</p>
-
+</div><p>接口只管定义方法,使用和声明接口需要什么样子的能力</p>
 <h3 id="go-中的标准接口">go 中的标准接口</h3>
-
 <ul>
 <li><strong>Stringer</strong></li>
 <li><strong>Reader</strong></li>
 <li><strong>Writer</strong></li>
 </ul>
-
 <p>系统中的 ReadWriter 接口,</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -631,10 +632,10 @@
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">ReaderWriter</span> <span class="kd">interface</span><span class="p">{</span>
   <span class="nx">Reader</span>
   <span class="nx">Writer</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<p>接口组合是使用者组合的,实现者只管定义方法就行了</p>
+</div><p>接口组合是使用者组合的,实现者只管定义方法就行了</p>
 
     </div>
 

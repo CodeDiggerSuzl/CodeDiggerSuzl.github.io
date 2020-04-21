@@ -16,14 +16,14 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
 
 
-<meta name="author" content="苏子叶" /><meta name="description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&amp;gt; 闭包 &amp;ldquo;正统&amp;rdquo;的函" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
+<meta name="author" content="苏子叶" /><meta name="description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&amp;gt; 闭包 &amp;ldquo;正统&amp;quot;的函数" /><meta name="keywords" content="Talented🥳, Fighting👨‍💻, Funny🤡, Rich🥰" />
 
 
 
 
 
 
-<meta name="generator" content="Hugo 0.56.3 with even 4.0.0" />
+<meta name="generator" content="Hugo 0.68.3 with even 4.0.0" />
 
 
 <link rel="canonical" href="http://codedigger.cn/post/golang-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" />
@@ -39,25 +39,22 @@
 
 
 <meta property="og:title" content="Golang-5 函数式编程" />
-<meta property="og:description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&gt; 闭包 &ldquo;正统&rdquo;的函" />
+<meta property="og:description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&gt; 闭包 &ldquo;正统&quot;的函数" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://codedigger.cn/post/golang-%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" />
 <meta property="article:published_time" content="2019-08-04T16:29:12+08:00" />
 <meta property="article:modified_time" content="2019-08-04T16:29:12+08:00" />
 <meta itemprop="name" content="Golang-5 函数式编程">
-<meta itemprop="description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&gt; 闭包 &ldquo;正统&rdquo;的函">
-
-
+<meta itemprop="description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&gt; 闭包 &ldquo;正统&quot;的函数">
 <meta itemprop="datePublished" content="2019-08-04T16:29:12&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-04T16:29:12&#43;08:00" />
 <meta itemprop="wordCount" content="1439">
 
 
 
-<meta itemprop="keywords" content="golang," />
-<meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="golang," /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang-5 函数式编程"/>
-<meta name="twitter:description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&gt; 闭包 &ldquo;正统&rdquo;的函"/>
+<meta name="twitter:description" content="函数式编程 函数与闭包 函数是一等公民 参数 变量 返回值 都可以是函数 高阶函数 (函数的参数也可是是函数) 函数 =&gt; 闭包 &ldquo;正统&quot;的函数"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -137,58 +134,38 @@
   <h2 class="post-toc-title">文章目录</h2>
   <div class="post-toc-content">
     <nav id="TableOfContents">
-<ul>
-<li><a href="#函数式编程">函数式编程</a>
-<ul>
-<li><a href="#函数与闭包">函数与闭包</a>
-<ul>
-<li><a href="#正统-的函数式编程">&ldquo;正统&rdquo;的函数式编程</a></li>
-<li><a href="#闭包的概念">闭包的概念</a>
-<ul>
-<li><a href="#python">Python</a></li>
-<li><a href="#c">c++</a></li>
-<li><a href="#java">java</a></li>
-<li><a href="#example">example</a>
-<ul>
-<li><a href="#1-斐波那契数列-闭包的使用">1- 斐波那契数列 闭包的使用</a></li>
-<li><a href="#为函数实现接口-一等公民-方法是一种特殊的函数">为函数实现接口-一等公民  方法是一种特殊的函数</a></li>
-<li><a href="#使用函数来遍历二叉树">使用函数来遍历二叉树</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#总结">总结</a></li>
-</ul></li>
-</ul></li>
-</ul>
+  <ul>
+    <li><a href="#函数与闭包">函数与闭包</a>
+      <ul>
+        <li><a href="#正统的函数式编程">&ldquo;正统&quot;的函数式编程</a></li>
+        <li><a href="#闭包的概念">闭包的概念</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
   </div>
 </div>
     <div class="post-content">
-      
-
-<h1 id="函数式编程">函数式编程</h1>
-
+      <h1 id="函数式编程">函数式编程</h1>
 <h2 id="函数与闭包">函数与闭包</h2>
-
 <ul>
 <li>函数是一等公民 参数 变量 返回值 都可以是函数</li>
 <li>高阶函数 (函数的参数也可是是函数)</li>
 <li>函数 =&gt; 闭包</li>
 </ul>
-
-<h3 id="正统-的函数式编程">&ldquo;正统&rdquo;的函数式编程</h3>
-
+<h3 id="正统的函数式编程">&ldquo;正统&quot;的函数式编程</h3>
 <ul>
 <li>不可变性: 不能有转态,只有常量和函数</li>
 <li>函数只有一个参数</li>
 <li>go 不是这样的</li>
 </ul>
-
 <h3 id="闭包的概念">闭包的概念</h3>
-
 <ul>
-<li><div class="highlight"><div class="chroma">
+<li>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -231,12 +208,12 @@
 
 <span class="c1">// 没有参数, 返回一个函数
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">adder</span><span class="p">()</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-<span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span> <span class="c1">// 自由变量
-</span><span class="c1">// 返回的还引用 sum 还保存 sum 状态
-</span><span class="c1"></span><span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">v</span>
-    <span class="k">return</span> <span class="nx">sum</span>
-<span class="p">}</span>
+  <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span> <span class="c1">// 自由变量
+</span><span class="c1"></span>  <span class="c1">// 返回的还引用 sum 还保存 sum 状态
+</span><span class="c1"></span>  <span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+      <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">v</span>
+      <span class="k">return</span> <span class="nx">sum</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// 正统函数式编程
@@ -244,47 +221,47 @@
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">iAdder</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="nx">iAdder</span><span class="p">)</span>
 
 <span class="kd">func</span> <span class="nf">adder2</span><span class="p">(</span><span class="nx">base</span> <span class="kt">int</span><span class="p">)</span> <span class="nx">iAdder</span> <span class="p">{</span>
-<span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="nx">iAdder</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="nx">base</span> <span class="o">+</span> <span class="nx">v</span><span class="p">,</span> <span class="nf">adder2</span><span class="p">(</span><span class="nx">base</span> <span class="o">+</span> <span class="nx">v</span><span class="p">)</span>
-<span class="p">}</span>
+  <span class="k">return</span> <span class="kd">func</span><span class="p">(</span><span class="nx">v</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="nx">iAdder</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="nx">base</span> <span class="o">+</span> <span class="nx">v</span><span class="p">,</span> <span class="nf">adder2</span><span class="p">(</span><span class="nx">base</span> <span class="o">+</span> <span class="nx">v</span><span class="p">)</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<span class="c1">// a := adder()
-</span><span class="c1">// for i := 0; i &lt; 10; i++ {
-</span><span class="c1">//  fmt.Println(a(i))
-</span><span class="c1">// }
-</span><span class="c1"></span><span class="nx">a</span><span class="o">:=</span> <span class="nf">adder2</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">s</span>  <span class="kt">int</span>
-    <span class="nx">s</span><span class="p">,</span><span class="nx">a</span> <span class="p">=</span><span class="nf">a</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+  <span class="c1">// a := adder()
+</span><span class="c1"></span>  <span class="c1">// for i := 0; i &lt; 10; i++ {
+</span><span class="c1"></span>  <span class="c1">// 	fmt.Println(a(i))
+</span><span class="c1"></span>  <span class="c1">// }
+</span><span class="c1"></span>  <span class="nx">a</span><span class="o">:=</span> <span class="nf">adder2</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">s</span>  <span class="kt">int</span>
+      <span class="nx">s</span><span class="p">,</span><span class="nx">a</span> <span class="p">=</span><span class="nf">a</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+      <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+  <span class="p">}</span>
 <span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>函数体有局部变量 自由变量</p></li>
-
-<li><p><code>adder</code>中的 return 语句是一个函数, 其中<code>v</code>可以看做局部变量, sum 可以看做自由变量, sum  可以连接下去, 一直连接下去,直到连接完成. 返回的就是一个闭包.</p></li>
-
-<li><p>return 语句不只只是返回的一段代码,而是返回的是闭包,返回了函数和 sum 的引用 和 sum 变量的保存.</p></li>
+<li>
+<p>函数体有局部变量 自由变量</p>
+</li>
+<li>
+<p><code>adder</code>中的 return 语句是一个函数, 其中<code>v</code>可以看做局部变量, sum 可以看做自由变量, sum  可以连接下去, 一直连接下去,直到连接完成. 返回的就是一个闭包.</p>
+</li>
+<li>
+<p>return 语句不只只是返回的一段代码,而是返回的是闭包,返回了函数和 sum 的引用 和 sum 变量的保存.</p>
+</li>
 </ul>
-
-<p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5nu4weurfj30ss0netaa.jpg" alt="闭包" /></p>
-
+<p><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5nu4weurfj30ss0netaa.jpg" alt="闭包"></p>
 <blockquote>
 <p><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures">参考链接 MDN</a></p>
 </blockquote>
-
 <h4 id="python">Python</h4>
-
 <ul>
 <li>原生支持闭包</li>
-
-<li><p>使用<code>_closure_</code> 来查看闭包的内容</p>
+<li>使用<code>_closure_</code> 来查看闭包的内容</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-python" data-lang="python"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -294,25 +271,22 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">adder</span><span class="p">():</span>
-<span class="nb">sum</span> <span class="o">=</span><span class="mi">0</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
-    <span class="n">nonlocal</span> <span class="nb">sum</span>  <span class="c1"># 声明下对 sum 的引用</span>
-    <span class="n">sun</span> <span class="o">+=</span> <span class="n">value</span>
-    <span class="k">return</span> <span class="nb">sum</span>
-    <span class="k">return</span> <span class="n">f</span></code></pre></td></tr></table>
+  	<span class="nb">sum</span> <span class="o">=</span><span class="mi">0</span>
+  	<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    	<span class="n">nonlocal</span> <span class="nb">sum</span>  <span class="c1"># 声明下对 sum 的引用</span>
+    	<span class="n">sun</span> <span class="o">+=</span> <span class="n">value</span>
+    	<span class="k">return</span> <span class="nb">sum</span>
+		<span class="k">return</span> <span class="n">f</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<h4 id="c">c++</h4>
-
+</div><h4 id="c">c++</h4>
 <ul>
 <li>C++ 11 后支持了</li>
-
-<li><p>过去使用stl 或者 boost 带有类似库</p>
+<li>过去使用stl 或者 boost 带有类似库</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-c++" data-lang="c++"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -322,29 +296,25 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-c++" data-lang="c++"><span class="k">auto</span> <span class="nf">adder</span><span class="p">(){</span>
-<span class="k">auto</span> <span class="n">sum</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
-<span class="k">return</span><span class="p">[</span><span class="o">=</span><span class="p">]</span> <span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="k">mutable</span><span class="p">{</span> <span class="c1">//[=] 代表对 sum 的引用 mutable 代表可以改变sum
-</span><span class="c1"></span><span class="n">sum</span> <span class="o">+=</span> <span class="n">value</span><span class="p">;</span>
-<span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-<span class="p">}</span>
+  <span class="k">auto</span> <span class="n">sum</span> <span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+  <span class="k">return</span><span class="p">[</span><span class="o">=</span><span class="p">]</span> <span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span> <span class="k">mutable</span><span class="p">{</span> <span class="c1">//[=] 代表对 sum 的引用 mutable 代表可以改变sum
+</span><span class="c1"></span>    <span class="n">sum</span> <span class="o">+=</span> <span class="n">value</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+  <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<h4 id="java">java</h4>
-
+</div><h4 id="java">java</h4>
 <ul>
 <li>闭包引用的 sum 的值不能改变</li>
 <li>Holder 是自定义的类</li>
 <li>sum.value 的值是可以改变的</li>
 <li>return 后的 lambda 表达式支持 1.8 后</li>
-
-<li><p>匿名内部类和 Lambda 均支持</p>
+<li>匿名内部类和 Lambda 均支持</li>
+</ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="lnt">1
+<pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -352,22 +322,19 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Function</span> <span class="o">&lt;</span><span class="n">Integer</span><span class="p">,</span><span class="n">Integer</span><span class="o">&gt;</span><span class="n">adder</span><span class="p">(){</span>
-<span class="kd">final</span> <span class="nf">Holder</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">sum</span><span class="o">=</span> <span class="k">new</span> <span class="n">Holder</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">0</span><span class="p">);</span>
-<span class="k">return</span> <span class="p">(</span><span class="n">Integer</span> <span class="nf">value</span><span class="p">)</span><span class="o">-&gt;</span><span class="p">{</span>
-<span class="n">sum</span><span class="p">.</span><span class="na">value</span> <span class="o">+=</span> <span class="n">value</span><span class="p">;</span>
-<span class="p">};</span>
-<span class="p">}</span></code></pre></td></tr></table>
+<pre class="chroma"><code class="language-java" data-lang="java"><span class="n">Function</span> <span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span><span class="n">adder</span><span class="o">(){</span>
+	<span class="kd">final</span> <span class="n">Holder</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">sum</span><span class="o">=</span> <span class="k">new</span> <span class="n">Holder</span><span class="o">&lt;&gt;(</span><span class="n">0</span><span class="o">);</span>
+  <span class="k">return</span> <span class="o">(</span><span class="n">Integer</span> <span class="n">value</span><span class="o">)-&gt;{</span>
+    <span class="n">sum</span><span class="o">.</span><span class="na">value</span> <span class="o">+=</span> <span class="n">value</span><span class="o">;</span>
+  <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ul>
-
-<h4 id="example">example</h4>
-
-<h5 id="1-斐波那契数列-闭包的使用">1- 斐波那契数列 闭包的使用</h5>
+</div><h4 id="example">example</h4>
+<h5 id="1--斐波那契数列-闭包的使用">1- 斐波那契数列 闭包的使用</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -387,28 +354,28 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 1 1 2 3 5 8 13
-</span><span class="c1">//   a b
+</span><span class="c1">//	 a b
 </span><span class="c1">//     a b 每次都讲 a b 向后移动一位
 </span><span class="c1">// 每次返回的是前的数值
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">fibonacci</span><span class="p">()</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-        <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span>
-        <span class="k">return</span> <span class="nx">a</span>
-    <span class="p">}</span>
+	<span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+	<span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+		<span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span>
+		<span class="k">return</span> <span class="nx">a</span>
+	<span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="nx">f</span> <span class="o">:=</span> <span class="nf">fibonacci</span><span class="p">()</span>
-    <span class="k">for</span> <span class="nx">index</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">index</span> <span class="p">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span>
-    <span class="p">}</span>
-<span class="p">}</span></code></pre></td></tr></table>
+	<span class="nx">f</span> <span class="o">:=</span> <span class="nf">fibonacci</span><span class="p">()</span>
+	<span class="k">for</span> <span class="nx">index</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">index</span> <span class="p">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="nx">index</span><span class="o">++</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">f</span><span class="p">())</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
-</div>
-<h5 id="为函数实现接口-一等公民-方法是一种特殊的函数">为函数实现接口-一等公民  方法是一种特殊的函数</h5>
+</div><h5 id="为函数实现接口-一等公民--方法是一种特殊的函数">为函数实现接口-一等公民  方法是一种特殊的函数</h5>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -449,18 +416,21 @@
 </span><span class="lnt">39
 </span><span class="lnt">40
 </span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 1 1 2 3 5 8 13
-</span><span class="c1">//   a b
+<pre class="chroma"><code class="language-go" data-lang="go">
+<span class="c1">// 1 1 2 3 5 8 13
+</span><span class="c1">//	 a b
 </span><span class="c1">//     a b 每次都讲 a b 向后移动一位
 </span><span class="c1">// 每次返回的是前的数值
 </span><span class="c1"></span><span class="kd">func</span> <span class="nf">fibonacci</span><span class="p">()</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-        <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span>
-        <span class="k">return</span> <span class="nx">a</span>
-    <span class="p">}</span>
+	<span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+	<span class="k">return</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+		<span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">,</span> <span class="nx">a</span><span class="o">+</span><span class="nx">b</span>
+		<span class="k">return</span> <span class="nx">a</span>
+	<span class="p">}</span>
 <span class="p">}</span>
 
 <span class="c1">// type is Function type 定义一种函数的 type
@@ -469,38 +439,39 @@
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">infGen</span> <span class="kd">func</span><span class="p">()</span> <span class="kt">int</span>
 <span class="c1">// 实现 read 接口
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="nx">infGen</span><span class="p">)</span> <span class="nf">Read</span><span class="p">(</span>
-    <span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">next</span> <span class="o">:=</span> <span class="nf">g</span><span class="p">()</span>
-    <span class="k">if</span> <span class="nx">next</span> <span class="p">&gt;</span> <span class="mi">10000</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span>
-    <span class="p">}</span>
-    <span class="nx">s</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%d\n&#34;</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">s</span><span class="p">).</span><span class="nf">Read</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+	<span class="nx">p</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">next</span> <span class="o">:=</span> <span class="nf">g</span><span class="p">()</span>
+	<span class="k">if</span> <span class="nx">next</span> <span class="p">&gt;</span> <span class="mi">10000</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">io</span><span class="p">.</span><span class="nx">EOF</span>
+	<span class="p">}</span>
+	<span class="nx">s</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;%d\n&#34;</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">NewReader</span><span class="p">(</span><span class="nx">s</span><span class="p">).</span><span class="nf">Read</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="kd">func</span> <span class="nf">printFileContents</span><span class="p">(</span><span class="nx">reader</span> <span class="nx">io</span><span class="p">.</span><span class="nx">Reader</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">reader</span><span class="p">)</span>
+	<span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nf">NewScanner</span><span class="p">(</span><span class="nx">reader</span><span class="p">)</span>
 
-    <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nf">Text</span><span class="p">())</span>
-    <span class="p">}</span>
+	<span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nf">Scan</span><span class="p">()</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nf">Text</span><span class="p">())</span>
+	<span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">f</span> <span class="nx">infGen</span> <span class="p">=</span> <span class="nf">fibonacci</span><span class="p">()</span>
-    <span class="c1">// for index := 0; index &lt; 20; index++ {
-</span><span class="c1"></span>    <span class="c1">//  fmt.Println(f())
-</span><span class="c1"></span>    <span class="c1">// }
-</span><span class="c1"></span>    <span class="nf">printFileContents</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
-</div>
-</div>
-<h5 id="使用函数来遍历二叉树">使用函数来遍历二叉树</h5>
+	<span class="kd">var</span> <span class="nx">f</span> <span class="nx">infGen</span> <span class="p">=</span> <span class="nf">fibonacci</span><span class="p">()</span>
+	<span class="c1">// for index := 0; index &lt; 20; index++ {
+</span><span class="c1"></span>	<span class="c1">// 	fmt.Println(f())
+</span><span class="c1"></span>	<span class="c1">// }
+</span><span class="c1"></span>	<span class="nf">printFileContents</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+<span class="p">}</span>
 
+</code></pre></td></tr></table>
+</div>
+</div><h5 id="使用函数来遍历二叉树">使用函数来遍历二叉树</h5>
 <ol>
-<li><p>node 定义</p>
+<li>node 定义</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -533,54 +504,57 @@
 </span><span class="lnt">31
 </span><span class="lnt">32
 </span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 定义一个 type
 </span><span class="c1"></span><span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
-<span class="nx">Value</span>       <span class="kt">int</span>
-<span class="nx">Left</span><span class="p">,</span> <span class="nx">Right</span> <span class="o">*</span><span class="nx">Node</span>
+	<span class="nx">Value</span>       <span class="kt">int</span>
+	<span class="nx">Left</span><span class="p">,</span> <span class="nx">Right</span> <span class="o">*</span><span class="nx">Node</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="nf">CreateNode</span><span class="p">(</span><span class="nx">Value</span> <span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">Node</span> <span class="p">{</span>
-<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">Value</span><span class="p">:</span> <span class="nx">Value</span><span class="p">}</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">Node</span><span class="p">{</span><span class="nx">Value</span><span class="p">:</span> <span class="nx">Value</span><span class="p">}</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="nx">Node</span><span class="p">)</span> <span class="nf">Print</span><span class="p">()</span> <span class="p">{</span>
-<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Print</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">Value</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="nf">SetValue</span><span class="p">(</span><span class="nx">Value</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nil is inside the func pass&#34;</span><span class="p">)</span>
-    <span class="k">return</span>
-<span class="p">}</span>
-<span class="c1">// 加不加 * 号都可以使用这个方法调用
-</span><span class="c1">// 也不用使用 *node 来调用 Value
-</span><span class="c1"></span><span class="nx">node</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">Value</span>
+	<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;nil is inside the func pass&#34;</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+	<span class="c1">// 加不加 * 号都可以使用这个方法调用
+</span><span class="c1"></span>	<span class="c1">// 也不用使用 *node 来调用 Value
+</span><span class="c1"></span>	<span class="nx">node</span><span class="p">.</span><span class="nx">Value</span> <span class="p">=</span> <span class="nx">Value</span>
 <span class="p">}</span>
 
 <span class="c1">// ----原来的中序遍历 仅仅能够打印-------
 </span><span class="c1"></span>
 <span class="cm">/* 遍历树 中序遍历 */</span>
 <span class="cm">/* func (node *Node) Traverse() {
-</span><span class="cm">if node == nil {
-</span><span class="cm">    return
+</span><span class="cm">	if node == nil {
+</span><span class="cm">		return
+</span><span class="cm">	}
+</span><span class="cm">	node.Left.Traverse()
+</span><span class="cm">	node.Print()
+</span><span class="cm">	node.Right.Traverse()
 </span><span class="cm">}
-</span><span class="cm">node.Left.Traverse()
-</span><span class="cm">node.Print()
-</span><span class="cm">node.Right.Traverse()
-</span><span class="cm">}
-</span><span class="cm">*/</span></code></pre></td></tr></table>
+</span><span class="cm">*/</span>
+
+
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ol>
-
-<p><strong>对Traverse方法进行扩展</strong></p>
-
+</div><p><strong>对Traverse方法进行扩展</strong></p>
 <ol>
-<li><p>定义一个函数</p></li>
-
-<li><p><code>TraverseFunc</code> 的参数是一个函数 这个函数的参数是 <code>Node struc</code>的指针</p>
+<li>
+<p>定义一个函数</p>
+</li>
+<li>
+<p><code>TraverseFunc</code> 的参数是一个函数 这个函数的参数是 <code>Node struc </code>的指针</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -598,21 +572,24 @@
 </span><span class="c1">// 1. 为结构体定义方法 (node *Node 代表 this,代表 TraverseFunc 是用来给 node 这个接受者使用的)
 </span><span class="c1">// 2. TraverseFunc 的参数是一个函数 这个函数的参数是 Node struct 的指针
 </span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span> <span class="kd">func</span><span class="p">(</span><span class="o">*</span><span class="nx">Node</span><span class="p">))</span> <span class="p">{</span>
-<span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
-    <span class="k">return</span>
-<span class="p">}</span>
-<span class="nx">node</span><span class="p">.</span><span class="nx">Left</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
-<span class="nf">f</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="c1">// 3. 此时node 是自由变量 是用这个函数来调用 node 这个函数可以做任何事情 除了打印还可以做其他事情
+ <span class="k">if</span> <span class="nx">node</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+     <span class="k">return</span>
+ <span class="p">}</span>
+ <span class="nx">node</span><span class="p">.</span><span class="nx">Left</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+ <span class="nf">f</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="c1">// 3. 此时node 是自由变量 是用这个函数来调用 node 这个函数可以做任何事情 除了打印还可以做其他事情
 </span><span class="c1"></span>
-<span class="nx">node</span><span class="p">.</span><span class="nx">Right</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
-<span class="p">}</span></code></pre></td></tr></table>
+ <span class="nx">node</span><span class="p">.</span><span class="nx">Right</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
 </div>
 </div></li>
-
-<li><p>在<code>Traverse</code> 方法中进行扩展</p>
+<li>
+<p>在<code>Traverse</code> 方法中进行扩展</p>
+</li>
+</ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code class="language-go" data-lang="go"><span class="lnt"> 1
+<pre class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -622,24 +599,23 @@
 </span><span class="lnt"> 8
 </span><span class="lnt"> 9
 </span><span class="lnt">10
+</span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="nf">Traverse</span><span class="p">()</span> <span class="p">{</span>
-<span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
-<span class="nx">node</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">n</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
-    <span class="nx">sum</span><span class="o">++</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;sum is %d&#34;</span><span class="p">,</span><span class="nx">sum</span><span class="p">)</span>
-<span class="p">})</span>
-<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
-<span class="p">}</span></code></pre></td></tr></table>
+	<span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
+	<span class="nx">node</span><span class="p">.</span><span class="nf">TraverseFunc</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">n</span><span class="p">.</span><span class="nf">Print</span><span class="p">()</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+		<span class="nx">sum</span><span class="o">++</span>
+		<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;sum is %d&#34;</span><span class="p">,</span><span class="nx">sum</span><span class="p">)</span>
+	<span class="p">})</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
+<span class="p">}</span>
+
+</code></pre></td></tr></table>
 </div>
-</div></li>
-</ol>
-
-<h3 id="总结">总结</h3>
-
+</div><h3 id="总结">总结</h3>
 <ul>
 <li>go 中的闭包更加自然, 不需要修饰怎么访问自由变量</li>
 <li>没有 lambda 表达式,但是有匿名函数 匿名函数和 lambda 表达式作用是一样的 再添加 lambda 表达式只是语法上的堆砌了</li>

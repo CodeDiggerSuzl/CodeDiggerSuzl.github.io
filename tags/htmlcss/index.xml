@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HTML*CSS on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/htmlcss/</link>
+    <description>Recent content in HTML*CSS on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Sun, 24 May 2020 21:03:50 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/htmlcss/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>HTML 和 CSS 基础</title>
+      <link>http://codedigger.cn/post/frontend-htmlcss/</link>
+      <pubDate>Sun, 24 May 2020 21:03:50 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-htmlcss/</guid>
+      <description>HTML and CSS 1. HTML 1.1 基本文档结构 第一行：文档声明 html 定义文件整体 &amp;lt;head&amp;gt; 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文</description>
+    </item>
+    
+  </channel>
+</rss>

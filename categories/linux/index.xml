@@ -7,22 +7,27 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Wed, 12 Feb 2020 19:15:16 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 20:46:54 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>How to Config A New Linux System</title>
-      <link>http://codedigger.cn/post/config-linux-system/</link>
-      <pubDate>Wed, 12 Feb 2020 19:15:16 +0800</pubDate>
+      <title>Linux bash 的键盘快捷键</title>
+      <link>http://codedigger.cn/post/linux-keyboard-shortcuts/</link>
+      <pubDate>Sun, 24 May 2020 20:46:54 +0800</pubDate>
       
-      <guid>http://codedigger.cn/post/config-linux-system/</guid>
-      <description>Config Manjaro(Brand New Linux System)  For future config back and other intentions.
-Not hand by hand, just url Config in Manjaro
- First of all ：git config  git config &amp;ndash;gloable user.name &amp;ldquo;username&amp;rdquo; git config &amp;ndash;gloable user.email &amp;ldquo;email&amp;rdquo; using ssh-keygen -t ras to generate ssh pub-keys, paste in to github settings in order to pull&amp;amp;&amp;amp;push code.  Shell Config   zsh &amp;amp;&amp;amp; oh-my-zsh
-  using curl
-sh -c &amp;quot;$(curl -fsSL https://raw.</description>
+      <guid>http://codedigger.cn/post/linux-keyboard-shortcuts/</guid>
+      <description>Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl + C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接</description>
+    </item>
+    
+    <item>
+      <title>Linux 基本的命令</title>
+      <link>http://codedigger.cn/post/basiclinecommands/</link>
+      <pubDate>Sun, 24 May 2020 20:44:14 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/basiclinecommands/</guid>
+      <description></description>
     </item>
     
   </channel>

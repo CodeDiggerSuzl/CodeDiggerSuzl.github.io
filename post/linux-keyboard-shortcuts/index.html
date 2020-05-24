@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Linux bash 的键盘快捷键 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl &#43; C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接" /><meta name="keywords" content="Linux shortcut,bash,linux" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/linux-keyboard-shortcuts/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.5bae6857fede23f0c50975656b80b2df325a2a59594b252efe3c2919dea7085e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Linux bash 的键盘快捷键" />
+<meta property="og:description" content="Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl &#43; C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/linux-keyboard-shortcuts/" />
+<meta property="article:published_time" content="2020-05-24T20:46:54+08:00" />
+<meta property="article:modified_time" content="2020-05-24T20:46:54+08:00" />
+<meta itemprop="name" content="Linux bash 的键盘快捷键">
+<meta itemprop="description" content="Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl &#43; C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接">
+<meta itemprop="datePublished" content="2020-05-24T20:46:54&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-24T20:46:54&#43;08:00" />
+<meta itemprop="wordCount" content="1465">
+
+
+
+<meta itemprop="keywords" content="Linux 键盘快捷方式," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux bash 的键盘快捷键"/>
+<meta name="twitter:description" content="Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl &#43; C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be awesome 🌱</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归类</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be awesome 🌱</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Linux bash 的键盘快捷键</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-24 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+          <span class="more-meta"> 约 1465 字 </span>
+          <span class="more-meta"> 预计阅读 3 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#线程相关">线程相关</a></li>
+    <li><a href="#控制屏幕相关的命令">控制屏幕相关的命令</a></li>
+    <li><a href="#光标移动">光标移动</a></li>
+    <li><a href="#删除文本">删除文本</a></li>
+    <li><a href="#修复错字">修复错字</a></li>
+    <li><a href="#剪切和粘贴">剪切和粘贴</a></li>
+    <li><a href="#大写字符">大写字符</a></li>
+    <li><a href="#tab-补全">Tab 补全</a></li>
+    <li><a href="#历史相关">历史相关</a></li>
+    <li><a href="#bash-bang-命令">Bash Bang(!) 命令</a></li>
+    <li><a href="#emacs-vs-vi-键盘快捷键">emacs vs. vi 键盘快捷键</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="keyboards-shortcuts-for-bash">Keyboards shortcuts for bash</h1>
+<h2 id="线程相关">线程相关</h2>
+<p>下面的快捷键能是你操作线程：</p>
+<ol>
+<li><code>Ctrl + C</code>: 杀死终端中前台进行的线程，发送 <code>SIGINT</code> 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接受它，但是有些可能会忽略它。</li>
+<li><code>Ctrl + Z</code>: 挂起以 <code>bash</code> 运行的当前前台进程。 这会将 <code>SIGTSTP</code> 信号发送到该进程。 要在以后将进程返回到前台，请使用 <code>fg process_name</code> 命令。</li>
+<li><code>Ctrl + D</code>: 关闭终端，发送 <code>EOF</code> 到 bash，bash 接受后就会退出，相当于 <code>exit</code> 命令。</li>
+</ol>
+<h2 id="控制屏幕相关的命令">控制屏幕相关的命令</h2>
+<ol>
+<li><code>Ctrl + L</code>: 相当于 <code>clear</code> 命令。</li>
+<li><code>Ctrl + S</code>: 停止所有输出到屏幕。 这在运行带有大量冗长且冗长输出的命令时特别有用，但您不想使用 <code>Ctrl + C</code> 停止命令本身。</li>
+<li><code>Ctrl + Q</code>: 继续 <code>Ctrl+S</code> 后的输入。</li>
+</ol>
+<h2 id="光标移动">光标移动</h2>
+<ol>
+<li><code>Ctrl + A</code> 或 Home：转到该行的开头。</li>
+<li><code>Ctrl + E</code> 或 End：转到行尾。</li>
+<li><code> Alt + B</code>：向左（向后）一个字。</li>
+<li><code>Ctrl + B</code>：向左（返回）一个字符。</li>
+<li><code>Alt + F</code>：向右（前进）一个字。</li>
+<li><code>Ctrl + F</code>：向右（前进）一个字符。</li>
+<li><code>Ctrl + XX</code>：在行的开头和光标的当前位置之间移动。 这使您可以按 <code>Ctrl + XX</code> 返回到行的开头，更改某些内容，然后按 <code>Ctrl + XX</code> 返回到原始光标位置。 要使用此快捷方式，请按住 <code>Ctrl</code> 键并点击 <code>X</code> 键两次。</li>
+</ol>
+<h2 id="删除文本">删除文本</h2>
+<ol>
+<li><code>Ctrl + D</code>: 或 Delete：删除光标下方的字符。</li>
+<li><code>Alt + D</code>：删除当前行上光标之后的所有字符。</li>
+<li><code>Ctrl + H</code> 或 Backspace：删除光标之前的字符。</li>
+</ol>
+<h2 id="修复错字">修复错字</h2>
+<ol>
+<li><code>Alt + T</code>：将当前单词与上一个单词交换。</li>
+<li><code>Ctrl + T</code>：将光标前的最后两个字符彼此交换。 当您以错误的顺序键入两个字符时，可以使用它来快速纠正错字。</li>
+<li><code>Ctrl + _</code>：撤消上一次按键操作。 您可以重复此操作以撤消多次。</li>
+</ol>
+<h2 id="剪切和粘贴">剪切和粘贴</h2>
+<ol>
+<li><code>Ctrl + W</code>：在光标之前剪切一个单词，然后将其添加到剪贴板。</li>
+<li><code>Ctrl + K</code>：剪切光标后的部分行，将其添加到剪贴板。</li>
+<li><code>Ctrl + U</code>：剪切光标之前的部分行，将其添加到剪贴板。</li>
+<li><code>Ctrl + Y</code>：粘贴从剪贴板剪切的最后一件事。 此处的 y 代表 “yank”。</li>
+</ol>
+<h2 id="大写字符">大写字符</h2>
+<p>bash shell 可以快速将字符转换为大写或小写：</p>
+<ol>
+<li><code>Alt + U</code>：大写从光标到当前单词结尾的每个字符，将字符转换为大写。</li>
+<li><code>Alt + L</code>：对从光标到当前单词结尾的每个字符取消大写，将字符转换为小写。</li>
+<li><code>Alt + C</code>：大写光标下的字符。 您的光标将移动到当前单词的末尾。</li>
+</ol>
+<h2 id="tab-补全">Tab 补全</h2>
+<p><code>Tab</code>：自动完成您输入的文件，目录或命令。</p>
+<h2 id="历史相关">历史相关</h2>
+<ol>
+<li><code>Ctrl + P</code> 或向上箭头：转到命令历史记录中的上一个命令。 多次按快捷方式可追溯历史记录。</li>
+<li><code>Ctrl + N</code> 或向下箭头：转到命令历史记录中的下一个命令。 多次按快捷方式可向前浏览历史记录。</li>
+<li><code>Alt + R</code>：如果您已对其进行了编辑，则将所有更改恢复到您从历史记录中拉出的命令。</li>
+</ol>
+<p>Bash 还具有一种特殊的 “调用” 模式，可用于搜索以前运行的命令：</p>
+<ol>
+<li><code>Ctrl + R</code> –在 bash 历史记录中开始反向搜索，只需键入要在历史记录中查找的命令应唯一的字符。</li>
+<li><code>Ctrl + S</code> –通过 bash 历史记录启动向前搜索。</li>
+<li><code>Ctrl + G</code> –在 bash 历史记录中退出反向或向前搜索。</li>
+<li><code>Ctrl + O</code>：运行使用 <code>Ctrl + R</code> 找到的命令。</li>
+</ol>
+<h2 id="bash-bang-命令">Bash Bang(!) 命令</h2>
+<ol>
+<li><code>!!</code>: 执行最后一条命令。</li>
+<li><code>!top</code>: 执行以'<code>top</code>'开头的最新命令（例如！）。</li>
+<li><code>!top:p</code>: 显示 <code>!top</code> 将运行的命令（还将其添加为命令历史记录中的最新命令）。</li>
+<li><code>!$</code>: 执行上一个命令的最后一个单词（与 <code>Alt + .</code> 相同，例如，如果最后一个命令是&rsquo;cat tecmint.txt&rsquo;，那么！$ 将尝试运行&rsquo;tecmint.txt&rsquo;）。</li>
+<li><code>!$:p</code>–显示 <code>!$</code> 将执行的单词。</li>
+<li><code>!*</code> –显示上一个命令的最后一个单词。</li>
+<li><code>!*:p</code>–显示 <code>!*</code> 替代的最后一个单词。</li>
+</ol>
+<h2 id="emacs-vs-vi-键盘快捷键">emacs vs. vi 键盘快捷键</h2>
+<p>以上说明假定您使用的是 bash 中的默认键盘快捷键配置。 默认情况下，bash 使用 emacs 样式的键。 如果您更习惯于 vi 文本编辑器，则可以切换到 vi 样式的键盘快捷键。</p>
+<p>以下命令将使 bash 进入 vi 模式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">set -o vi
+</code></pre></td></tr></table>
+</div>
+</div><p>以下命令会将 bash 放回默认的 emacs 模式：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-fallback" data-lang="fallback">set -o emacs
+</code></pre></td></tr></table>
+</div>
+</div><p>(全文完)</p>
+<hr>
+<p>参考链接：</p>
+<blockquote>
+<p><a href="https://www.howtogeek.com/howto/ubuntu/keyboard-shortcuts-for-bash-command-shell-for-ubuntu-debian-suse-redhat-linux-etc/">The Best Keyboard Shortcuts for Bash (aka the Linux and macOS Terminal)</a></p>
+</blockquote>
+<blockquote>
+<p><a href="https://linuxhandbook.com/linux-shortcuts/">Linux Terminal Shortcuts Every Power Linux User Must Know</a></p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rxabglgj30ey0eymy2.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rwpbf2hj30gk0goq45.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux-%E9%94%AE%E7%9B%98%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F/">Linux 键盘快捷方式</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/spring-start/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Spring 入门</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/basiclinecommands/">
+            <span class="next-text nav-default">Linux 基本的命令</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

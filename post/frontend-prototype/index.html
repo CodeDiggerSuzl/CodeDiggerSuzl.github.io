@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>JavaScript 中的继承和原型 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="继承和原型 https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0 JavaScript 中的继承和 Java 和 C&#43;&#43; 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 class 关键字, 但是还是语法糖, 本质还是基于原型的. 当谈到" /><meta name="keywords" content="prototype&#34;, JavaScript&#34;" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/frontend-prototype/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.5bae6857fede23f0c50975656b80b2df325a2a59594b252efe3c2919dea7085e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="JavaScript 中的继承和原型" />
+<meta property="og:description" content="继承和原型 https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0 JavaScript 中的继承和 Java 和 C&#43;&#43; 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 class 关键字, 但是还是语法糖, 本质还是基于原型的. 当谈到" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/frontend-prototype/" />
+<meta property="article:published_time" content="2020-05-24T21:10:28+08:00" />
+<meta property="article:modified_time" content="2020-05-24T21:10:28+08:00" />
+<meta itemprop="name" content="JavaScript 中的继承和原型">
+<meta itemprop="description" content="继承和原型 https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0 JavaScript 中的继承和 Java 和 C&#43;&#43; 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 class 关键字, 但是还是语法糖, 本质还是基于原型的. 当谈到">
+<meta itemprop="datePublished" content="2020-05-24T21:10:28&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-24T21:10:28&#43;08:00" />
+<meta itemprop="wordCount" content="930">
+
+
+
+<meta itemprop="keywords" content="JavaScript," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="JavaScript 中的继承和原型"/>
+<meta name="twitter:description" content="继承和原型 https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0 JavaScript 中的继承和 Java 和 C&#43;&#43; 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 class 关键字, 但是还是语法糖, 本质还是基于原型的. 当谈到"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be awesome 🌱</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归类</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be awesome 🌱</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">JavaScript 中的继承和原型</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-24 </span>
+        <div class="post-category">
+            <a href="/categories/javascript/"> JavaScript </a>
+            </div>
+          <span class="more-meta"> 约 930 字 </span>
+          <span class="more-meta"> 预计阅读 2 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#javascript-原型对象">JavaScript 原型对象</a>
+      <ul>
+        <li><a href="#js-new-创建一个对象的过程">js new 创建一个对象的过程</a></li>
+      </ul>
+    </li>
+    <li><a href="#原型链">原型链</a>
+      <ul>
+        <li><a href="#面试题">面试题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="继承和原型">继承和原型</h1>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0">https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0</a></p>
+</blockquote>
+<p>JavaScript 中的继承和 Java 和 C++ 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 <code>class</code> 关键字, 但是还是语法糖, 本质还是基于原型的.</p>
+<p>当谈到继承时，JavaScript 只有一种结构：<strong>对象</strong>。每个实例对象（ <code>object</code> ）都有一个私有属性（称之为 <code>__proto__</code> ）指向它的构造函数的原型对象（<code>prototype</code> ）。该原型对象也有一个自己的原型对象 (<code>__proto__</code>) ，层层向上直到一个对象的原型对象为 null。根据定义，null 没有原型，并作为这个原型链中的最后一个环节。</p>
+<h2 id="javascript-原型对象">JavaScript 原型对象</h2>
+<p>JavaScript 中的类型与对象</p>
+<ul>
+<li>基本类型: string,number,boolean,object,null,undefined</li>
+<li>引用类型: String,Number,Boolean,Object,Function,Array,Date,RegExp,Error</li>
+</ul>
+<p>引用类型就是我们说的对象, 创建对象通常是通过<strong>声明</strong>或者<strong>构造形式</strong>来进行创建的.</p>
+<p>通过构造函数创建:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">String</span><span class="p">(</span><span class="s2">&#34;Joe&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>通过声明进行创建:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="s2">&#34;joe&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在浏览器中输入:</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gewvv4qndsj30b005cjrm.jpg" alt=""></p>
+<p>这个 <code>__proto__</code> 也是对象的属性, 这个属性在对象创建的时候就会生成, 这个 <code>__proto__</code> 属性其实是 <code>[[prototype]]</code>(用两个中括号括起来)</p>
+<p>proto 其实就是原型的意思,</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gewvzwp1e3j30kg0n2tcb.jpg" alt=""></p>
+<p>就行 java 中的 <code>Object</code>, 原型对象的最终也是指向 <code>object</code>, 实际就是老祖宗.</p>
+<p>创建出的原型对象和创建时对象的原型对象是相同的:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="o">&gt;</span> <span class="nb">String</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">===</span> <span class="nx">a</span><span class="p">.</span><span class="nx">__proto__</span>
+<span class="o">&gt;</span> <span class="kc">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>都是指向同一个原型对象的.</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1geww99zxkgj31h20pctj4.jpg" alt=""></p>
+<ul>
+<li>创建出的对象 <code>a</code>(孙子辈) 通过 <code>a.__proto__</code> 来访问原型</li>
+<li><code>Sting</code>(父辈) 通过 <code>Sting.prototype</code> 来访问原型</li>
+<li>爷爷辈的通过 <code>.constructor</code> 来访问创建对象的对象</li>
+</ul>
+<h3 id="js-new-创建一个对象的过程">js new 创建一个对象的过程</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Mother</span><span class="p">(</span><span class="nx">lastName</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">son</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mother</span><span class="p">(</span><span class="s2">&#34;sonName&#34;</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol>
+<li>
+<p>创建一个新对象:<code>son</code></p>
+</li>
+<li>
+<p>新对象会被执行 <code>[[prototype]]</code> 连接, 连接就是 <code>son.__proto__ = Mother.prototype</code>,Mother 指向的原型可以让 son 指向这个原型, 在 son 中的 <code>__proto__</code> 指向原型</p>
+</li>
+<li>
+<p>新对象和函数调用的 <code>this</code> 会绑定起来(this 关键字)</p>
+<ol>
+<li>就是让 Mother 中的 this 指向 son</li>
+<li>执行 Mother 的函数体,相当于用 Call 进行绑定<code>Mother.call(son,&quot;sonName&quot;)</code></li>
+</ol>
+</li>
+<li>
+<p>执行构造函数中的代码</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="nx">son</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span><span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>如果没有返回值,就自动返回这个对象</p>
+<p>不会报错:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Mother</span><span class="p">(</span><span class="nx">lastName</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">son</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Mother</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">)</span>
+<span class="nx">son</span><span class="p">.</span><span class="nx">lastName</span>
+<span class="o">&gt;</span> <span class="s2">&#34;test&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>报错:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">Mother</span><span class="p">(</span><span class="nx">lastName</span><span class="p">){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">lastName</span> <span class="o">=</span> <span class="nx">lastName</span><span class="p">;</span>
+    <span class="c1">// 加上就不会报错
+</span><span class="c1"></span>    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">son</span> <span class="o">=</span> <span class="nx">mother</span><span class="p">(</span><span class="s2">&#34;test&#34;</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="nx">Uncaught</span> <span class="nx">TypeError</span><span class="o">:</span> <span class="nx">Cannot</span> <span class="nx">read</span> <span class="nx">property</span> <span class="s1">&#39;lastName&#39;</span> <span class="k">of</span> <span class="kc">undefined</span>
+<span class="nx">at</span> <span class="o">&lt;</span><span class="nx">anonymous</span><span class="o">&gt;:</span><span class="mi">1</span><span class="o">:</span><span class="mi">5</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>报错是因为: 普通函数不会自动返回, 加上<code>return this</code>就不会报错</p>
+</li>
+</ol>
+<h2 id="原型链">原型链</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">function</span> <span class="nx">SuperMarket</span><span class="p">(){</span>
+    <span class="nx">SuperMarket</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">product</span> <span class="o">=</span> <span class="s2">&#34;mask&#34;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">Shop</span><span class="p">(){}</span>
+<span class="nx">Shop</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SuperMarket</span><span class="p">()</span>
+
+<span class="kd">var</span> <span class="nx">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Shop</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">product</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gewxgo6elvj31dg0rkdx3.jpg" alt=""></p>
+<p>一层一层往上找</p>
+<h3 id="面试题">面试题</h3>
+<p>怎们判断一个对象是数组类型</p>
+<blockquote>
+<p>使用<code>instanceof</code>进行判断, 其实就是通过<code>__proto__</code>向上进行查找的</p>
+</blockquote>
+<p>f 是否有 a 或者 b</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">F</span> <span class="o">=</span>  <span class="kd">function</span><span class="p">(){}</span>
+<span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">a</span> <span class="o">=</span>  <span class="kd">function</span><span class="p">(){}</span>
+<span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">b</span><span class="o">=</span> <span class="kd">function</span><span class="p">(){}</span>
+
+<span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">F</span><span class="p">()</span>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>只有 a</p>
+</blockquote>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rxabglgj30ey0eymy2.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rwpbf2hj30gk0goq45.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/javascript/">JavaScript</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/frontend-vue%E4%B8%AD%E7%9A%84%E5%9D%91/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Vue-element中的坑</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/readingnote-%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+            <span class="next-text nav-default">大话数据结构 读书笔记</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JavaScript on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/javascript/</link>
+    <description>Recent content in JavaScript on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Sun, 24 May 2020 21:10:28 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/javascript/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>JavaScript 中的继承和原型</title>
+      <link>http://codedigger.cn/post/frontend-prototype/</link>
+      <pubDate>Sun, 24 May 2020 21:10:28 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-prototype/</guid>
+      <description>继承和原型 https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0 JavaScript 中的继承和 Java 和 C++ 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 class 关键字, 但是还是语法糖, 本质还是基于原型的. 当谈到</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -7,10 +7,91 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Sun, 24 May 2020 18:29:43 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 21:12:47 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Vue-element中的坑</title>
+      <link>http://codedigger.cn/post/frontend-vue%E4%B8%AD%E7%9A%84%E5%9D%91/</link>
+      <pubDate>Sun, 24 May 2020 21:12:47 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-vue%E4%B8%AD%E7%9A%84%E5%9D%91/</guid>
+      <description>Vue-element 中遇到的问题 使用 &amp;lt;/el-autocomplete&amp;gt; 下拉框不显示下拉框 下拉框显示数据, 返回数据,但是不显示 1 2 3 4 5 6 7 8 &amp;lt;el-autocomplete class=&amp;#34;inline-input&amp;#34; v-model=&amp;#34;state1&amp;#34; :fetch-suggestions=&amp;#34;querySearch&amp;#34; placeholder=&amp;#34;请输入内</description>
+    </item>
+    
+    <item>
+      <title>JavaScript 中的继承和原型</title>
+      <link>http://codedigger.cn/post/frontend-prototype/</link>
+      <pubDate>Sun, 24 May 2020 21:10:28 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-prototype/</guid>
+      <description>继承和原型 https://www.bilibili.com/video/BV1N7411k7D2/?spm_id_from=333.788.videocard.0 JavaScript 中的继承和 Java 和 C++ 等基于类的语言不同, JavaScript 中继承是通过原型链的, 尽管 ES6 中引入了 class 关键字, 但是还是语法糖, 本质还是基于原型的. 当谈到</description>
+    </item>
+    
+    <item>
+      <title>大话数据结构 读书笔记</title>
+      <link>http://codedigger.cn/post/readingnote-%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Sun, 24 May 2020 21:07:27 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/readingnote-%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <description>大话数据结构 https://www.cs.usfca.edu/~galles/visualization/Algorithms.html 算法可视化 【TED-ed】快速排序是什么【6小时字幕组】 1. 绪论 1.1 逻辑结构与物理结构 逻辑结构: 数据对象和数据元素中的关系: 集合结</description>
+    </item>
+    
+    <item>
+      <title>HTML 和 CSS 基础</title>
+      <link>http://codedigger.cn/post/frontend-htmlcss/</link>
+      <pubDate>Sun, 24 May 2020 21:03:50 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-htmlcss/</guid>
+      <description>HTML and CSS 1. HTML 1.1 基本文档结构 第一行：文档声明 html 定义文件整体 &amp;lt;head&amp;gt; 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文</description>
+    </item>
+    
+    <item>
+      <title>ES6的新特性</title>
+      <link>http://codedigger.cn/post/frontend-es6/</link>
+      <pubDate>Sun, 24 May 2020 20:59:51 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-es6/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Promise 异步回调解决方案</title>
+      <link>http://codedigger.cn/post/frontend-promise/</link>
+      <pubDate>Sun, 24 May 2020 20:57:00 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-promise/</guid>
+      <description>Promise 异步回调解决方案 因为网络请求异步回调的原因，嵌套代码很严重,所以引入 Promise。 是什么? ES6 中加入了 Promise，自带的对象. 构造函数</description>
+    </item>
+    
+    <item>
+      <title>Spring 入门</title>
+      <link>http://codedigger.cn/post/spring-start/</link>
+      <pubDate>Sun, 24 May 2020 20:54:23 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/spring-start/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux bash 的键盘快捷键</title>
+      <link>http://codedigger.cn/post/linux-keyboard-shortcuts/</link>
+      <pubDate>Sun, 24 May 2020 20:46:54 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/linux-keyboard-shortcuts/</guid>
+      <description>Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl + C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接</description>
+    </item>
+    
+    <item>
+      <title>Linux 基本的命令</title>
+      <link>http://codedigger.cn/post/basiclinecommands/</link>
+      <pubDate>Sun, 24 May 2020 20:44:14 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/basiclinecommands/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>ArrayList源码分析</title>
@@ -130,34 +211,12 @@
     </item>
     
     <item>
-      <title>Go Programming Language 1</title>
-      <link>http://codedigger.cn/post/go-programming-language-1/</link>
-      <pubDate>Wed, 12 Feb 2020 19:23:18 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/go-programming-language-1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Go语言编程-ch0-为什么选择 go 语言</title>
       <link>http://codedigger.cn/post/go-programming-language-0/</link>
       <pubDate>Wed, 12 Feb 2020 19:19:27 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/go-programming-language-0/</guid>
       <description>Go 语言的好处 互联网时代的语言需要考虑的问题: 对并行 (多核化) 和分布式 (集群化) 的支持 对逐步扩大的软件工程规模的支持. 编程哲学的重新塑造, 什么</description>
-    </item>
-    
-    <item>
-      <title>How to Config A New Linux System</title>
-      <link>http://codedigger.cn/post/config-linux-system/</link>
-      <pubDate>Wed, 12 Feb 2020 19:15:16 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/config-linux-system/</guid>
-      <description>Config Manjaro(Brand New Linux System)  For future config back and other intentions.
-Not hand by hand, just url Config in Manjaro
- First of all ：git config  git config &amp;ndash;gloable user.name &amp;ldquo;username&amp;rdquo; git config &amp;ndash;gloable user.email &amp;ldquo;email&amp;rdquo; using ssh-keygen -t ras to generate ssh pub-keys, paste in to github settings in order to pull&amp;amp;&amp;amp;push code.  Shell Config   zsh &amp;amp;&amp;amp; oh-my-zsh
-  using curl
-sh -c &amp;quot;$(curl -fsSL https://raw.</description>
     </item>
     
     <item>
@@ -202,7 +261,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/1_baisc/</guid>
-      <description>basic of go try to learn go and vim at the same time things to notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
+      <description>Basic Of Go try to learn go and vim at the same time Things To Notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a Primitive Type in Golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
     </item>
     
     <item>
@@ -212,15 +271,6 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       
       <guid>http://codedigger.cn/post/4_channel_goroutine_intro/</guid>
       <description>Go 并发编程 并发和并行 the diff between parallel and 并行 parallel 1s = 1000ms 1ms = 1000us 1us = 1000ns 同一时刻（在 cpu 量级上），借助多个 cup 实现。 并行(parallel)：指在同一时刻，有多条</description>
-    </item>
-    
-    <item>
-      <title>Go 文件操作</title>
-      <link>http://codedigger.cn/post/3_file_string_operation/</link>
-      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/3_file_string_operation/</guid>
-      <description>File operation Dir Operation OpenFile Readdir</description>
     </item>
     
     <item>
@@ -292,7 +342,7 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       <pubDate>Fri, 20 Dec 2019 01:21:31 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/goobject/</guid>
-      <description>object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder</description>
+      <description>Object Oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder</description>
     </item>
     
     <item>
@@ -302,15 +352,6 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       
       <guid>http://codedigger.cn/post/gobasic/</guid>
       <description>basic of go try to learn go and vim at the same time things to notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
-    </item>
-    
-    <item>
-      <title>ToLearnANewProgrammingLanguage</title>
-      <link>http://codedigger.cn/post/tolearnanewprogramminglanguage/</link>
-      <pubDate>Wed, 16 Oct 2019 20:38:17 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/tolearnanewprogramminglanguage/</guid>
-      <description></description>
     </item>
     
     <item>
@@ -346,15 +387,6 @@ sh -c &amp;quot;$(curl -fsSL https://raw.</description>
       
       <guid>http://codedigger.cn/post/thread/</guid>
       <description>线程和进程的区别 每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立</description>
-    </item>
-    
-    <item>
-      <title>ArrayInJava</title>
-      <link>http://codedigger.cn/post/arrayinjava/</link>
-      <pubDate>Tue, 27 Aug 2019 23:13:07 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/arrayinjava/</guid>
-      <description></description>
     </item>
     
     <item>

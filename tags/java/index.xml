@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Sun, 24 May 2020 18:29:43 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 21:10:28 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/tags/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Spring 入门</title>
+      <link>http://codedigger.cn/post/spring-start/</link>
+      <pubDate>Sun, 24 May 2020 20:54:23 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/spring-start/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>ArrayList源码分析</title>
@@ -55,15 +64,6 @@
       
       <guid>http://codedigger.cn/post/thread/</guid>
       <description>线程和进程的区别 每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立</description>
-    </item>
-    
-    <item>
-      <title>ArrayInJava</title>
-      <link>http://codedigger.cn/post/arrayinjava/</link>
-      <pubDate>Tue, 27 Aug 2019 23:13:07 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/arrayinjava/</guid>
-      <description></description>
     </item>
     
   </channel>

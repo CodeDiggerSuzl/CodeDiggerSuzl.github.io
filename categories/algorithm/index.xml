@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>algorithm on The Blog of Suzl 🤠</title>
@@ -7,18 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Fri, 11 Oct 2019 00:57:58 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 21:07:27 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Leetcode-1 TwoSum</title>
-      <link>http://codedigger.cn/post/leetcode1-two/</link>
-      <pubDate>Fri, 11 Oct 2019 00:57:58 +0800</pubDate>
+      <title>大话数据结构 读书笔记</title>
+      <link>http://codedigger.cn/post/readingnote-%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+      <pubDate>Sun, 24 May 2020 21:07:27 +0800</pubDate>
       
-      <guid>http://codedigger.cn/post/leetcode1-two/</guid>
-      <description>TwoSum 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。 你可以假设每种输入只会对应一个</description>
+      <guid>http://codedigger.cn/post/readingnote-%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+      <description>大话数据结构 https://www.cs.usfca.edu/~galles/visualization/Algorithms.html 算法可视化 【TED-ed】快速排序是什么【6小时字幕组】 1. 绪论 1.1 逻辑结构与物理结构 逻辑结构: 数据对象和数据元素中的关系: 集合结</description>
     </item>
     
   </channel>

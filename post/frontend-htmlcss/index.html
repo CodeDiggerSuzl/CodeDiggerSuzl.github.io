@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>HTML 和 CSS 基础 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="HTML and CSS 1. HTML 1.1 基本文档结构 第一行：文档声明 html 定义文件整体 &amp;lt;head&amp;gt; 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文" /><meta name="keywords" content="html,css,前端" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/frontend-htmlcss/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.5bae6857fede23f0c50975656b80b2df325a2a59594b252efe3c2919dea7085e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="HTML 和 CSS 基础" />
+<meta property="og:description" content="HTML and CSS 1. HTML 1.1 基本文档结构 第一行：文档声明 html 定义文件整体 &lt;head&gt; 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/frontend-htmlcss/" />
+<meta property="article:published_time" content="2020-05-24T21:03:50+08:00" />
+<meta property="article:modified_time" content="2020-05-24T21:03:50+08:00" />
+<meta itemprop="name" content="HTML 和 CSS 基础">
+<meta itemprop="description" content="HTML and CSS 1. HTML 1.1 基本文档结构 第一行：文档声明 html 定义文件整体 &lt;head&gt; 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文">
+<meta itemprop="datePublished" content="2020-05-24T21:03:50&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-24T21:03:50&#43;08:00" />
+<meta itemprop="wordCount" content="2643">
+
+
+
+<meta itemprop="keywords" content="HTML*CSS," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="HTML 和 CSS 基础"/>
+<meta name="twitter:description" content="HTML and CSS 1. HTML 1.1 基本文档结构 第一行：文档声明 html 定义文件整体 &lt;head&gt; 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be awesome 🌱</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归类</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be awesome 🌱</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">HTML 和 CSS 基础</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-24 </span>
+        <div class="post-category">
+            <a href="/categories/front-end/"> front-end </a>
+            </div>
+          <span class="more-meta"> 约 2643 字 </span>
+          <span class="more-meta"> 预计阅读 6 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-html">1. HTML</a>
+      <ul>
+        <li><a href="#11-基本文档结构">1.1 基本文档结构</a></li>
+        <li><a href="#12-html-标签入门">1.2 🏷️<code>html</code> 标签入门</a></li>
+        <li><a href="#13-html-布局">1.3 html 布局</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-csscascading-style-sheets-层叠样式表">2. CSS(Cascading Style Sheets) 层叠样式表</a>
+      <ul>
+        <li><a href="#21-css-基本语法">2.1 CSS 基本语法</a></li>
+        <li><a href="#22-css-引入方式">2.2 CSS 引入方式</a></li>
+        <li><a href="#23-css-选择器">2.3 CSS 选择器</a></li>
+        <li><a href="#24-css-属性和盒子模型">2.4 CSS 属性和盒子模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-html-css-进阶">3. html CSS 进阶</a>
+      <ul>
+        <li><a href="#31-html-表单">3.1 html 表单</a></li>
+        <li><a href="#32-html-表单表格元素及相关样式">3.2 html 表单表格元素及相关样式</a></li>
+        <li><a href="#33-css-显示特性">3.3 css 显示特性</a></li>
+        <li><a href="#34-css-权重">3.4 CSS 权重</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="html-and-css">HTML and CSS</h1>
+<h2 id="1-html">1. HTML</h2>
+<p><!-- raw HTML omitted --></p>
+<h3 id="11-基本文档结构">1.1 基本文档结构</h3>
+<ul>
+<li>第一行：文档声明</li>
+<li><code>html</code> 定义文件整体</li>
+<li><code>&lt;head&gt;</code> 标签里面负责对网页进行一些设置以及定义标题，设置包括定义网页的编码格式，外链 CSS 样式文件和 javascript 文件等，设置的内容不会显示在网页上，标题的内容会显示在标题栏</li>
+<li><code>&lt;body&gt;</code> 内编写网页上显示的内容</li>
+</ul>
+<h3 id="12-html-标签入门">1.2 🏷️<code>html</code> 标签入门</h3>
+<h4 id="121-块元素标签-行元素-和内联元素标签-行内元素">1.2.1 块元素标签 (行元素) 和内联元素标签 (行内元素)</h4>
+<ul>
+<li>块元素：在布局中默认会独占一行，宽度默认等于父级的宽度，块元素后的元素需换行排列。</li>
+<li>内联元素：元素之间可以排列在一行，设置宽高无效，它的宽高由内容撑开，元素之间默认有小间距，而且是基线对齐 (文字底部对齐)。</li>
+</ul>
+<h5 id="1211-常见块元素标签">1.2.1.1 常见块元素标签</h5>
+<ol>
+<li>标题大小 <code>&lt;h1&gt;</code> 到 <code>&lt;h6&gt;</code></li>
+<li>段落标签 <code>&lt;p&gt;</code></li>
+<li>通用块容器标签，表示文档中一块内容，具有块元素基本特性，没有其他默认样式 <code>&lt;p&gt;</code></li>
+</ol>
+<h5 id="1212-常见内联元素标签">1.2.1.2 常见内联元素标签</h5>
+<ol>
+<li>超链接 <code>&lt;a href=&quot;02.html&quot;&gt;other 网页 &lt;/a&gt;</code></li>
+<li>通用内联容器标签，具有内联元素基本特性，没有其他默认样式 <code>&lt;span&gt; 特殊标志或样式 &lt;/span&gt;</code></li>
+<li>图片标签 <code>&lt;img src = &quot;&quot;&gt; </code></li>
+</ol>
+<h5 id="1213-其他常用功能标签">1.2.1.3 其他常用功能标签</h5>
+<ol>
+<li>换行 <code>&lt;br&gt;</code></li>
+<li>注释 <code>&lt;!-- 这是一段注释  --&gt;</code></li>
+<li>常用 html 字符实体
+<ol>
+<li><code>&amp;nbsp</code> 空格</li>
+<li><code>&lt;!-- “&lt;” 和 “&gt;” 的字符实体为 &amp;lt; 和 &amp;gt;  --&gt;</code></li>
+</ol>
+</li>
+</ol>
+<h3 id="13-html-布局">1.3 html 布局</h3>
+<h4 id="131-网络布局原理">1.3.1 网络布局原理</h4>
+<p>标签在网页中会显示成一个个的方块，先按照行的方式，把网页划分成多个行，再到行里面划分列，也就是在表示行的标签中再嵌套标签来表示列，整体按照先整体，后局部，先大后小的顺序来书写结构。</p>
+<h5 id="1311-标签语义化">1.3.1.1 标签语义化</h5>
+<ol>
+<li><code>h1~h6</code>：表示标题</li>
+<li><code>p</code>：表示段落</li>
+<li><code>img</code>：表示图片</li>
+<li><code>a</code>：表示链接</li>
+</ol>
+<p>不带语义的标签</p>
+<ol>
+<li><code>div</code>：表示一块内容</li>
+<li><code>span</code>：表示行内的一块内容</li>
+</ol>
+<h2 id="2-csscascading-style-sheets-层叠样式表">2. CSS(Cascading Style Sheets) 层叠样式表</h2>
+<h3 id="21-css-基本语法">2.1 CSS 基本语法</h3>
+<p>CSS 的定义方法是：</p>
+<ul>
+<li><code> 选择器 {属性：值； 属性：值； 属性：值；}</code></li>
+</ul>
+<p>选择器是将样式和页面元素关联起来的名称，属性是希望设置的样式属性，每个属性有一个或多个值。属性和值之间用冒号，一个属性和值与下一个属性和值之间用分号，最后一个分号可以省略，代码示例：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="c">/* 样式中注释的写法，单行或者多行注释 */</span>
+<span class="nt">div</span><span class="p">{</span>
+    <span class="k">width</span><span class="p">:</span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">height</span><span class="p">:</span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span>
+    <span class="k">background</span><span class="p">:</span><span class="kc">gold</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="22-css-引入方式">2.2 CSS 引入方式</h3>
+<ol>
+<li>内联式：通过标签的 style 属性，在标签上直接写样式。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">style</span><span class="o">=</span><span class="s">&#34;width:100px; height:100px; background:red&#34;</span><span class="p">&gt;</span>......<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="2">
+<li>嵌入式：通过 style 标签，在网页上创建嵌入的样式表。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">style</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/CSS&#34;</span><span class="p">&gt;</span>
+    <span class="nt">div</span><span class="p">{</span><span class="k">width</span><span class="p">:</span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span> <span class="k">height</span><span class="p">:</span><span class="mi">100</span><span class="kt">px</span><span class="p">;</span> <span class="k">background</span><span class="p">:</span><span class="kc">red</span><span class="p">}</span>
+    <span class="o">......</span>
+<span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><ol start="3">
+<li>外链式：通过 link 标签，链接外部样式文件到页面中。</li>
+</ol>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text/CSS&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;CSS/main.CSS&#34;</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="23-css-选择器">2.3 CSS 选择器</h3>
+<ol>
+<li>
+<p>标签选择器</p>
+<p>标签选择器，此种选择器影响范围大，一般用来做一些通用设置，或用在层级选择器中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">div{color:red}
+......
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span> 这是第一个 div<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>   <span class="c">&lt;!-- 对应以上样式 --&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span> 这是第二个 div<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>   <span class="c">&lt;!-- 对应以上样式 --&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>类选择器</p>
+<p>通过类名来选择元素，一个类可应用于多个元素，一个元素上也可以使用多个类，应用灵活，可复用，是 CSS 中应用最多的一种选择器。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">.blue{color:blue}
+.big{font-size:20px}
+.box{width:100px;height:100px;background:gold}
+......
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;blue&#34;</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;blue big box&#34;</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;blue box&#34;</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>层级选择器</p>
+<p>主要应用在标签嵌套的结构中，层级选择器，是结合上面的两种选择器来写的选择器, 它可与标签选择器结合使用，减少命名，同时也可以通过层级，限制样式的作用范围。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">.con{width:300px;height:80px;background:green}
+.con span{color:red}
+.con .pink{color:pink}
+.con .gold{color:gold}
+......
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;con&#34;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pink&#34;</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;gold&#34;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;#&#34;</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;pink&#34;</span><span class="p">&gt;</span>....<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ol>
+<h3 id="24-css-属性和盒子模型">2.4 CSS 属性和盒子模型</h3>
+<h4 id="241-盒子模型">2.4.1 盒子模型</h4>
+<p>元素在页面中显示成一个方块，类似一个盒子，CSS 盒子模型就是使用现实中盒子来做比喻，帮助我们设置元素对应的样式。盒子模型示意图如下：</p>
+<p><img src="https://mdn.mozillademos.org/files/8685/boxmodel-(3).png" alt="css"></p>
+<p>把元素叫做盒子，设置对应的样式分别为</p>
+<ul>
+<li>盒子的宽度 (width)</li>
+<li>盒子的高度 (height)</li>
+<li>盒子的边框 (border)
+-<strong>盒子内的内容和边框之间的间距</strong>(padding)
+-<strong>盒子与盒子之间的间距</strong>(margin)。</li>
+</ul>
+<p><strong>设置行高</strong>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">width:200px;  /* 设置盒子的宽度，此宽度是指盒子内容的宽度，不是盒子整体宽度 (难点) */
+height:200px; /* 设置盒子的高度，此高度是指盒子内容的高度，不是盒子整体高度 (难点) */
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>设置边框</strong>:</p>
+<p>设置一边的边框，比如顶部边框，可以按如下设置：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">border-top:10px solid red; /* 10px 表示线框的粗细；solid 表示线性。*/
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>设置内间距 padding</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-html" data-lang="html">padding：20px 40px 50px 30px; /* 四个值按照顺时针方向，分别设置的是 上 右 下 左
+四个方向的内边距值。 */
+</code></pre></td></tr></table>
+</div>
+</div><p><strong>设置外间距 margin</strong></p>
+<p>外边距的设置方法和 padding 的设置方法相同，将上面设置项中的&rsquo;padding'换成&rsquo;margin'就是外边距设置方法。</p>
+<p><strong>盒子的真实尺寸</strong></p>
+<p>盒子的 width 和 height 值固定时，如果盒子增加 border 和 padding，盒子整体的尺寸会变大，所以盒子的真实尺寸为：</p>
+<p><code>盒子宽度 = width + padding 左右 + border 左右</code></p>
+<p><code>盒子高度 = height + padding 上下 + border 上下</code></p>
+<p><strong>块元素居中技巧</strong></p>
+<p>块元素如果想设置相对页面水平居中，可以使用 margin 值中的 auto 关键字，<strong>“auto” 只能用于左右的 margin 设置，不能用于上下的</strong>：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-CSS" data-lang="CSS"><span class="p">.</span><span class="nc">box</span><span class="p">{</span>
+      <span class="k">width</span><span class="p">:</span><span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+      <span class="k">height</span><span class="p">:</span><span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+      <span class="k">background</span><span class="p">:</span><span class="kc">gold</span><span class="p">;</span>
+      <span class="k">margin-left</span><span class="p">:</span><span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+      <span class="k">margin-top</span><span class="p">:</span><span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+      <span class="k">margin-left</span><span class="p">:</span><span class="kc">auto</span><span class="p">;</span>
+      <span class="k">margin-right</span><span class="p">:</span><span class="kc">auto</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c">/* 简化 */</span>
+<span class="p">.</span><span class="nc">box</span><span class="p">{</span>
+     <span class="k">width</span><span class="p">:</span><span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+     <span class="k">height</span><span class="p">:</span><span class="mi">300</span><span class="kt">px</span><span class="p">;</span>
+     <span class="k">background</span><span class="p">:</span><span class="kc">gold</span><span class="p">;</span>
+     <span class="k">margin</span><span class="p">:</span><span class="mi">0</span><span class="kt">px</span> <span class="kc">auto</span><span class="p">;</span>
+ <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="242-css-文本属性">2.4.2 CSS 文本属性</h4>
+<ul>
+<li><code>color</code> 设置文字的颜色，如：<code> color:red;</code></li>
+<li><code>font-size</code> 设置文字的大小，如：<code>font-size:12px;</code></li>
+<li><code>font-family</code> 设置文字的字体，如：<code>font-family:'微软雅黑';</code> 为了避免中文字不兼容，一般写成：- <code>font-family:'Microsoft Yahei';</code></li>
+<li><code>font-weight</code> 设置文字是否加粗，如：<code>font-weight:bold;</code> 设置加粗 <code> font-weight:normal</code> 设置不加粗</li>
+<li><code>line-height </code> 设置文字的行高，如：<code>line-height:24px;</code> 表示文字高度加上文字上下的间距是 <code>24px</code>，也就是每一行占有的高度是 <code>24px</code></li>
+<li><code>text-decoration</code> 设置文字的下划线，如：<code>text-decoration:none; </code> 将文字下划线去掉</li>
+<li><code>text-align</code> 设置文字水平对齐方式，如 <code>text-align:center</code> 设置文字水平居中</li>
+<li><code>text-indent</code> 设置文字首行缩进，如：<code>text-indent:24px;</code> 设置文字首行缩进 24px</li>
+</ul>
+<h2 id="3-html-css-进阶">3. html CSS 进阶</h2>
+<p><strong>列表标签:</strong></p>
+<ul>
+<li><code>ul</code>+<code>li</code></li>
+</ul>
+<h3 id="31-html-表单">3.1 html 表单</h3>
+<ol>
+<li><code>&lt;form&gt;</code> 标签 定义整体的表单区域</li>
+</ol>
+<ul>
+<li><code>action</code> 属性 定义表单数据提交地址</li>
+<li><code>method</code> 属性 定义表单提交的方式，一般有 “get” 方式和 “post” 方式</li>
+</ul>
+<ol start="2">
+<li>
+<p><code>&lt;label&gt;</code> 标签 为表单元素定义文字标注</p>
+</li>
+<li>
+<p><code>&lt;input&gt;</code> 标签 定义通用的表单元素</p>
+<p>type 属性</p>
+<ul>
+<li><code>type=&quot;text&quot;</code> 定义单行文本输入框</li>
+<li><code>type=&quot;password&quot;</code> 定义密码输入框</li>
+<li><code>type=&quot;radio&quot;</code> 定义单选框</li>
+<li><code>type=&quot;checkbox&quot;</code> 定义复选框</li>
+<li><code>type=&quot;file&quot;</code> 定义上传文件</li>
+<li><code>type=&quot;submit&quot;</code> 定义提交按钮</li>
+<li><code>type=&quot;reset&quot;</code> 定义重置按钮</li>
+<li><code>type=&quot;button&quot;</code> 定义一个普通按钮</li>
+</ul>
+<p><code>value</code> 属性 定义表单元素的值</p>
+<p><code>name</code> 属性 定义表单元素的名称，此名称是提交数据时的键名</p>
+</li>
+<li>
+<p><code>&lt;textarea&gt;</code> 标签 定义多行文本输入框</p>
+</li>
+<li>
+<p><code>&lt;select&gt;</code> 标签 定义下拉表单元素</p>
+</li>
+<li>
+<p><code>&lt;option&gt;</code> 标签 与 <code>&lt;select&gt;</code> 标签配合，定义下拉表单元素中的选项</p>
+</li>
+</ol>
+<h3 id="32-html-表单表格元素及相关样式">3.2 html 表单表格元素及相关样式</h3>
+<ol>
+<li>
+<p><code>&lt;table&gt;</code> 标签：声明一个表格</p>
+</li>
+<li>
+<p><code>&lt;tr&gt;</code> 标签：定义表格中的一行</p>
+</li>
+<li>
+<p><code>&lt;td&gt; &lt;th&gt;</code> 标签：定义一行中的一个单元格，td 代表普通单元格，th 表示表头单元格</p>
+</li>
+</ol>
+<p>表格相关样式属性</p>
+<ul>
+<li><code>border-collapse</code> 设置表格的边线合并，如：<code>border-collapse:collapse;</code></li>
+</ul>
+<h3 id="33-css-显示特性">3.3 css 显示特性</h3>
+<p>display 属性是用来设置元素的类型及隐藏的，常用的属性有：</p>
+<ol>
+<li><code>none</code> 元素隐藏且不占位置</li>
+<li><code>inline</code> 元素以行内元素显示</li>
+<li><code>block</code> 元素以块元素显示</li>
+</ol>
+<h3 id="34-css-权重">3.4 CSS 权重</h3>
+<p>CSS 权重指的是样式的优先级，有两条或多条样式作用于一个元素，权重高的那条样式对元素起作用, 权重相同的，后写的样式会覆盖前面写的样式。</p>
+<p>权重的等级
+可以把样式的应用方式分为几个等级，按照等级来计算权重</p>
+<ol>
+<li>内联样式，如：<code>style=””</code>，权重值为 1000</li>
+<li>ID 选择器，如：<code>#content</code>，权重值为 100</li>
+<li>类，伪类，如：<code>.content、:hover</code> 权重值为 10</li>
+<li>标签选择器，如：<code>div、p </code> 权重值为 1</li>
+</ol>
+
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rxabglgj30ey0eymy2.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rwpbf2hj30gk0goq45.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/htmlcss/">HTML*CSS</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/readingnote-%E5%A4%A7%E8%AF%9D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">大话数据结构 读书笔记</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/frontend-es6/">
+            <span class="next-text nav-default">ES6的新特性</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

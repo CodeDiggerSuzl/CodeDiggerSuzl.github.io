@@ -81,7 +81,7 @@
       <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/1_baisc/</guid>
-      <description>basic of go try to learn go and vim at the same time things to notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a primitive type in golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
+      <description>Basic Of Go try to learn go and vim at the same time Things To Notice comments // &amp;amp; /* */ variables var age int age := 20 auto guess a,b,c := 1,2,3 _ ,1 ,_ = 1,2,4 the first letter is lower or upper case matters, means different in golang trading data a,b=b,a Primitive Type in Golang bool float32 / float64 int / uint int8 / uint8 int16 /</description>
     </item>
     
     <item>
@@ -91,15 +91,6 @@
       
       <guid>http://codedigger.cn/post/4_channel_goroutine_intro/</guid>
       <description>Go 并发编程 并发和并行 the diff between parallel and 并行 parallel 1s = 1000ms 1ms = 1000us 1us = 1000ns 同一时刻（在 cpu 量级上），借助多个 cup 实现。 并行(parallel)：指在同一时刻，有多条</description>
-    </item>
-    
-    <item>
-      <title>Go 文件操作</title>
-      <link>http://codedigger.cn/post/3_file_string_operation/</link>
-      <pubDate>Mon, 06 Jan 2020 01:19:01 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/3_file_string_operation/</guid>
-      <description>File operation Dir Operation OpenFile Readdir</description>
     </item>
     
     <item>
@@ -144,7 +135,7 @@
       <pubDate>Fri, 20 Dec 2019 01:21:31 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/goobject/</guid>
-      <description>object oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder</description>
+      <description>Object Oriented 继承 使用匿名字段实现继承 1 2 3 4 5 6 7 8 9 type Coder struct{ language string name string } type GoCoder struct{ Coder height float64 } 使用.进行操作 同名字段就近原则 指针类型的同名字段 1 2 3 4 5 6 type JavaCoder</description>
     </item>
     
     <item>
@@ -163,15 +154,6 @@
       
       <guid>http://codedigger.cn/post/thread/</guid>
       <description>线程和进程的区别 每个正在系统上运行的程序都是一个进程。每个进程包含一到多个线程。线程是一组指令的集合，或者是程序的特殊段，它可以在程序里独立</description>
-    </item>
-    
-    <item>
-      <title>ArrayInJava</title>
-      <link>http://codedigger.cn/post/arrayinjava/</link>
-      <pubDate>Tue, 27 Aug 2019 23:13:07 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/arrayinjava/</guid>
-      <description></description>
     </item>
     
     <item>

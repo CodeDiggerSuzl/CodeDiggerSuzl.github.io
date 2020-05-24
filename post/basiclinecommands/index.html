@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Linux 基本的命令 - The Blog of Suzl 🤠</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="苏子叶" /><meta name="description" content="" /><meta name="keywords" content="linux command,linux" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.68.3 with theme even" />
+
+
+<link rel="canonical" href="http://codedigger.cn/post/basiclinecommands/" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<link href="/sass/main.min.5bae6857fede23f0c50975656b80b2df325a2a59594b252efe3c2919dea7085e.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css" integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin="anonymous">
+
+
+<meta property="og:title" content="Linux 基本的命令" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://codedigger.cn/post/basiclinecommands/" />
+<meta property="article:published_time" content="2020-05-24T20:44:14+08:00" />
+<meta property="article:modified_time" content="2020-05-24T20:44:14+08:00" />
+<meta itemprop="name" content="Linux 基本的命令">
+<meta itemprop="description" content="">
+<meta itemprop="datePublished" content="2020-05-24T20:44:14&#43;08:00" />
+<meta itemprop="dateModified" content="2020-05-24T20:44:14&#43;08:00" />
+<meta itemprop="wordCount" content="3466">
+
+
+
+<meta itemprop="keywords" content="Linux commands," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Linux 基本的命令"/>
+<meta name="twitter:description" content=""/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Way to be awesome 🌱</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">主页</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">归类</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">标签</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">分类</li>
+      </a><a href="/about/">
+        <li class="mobile-menu-item">关于我</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Way to be awesome 🌱</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">主页</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">归类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">标签</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">分类</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/about/">关于我</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Linux 基本的命令</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2020-05-24 </span>
+        <div class="post-category">
+            <a href="/categories/linux/"> Linux </a>
+            </div>
+          <span class="more-meta"> 约 3466 字 </span>
+          <span class="more-meta"> 预计阅读 7 分钟 </span>
+        <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
+      </div>
+    </header>
+
+    <div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-目录结构">1. 目录结构</a></li>
+    <li><a href="#2-all-is-file">2. All is File</a>
+      <ul>
+        <li><a href="#21-文件类型">2.1 文件类型</a></li>
+        <li><a href="#22-文件权限">2.2 文件权限</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-常用命令">3. 常用命令</a>
+      <ul>
+        <li><a href="#31-用户相关命令">3.1 用户相关命令</a></li>
+        <li><a href="#32-系统管理">3.2 系统管理</a></li>
+        <li><a href="#33-网络信息">3.3 网络信息</a></li>
+        <li><a href="#34-查找和检索">3.4 查找和检索</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-远程操作">4. 远程操作</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+    <div class="post-content">
+      <h1 id="linux-basic">Linux Basic</h1>
+<h2 id="1-目录结构">1. 目录结构</h2>
+<ul>
+<li><code>/</code> 根目录</li>
+<li><code>/bin</code>: <code>/usr/bin</code>: 可执行二进制文件的目录，如常用的命令 <code>ls</code>、<code>tar</code>、<code>mv</code>、<code>cat</code> 等。(binary)</li>
+<li><code>/boot</code>：放置 linux 系统启动时用到的一些文件，如 Linux 的内核文件：<code>/boot/vmlinuz</code>，系统引导管理器：<code>/boot/grub</code>。(bootstrap)</li>
+<li><code>/dev</code>：存放 Linux 系统下的设备文件，访问该目录下某个文件，相当于访问某个设备，常用的是挂载光驱 <code>mount /dev/cdrom /mnt</code>。(device)</li>
+<li><code>/etc</code>：系统配置文件存放的目录，不建议在此目录下存放可执行文件，重要的配置文件有 <code>/etc/inittab</code>、<code>/etc/fstab</code>、<code>/etc/init.d</code>、<code>/etc/X11</code>、<code>/etc/sysconfig</code>、<code>/etc/xinetd.d</code>。</li>
+<li><code>/home</code>：系统默认的用户家目录，新增用户账号时，用户的家目录都存放在此目录下，<code>~</code> 表示当前用户的家目录，~edu 表示用户 edu 的家目录。</li>
+<li><code>/lib</code>: <code>/usr/lib</code>: <code>/usr/local/lib</code>：系统使用的函数库的目录，程序在执行过程中，需要调用一些额外的参数时需要函数库的协助。(lib)</li>
+<li><code>/lost+fount</code>：系统异常产生错误时，会将一些遗失的片段放置于此目录下。</li>
+<li><code>/mnt</code>: /media：光盘默认挂载点，通常光盘挂载于 /mnt/cdrom 下，也不一定，可以选择任意位置进行挂载。(media)</li>
+<li><code>/opt</code>：给主机额外安装软件所摆放的目录。(optional)</li>
+<li><code>/proc</code>：此目录的数据都在内存中，如系统核心，外部设备，网络状态，由于数据都存放于内存中，所以不占用磁盘空间，比较重要的目录有 <code>/proc/cpuinfo</code>、<code>/proc/interrupts</code>、/proc/dma、/proc/ioports、/proc/net/* 等。(process)</li>
+<li><code>/root</code>：系统管理员 root 的家目录（宿主目录）。</li>
+<li><code>/sbin</code>:<code> /usr/sbin</code>: <code>/usr/local/sbin</code>：放置系统管理员使用的可执行命令，如 <code>fdisk</code>、<code>shutdown</code>、<code>mount</code> 等。与 <code>/bin</code> 不同的是，这几个目录是给系统管理员 root 使用的命令，一般用户只能 &ldquo;查看&rdquo; 而不能设置和使用。(super binary)</li>
+<li><code>/tmp</code>：一般用户或正在执行的程序临时存放文件的目录，任何人都可以访问，重要数据不可放置在此目录下。(temp)</li>
+<li><code>/srv</code>：服务启动之后需要访问的数据目录，如 www 服务需要访问的网页数据存放在 <code>/srv/www</code> 内。</li>
+<li><code>/usr</code>：<strong>应用程序存放目录</strong>
+<ul>
+<li><code>/usr/bin</code> 存放应用程序</li>
+<li><code>/usr/share</code> 存放共享数据</li>
+<li><code>/usr/lib</code> 存放不能直接运行的，却是许多程序运行所必需的一些函数库文件</li>
+<li><code>/usr/local</code>: 存放软件升级包</li>
+<li><code>/usr/share/doc</code>: 系统说明文件存放目录</li>
+<li><code>/usr/share/man</code>:  程序说明文件存放目录</li>
+<li><code>/usr/include</code>: 存放头文件</li>
+</ul>
+</li>
+<li><code>/var</code>：放置系统执行过程中经常变化的文件，如随时更改的日志文件 <code>/var/log</code>，<code>/var/log/message</code>：所有的登录文件存放目录，<code>/var/spool/mail</code>：邮件存放的目录，<code>/var/run</code>: 程序或服务启动后，其 <code>PID</code> 存放在该目录下。(variable)</li>
+</ul>
+<h2 id="2-all-is-file">2. All is File</h2>
+<p>Unix/Linux 将一切都抽象为文件, 数据文件, 程序文件, 设备文件 (LCD, 触摸屏, 鼠标), 网络文件 (socket) 使用统一的文件进行管理.</p>
+<p>对不同的文件进行区分.</p>
+<h3 id="21-文件类型">2.1 文件类型</h3>
+<p>文件类型标识符:</p>
+<ul>
+<li><code>-</code>: 普通文件</li>
+<li><code>d</code>: 目录文件</li>
+<li><code>p</code>: 管道文件</li>
+<li><code>s</code>: 套接字文件 (socket)</li>
+<li><code>l</code>: 软链接文件 (link)</li>
+<li><code>b</code>: 设备块文件 (block)</li>
+<li><code>c</code>: 字符设备文件 (character)</li>
+</ul>
+<h3 id="22-文件权限">2.2 文件权限</h3>
+<p>文件权限就是文件的访问控制权限，即哪些用户和组群可以访问文件以及可以执行什么样的操作。Unix/Linux 系统是一个典型的多用户系统，不同的用户处于不同的地位，对文件和目录有不同的访问权限。</p>
+<h4 id="221-访问用户">2.2.1 访问用户</h4>
+<p>通过设定权限可以从以下三种访问方式限制访问权限：</p>
+<ul>
+<li>只允许用户自己访问 (所有者)</li>
+<li>只允许特定的用户者进行访问 (用户组)</li>
+<li>允许系统中任何用户访问 (其他用户)</li>
+</ul>
+<h4 id="222-访问权限">2.2.2 访问权限</h4>
+<ul>
+<li><code>r</code>: read 读取权限</li>
+<li><code>w</code>: write 写权限</li>
+<li><code>x</code>: 可执行权限</li>
+</ul>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">-rw-r--r--   <span class="m">1</span> suzl  staff   1.2K May <span class="m">12</span> 21:52 README.md
+drwxr-xr-x  <span class="m">14</span> suzl  staff   448B May <span class="m">12</span> 21:52 Skills
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>第 1 位: 文件类型</li>
+<li>2 3 4 位: 所有者权限</li>
+<li>5 6 7 位: 用户组所有权限</li>
+<li>8 9 10: 其他用户权限</li>
+</ul>
+<p>数字代表: TODO; 接着是: 所有者 + 用户组</p>
+<h2 id="3-常用命令">3. 常用命令</h2>
+<ul>
+<li>
+<p><code>--help</code>: e.g. <code>ls --help</code></p>
+</li>
+<li>
+<p><code>man</code>: e.g. <code>man ls</code></p>
+<p>进入 man 后的操作：
+| 功能键   | 功能                 |
+| :&mdash;&mdash;- | :&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;- |
+| 空格键   | 显示手册页的下一屏   |
+| Enter 键 | 一次滚动手册页的一行 |
+| b        | 回滚一屏             |
+| f        | 前滚一屏             |
+| q        | 退出 man 命令        |
+| h        | 列出所有功能键       |
+| /word    | 搜索 word 字符串     |</p>
+</li>
+<li>
+<p><code>ls</code>：list 查看目录, 支持通配符号</p>
+<ul>
+<li><code>-a</code>: all file</li>
+<li><code>-l</code>: list</li>
+<li>🌟<code>-h</code>: human🏵</li>
+</ul>
+</li>
+<li>
+<p>🌟重定向 <code>&gt;</code>; <code>&gt;&gt;</code> 追加到文件尾部</p>
+</li>
+<li>
+<p><code>more</code>: 可以使用 more 命令，每次只显示一页，按下空格键可以显示下一页，按下 q 键退出显示，按下 h 键可以获取帮助</p>
+</li>
+<li>
+<p><code>|</code>: 管道, 一个命令的输出可以通过管道做为另一个命令的输入</p>
+</li>
+<li>
+<p><code>cd</code>: change directory</p>
+</li>
+<li>
+<p><code>pwd</code>: print working directory</p>
+</li>
+<li>
+<p><code>rmdir</code>/<code>mkdir</code>: remove dir and make dir</p>
+</li>
+<li>
+<p><code>rm</code>:</p>
+<ul>
+<li><code>-r</code>: 递归删除</li>
+<li><code>-f</code>: force delete</li>
+<li><code>i</code>: 交互式删除</li>
+</ul>
+</li>
+<li>
+<p>🌟<code>ln</code>: 类型 windows 的快捷方式, 分为软连接和硬链接.</p>
+<ul>
+<li>软链接：软链接不占用磁盘空间，源文件删除则软链接失效。 <code>ln -s src dest</code></li>
+<li>硬链接：硬链接只能链接普通文件，不能链接目录。 <code>ln src dest</code></li>
+<li>注意：如果软链接文件和源文件不在同一个目录，源文件要使用绝对路径，不能使用相对路径。</li>
+</ul>
+</li>
+<li>
+<p>🌟<code>cat</code>: concatenate files and print on the stout</p>
+<ul>
+<li>合并文件</li>
+<li>打印到标准输出</li>
+</ul>
+</li>
+<li>
+<p><code>cp</code>: 复制</p>
+<ul>
+<li><code>a</code>: 保留文件的原有属性</li>
+<li><code>f</code>: force 覆盖文件</li>
+<li><code>i</code>: 交互式</li>
+<li><code>r</code>: 若给出的源文件是目录文件，则 cp 将递归复制该目录下的所有子目录和文件，目标文件必须为一个目录名。</li>
+<li><code>v</code>: 显示拷贝进度</li>
+<li>e.g. : <code>cp configure/ code/ -ivr 把文件夹 configure 拷贝到 code 目录 </code></li>
+</ul>
+</li>
+<li>
+<p><code>mv</code> 移动或者重新命名</p>
+</li>
+<li>
+<p>🏵<code>file</code>: 确定具体文件类型</p>
+</li>
+<li>
+<p><code>tar</code>: <code>tar [arg] 打包文件名字 文件 </code></p>
+</li>
+<li>
+<p><code>gzip</code>: 文件解压缩</p>
+</li>
+<li>
+<p><code>which</code>: 查看命令位置</p>
+</li>
+</ul>
+<h3 id="31-用户相关命令">3.1 用户相关命令</h3>
+<ul>
+<li><code>whoami</code>: 查看登陆人</li>
+<li><code>exit</code>: 退出当前用户</li>
+<li><code>su</code> 切换用户</li>
+</ul>
+<p>添加 / 删除用户</p>
+<ul>
+<li><code>adduser</code>: 新建用户</li>
+<li><code>deluser</code>: 删除用户</li>
+<li><code>cat /etc/passwd</code>: 查看用户组</li>
+</ul>
+<p>添加、删除用户组：addgroup、delgroup</p>
+<ul>
+<li><code>addgroup</code> 新建用户组</li>
+<li><code>delgroup</code> 删除用户组</li>
+<li><code>cat /etc/group</code> 查看用户组</li>
+</ul>
+<p>设置用户密码：<code>passwd</code></p>
+<p>修改文件所有者: <code>chown</code></p>
+<ul>
+<li><code>chown  用户名  文件或目录名 </code></li>
+</ul>
+<p>修改文件所属组：<code>chgrp</code></p>
+<ul>
+<li>使用方法：<code>chgrp</code>  用户组名  文件或目录名</li>
+</ul>
+<p>修改文件到新的用户、用户组</p>
+<ul>
+<li><code>chown 用户名: 用户组名 文件或目录名 </code></li>
+</ul>
+<p>修改文件权限:(字母法和数字法)</p>
+<ul>
+<li><code>chmod u/g/o/a/ +/-/= rwx 文件 </code>
+<ul>
+<li><code>user</code> 表示该文件的所有者</li>
+<li><code>group</code> 表示与该文件的所有者属于同一组 (group) 者，即用户组</li>
+<li><code>other</code> 表示其他以外的人</li>
+<li><code>all</code> 表示这三者皆是</li>
+<li><code>+</code> 增加权限</li>
+<li><code>-</code> 撤销权限</li>
+<li><code>=</code> 设定权限</li>
+<li><code>r</code>: read 4</li>
+<li><code>w</code>: 2</li>
+<li><code>x</code>: 1</li>
+<li><code>-</code>: 0</li>
+</ul>
+</li>
+</ul>
+<h3 id="32-系统管理">3.2 系统管理</h3>
+<p><strong>ps</strong>: information of running process, report a snapshot of the current process.</p>
+<ul>
+<li><code>a</code>: 显示所有的终端进程</li>
+<li><code>u</code>: 显示进程详细信息</li>
+<li><code>x</code>: 显示没有控制终端的进程</li>
+<li><code>w</code>: 显示加宽, wide</li>
+<li><code>r</code>: 显示正在进行的进程</li>
+</ul>
+<p>终止进程: <strong>kill</strong>,send a signal to process</p>
+<ul>
+<li><code>kill [-signal] pid</code></li>
+<li>📶值从 <code>0-15</code>,9 为绝对终止, 处理一般信号无法终止的进程</li>
+</ul>
+<p>👑后台程序:<code>&amp;</code>,<code>jobs</code>,<code>fg</code></p>
+<ul>
+<li>用户可以将一个前台执行的程序调入后台执行，方法为：<code> 命令 &amp;</code></li>
+<li>如果程序已经在执行，<code>ctrl+z</code> 可以将程序调入后台</li>
+<li><code>job</code> 查看后台进程</li>
+<li><code>fg</code> 编号（编号为通过 <code>jobs</code> 查看的编号），将后台运行程序调出到前台</li>
+</ul>
+<p>关机重启: <code>reboot</code> <code>shutdown</code> <code>init</code>👑</p>
+<ul>
+<li><code>init 0</code>: 关机</li>
+<li><code>init 6</code>: 重启</li>
+<li><code>shutdown</code></li>
+</ul>
+<h3 id="33-网络信息">3.3 网络信息</h3>
+<p>查看或配置网卡信息：<code>ifconfig</code></p>
+<pre><code>| ｜eth0        | 网络接口名称｜                                                         |
+| ------------- | ---------------------------------------------------------------------- |
+| ｜Link encap  | 链路封装协议                                                           |
+| ｜Hwaddr      | 网络接口的 MAC 地址                                                    |
+| ｜Inet addr   | IP 地址                                                                |
+| ｜Bcast       | 广播地址                                                               |
+| ｜Mask        | 子网掩码                                                               |
+| ｜UP          | 网络接口状态标识，UP 已经启用，DOWN 已经停用                           |
+| ｜BROADCAST   | 广播标识，标识网络接口是否支持广播                                     |
+| ｜RUNNING     | 传输标识，标识网络接口是否已经开始传输分组数                           |
+| ｜MULTICAST   | 多播标识，标识网络接口是否支持多播                                     |
+| ｜MTU，Metric | MTU: 最大传输单位，单位：字节。Metric: 度量值，用于 RIP 建立网络路由用 |
+| ｜RX bytes    | 接收数据字节统计                                                       |
+| ｜TX bytes    | 发送数据字节统计                                                       |
+</code></pre>
+<ul>
+<li><code>a</code>: 显示所有的网络接口状态</li>
+<li><code>inet  [IP 地址]</code>	设置 IP 地址</li>
+<li><code>netmask [子网掩码]</code>	设置子网掩码</li>
+<li><code>up</code>	启用网络接口</li>
+<li><code>down</code>	关闭网络接口</li>
+</ul>
+<p>修改配置文件中的网络参数：</p>
+<ul>
+<li>redhat：修改 <code>/etc/sysconfig/network-scripts/ifcfg-eth0</code> 文件
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="nv">IPADDR</span><span class="o">=</span>IP 地址
+<span class="nv">GATEWAY</span> <span class="o">=</span> 默认网关
+</code></pre></td></tr></table>
+</div>
+</div></li>
+<li>buntu 修改 <code>/etc/NetworkManager/system-connections/Wired connection 1</code> 文件
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh"><span class="o">[</span>ipv4<span class="o">]</span>
+<span class="nv">method</span><span class="o">=</span>manual
+<span class="nv">addresses1</span><span class="o">=</span>IP 地址<span class="p">;</span> 24<span class="p">;</span> 默认网关<span class="p">;</span>
+</code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+<h4 id="331-ping-测试远程主机连通性-ping">3.3.1 ping 测试远程主机连通性： ping</h4>
+<ul>
+<li><code>ping</code> 通过 <code>ICMP</code> 协议向远程主机发送 <code>ECHO_REQUEST</code> 请求，期望主机回复 <code>ECHO_REPLY</code> 消息</li>
+<li>通过 <code>ping</code> 命令可以检查是否与远程主机建立了 <code>TCP/IP</code> 连接</li>
+</ul>
+<h3 id="34-查找和检索">3.4 查找和检索</h3>
+<h4 id="341-find">3.4.1 find</h4>
+<p><code>find 目录位置 参数 搜索条件</code></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">Find files or directories under the given directory tree, recursively.
+
+- Find files by extension:
+    find root_path -name <span class="s1">&#39;*.ext&#39;</span>
+
+- Find files by matching multiple patterns:
+    find root_path -name <span class="s1">&#39;*pattern_1*&#39;</span> -or -name <span class="s1">&#39;*pattern_2*&#39;</span>
+
+- Find directories matching a given name, in <span class="k">case</span>-insensitive mode:
+    find root_path -type d -iname <span class="s1">&#39;*lib*&#39;</span>
+
+- Find files matching a path pattern:
+    find root_path -path <span class="s1">&#39;**/lib/**/*.ext&#39;</span>
+
+- Find files matching a given pattern, excluding specific paths:
+    find root_path -name <span class="s1">&#39;*.py&#39;</span> -not -path <span class="s1">&#39;*/site-packages/*&#39;</span>
+
+- Find files matching a given size range:
+    find root_path -size +500k -size -10M
+
+- Run a <span class="nb">command</span> <span class="k">for</span> each file <span class="o">(</span>use <span class="sb">`</span><span class="o">{}</span><span class="sb">`</span> within the <span class="nb">command</span> to access the filename<span class="o">)</span>:
+    find root_path -name <span class="s1">&#39;*.ext&#39;</span> -exec wc -l <span class="o">{}</span> <span class="se">\;</span>
+
+- Find files modified in the last <span class="m">7</span> days, and delete them:
+    find root_path -mtime -7 -delete
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="342-grep">3.4.2 grep</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sh" data-lang="sh">- Search <span class="k">for</span> an exact string:
+    grep search_string path/to/file
+
+- Search in <span class="k">case</span>-insensitive mode:
+    grep -i search_string path/to/file
+
+- Search recursively <span class="o">(</span>ignoring non-text files<span class="o">)</span> in current directory <span class="k">for</span> an exact string:
+    grep -RI search_string .
+
+- Use extended regular expressions <span class="o">(</span>supporting <span class="sb">`</span>?<span class="sb">`</span>, <span class="sb">`</span>+<span class="sb">`</span>, <span class="sb">`</span><span class="o">{}</span><span class="sb">`</span>, <span class="sb">`</span><span class="o">()</span><span class="sb">`</span> and <span class="sb">`</span><span class="p">|</span><span class="sb">`</span><span class="o">)</span>:
+    grep -E ^regex$ path/to/file
+
+- Print <span class="m">3</span> lines of <span class="o">[</span>C<span class="o">]</span>ontext around, <span class="o">[</span>B<span class="o">]</span>efore, or <span class="o">[</span>A<span class="o">]</span>fter each match:
+    grep -C<span class="p">|</span>B<span class="p">|</span>A <span class="m">3</span> search_string path/to/file
+
+- Print file name with the corresponding line number <span class="k">for</span> each match:
+    🎲grep -Hn search_string path/to/file
+
+- Use the standard input instead of a file:
+   🎲 cat path/to/file <span class="p">|</span> grep search_string
+
+- Invert match <span class="k">for</span> excluding specific strings:
+    grep -v search_string
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="4-远程操作">4. 远程操作</h2>
+<ul>
+<li>ssh Secure Shell，常用于远程登录，以及用户之间进行资料拷贝</li>
+<li>scp：scp &ndash; secure copy (remote file copy program)</li>
+</ul>
+    </div>
+
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">苏子叶</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">
+        2020-05-24
+        
+    </span>
+  </p>
+  
+  <p class="copyright-item">
+    <span class="item-title">许可协议</span>
+    <span class="item-content"><a rel="license noopener" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">CC BY-NC-ND 4.0</a></span>
+  </p>
+</div>
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rxabglgj30ey0eymy2.jpg">
+        <span>微信打赏</span>
+      </label>
+    <label class="qr-code-image" for="reward">
+        <img class="image" src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3rwpbf2hj30gk0goq45.jpg">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div><footer class="post-footer">
+      <div class="post-tags">
+          <a href="/tags/linux-commands/">Linux commands</a>
+          </div>
+      <nav class="post-nav">
+        <a class="prev" href="/post/linux-keyboard-shortcuts/">
+            <i class="iconfont icon-left"></i>
+            <span class="prev-text nav-default">Linux bash 的键盘快捷键</span>
+            <span class="prev-text nav-mobile">上一篇</span>
+          </a>
+        <a class="next" href="/post/arraylist%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">
+            <span class="next-text nav-default">ArrayList源码分析</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="joexsue@gmail.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/10039970/joex-sue" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/CodeDiggerSuzl" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.instagram.com/jesseraindrop/" class="iconfont icon-instagram" title="instagram"></a>
+      <a href="https://space.bilibili.com/8857871" class="iconfont icon-bilibili" title="bilibili"></a>
+  <a href="http://codedigger.cn/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  <div class="busuanzi-footer">
+    <span id="busuanzi_container_site_pv"> 本站总访问量 <span id="busuanzi_value_site_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次 </span>
+      <span class="division">|</span>
+    <span id="busuanzi_container_site_uv"> 本站总访客数 <span id="busuanzi_value_site_uv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 人 </span>
+  </div>
+
+  <span class="copyright-year">
+    &copy; 
+    2019 - 
+    2020
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">苏子叶</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js" integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js" integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin="anonymous"></script><script></script><script src="https://cdn.jsdelivr.net/npm/raphael@2.2.7/raphael.min.js" integrity="sha256-67By+NpOtm9ka1R6xpUefeGOY8kWWHHRAKlvaTJ7ONI=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/flowchart.js@1.8.0/release/flowchart.min.js" integrity="sha256-zNGWjubXoY6rb5MnmpBNefO0RgoVYfle9p0tvOQM+6k=" crossorigin="anonymous"></script><script>window.sequenceDiagramsOptions = {theme: 'hand'};</script><script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.js" integrity="sha256-4O4pS1SH31ZqrSO2A/2QJTVjTPqVe+jnYgOWUVr7EEc=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/snapsvg@0.5.1/dist/snap.svg-min.js" integrity="sha256-oI+elz+sIm+jpn8F/qEspKoKveTc5uKeFHNNVexe6d8=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/npm/underscore@1.8.3/underscore-min.js" integrity="sha256-obZACiHd7gkOk9iIL/pimWMTJ4W/pBsKu+oZnSeBIek=" crossorigin="anonymous"></script> <script src="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.js" integrity="sha384-8748Vn52gHJYJI0XEuPB2QlPVNUkJlJn9tHqKec6J3q2r9l8fvRxrgn/E5ZHV0sP" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bramp/js-sequence-diagrams@2.0.1/dist/sequence-diagram-min.css" integrity="sha384-6QbLKJMz5dS3adWSeINZe74uSydBGFbnzaAYmp+tKyq60S7H2p6V7g1TysM5lAaF" crossorigin="anonymous">
+
+
+
+<script type="text/javascript" src="/js/main.min.d7b7ada643c9c1a983026e177f141f7363b4640d619caf01d8831a6718cd44ea.js"></script>
+  <script type="text/javascript">
+    window.MathJax = {
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+      TeX: {equationNumbers: {autoNumber: "AMS"}},
+      showProcessingMessages: false,
+      messageStyle: 'none'
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"  integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+
+
+
+<script id="baidu_push">
+  (function(){
+    if (window.location.hostname === 'localhost') return;
+    var bp = document.createElement('script'); bp.async = true;
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+      bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+      bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+  })();
+</script>
+
+
+
+
+</body>
+</html>

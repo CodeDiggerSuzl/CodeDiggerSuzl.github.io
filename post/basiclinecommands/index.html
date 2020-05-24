@@ -49,7 +49,7 @@
 <meta itemprop="description" content="">
 <meta itemprop="datePublished" content="2020-05-24T20:44:14&#43;08:00" />
 <meta itemprop="dateModified" content="2020-05-24T20:44:14&#43;08:00" />
-<meta itemprop="wordCount" content="3466">
+<meta itemprop="wordCount" content="3332">
 
 
 
@@ -129,7 +129,7 @@
         <div class="post-category">
             <a href="/categories/linux/"> Linux </a>
             </div>
-          <span class="more-meta"> 约 3466 字 </span>
+          <span class="more-meta"> 约 3332 字 </span>
           <span class="more-meta"> 预计阅读 7 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -240,22 +240,49 @@ drwxr-xr-x  <span class="m">14</span> suzl  staff   448B May <span class="m">12<
 <p>数字代表: TODO; 接着是: 所有者 + 用户组</p>
 <h2 id="3-常用命令">3. 常用命令</h2>
 <ul>
-<li>
-<p><code>--help</code>: e.g. <code>ls --help</code></p>
-</li>
-<li>
-<p><code>man</code>: e.g. <code>man ls</code></p>
-<p>进入 man 后的操作：
-| 功能键   | 功能                 |
-| :&mdash;&mdash;- | :&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;- |
-| 空格键   | 显示手册页的下一屏   |
-| Enter 键 | 一次滚动手册页的一行 |
-| b        | 回滚一屏             |
-| f        | 前滚一屏             |
-| q        | 退出 man 命令        |
-| h        | 列出所有功能键       |
-| /word    | 搜索 word 字符串     |</p>
-</li>
+<li><code>--help</code>: e.g. <code>ls --help</code></li>
+<li><code>man</code>: e.g. <code>man ls</code></li>
+</ul>
+<p>进入 man 后的操作：</p>
+<table>
+<thead>
+<tr>
+<th align="left">功能键</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">空格键</td>
+<td align="left">显示手册页的下一屏</td>
+</tr>
+<tr>
+<td align="left">Enter 键</td>
+<td align="left">一次滚动手册页的一行</td>
+</tr>
+<tr>
+<td align="left">b</td>
+<td align="left">回滚一屏</td>
+</tr>
+<tr>
+<td align="left">f</td>
+<td align="left">前滚一屏</td>
+</tr>
+<tr>
+<td align="left">q</td>
+<td align="left">退出 man 命令</td>
+</tr>
+<tr>
+<td align="left">h</td>
+<td align="left">列出所有功能键</td>
+</tr>
+<tr>
+<td align="left">/word</td>
+<td align="left">搜索 word 字符串</td>
+</tr>
+</tbody>
+</table>
+<ul>
 <li>
 <p><code>ls</code>：list 查看目录, 支持通配符号</p>
 <ul>
@@ -410,21 +437,64 @@ drwxr-xr-x  <span class="m">14</span> suzl  staff   448B May <span class="m">12<
 </ul>
 <h3 id="33-网络信息">3.3 网络信息</h3>
 <p>查看或配置网卡信息：<code>ifconfig</code></p>
-<pre><code>| ｜eth0        | 网络接口名称｜                                                         |
-| ------------- | ---------------------------------------------------------------------- |
-| ｜Link encap  | 链路封装协议                                                           |
-| ｜Hwaddr      | 网络接口的 MAC 地址                                                    |
-| ｜Inet addr   | IP 地址                                                                |
-| ｜Bcast       | 广播地址                                                               |
-| ｜Mask        | 子网掩码                                                               |
-| ｜UP          | 网络接口状态标识，UP 已经启用，DOWN 已经停用                           |
-| ｜BROADCAST   | 广播标识，标识网络接口是否支持广播                                     |
-| ｜RUNNING     | 传输标识，标识网络接口是否已经开始传输分组数                           |
-| ｜MULTICAST   | 多播标识，标识网络接口是否支持多播                                     |
-| ｜MTU，Metric | MTU: 最大传输单位，单位：字节。Metric: 度量值，用于 RIP 建立网络路由用 |
-| ｜RX bytes    | 接收数据字节统计                                                       |
-| ｜TX bytes    | 发送数据字节统计                                                       |
-</code></pre>
+<table>
+<thead>
+<tr>
+<th>eth0</th>
+<th>网络接口名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Link encap</td>
+<td>链路封装协议</td>
+</tr>
+<tr>
+<td>Hwaddr</td>
+<td>网络接口的 MAC 地址</td>
+</tr>
+<tr>
+<td>Inet addr</td>
+<td>IP 地址</td>
+</tr>
+<tr>
+<td>Bcast</td>
+<td>广播地址</td>
+</tr>
+<tr>
+<td>Mask</td>
+<td>子网掩码</td>
+</tr>
+<tr>
+<td>UP</td>
+<td>网络接口状态标识，UP 已经启用，DOWN 已经停用</td>
+</tr>
+<tr>
+<td>BROADCAST</td>
+<td>广播标识，标识网络接口是否支持广播</td>
+</tr>
+<tr>
+<td>RUNNING</td>
+<td>传输标识，标识网络接口是否已经开始传输分组数</td>
+</tr>
+<tr>
+<td>MULTICAST</td>
+<td>多播标识，标识网络接口是否支持多播</td>
+</tr>
+<tr>
+<td>MTU，Metric</td>
+<td>MTU: 最大传输单位，单位：字节。Metric: 度量值，用于 RIP 建立网络路由用</td>
+</tr>
+<tr>
+<td>RX bytes</td>
+<td>接收数据字节统计</td>
+</tr>
+<tr>
+<td>TX bytes</td>
+<td>发送数据字节统计</td>
+</tr>
+</tbody>
+</table>
 <ul>
 <li><code>a</code>: 显示所有的网络接口状态</li>
 <li><code>inet  [IP 地址]</code>	设置 IP 地址</li>

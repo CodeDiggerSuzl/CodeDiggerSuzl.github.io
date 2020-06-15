@@ -49,7 +49,7 @@
 <meta itemprop="description" content="vcharts 折线图 ! 数据结构的灵活使用 前端 Java &amp; Mybatis 前台需要的数据样式 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 export default { data: function () { return { chartData: { columns: [&#39;日期&#39;">
 <meta itemprop="datePublished" content="2020-02-28T23:18:29&#43;08:00" />
 <meta itemprop="dateModified" content="2020-02-28T23:18:29&#43;08:00" />
-<meta itemprop="wordCount" content="1141">
+<meta itemprop="wordCount" content="1347">
 
 
 
@@ -129,7 +129,7 @@
         <div class="post-category">
             <a href="/categories/worksummary/"> WorkSummary </a>
             </div>
-          <span class="more-meta"> 约 1141 字 </span>
+          <span class="more-meta"> 约 1347 字 </span>
           <span class="more-meta"> 预计阅读 3 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -149,6 +149,8 @@
         <li><a href="#postman-test">postman test</a></li>
       </ul>
     </li>
+    <li><a href="#分组的情况">分组的情况</a></li>
+    <li><a href="#使用前端-js-处理数据更好">使用前端 js 处理数据更好</a></li>
   </ul>
 </nav>
   </div>
@@ -441,7 +443,103 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><ul>
+</div><h2 id="分组的情况">分组的情况</h2>
+<p>SQL</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-sql" data-lang="sql"><span class="k">SELECT</span> <span class="k">AVG</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">INDEX_SCORE</span><span class="p">)</span>  <span class="k">AS</span> <span class="n">indexScore</span><span class="p">,</span>
+        <span class="n">b</span><span class="p">.</span><span class="n">INDEX_NAME</span>       <span class="k">AS</span> <span class="n">indexName</span><span class="p">,</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">PARTICIPANT_TYPE</span> <span class="k">AS</span> <span class="n">partType</span>
+<span class="k">FROM</span> <span class="n">cp_cr_results_detail</span> <span class="n">a</span><span class="p">,</span>
+        <span class="n">cp_cr_index_sys_detail</span> <span class="n">b</span>
+<span class="k">WHERE</span> <span class="n">a</span><span class="p">.</span><span class="n">INDEX_CODE</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_CODE</span>
+    <span class="k">and</span> <span class="n">a</span><span class="p">.</span><span class="n">PARTICIPANT_TYPE</span> <span class="k">IS</span> <span class="k">NOT</span> <span class="k">NULL</span>
+    <span class="k">AND</span> <span class="n">a</span><span class="p">.</span><span class="n">EVALUAT_DATE</span> <span class="o">=</span> <span class="o">#</span><span class="err">{</span><span class="k">year</span><span class="err">}</span>
+    <span class="k">AND</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_LEVEL</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">GROUP</span> <span class="k">BY</span> <span class="n">b</span><span class="p">.</span><span class="n">INDEX_NAME</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">PARTICIPANT_TYPE</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Result:</p>
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gfstwke3ogj306q0df74y.jpg" alt=""></p>
+<p>使用 Java Stream 进行分组:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-java" data-lang="java"> <span class="kd">public</span> <span class="n">ResultUtil</span> <span class="nf">indexRadarChartOne</span><span class="o">(</span><span class="n">String</span> <span class="n">year</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">String</span> <span class="n">pType</span> <span class="o">=</span> <span class="s">&#34;partType&#34;</span><span class="o">;</span>
+    <span class="n">VchartsEntity</span> <span class="n">vchartsEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VchartsEntity</span><span class="o">();</span>
+    <span class="c1">// query raw data form db
+</span><span class="c1"></span>    <span class="n">List</span><span class="o">&lt;</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">dbResult</span> <span class="o">=</span> <span class="n">cpCrResultsDetailExtMapper</span><span class="o">.</span><span class="na">getAvgIndexValueByType</span><span class="o">(</span><span class="n">year</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">dbResult</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span> <span class="o">{</span><span class="k">return</span> <span class="n">ResultUtil</span><span class="o">.</span><span class="na">success</span><span class="o">(</span><span class="n">vchartsEntity</span><span class="o">);}</span>
+
+    <span class="c1">// group by participantType
+</span><span class="c1"></span>    <span class="n">Map</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;&gt;&gt;</span> <span class="n">resGroup</span> <span class="o">=</span> <span class="n">dbResult</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">pType</span><span class="o">)));</span>
+
+    <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">vchartsEntity</span><span class="o">.</span><span class="na">getColumns</span><span class="o">();</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">rows</span> <span class="o">=</span> <span class="n">vchartsEntity</span><span class="o">.</span><span class="na">getRows</span><span class="o">();</span>
+    <span class="n">columns</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">pType</span><span class="o">);</span>
+
+    <span class="c1">// 向 row element 中塞数据
+</span><span class="c1"></span>    <span class="n">resGroup</span><span class="o">.</span><span class="na">forEach</span><span class="o">((</span><span class="n">k</span><span class="o">,</span> <span class="n">v</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">rowElement</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">rowElement</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">pType</span><span class="o">,</span> <span class="n">MyUtils</span><span class="o">.</span><span class="na">formatPartType</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">k</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">:</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// key=&gt; 交易管理 value =&gt; value
+</span><span class="c1"></span>            <span class="n">rowElement</span><span class="o">.</span><span class="na">put</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;indexName&#34;</span><span class="o">),</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;indexScore&#34;</span><span class="o">));</span>
+            <span class="c1">// a little bad
+</span><span class="c1"></span>            <span class="n">columns</span><span class="o">.</span><span class="na">add</span><span class="o">((</span><span class="n">String</span><span class="o">)</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">&#34;indexName&#34;</span><span class="o">));</span>
+        <span class="o">}</span>
+
+        <span class="n">rows</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">rowElement</span><span class="o">);</span>
+    <span class="o">});</span>
+    <span class="k">return</span> <span class="n">ResultUtil</span><span class="o">.</span><span class="na">success</span><span class="o">(</span><span class="n">vchartsEntity</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="使用前端-js-处理数据更好">使用前端 js 处理数据更好</h2>
+<ul>
 <li>Date: 2020-04-21 change to LinkedHashSet (横坐标需要顺序)</li>
 </ul>
 <blockquote>

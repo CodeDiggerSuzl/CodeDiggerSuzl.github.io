@@ -31,24 +31,6 @@
     </item>
     
     <item>
-      <title>基于 go 语言实现聊天室</title>
-      <link>http://codedigger.cn/post/go-chatroom/</link>
-      <pubDate>Wed, 12 Feb 2020 20:07:23 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/go-chatroom/</guid>
-      <description>🪐Concurrent Chat Room 源代码: https://github.com/CodeDiggerSuzl/Go-Practice-Demos/tree/master/ChatRoom 并发编程和网络编程是现今行业开发中常用的技术。Go 语言强大的语法设定使得 并发 和 网络编程 都变的简洁而高效。</description>
-    </item>
-    
-    <item>
-      <title>基于 go 实现文件传输</title>
-      <link>http://codedigger.cn/post/go-filetransfer/</link>
-      <pubDate>Wed, 12 Feb 2020 20:07:11 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/go-filetransfer/</guid>
-      <description>File Transfer 命令行参数 作用是: 在 main 函数启动的时候向 main 函数传入参数 语法: go run main.go arg1 arg2 main.go 第 0 个参数 arg1 第 1 个参数 arg2 第 2 个参数 获取文件属性 1 2 os.Stat(</description>
-    </item>
-    
-    <item>
       <title>Go UDP 编程</title>
       <link>http://codedigger.cn/post/go-tcpudp/</link>
       <pubDate>Wed, 12 Feb 2020 20:06:27 +0800</pubDate>

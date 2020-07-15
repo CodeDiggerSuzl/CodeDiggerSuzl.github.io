@@ -476,7 +476,7 @@
       <pubDate>Sun, 04 Aug 2019 15:53:46 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/golang-%E6%8E%A5%E5%8F%A3/</guid>
-      <description>接口 ducktyping ? 描述事物的外部行为 而非内部结构 &amp;ldquo;像鸭子走路,走路像鸭子,那就是🦆&amp;rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&amp;#34;www.google.com&amp;#34;) } 1. 运行时才知</description>
+      <description>接口 ducktyping 描述事物的外部行为 而非内部结构 &amp;ldquo;像鸭子走路,走路像鸭子,那就是🦆&amp;rdquo; Python 中的 duck typing 1 2 3 4 5 def download(retriver){ return retriver.get(&amp;#34;www.google.com&amp;#34;) } 1. 运行时才知道</description>
     </item>
     
     <item>

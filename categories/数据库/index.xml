@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Tue, 07 Jan 2020 22:49:50 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Mysql 5.x 实现 rank 排名和百分比排序(Percentile Rank)</title>
+      <link>http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/</link>
+      <pubDate>Tue, 07 Jan 2020 22:49:50 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/dailysummary-mysql%E5%AE%9E%E7%8E%B0rank%E6%8E%92%E5%90%8D/</guid>
+      <description>mysql 实现 rank 排名 实现 rank 排名在 mysql8.0 版本新增了 PERCENT_RANK 函数链接在此 在 mysql5.5 版本中没有这个函数,需要借助函数实现. 实现排名 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 SELECT t.*</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>技能 on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/%E6%8A%80%E8%83%BD/</link>
+    <description>Recent content in 技能 on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Wed, 12 Feb 2020 19:13:12 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/%E6%8A%80%E8%83%BD/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>怎么分析一个好的开源项目?</title>
+      <link>http://codedigger.cn/post/how-to-analyze-an-project/</link>
+      <pubDate>Wed, 12 Feb 2020 19:13:12 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/how-to-analyze-an-project/</guid>
+      <description>怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:</description>
+    </item>
+    
+  </channel>
+</rss>

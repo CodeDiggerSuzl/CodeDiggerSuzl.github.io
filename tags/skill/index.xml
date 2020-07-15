@@ -7,18 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
-    <lastBuildDate>Wed, 12 Feb 2020 19:13:12 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 24 May 2020 20:46:54 +0800</lastBuildDate>
     
 	<atom:link href="http://codedigger.cn/tags/skill/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>怎么分析一个好的开源项目?</title>
-      <link>http://codedigger.cn/post/how-to-analyze-an-project/</link>
-      <pubDate>Wed, 12 Feb 2020 19:13:12 +0800</pubDate>
+      <title>Linux bash 的键盘快捷键</title>
+      <link>http://codedigger.cn/post/linux-keyboard-shortcuts/</link>
+      <pubDate>Sun, 24 May 2020 20:46:54 +0800</pubDate>
       
-      <guid>http://codedigger.cn/post/how-to-analyze-an-project/</guid>
-      <description>怎么分析开源项目? 观察开源项目 阅读下列文件中的内容: 查看官网或者文档 README.md 使用的协议 需要获取的信息: 项目的作用 项目使用的技术架构 重点关注的文件:</description>
+      <guid>http://codedigger.cn/post/linux-keyboard-shortcuts/</guid>
+      <description>Keyboards shortcuts for bash 线程相关 下面的快捷键能是你操作线程： Ctrl + C: 杀死终端中前台进行的线程，发送 SIGINT 信号到进程中, 从技术上讲，这只是一个请求 - 大多数进程都会接</description>
     </item>
     
   </channel>

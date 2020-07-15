@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>socket on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/socket/</link>
+    <description>Recent content in socket on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Wed, 12 Feb 2020 20:06:07 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/socket/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Go Socket 编程</title>
+      <link>http://codedigger.cn/post/go-scoket/</link>
+      <pubDate>Wed, 12 Feb 2020 20:06:07 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-scoket/</guid>
+      <description>Socket Socket，英文含义是【插座、插孔】，一般称之为套接字，用于描述 IP 地址和端口。可以实现不同程序间的数据通信。 通信过程中一定是成对出现的.</description>
+    </item>
+    
+  </channel>
+</rss>

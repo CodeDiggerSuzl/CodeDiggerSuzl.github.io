@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ES6 on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/tags/es6/</link>
+    <description>Recent content in ES6 on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Sun, 24 May 2020 20:59:51 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/tags/es6/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ES6的新特性</title>
+      <link>http://codedigger.cn/post/frontend-es6/</link>
+      <pubDate>Sun, 24 May 2020 20:59:51 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/frontend-es6/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

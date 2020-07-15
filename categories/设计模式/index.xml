@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>设计模式 on The Blog of Suzl 🤠</title>
+    <link>http://codedigger.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <description>Recent content in 设计模式 on The Blog of Suzl 🤠</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>苏子叶</copyright>
+    <lastBuildDate>Wed, 26 Feb 2020 22:10:26 +0800</lastBuildDate>
+    
+	<atom:link href="http://codedigger.cn/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>代理模式</title>
+      <link>http://codedigger.cn/post/dp-proxy/</link>
+      <pubDate>Wed, 26 Feb 2020 22:10:26 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/dp-proxy/</guid>
+      <description>代理模式 总体作用: 控制和管理访问 和装饰器模式的区别: 装饰器模式: 包装另一个对象, 提供不同的接口 代理模式: 包装另一个对象, 控制对它的访问 角色分</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -22,15 +22,6 @@
     </item>
     
     <item>
-      <title>ES6的新特性</title>
-      <link>http://codedigger.cn/post/frontend-es6/</link>
-      <pubDate>Sun, 24 May 2020 20:59:51 +0800</pubDate>
-      
-      <guid>http://codedigger.cn/post/frontend-es6/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Promise 异步回调解决方案</title>
       <link>http://codedigger.cn/post/frontend-promise/</link>
       <pubDate>Sun, 24 May 2020 20:57:00 +0800</pubDate>

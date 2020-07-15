@@ -12,12 +12,30 @@
     
     
     <item>
+      <title>Go UDP 编程</title>
+      <link>http://codedigger.cn/post/go-tcpudp/</link>
+      <pubDate>Wed, 12 Feb 2020 20:06:27 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-tcpudp/</guid>
+      <description>udp 通信 tcp: 面向连接,可靠数据包的传输 udp: 无连接,不可靠的报文传输 QQ 用的是 udp 加上上层对数据包完整性的校验,来保证数据的完整性. 服务器 由于UDP是“</description>
+    </item>
+    
+    <item>
       <title>通信协议入门</title>
       <link>http://codedigger.cn/post/go-tcppro/</link>
       <pubDate>Wed, 12 Feb 2020 20:06:21 +0800</pubDate>
       
       <guid>http://codedigger.cn/post/go-tcppro/</guid>
       <description>协议入门 从应用的角度出发，协议可理解为“规则”，是数据传输和数据的解释的规则。 常见协议 传输层 常见协议有TCP/UDP协议。 TCP传输控制协议</description>
+    </item>
+    
+    <item>
+      <title>Tcp 入门</title>
+      <link>http://codedigger.cn/post/go-tcp/</link>
+      <pubDate>Wed, 12 Feb 2020 20:05:54 +0800</pubDate>
+      
+      <guid>http://codedigger.cn/post/go-tcp/</guid>
+      <description>TCP 127.0.0.1 和 192.100.x.xxx 的区别 一个是本地回环地址, 只要有网卡, 就能使用, 没有出这台电脑 另一个是通过网卡发出去, 再由路由器法返回来到本机, 真正意义上的网络通信</description>
     </item>
     
   </channel>

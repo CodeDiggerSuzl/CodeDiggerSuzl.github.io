@@ -49,7 +49,7 @@
 <meta itemprop="description" content="item 的保存 可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 e.Scheduler.Submit(request) 让其他程序去执行 save 方法. 抽象出 task 的概念, FetchTask,PersistTask 公用同一个">
 <meta itemprop="datePublished" content="2019-08-21T20:28:52&#43;08:00" />
 <meta itemprop="dateModified" content="2019-08-21T20:28:52&#43;08:00" />
-<meta itemprop="wordCount" content="291">
+<meta itemprop="wordCount" content="292">
 
 
 
@@ -127,9 +127,9 @@
       <div class="post-meta">
         <span class="post-time"> 2019-08-21 </span>
         <div class="post-category">
-            <a href="/categories/programming-language/"> programming language </a>
+            <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"> 编程语言 </a>
             </div>
-          <span class="more-meta"> 约 291 字 </span>
+          <span class="more-meta"> 约 292 字 </span>
           <span class="more-meta"> 预计阅读 1 分钟 </span>
         <span id="busuanzi_container_page_pv" class="more-meta"> <span id="busuanzi_value_page_pv"><img src="/img/spinner.svg" alt="spinner.svg"/></span> 次阅读 </span>
       </div>
@@ -157,11 +157,11 @@
 </div>
     <div class="post-content">
       <h2 id="item-的保存">item 的保存</h2>
-<p>可以在得到 item 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 <code>e.Scheduler.Submit(request)</code> 让其他程序去执行 save 方法.</p>
+<p>可以在得到 <code>item</code> 的时候就进行保存,但是太费时间,应该及时的交出去 让其他程序去做 就像 <code>e.Scheduler.Submit(request)</code> 让其他程序去执行 save 方法.</p>
 <h3 id="抽象出-task-的概念">抽象出 task 的概念,</h3>
 <ul>
-<li>FetchTask,PersistTask 公用同一个 Engine, Scheduler</li>
-<li>还需要创建 FetchWorker,PersitWorker (比较重 太复杂了)</li>
+<li>FetchTask,PersistTask 公用同一个 <code>Engine</code>, <code>Scheduler</code></li>
+<li>还需要创建 FetchWorker, PersistWorker (比较重 太复杂了)</li>
 </ul>
 <h3 id="为每一个-item-创建-goroutine-提交给-itemsaver">为每一个 item 创建 goroutine 提交给 itemsaver</h3>
 <ul>

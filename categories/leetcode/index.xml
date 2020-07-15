@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>leetcode on The Blog of Suzl 🤠</title>
+    <title>LeetCode on The Blog of Suzl 🤠</title>
     <link>http://codedigger.cn/categories/leetcode/</link>
-    <description>Recent content in leetcode on The Blog of Suzl 🤠</description>
+    <description>Recent content in LeetCode on The Blog of Suzl 🤠</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>苏子叶</copyright>
@@ -13,7 +13,7 @@
     
     
     <item>
-      <title>Leetcode-1 TwoSum</title>
+      <title>LeetCode-1 TwoSum</title>
       <link>http://codedigger.cn/post/leetcode1-two/</link>
       <pubDate>Fri, 11 Oct 2019 00:57:58 +0800</pubDate>
       

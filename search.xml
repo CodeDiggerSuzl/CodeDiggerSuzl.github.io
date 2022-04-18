@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>备份</title>
+    <url>/2022/04/15/backup/</url>
+    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span> </p>
+<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
+<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p>Guice 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">google&#x2F;guice: Guice (pronounced ‘juice’) is a lightweight dependency injection framework for Java 8 and above, brought to you by Google.<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
+</blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">Motivation · google&#x2F;guice Wiki<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+  </entry>
+  <entry>
     <title>《大话数据结构》</title>
     <url>/2022/04/16/ReadingNote-ds/</url>
     <content><![CDATA[<h1 id="大话数据结构"><a href="#大话数据结构" class="headerlink" title="大话数据结构"></a>大话数据结构</h1><blockquote>
@@ -976,20 +990,6 @@
       <tags>
         <tag>读书笔记</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>备份</title>
-    <url>/2022/04/15/backup/</url>
-    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span> </p>
-<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
-<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
-<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p>Guice 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">google&#x2F;guice: Guice (pronounced ‘juice’) is a lightweight dependency injection framework for Java 8 and above, brought to you by Google.<i class="fa fa-external-link-alt"></i></span></p>
-<blockquote>
-<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
-</blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">Motivation · google&#x2F;guice Wiki<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
   </entry>
   <entry>
     <title>使用 hexo 搭建博客</title>

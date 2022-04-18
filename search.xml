@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>备份</title>
-    <url>/2022/04/15/backup/</url>
-    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span> </p>
-<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
-<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
-<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p>Guice 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">google&#x2F;guice: Guice (pronounced ‘juice’) is a lightweight dependency injection framework for Java 8 and above, brought to you by Google.<i class="fa fa-external-link-alt"></i></span></p>
-<blockquote>
-<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
-</blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">Motivation · google&#x2F;guice Wiki<i class="fa fa-external-link-alt"></i></span></p>
-]]></content>
-  </entry>
-  <entry>
     <title>《大话数据结构》</title>
     <url>/2022/04/16/ReadingNote-ds/</url>
     <content><![CDATA[<h1 id="大话数据结构"><a href="#大话数据结构" class="headerlink" title="大话数据结构"></a>大话数据结构</h1><blockquote>
@@ -989,6 +975,63 @@
 ]]></content>
       <tags>
         <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>备份</title>
+    <url>/2022/04/15/backup/</url>
+    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span> </p>
+<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
+<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p>Guice 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">google&#x2F;guice: Guice (pronounced ‘juice’) is a lightweight dependency injection framework for Java 8 and above, brought to you by Google.<i class="fa fa-external-link-alt"></i></span></p>
+<blockquote>
+<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
+</blockquote>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">Motivation · google&#x2F;guice Wiki<i class="fa fa-external-link-alt"></i></span></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>文本换行符号(^M)导致的 git diff 问题</title>
+    <url>/2022/04/18/memo_line_feed/</url>
+    <content><![CDATA[<h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>文件改动了一点，但是在 gitlab&#x2F;github 看 diff 却发现整个文件全部都进行了改动，且文件变的乱序或者变成了一行。</p>
+<h2 id="原因-文件换行符导致"><a href="#原因-文件换行符导致" class="headerlink" title="原因: 文件换行符导致"></a>原因: 文件换行符导致</h2><p>文本换行符号通常有: LF 和 CRLF。</p>
+<span id="more"></span>
+<p>首先介绍 LF 和 CRLF 下是什么：</p>
+<ul>
+<li><strong>CRLF</strong>: 是 carriagereturnlinefeed 的缩写。中文意思是回车换行；</li>
+<li><strong>LF</strong>: 是 line feed 的缩写，中文意思是换行；</li>
+<li><strong>CR</strong>: 是 carriagereturn 的缩写。中文意思是回车；</li>
+</ul>
+<p>为什么换行回车会不同呢? 主要的原因在于操作系统之间的分歧：</p>
+<ul>
+<li>早期的 macOS 系统使用 CR 当做换行，现在也已经统一成了 LF。</li>
+<li>Unix(包含现在大量使用的 linux) 系统使用 LF</li>
+<li>Windows 系统使用 LFCR 当做换行</li>
+</ul>
+<p>也正是因为不同系统的分歧，在多人协作共同开发的时候，可能导致提交代码时候产生问题。</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><h3 id="1-IDE-或者代码编辑器中统一将换行符修改为-LF"><a href="#1-IDE-或者代码编辑器中统一将换行符修改为-LF" class="headerlink" title="1. IDE 或者代码编辑器中统一将换行符修改为: LF"></a>1. IDE 或者代码编辑器中统一将换行符修改为: LF</h3><h3 id="2-在-git-中进行配置"><a href="#2-在-git-中进行配置" class="headerlink" title="2. 在 git 中进行配置"></a>2. 在 git 中进行配置</h3><p>git 为了防止以上问题扰乱跨平台合作开发，使用命令可以转化 LF 和 CRLF<br>具体命令为：</p>
+<ol>
+<li><p><code>git config --global core.autocrlf true</code>: Git 可以在你 push 时自动地把行结束符 CRLF 转换成 LF，而在 pull 代码时把 LF 转换成 CRLF。用 core.autocrlf 来打开此项功能，如果是在 Windows 系统上，把它设置成 true，这样当签出代码时，LF 会被转换成 CRLF</p>
+</li>
+<li><p><code>git config --global core.autocrlf input</code>: Linux 或 Mac 系统使用 LF 作为行结束符；当一个以 CRLF 为行结束符的文件不小心被引入时你肯定想进行修正，把 core.autocrlf 设置成 input 来告诉 Git 在 push 时把 CRLF 转换成 LF，pull 时不转换</p>
+</li>
+<li><p><code>git config --global core.autocrlf false</code>: 在本地和代码库中都保留 CRLF，无论 pull 还是 push 都不变，代码库什么样，本地还是什么样子</p>
+</li>
+</ol>
+<p>参考链接:</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoZW56aG91X3loL2FydGljbGUvZGV0YWlscy8xMDU1MDc1NDk=">IDEA 批量替换文件换行符、分隔符 CRLF、LF、CR_shenzhou_yh 的博客<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3Nkbi5uZXQvdGFncy9NdFRhQWcyc05EWTJNRGt6TFdKc2IyY08wTzBPLmh0bWw=">idea 换行格式指定为 LF<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGV0aWFuYmlqaS5jb20vZ2l0L2dpdC1jcmxmLmh0bWw=">git 解决换行符 ^M 导致整个文件被改 - 乐天笔记<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<!-- - www.baidu.com -->]]></content>
+      <categories>
+        <category>备忘</category>
+      </categories>
+      <tags>
+        <tag>BugMemo</tag>
+        <tag>文本换行符号</tag>
       </tags>
   </entry>
   <entry>

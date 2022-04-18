@@ -2129,18 +2129,6 @@ pre code {
   top: 1.25em;
   width: 4px;
 }
-.post-collapse p a {
-  color: none;
-  border-bottom: none;
-  background: transparent;
-  border-bottom: 3px solid #cbf8df;
-}
-.post-collapse p a:hover {
-  color: none;
-  border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
-}
 .post-body {
   font-family: Lato, PingFang SC, Microsoft YaHei, sans-serif, Lato, PingFang SC, Microsoft YaHei, sans-serif, 'PingFang SC', 'Microsoft YaHei', sans-serif;
   overflow-wrap: break-word;
@@ -2261,17 +2249,17 @@ pre code {
   top: 0;
   width: 100%;
 }
-.post-body p a {
+.post-body a:not(.btn) {
   color: none;
   border-bottom: none;
   background: transparent;
-  border-bottom: 3px solid #cbf8df;
+  border-bottom: 3px solid #d4f7e1;
 }
-.post-body p a:hover {
+.post-body a:not(.btn):hover {
   color: none;
   border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
+  background: #d4f7e1;
+  border-bottom: 4px solid #d4f7e1;
 }
 .post-gallery {
   display: flex;
@@ -2298,18 +2286,6 @@ pre code {
 }
 .posts-collapse .post-gallery {
   margin: 15px 0;
-}
-.post-body p a {
-  color: none;
-  border-bottom: none;
-  background: transparent;
-  border-bottom: 3px solid #cbf8df;
-}
-.post-body p a:hover {
-  color: none;
-  border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
 }
 .posts-expand .post-header {
   font-size: 1.125em;
@@ -2388,17 +2364,17 @@ pre code {
 #busuanzi_container_page_pv {
   display: none;
 }
-.post-header p a {
+.post-header a:not(.btn) {
   color: none;
   border-bottom: none;
   background: transparent;
-  border-bottom: 3px solid #cbf8df;
+  border-bottom: 3px solid #d4f7e1;
 }
-.post-header p a:hover {
+.post-header a:not(.btn):hover {
   color: none;
   border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
+  background: #d4f7e1;
+  border-bottom: 4px solid #d4f7e1;
 }
 .post-nav {
   border-top: 1px solid #eee;
@@ -2432,18 +2408,6 @@ pre code {
 .post-nav-item:last-child .fa {
   margin-left: 5px;
 }
-.post-body p a {
-  color: none;
-  border-bottom: none;
-  background: transparent;
-  border-bottom: 3px solid #cbf8df;
-}
-.post-body p a:hover {
-  color: none;
-  border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
-}
 .post-footer {
   display: flex;
   flex-direction: column;
@@ -2476,17 +2440,29 @@ pre code {
 .post-tags a:not(:last-child) {
   margin-right: 10px;
 }
-.post-body p a {
+.post-tags a:not(.btn) {
   color: none;
   border-bottom: none;
   background: transparent;
-  border-bottom: 3px solid #cbf8df;
+  border-bottom: 3px solid #d4f7e1;
 }
-.post-body p a:hover {
+.post-tags a:not(.btn):hover {
   color: none;
   border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
+  background: #d4f7e1;
+  border-bottom: 4px solid #d4f7e1;
+}
+.post-copyright a:not(.btn) {
+  color: none;
+  border-bottom: none;
+  background: transparent;
+  border-bottom: 3px solid #d4f7e1;
+}
+.post-copyright a:not(.btn):hover {
+  color: none;
+  border-bottom: none;
+  background: #d4f7e1;
+  border-bottom: 4px solid #d4f7e1;
 }
 .post-widgets {
   border-top: 1px solid #eee;
@@ -2505,18 +2481,6 @@ pre code {
   font-size: 0.875em;
   justify-content: center;
   text-align: center;
-}
-.post-body p a {
-  color: none;
-  border-bottom: none;
-  background: transparent;
-  border-bottom: 3px solid #cbf8df;
-}
-.post-body p a:hover {
-  color: none;
-  border-bottom: none;
-  background: #cbf8df;
-  border-bottom: 4px solid #cbf8df;
 }
 .reward-container {
   margin: 1em 0 0;

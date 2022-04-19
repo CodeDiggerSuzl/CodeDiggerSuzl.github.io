@@ -1,0 +1,6 @@
+# hexo robots.txt
+User-agent: *
+Allow: /
+
+Sitemap: https://tech-garden.top/sitemap.xml
+Sitemap: https://tech-garden.top/baidusitemap.xml

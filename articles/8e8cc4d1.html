@@ -27,15 +27,14 @@
 
 
 
-<link rel="canonical" href="https://tech-garden.top/tags/">
+<link rel="canonical" href="https://tech-garden.top/articles/8e8cc4d1.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://tech-garden.top/tags/index.html","path":"tags/index.html","title":"Tags"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://tech-garden.top/articles/8e8cc4d1.html","path":"articles/8e8cc4d1.html","title":"文本换行符号(^M)导致的 git diff 问题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Tags | 👨🏻‍🌾 苏子叶的技术菜园
-</title>
+<title>文本换行符号(^M)导致的 git diff 问题 | 👨🏻‍🌾 苏子叶的技术菜园</title>
   
 
 
@@ -126,7 +125,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -139,6 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9B%A0-%E6%96%87%E4%BB%B6%E6%8D%A2%E8%A1%8C%E7%AC%A6%E5%AF%BC%E8%87%B4"><span class="nav-number">2.</span> <span class="nav-text">原因: 文件换行符导致</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">解法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-IDE-%E6%88%96%E8%80%85%E4%BB%A3%E7%A0%81%E7%BC%96%E8%BE%91%E5%99%A8%E4%B8%AD%E7%BB%9F%E4%B8%80%E5%B0%86%E6%8D%A2%E8%A1%8C%E7%AC%A6%E4%BF%AE%E6%94%B9%E4%B8%BA-LF"><span class="nav-number">3.1.</span> <span class="nav-text">1. IDE 或者代码编辑器中统一将换行符修改为: LF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9C%A8-git-%E4%B8%AD%E8%BF%9B%E8%A1%8C%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">2. 在 git 中进行配置</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -219,41 +219,173 @@
 </noscript>
 
 
-    <div class="main-inner page posts-expand">
+    <div class="main-inner post posts-expand">
 
 
-    
-    
-    
-    <div class="post-block" lang="zh-CN"><header class="post-header">
+  
 
-<h1 class="post-title" itemprop="name headline">Tags
-</h1>
 
-<div class="post-meta-container">
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tech-garden.top/articles/8e8cc4d1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/logo.png">
+      <meta itemprop="name" content="苏子叶">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="👨🏻‍🌾 苏子叶的技术菜园">
+      <meta itemprop="description" content="希望成为一个有趣、有才、自由的人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="文本换行符号(^M)导致的 git diff 问题 | 👨🏻‍🌾 苏子叶的技术菜园">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          文本换行符号(^M)导致的 git diff 问题
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-04-18 14:17:13" itemprop="dateCreated datePublished" datetime="2022-04-18T14:17:13+08:00">2022-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/BugMemo/" itemprop="url" rel="index"><span itemprop="name">BugMemo</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>894</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
 </div>
 
-</header>
+        </div>
+      </header>
 
-      
-      
-      <div class="post-body"><div class="tag-cloud">
-  <div class="tag-cloud-title">
-    目前共计 8 个标签
-  </div>
-  <div class="tag-cloud-tags">
-    <a href="/tags/IDEA-%E6%8F%92%E4%BB%B6/" style="font-size: 20px;" class="tag-cloud-0">IDEA - 插件</a> <a href="/tags/Java%E5%AE%B9%E5%99%A8/" style="font-size: 20px;" class="tag-cloud-0">Java容器</a> <a href="/tags/git/" style="font-size: 20px;" class="tag-cloud-0">git</a> <a href="/tags/hexo/" style="font-size: 20px;" class="tag-cloud-0">hexo</a> <a href="/tags/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/" style="font-size: 20px;" class="tag-cloud-0">开源项目</a> <a href="/tags/%E6%96%87%E6%9C%AC%E6%8D%A2%E8%A1%8C%E7%AC%A6%E5%8F%B7/" style="font-size: 20px;" class="tag-cloud-0">文本换行符号</a> <a href="/tags/%E6%BA%90%E7%A0%81/" style="font-size: 20px;" class="tag-cloud-0">源码</a> <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" style="font-size: 20px;" class="tag-cloud-0">读书笔记</a>
-  </div>
-</div>
-
-      </div>
-      
-      
-      
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>文件改动了一点，但是在 gitlab&#x2F;github 看 diff 却发现整个文件全部都进行了改动，且文件变的乱序或者变成了一行。</p>
+<h2 id="原因-文件换行符导致"><a href="#原因-文件换行符导致" class="headerlink" title="原因: 文件换行符导致"></a>原因: 文件换行符导致</h2><p>文本换行符号通常有: LF 和 CRLF。</p>
+<span id="more"></span>
+<p>首先介绍 LF 和 CRLF 下是什么：</p>
+<ul>
+<li><strong>CRLF</strong>: 是 carriagereturnlinefeed 的缩写。中文意思是回车换行；</li>
+<li><strong>LF</strong>: 是 line feed 的缩写，中文意思是换行；</li>
+<li><strong>CR</strong>: 是 carriagereturn 的缩写。中文意思是回车；</li>
+</ul>
+<p>为什么换行回车会不同呢? 主要的原因在于操作系统之间的分歧：</p>
+<ul>
+<li>早期的 macOS 系统使用 CR 当做换行，现在也已经统一成了 LF。</li>
+<li>Unix(包含现在大量使用的 linux) 系统使用 LF</li>
+<li>Windows 系统使用 LFCR 当做换行</li>
+</ul>
+<p>也正是因为不同系统的分歧，在多人协作共同开发的时候，可能导致提交代码时候产生问题。</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><h3 id="1-IDE-或者代码编辑器中统一将换行符修改为-LF"><a href="#1-IDE-或者代码编辑器中统一将换行符修改为-LF" class="headerlink" title="1. IDE 或者代码编辑器中统一将换行符修改为: LF"></a>1. IDE 或者代码编辑器中统一将换行符修改为: LF</h3><h3 id="2-在-git-中进行配置"><a href="#2-在-git-中进行配置" class="headerlink" title="2. 在 git 中进行配置"></a>2. 在 git 中进行配置</h3><p>git 为了防止以上问题扰乱跨平台合作开发，使用命令可以转化 LF 和 CRLF<br>具体命令为：</p>
+<ol>
+<li><p><code>git config --global core.autocrlf true</code>: Git 可以在你 push 时自动地把行结束符 CRLF 转换成 LF，而在 pull 代码时把 LF 转换成 CRLF。用 core.autocrlf 来打开此项功能，如果是在 Windows 系统上，把它设置成 true，这样当签出代码时，LF 会被转换成 CRLF</p>
+</li>
+<li><p><code>git config --global core.autocrlf input</code>: Linux 或 Mac 系统使用 LF 作为行结束符；当一个以 CRLF 为行结束符的文件不小心被引入时你肯定想进行修正，把 core.autocrlf 设置成 input 来告诉 Git 在 push 时把 CRLF 转换成 LF，pull 时不转换</p>
+</li>
+<li><p><code>git config --global core.autocrlf false</code>: 在本地和代码库中都保留 CRLF，无论 pull 还是 push 都不变，代码库什么样，本地还是什么样子</p>
+</li>
+</ol>
+<p>参考链接:</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoZW56aG91X3loL2FydGljbGUvZGV0YWlscy8xMDU1MDc1NDk=">IDEA 批量替换文件换行符、分隔符 CRLF、LF、CR_shenzhou_yh 的博客<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3Nkbi5uZXQvdGFncy9NdFRhQWcyc05EWTJNRGt6TFdKc2IyY08wTzBPLmh0bWw=">idea 换行格式指定为 LF<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGV0aWFuYmlqaS5jb20vZ2l0L2dpdC1jcmxmLmh0bWw=">git 解决换行符 ^M 导致整个文件被改 - 乐天笔记<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<!-- - www.baidu.com -->
     </div>
 
     
     
+    
+      
+
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>苏子叶
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://tech-garden.top/articles/8e8cc4d1.html" title="文本换行符号(^M)导致的 git diff 问题">https://tech-garden.top/articles/8e8cc4d1.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E6%96%87%E6%9C%AC%E6%8D%A2%E8%A1%8C%E7%AC%A6%E5%8F%B7/" rel="tag"><i class="fa fa-tag"></i> 文本换行符号</a>
+              <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/articles/3a72b4cd.html" rel="prev" title="使用 hexo 搭建博客">
+                  <i class="fa fa-chevron-left"></i> 使用 hexo 搭建博客
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/articles/7992296d.html" rel="next" title="IDEA 好用的插件备忘">
+                  IDEA 好用的插件备忘 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
 
 
     <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC81NjEzNS8zMjU5OA=="></div>
@@ -339,7 +471,7 @@
 
 
   <script src="https://cdn.jsdelivr.net/npm/quicklink@2.2.0/dist/quicklink.umd.js" integrity="sha256-4kQf9z5ntdQrzsBC3YSHnEz02Z9C1UeW/E9OgnvlzSY=" crossorigin="anonymous"></script>
-  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://tech-garden.top/tags/"}</script>
+  <script class="next-config" data-name="quicklink" type="application/json">{"enable":true,"home":true,"archive":true,"delay":true,"timeout":3000,"priority":true,"url":"https://tech-garden.top/articles/8e8cc4d1.html"}</script>
   <script src="/js/third-party/quicklink.js"></script>
 <script src="/js/third-party/comments/livere.js"></script>
 

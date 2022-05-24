@@ -35,6 +35,631 @@
       </tags>
   </entry>
   <entry>
+    <title>优秀的项目备忘</title>
+    <url>/articles/6d3e6a59.html</url>
+    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span></p>
+<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
+<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">Guice<i class="fa fa-external-link-alt"></i></span> 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">DI 的核心思想<i class="fa fa-external-link-alt"></i></span>:</p>
+<blockquote>
+<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>备忘</category>
+      </categories>
+      <tags>
+        <tag>开源项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文本换行符号(^M)导致的 git diff 问题</title>
+    <url>/articles/8e8cc4d1.html</url>
+    <content><![CDATA[<h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><p>文件改动了一点，但是在 gitlab&#x2F;github 看 diff 却发现整个文件全部都进行了改动，且文件变的乱序或者变成了一行。</p>
+<h2 id="原因-文件换行符导致"><a href="#原因-文件换行符导致" class="headerlink" title="原因: 文件换行符导致"></a>原因: 文件换行符导致</h2><p>文本换行符号通常有: LF 和 CRLF。</p>
+<span id="more"></span>
+<p>首先介绍 LF 和 CRLF 下是什么：</p>
+<ul>
+<li><strong>CRLF</strong>: 是 carriagereturnlinefeed 的缩写。中文意思是回车换行；</li>
+<li><strong>LF</strong>: 是 line feed 的缩写，中文意思是换行；</li>
+<li><strong>CR</strong>: 是 carriagereturn 的缩写。中文意思是回车；</li>
+</ul>
+<p>为什么换行回车会不同呢? 主要的原因在于操作系统之间的分歧：</p>
+<ul>
+<li>早期的 macOS 系统使用 CR 当做换行，现在也已经统一成了 LF。</li>
+<li>Unix(包含现在大量使用的 linux) 系统使用 LF</li>
+<li>Windows 系统使用 LFCR 当做换行</li>
+</ul>
+<p>也正是因为不同系统的分歧，在多人协作共同开发的时候，可能导致提交代码时候产生问题。</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><h3 id="1-IDE-或者代码编辑器中统一将换行符修改为-LF"><a href="#1-IDE-或者代码编辑器中统一将换行符修改为-LF" class="headerlink" title="1. IDE 或者代码编辑器中统一将换行符修改为: LF"></a>1. IDE 或者代码编辑器中统一将换行符修改为: LF</h3><h3 id="2-在-git-中进行配置"><a href="#2-在-git-中进行配置" class="headerlink" title="2. 在 git 中进行配置"></a>2. 在 git 中进行配置</h3><p>git 为了防止以上问题扰乱跨平台合作开发，使用命令可以转化 LF 和 CRLF<br>具体命令为：</p>
+<ol>
+<li><p><code>git config --global core.autocrlf true</code>: Git 可以在你 push 时自动地把行结束符 CRLF 转换成 LF，而在 pull 代码时把 LF 转换成 CRLF。用 core.autocrlf 来打开此项功能，如果是在 Windows 系统上，把它设置成 true，这样当签出代码时，LF 会被转换成 CRLF</p>
+</li>
+<li><p><code>git config --global core.autocrlf input</code>: Linux 或 Mac 系统使用 LF 作为行结束符；当一个以 CRLF 为行结束符的文件不小心被引入时你肯定想进行修正，把 core.autocrlf 设置成 input 来告诉 Git 在 push 时把 CRLF 转换成 LF，pull 时不转换</p>
+</li>
+<li><p><code>git config --global core.autocrlf false</code>: 在本地和代码库中都保留 CRLF，无论 pull 还是 push 都不变，代码库什么样，本地还是什么样子</p>
+</li>
+</ol>
+<p>参考链接:</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoZW56aG91X3loL2FydGljbGUvZGV0YWlscy8xMDU1MDc1NDk=">IDEA 批量替换文件换行符、分隔符 CRLF、LF、CR_shenzhou_yh 的博客<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3Nkbi5uZXQvdGFncy9NdFRhQWcyc05EWTJNRGt6TFdKc2IyY08wTzBPLmh0bWw=">idea 换行格式指定为 LF<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGV0aWFuYmlqaS5jb20vZ2l0L2dpdC1jcmxmLmh0bWw=">git 解决换行符 ^M 导致整个文件被改 - 乐天笔记<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<!-- - www.baidu.com -->]]></content>
+      <categories>
+        <category>BugMemo</category>
+      </categories>
+      <tags>
+        <tag>文本换行符号</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>从头开始搭建开发环境（CentOS)</title>
+    <url>/articles/d0e276b1.html</url>
+    <content><![CDATA[<p>首先确定系统的包管理工具：这里是 CentOS，是 yum</p>
+<h3 id="下载基本的工具"><a href="#下载基本的工具" class="headerlink" title="下载基本的工具"></a>下载基本的工具</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo yum install -y \</span><br><span class="line">neovim.x86_64 \</span><br><span class="line">unzip \</span><br><span class="line">tar \</span><br><span class="line">wget \</span><br><span class="line">git \</span><br><span class="line">zsh</span><br></pre></td></tr></table></figure>
+
+<p>安装 oh-my-zsh</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sh -c <span class="string">&quot;<span class="subst">$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Java-安装和配置"><a href="#Java-安装和配置" class="headerlink" title="Java 安装和配置"></a>Java 安装和配置</h3><p>下载 java：<span class="exturl" data-url="aHR0cHM6Ly93d3cub3JhY2xlLmNvbS9qYXZhL3RlY2hub2xvZ2llcy9kb3dubG9hZHMvI2phdmE4">https://www.oracle.com/java/technologies/downloads/#java8<i class="fa fa-external-link-alt"></i></span></p>
+<p>拷贝到服务器上：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">scp jdk-8u333-linux-x64.tar.gz user_name@host:host_dir</span><br></pre></td></tr></table></figure>
+
+<p>解压和移动：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">tar -zxvpf jdk-8u333-linux-x64.tar.gz</span><br><span class="line"></span><br><span class="line">sudo <span class="built_in">mv</span> jdk1.8.0_333/ /opt/</span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量：<br><code>vi /etc/profile</code> 或者<code>vi ~/.zshrc </code>,加入下面的文字配置：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/jdk1.8.0_333</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> CLASSPATH=.:<span class="variable">$JAVA_HOME</span>/lib:<span class="variable">$JAVA_HOME</span>/jre/lib</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装-MySQL"><a href="#安装-MySQL" class="headerlink" title="安装 MySQL"></a>安装 MySQL</h3><p>参考链接：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZGlnaXRhbG9jZWFuLmNvbS9jb21tdW5pdHkvdHV0b3JpYWxzL2hvdy10by1pbnN0YWxsLW15c3FsLW9uLWNlbnRvcy03">https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-centos-7<i class="fa fa-external-link-alt"></i></span></p>
+<p>下载安装包,这里安装的是 8.0 版本的 MySQL：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -sSLO https://dev.mysql.com/get/mysql80-community-release-el8-4.noarch.rpm</span><br></pre></td></tr></table></figure>
+
+<p>安装：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo rpm -ivh mysql80-community-release-el8-4.noarch.rpm</span><br><span class="line">sudo yum install mysql-server</span><br></pre></td></tr></table></figure>
+
+<p>启动 MySQL：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo systemctl start mysqld</span><br></pre></td></tr></table></figure>
+<p>查看状态&#x2F;关闭：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo systemctl status/stop mysqld</span><br></pre></td></tr></table></figure>
+
+<p>配置MySQL，按照指示依次输入 y（yes）或者 n（no)：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sudo mysql_secure_installation</span><br></pre></td></tr></table></figure>
+<p>测试 MySQL：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysqladmin <span class="operator">-</span>u root <span class="operator">-</span>p version</span><br></pre></td></tr></table></figure>
+<p>这样应该就可以使用，如果后续链接出问题的话可以根据 MySQL 特定的返回码来判断对应的问题。</p>
+<h3 id="安装-Maven"><a href="#安装-Maven" class="headerlink" title="安装 Maven"></a>安装 Maven</h3><p>同样的下载 zip 包，上传到服务器上</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">unzip apache-maven-3.8.4-bin.zip</span><br><span class="line"></span><br><span class="line"><span class="built_in">mv</span> apache-maven-3.8.4 /opt</span><br></pre></td></tr></table></figure>
+
+<p>配置环境变量</p>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="attribute">MAVEN_HOME</span>=/opt/apache-maven-3.8.4</span><br><span class="line"><span class="built_in">export</span> <span class="attribute">PATH</span>=<span class="variable">$MAVEN_HOME</span>/bin:$PATH</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="安装-rocketmq"><a href="#安装-rocketmq" class="headerlink" title="安装 rocketmq"></a>安装 rocketmq</h3><ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2xpdTMyMHlqL2FydGljbGUvZGV0YWlscy8xMjAxMzIxMDU/c3BtPTEwMDEuMjEwMS4zMDAxLjY2NTAuMSZ1dG1fbWVkaXVtPWRpc3RyaWJ1dGUucGNfcmVsZXZhbnQubm9uZS10YXNrLWJsb2ctMn5kZWZhdWx0fkJsb2dDb21tZW5kRnJvbUJhaWR1fmRlZmF1bHQtMS0xMjAxMzIxMDUtYmxvZy03NzE0MjIzMy5wY19yZWxldmFudF9kZWZhdWx0JmRlcHRoXzEtdXRtX3NvdXJjZT1kaXN0cmlidXRlLnBjX3JlbGV2YW50Lm5vbmUtdGFzay1ibG9nLTJ+ZGVmYXVsdH5CbG9nQ29tbWVuZEZyb21CYWlkdX5kZWZhdWx0LTEtMTIwMTMyMTA1LWJsb2ctNzcxNDIyMzMucGNfcmVsZXZhbnRfZGVmYXVsdCZ1dG1fcmVsZXZhbnRfaW5kZXg9Mg==">参考安装链接<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>建议不要使用 root 账户进行操作：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">wget https://dlcdn.apache.org/rocketmq/4.9.3/rocketmq-all-4.9.3-bin-release.zip</span><br><span class="line"><span class="comment"># 解压</span></span><br><span class="line">unzip rocketmq-all-4.9.3-bin-release.zip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移动</span></span><br><span class="line">sudo <span class="built_in">mv</span> rocketmq-4.9.3 /opt</span><br></pre></td></tr></table></figure>
+
+<p><strong>修改 rocketmq 的运行内存</strong></p>
+<p>使用vim命令打开bin&#x2F;runserver.sh文件，将这些值修改为如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/db971c9bb82945d4991aa49ac7e6299f.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAbGl1MzIweWo=,size_20,color_FFFFFF,t_70,g_se,x_16#pic_center"></p>
+<p>修改runbroker.sh</p>
+<p>使用vim命令打开bin&#x2F;runbroker.sh文件，将这些值修改为如下：<br><img src="https://img-blog.csdnimg.cn/812d072b5d5a41e1810798abecef25d7.png#pic_center"></p>
+<p>修改配置文件：</p>
+<p>使用vim命令打开conf&#x2F;broker.conf文件，在最后添加如下信息：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">brokerIP1=ECS的公网IP</span><br><span class="line">namesrvAddr=ECS的公网IP:9876</span><br></pre></td></tr></table></figure>
+
+<p>编写一个脚本来启动 nameserver 和 broker</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ;<span class="built_in">mkdir</span> <span class="built_in">exec</span>;<span class="built_in">cd</span> <span class="built_in">exec</span>; <span class="built_in">touch</span> mq_start; <span class="built_in">touch</span> mq_stop; <span class="built_in">chmod</span> 755 mq_start mq_stop;</span><br></pre></td></tr></table></figure>
+
+<p>mq_start 文件内容：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> /opt/rocketmq-4.9.3</span><br><span class="line"><span class="comment"># start name server</span></span><br><span class="line"><span class="built_in">nohup</span> sh bin/mqnamesrv &amp;</span><br><span class="line"><span class="comment"># start broker</span></span><br><span class="line"><span class="built_in">nohup</span> sh bin/mqbroker -n ECS的公网IP:9876 -c conf/broker.conf autoCreateTopicEnable=<span class="literal">true</span> &amp;</span><br></pre></td></tr></table></figure>
+
+<p>mq_stop 内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">cd</span> /opt/rocketmq-4.9.3</span><br><span class="line"></span><br><span class="line">sh bin/mqshutdown broker</span><br><span class="line">sh bin/mqshutdown namesrv</span><br></pre></td></tr></table></figure>
+
+<p>最后将这个文件夹 exec 加入到环境变量中：</p>
+<p><code>vim .zshrc</code> 写入内容：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> EXEC_HOME=/home/lighthouse/exec</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$EXEC_HOME</span>/:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>刷新环境变量：</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+
+<p><strong>其他需要注意的地方：</strong></p>
+<ol>
+<li>关闭 centos 的防火墙 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 关闭防火墙</span></span><br><span class="line">systemctl stop firewalld.service</span><br><span class="line"><span class="comment"># 关闭防自动启动</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld.service</span><br><span class="line"><span class="comment"># 查看防火墙状态：</span></span><br><span class="line">systemctl status firewalld.service</span><br></pre></td></tr></table></figure></li>
+<li>在云服务器的控制台，安全组开放：9876 和 10911 两个端口。<br><img src="https://s3.bmp.ovh/imgs/2022/05/24/8219e73b49ded266.png"></li>
+<li>mq client 的版本要和 rocketmq 的版本一致</li>
+</ol>
+]]></content>
+      <categories>
+        <category>环境搭建</category>
+      </categories>
+      <tags>
+        <tag>mysql</tag>
+        <tag>rocketmq</tag>
+        <tag>java</tag>
+        <tag>maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell 脚本编程-1</title>
+    <url>/articles/80fbfe5c.html</url>
+    <content><![CDATA[<h2 id="什么是-shell"><a href="#什么是-shell" class="headerlink" title="什么是 shell ?"></a>什么是 shell ?</h2><p>维基百科定义：</p>
+<blockquote>
+<p>Computers understand the language of zeros and ones known as <span class="exturl" data-url="aHR0cHM6Ly9iYXNoLmN5YmVyY2l0aS5iaXovd2lraS9pbmRleC5waHA/dGl0bGU9QmluYXJ5X2xhbmd1YWdlJmFjdGlvbj1lZGl0JnJlZGxpbms9MQ==">binary language<i class="fa fa-external-link-alt"></i></span>. In the early days of computing, instructions were provided using binary language, which is difficult for all of us to read and write. Therefore, in an operating system there is a special program called the shell. The shell accepts human readable commands and translates them into something the kernel can read and process.</p>
+</blockquote>
+<p>简而言之：shell 就是将人类可读的指令转换成计算机内核能够识别并执行的程序。</p>
+<p>常见的 shell 有:</p>
+<p><img  width = '256' height ='144' src="https://kurume-4th-ranger-club.com/wp-content/uploads/2020/07/bash_logo_eyecatch-1024x576.png" align = "right" hspace="12"></img></p>
+<ul>
+<li>Bourne Shell（sh）</li>
+<li>Bourne Again shell（bash）</li>
+<li>C Shell（csh）</li>
+<li>TENEX C Shell（tcsh）</li>
+<li>Korn shell（ksh）</li>
+<li>Z Shell（zsh）</li>
+<li>Friendly Interactive Shell（fish）</li>
+</ul>
+<p>其中 bash 是目前使用最多的 shell。</p>
+<p><strong>shell 脚本</strong> 就是将完成一个任务的所有的命令按照执行的先后顺序，自上而下写入到一个文本文件中，然后给予执行权限。</p>
+<p>比如：这是一个安装 ngixn 的脚本：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#install gcc</span></span><br><span class="line">yum -y install wget gcc pcre-devel zlib-devel</span><br><span class="line"><span class="comment">#get nginx</span></span><br><span class="line">wget http://nginx.org/download/nginx-1.16.0.tar.gz</span><br><span class="line"></span><br><span class="line">tar xf nginx-1.16.0.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> nginx-1.16.0</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<p>给脚本赋予权限 <code>chmod 700 ngnix_installation_script.sh</code> 或者 <code>sh nginx_installation_script.sh</code>, 就可以运行了.</p>
+<h2 id="shell-脚本基础"><a href="#shell-脚本基础" class="headerlink" title="shell 脚本基础"></a>shell 脚本基础</h2><h3 id="注释和命名"><a href="#注释和命名" class="headerlink" title="注释和命名"></a>注释和命名</h3><ul>
+<li>shell 中使用 <code>#</code> 进行注释</li>
+<li>脚本的第一行通常是指定解释器，即这个脚本必须通过什么解释器执行。这一行以 <code>#!</code> 字符开头，这个字符称为 Shebang，所以这一行就叫做 Shebang 行。</li>
+<li>shell 脚本文件的命名和其他编程语言的命名类似，数字不能开头，</li>
+</ul>
+<h3 id="运行一个脚本"><a href="#运行一个脚本" class="headerlink" title="运行一个脚本"></a>运行一个脚本</h3><ol>
+<li><p>脚本运行需要执行权限，当我们给一个文件赋予执行权限后，该脚本就可以运行。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod u+x script_fileName</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接使用 bash 进行运行 <code>bash script_fileName</code></p>
+</li>
+</ol>
+<h3 id="shell-中的特殊符号-会被特殊对待"><a href="#shell-中的特殊符号-会被特殊对待" class="headerlink" title="shell 中的特殊符号,(会被特殊对待)"></a>shell 中的特殊符号,(会被特殊对待)</h3><ol>
+<li><code>~</code> 家目录</li>
+<li><code>!</code> 执行历史命令,<code>!!</code> 表示执行上一条命令</li>
+<li><code>$</code> 去变量符号</li>
+<li><code>&amp;</code> 后台执行</li>
+<li><code>*</code> shell 中的通配符号, 匹配所有</li>
+<li><code>?</code> shell 中的通配符号, 匹配除回车外的一个字符</li>
+<li><code>;</code> 多条命令之间的分割符号</li>
+<li><code>|</code> 管道符号</li>
+<li><code>\</code> 转义符号</li>
+<li>&#96; 反引号, 命令中执行命令</li>
+<li><code>&#39;&#39;</code> 单引号, 脚本中字符串需要用单引号括起来,<strong>但是不会解释变量</strong></li>
+<li><code>&quot;&quot;</code> 双引号, 用于包裹字符串</li>
+</ol>
+<h3 id="shell-中的重定向"><a href="#shell-中的重定向" class="headerlink" title="shell 中的重定向"></a>shell 中的重定向</h3><ol>
+<li><p><code>&gt;</code> 重定向输入 覆盖原始的数据</p>
+</li>
+<li><p><code>&gt;&gt;</code> 从定向追加输入, 在原来的文件中追加数据</p>
+</li>
+<li><p><code>&lt;</code> 重定向输出 <code>wc -l &lt; /etc/passwd</code> 统计数据流</p>
+</li>
+<li><p><code>&lt;&lt;</code> 重定向追加输出 <code>fdisk /dev/sdb &lt;</code></p>
+<p> 格式化硬盘，重新缓存。</p>
+ <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">fdisk /dev/sdb &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">n</span></span><br><span class="line"><span class="string">p</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">+534M</span></span><br><span class="line"><span class="string">w</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="shell-中的数学运算"><a href="#shell-中的数学运算" class="headerlink" title="shell 中的数学运算"></a>shell 中的数学运算</h3><ol>
+<li><p><strong>expr</strong> 只能整数运算, 格式比较古板 需要有空格 <code>expr 1 + 1</code></p>
+</li>
+<li><p><strong>bc</strong> 使用 bc 计算器处理浮点运算,<code>scale=2</code> 代表小数点保留两位 <code>echo &quot;scale=2;3+100&quot;|bc</code></p>
+</li>
+<li><p>双小圆括号进行运算 shell 中 <code>(())</code> 可以用来做数学运算 <code>echo $(( 100**3 ))</code></p>
+</li>
+</ol>
+<h3 id="退出脚本"><a href="#退出脚本" class="headerlink" title="退出脚本"></a>退出脚本</h3><p>exit NUM 退出脚本, 释放系统资源 (NUM 代表一个整数) 代表脚本的返回值</p>
+<p>在命令行中输入：<br><code>man exit</code> 查看详细 <code>exit</code> 详细的信息</p>
+<h2 id="输出和输入"><a href="#输出和输入" class="headerlink" title="输出和输入"></a>输出和输入</h2><h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h4><p><code>echo</code> 命令的作用是在屏幕输出一行文本，可以将该命令的参数原样输出。</p>
+<ul>
+<li><p><code>-n</code>: 在文本末尾不添加换行符号</p>
+</li>
+<li><p><code>-e</code>: <strong>解释</strong> 引号中的特殊字符 (双引号和单引号)</p>
+</li>
+<li><p><code>-b</code>: 删除一个符号</p>
+<p>  倒计时脚本:</p>
+  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> time <span class="keyword">in</span> `<span class="built_in">seq</span> 9 -1 0`;<span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> -ne <span class="string">&quot;\b<span class="variable">$time</span>&quot;</span></span><br><span class="line">        <span class="built_in">sleep</span> 1</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><h4 id="脚本的传参"><a href="#脚本的传参" class="headerlink" title="脚本的传参"></a>脚本的传参</h4><ul>
+<li><p><code>$1</code>: 在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：**<code>$n</code>**。<code>n</code> 代表一个数字，，其中 <code>$0</code> 为执行的文件名（包含文件路径）, <code>$1</code> 为执行脚本的第一个参数，<code>$2 </code> 为执行脚本的第二个参数，以此类推……</p>
+</li>
+<li><p><code>$#</code>:  传递到脚本的参数个数</p>
+</li>
+<li><p><code>$*</code>:  以一个单字符串显示所有向脚本传递的参数。 如 <code>$*</code> 用「”」括起来的情况、以 <code>$1</code> <code>$2</code> … <code>$n</code> 的形式输出所有参数。</p>
+</li>
+<li><p><code>$$</code>:   脚本运行的当前进程 ID 号</p>
+</li>
+<li><p><code>$!</code>:  后台运行的最后一个进程的 ID 号</p>
+</li>
+<li><p><code>$@</code>:   与 <code>$*</code> 相同，但是使用时加引号，并在引号中返回每个参数。 如 <code>&quot;$@&quot;</code> 用 <code>「&quot;」</code> 括起来的情况、以 <code>&quot;$1&quot;&quot;$2&quot; … &quot;$n&quot;</code> 的形式输出所有参数。</p>
+</li>
+<li><p><code>$-</code>:   显示 Shell 使用的当前选项，与 <span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9saW51eC9saW51eC1jb21tLXNldC5odG1s">set 命令<i class="fa fa-external-link-alt"></i></span> 功能相同。</p>
+</li>
+<li><p><code>$?</code>:  显示最后命令的退出状态。0 表示没有错误，其他任何值表明有错误。</p>
+</li>
+</ul>
+<h4 id="Read-命令"><a href="#Read-命令" class="headerlink" title="Read 命令"></a><code>Read</code> 命令</h4><p>默认接受键盘的输入，回车符代表输入结束</p>
+<ul>
+<li><p><code>-p</code>: 打印信息</p>
+</li>
+<li><p><code>-t</code>: 限定时间</p>
+</li>
+<li><p><code>-s</code>: 不回显</p>
+</li>
+<li><p><code>-n</code>: 输入字符个数</p>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">clear</span><br><span class="line"><span class="built_in">echo</span> -n -e <span class="string">&quot;type something&quot;</span></span><br><span class="line"><span class="built_in">read</span> var</span><br><span class="line"><span class="built_in">echo</span>  <span class="string">&quot;you typed:&quot;</span> <span class="variable">$var</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="shell-变量"><a href="#shell-变量" class="headerlink" title="shell 变量"></a>shell 变量</h2><h3 id="变量的操作"><a href="#变量的操作" class="headerlink" title="变量的操作"></a>变量的操作</h3><ul>
+<li><p>定义变量格式: <code>变量名 = 值</code>(不能有空号)</p>
+</li>
+<li><p>使用 <code>$</code> 进行变量的读取</p>
+</li>
+<li><p>使用 <code>unset 变量名 </code> 取消变量</p>
+</li>
+</ul>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ol>
+<li><p>本地变量：用户私有变量，只有 <strong>本用户可以使用</strong>，保存在家目录下的 <code>.bash_profile</code>、<code>.bashrc</code> 文件中</p>
+</li>
+<li><p>全局变量：<strong>所有用户都可以使用</strong>，保存在 <code>/etc/profile</code>、<code>/etc/bashrc</code> 文件中。使用 <code>export 变量名 = 变量值 </code> 进行全局变量的定义</p>
+</li>
+<li><p>用户自定义变量：用户自定义，比如脚本中的变量，终端关闭或者关机，都会丢失，</p>
+</li>
+</ol>
+<h2 id="shell-数组"><a href="#shell-数组" class="headerlink" title="shell 数组"></a>shell 数组</h2><h3 id="基本数组"><a href="#基本数组" class="headerlink" title="基本数组"></a>基本数组</h3><h4 id="数组语法"><a href="#数组语法" class="headerlink" title="数组语法"></a>数组语法</h4><ul>
+<li>定义: <code> 数组名称 =(元素 1 元素 2 元素 3 ...)</code></li>
+<li>数组的读出 <code>$&#123;数组名称&#125;[index]</code></li>
+</ul>
+<h4 id="数组的赋值"><a href="#数组的赋值" class="headerlink" title="数组的赋值"></a>数组的赋值</h4><p>方法一: 一次赋一个值</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">array0[0]=<span class="string">&#x27;tom&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>方法二: 一次赋予多个值</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">array2=(tom jack alice)</span><br><span class="line"></span><br><span class="line">array3=(<span class="built_in">cat</span> /etc/passwd) <span class="comment">#希望是将该文件中的每一个行作为一个元素赋值给数组 array3</span></span><br><span class="line"></span><br><span class="line">array4=(<span class="built_in">ls</span> /var/ftp/Shell/for*)</span><br><span class="line"></span><br><span class="line">array5=(tom jack alice “bash shell”)</span><br></pre></td></tr></table></figure>
+
+<h4 id="访问数组元素"><a href="#访问数组元素" class="headerlink" title="访问数组元素"></a>访问数组元素</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[0]&#125;</span> 访问数组中的第一个元素</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[@]&#125;</span> 访问数组中所有元素 等同于 <span class="built_in">echo</span> <span class="variable">$&#123;array1[*]&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#array1[@]&#125;</span> 统计数组元素的个数</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;!array2[@]&#125;</span> 获取数组元素的索引</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[@]:1&#125;</span> 从数组下标 1 开始</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[@]:1:2&#125;</span> 从数组下标 1 开始，访问两个元素</span><br></pre></td></tr></table></figure>
+
+<h3 id="联合数组"><a href="#联合数组" class="headerlink" title="联合数组"></a>联合数组</h3><p>关联数组可以允许用户自定义数组的索引，这样使用起来更加方便、高效。</p>
+<p><strong>需要先申明该数组为关联数组</strong></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">declare</span> -A a_array</span><br><span class="line">a_array=([name]=<span class="string">&#x27;joey&#x27;</span> [age]=<span class="string">&#x27;25&#x27;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;a_array[name]&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>访问数组元素：</strong></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;ass_array2[index2]&#125;</span> 访问数组中的第二个元数</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;ass_array2[@]&#125;</span> 访问数组中所有元数 等同于 <span class="built_in">echo</span> <span class="variable">$&#123;array1[*]&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#ass_array2[@]&#125;</span> 获得数组元数的个数</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;!ass_array2[@]&#125;</span> 获得数组元数的索引</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<p>相关教程和书籍:</p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zMDM1OTk1NC8=">鸟哥的Linux私房菜 基础学习篇 第四版 (豆瓣)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmFwZWxhbmQuY24vZGV0YWlscy8xMi8=">路飞学城 shell 教程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC82ODA2ODYyLw==">The Linux Command Line <i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93YW5nZG9jLmNvbS9iYXNoLw==">Bash 脚本教程 - 网道<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<p>接着入门: <a href="https://tech-garden.top/articles/98e16645.html">https://tech-garden.top/articles/98e16645.html</a></p>
+<center>--- 全文完 ---</center>]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>shell 脚本编程-2</title>
+    <url>/articles/98e16645.html</url>
+    <content><![CDATA[<p>前置文章：<a href="https://tech-garden.top/articles/98e16645.html">https://tech-garden.top/articles/98e16645.html</a></p>
+<h2 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h2><h3 id="shell-中的比较运算"><a href="#shell-中的比较运算" class="headerlink" title="shell 中的比较运算"></a>shell 中的比较运算</h3><h4 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h4><p>  运算符解释</p>
+<ul>
+<li><code>-eq</code>       等于</li>
+<li><code>-gt</code>       大于</li>
+<li><code>-lt</code>       小于</li>
+<li><code>-ge</code>       大于或等于</li>
+<li><code>-le</code>       小于或等于</li>
+<li><code>-ne</code>       不等于</li>
+</ul>
+<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><p>运算符解释，注意字符串一定别忘了使用引号引起来</p>
+<ul>
+<li><code>==</code> 等于</li>
+<li><code>!=</code> 不等于</li>
+<li><code>-n</code> 检查字符串长度是否大于 0</li>
+<li><code>-z</code> 检查字符串长度是否为 0</li>
+</ul>
+<h4 id="文件的检查和比较"><a href="#文件的检查和比较" class="headerlink" title="文件的检查和比较"></a>文件的检查和比较</h4><ul>
+<li><code>-d</code> 是否存在且为目录</li>
+<li><code>-e</code> 检查文件是否存在</li>
+<li><code>-f</code> 检查文件是否存在且为文件</li>
+<li><code>-s</code> 检查文件是否存在且可读</li>
+<li><code>-w</code> 检查文件是否存在且不为空</li>
+<li><code>-x </code> 检查文件是否存在且可写</li>
+<li><code>-O</code> 检查文件是否存在且可执行</li>
+<li><code>-G</code> 检查文件是否存在并且被当前用户拥有</li>
+<li><code> file1 -nt file2</code>  检查 file1 是否比 file2 新</li>
+<li><code>file1 -ot file2</code> 检查 file1 是否比 file2 旧</li>
+</ul>
+<h3 id="if-语法"><a href="#if-语法" class="headerlink" title="if 语法"></a><code>if</code> 语法</h3><p>if 条件要加 <code>[]</code></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition]</span><br><span class="line">   <span class="keyword">then</span></span><br><span class="line">      commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="if-else"><a href="#if-else" class="headerlink" title="if-else"></a><code>if-else</code></h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition]</span><br><span class="line">	<span class="keyword">then</span></span><br><span class="line">    	commands1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        commands2</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="if-else-elseif"><a href="#if-else-elseif" class="headerlink" title="if-else-elseif"></a><code>if-else-elseif</code></h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition 1]</span><br><span class="line">	<span class="keyword">then</span></span><br><span class="line">    	commands1</span><br><span class="line"><span class="keyword">elif</span> [condition 2]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        commands2</span><br><span class="line">  .......</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    commandsX</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="if-的高级用法"><a href="#if-的高级用法" class="headerlink" title="if 的高级用法"></a><code>if</code> 的高级用法</h4><ul>
+<li><p>🍋条件符号使用双圆括号 <code>(())</code>，<strong>可以在条件中植入数学表达式</strong></p>
+</li>
+<li><p>🍋使用双方括号 <code>[[]]</code>, 可以在条件中 <strong>使用通配符</strong></p>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> ((100*3+10&gt;500 ));<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&gt;&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&lt;&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> str <span class="keyword">in</span> java javascript js</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    	<span class="keyword">if</span> [[<span class="string">&quot;<span class="variable">$str</span>&quot;</span> == j*]];<span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$str</span>&quot;</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><h4 id="for-语法"><a href="#for-语法" class="headerlink" title="for 语法"></a>for 语法</h4><ul>
+<li><p>语法 1: 有限变量</p>
+  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> v1 v2 v3..</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法 2: C 语言写法</p>
+  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ((变量; 条件; 变化))</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>语法 3: 无限循环</p>
+  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ((;;))</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="循环控制"><a href="#循环控制" class="headerlink" title="循环控制"></a>循环控制</h3><ul>
+<li><code>continue</code> 跳过循环中的某次循环</li>
+<li><code>break</code> 跳出循环继续执行后续代码, 可以使用 <code>break N</code> 循环退出, 循环从里往外排序为 <code>1 - N</code></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> ((i=9;i&gt;0;i--))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="keyword">if</span> [<span class="variable">$i</span> -eq 5]</span><br><span class="line">		<span class="keyword">then</span></span><br><span class="line">  		<span class="built_in">continue</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> -n -e <span class="string">&quot;\b<span class="variable">$i</span>===&quot;</span></span><br><span class="line">        <span class="built_in">sleep</span> 1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> -e</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> ((i=1;i&lt;100;i++))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;ha&quot;</span></span><br><span class="line">	<span class="keyword">for</span>((;;))</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">&quot;the inner loop&quot;</span></span><br><span class="line">        <span class="built_in">break</span> 2</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">打印:</span><br><span class="line">ha</span><br><span class="line">the inner loop</span><br></pre></td></tr></table></figure>
+
+<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><h4 id="语法格式-条件可以是-5-种运算中的任意一种"><a href="#语法格式-条件可以是-5-种运算中的任意一种" class="headerlink" title="语法格式: 条件可以是 5 种运算中的任意一种"></a>语法格式: 条件可以是 5 种运算中的任意一种</h4><p><strong>数学, 字符串比较, 文件类型, 逻辑运算, 赋值运算</strong></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> [condition]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="until"><a href="#until" class="headerlink" title="until"></a>until</h4><p><code>while</code> 是条件为真开始时循环, <code>until</code> 是条件为假开始循环.</p>
+<h4 id="case-多条件执行语句"><a href="#case-多条件执行语句" class="headerlink" title="case (多条件执行语句)"></a>case (多条件执行语句)</h4><p><strong>语法 (比较奇怪):</strong></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> var <span class="keyword">in</span></span><br><span class="line">condition1)</span><br><span class="line">	command1</span><br><span class="line">;;</span><br><span class="line">condition1)</span><br><span class="line">	command2</span><br><span class="line">;;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意特殊的变量</strong></p>
+<h2 id="shell-函数"><a href="#shell-函数" class="headerlink" title="shell 函数"></a>shell 函数</h2><h3 id="函数语法"><a href="#函数语法" class="headerlink" title="函数语法"></a>函数语法</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式 1</span></span><br><span class="line"><span class="function"><span class="title">func_name</span></span> ()&#123;</span><br><span class="line">	<span class="built_in">command</span></span><br><span class="line">	<span class="built_in">return</span> N</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 方式 2</span></span><br><span class="line"><span class="keyword">function</span> func_name&#123;</span><br><span class="line">	<span class="built_in">command</span></span><br><span class="line">	<span class="built_in">return</span> N</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><p>直接使用函数名字, 不加括号: <code>func_name</code></p>
+<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><h3 id="定位字符-锚定字符"><a href="#定位字符-锚定字符" class="headerlink" title="定位字符: 锚定字符"></a>定位字符: 锚定字符</h3><ul>
+<li><code>^</code> 锚定开头 <code>^a</code> 以 a 开头, 默认锚定一个字符</li>
+<li><code>$</code> 锚定结尾 <code>a$</code> 以 a 结尾, 默认锚定一个字符</li>
+<li><code>^$</code> 两个字符在一起表示精准匹配</li>
+<li><code>grep</code> 默认不支持正则表达式, 需要加上 <code>-e</code> 参数, 或者使用 <code>egrep</code></li>
+</ul>
+<p>其他特定符号的意思</p>
+<h3 id="匹配符-匹配字符串"><a href="#匹配符-匹配字符串" class="headerlink" title="匹配符: 匹配字符串"></a>匹配符: 匹配字符串</h3><ul>
+<li><code>.</code> 除了回车符号任意的字符</li>
+<li><code>(|)</code> 字符串分组 <code>^(a|b)c$</code> a 或者 b 开头以 c 结尾的串</li>
+<li><code>[]</code> 定义字符类, 匹配括号中的一个字符</li>
+<li><code>[^]</code> 表示否定括号中出现字符类中的字符, 取反</li>
+<li><code>\</code> 转义字符</li>
+<li><code>|</code> 或符号</li>
+</ul>
+<h3 id="限定符号-对前面的字符或者字符串做限定说明"><a href="#限定符号-对前面的字符或者字符串做限定说明" class="headerlink" title="限定符号 : 对前面的字符或者字符串做限定说明"></a>限定符号 : 对前面的字符或者字符串做限定说明</h3><ul>
+<li><code>*</code> 某个字符之后加星号表示该字符不出现或出现多次 (**0 次或者多次 **)</li>
+<li><code>?</code> 与星号相似，但略有变化，表示该字符出现一次或不出现 <strong>(0 次或者 1 次)</strong></li>
+</ul>
+<ul>
+<li><code>+</code> 与星号相似，表示其前面字符出现 ** 一次或多次 <strong>，</strong> 但必须出现一次 **</li>
+<li><code>&#123;n,m&#125;</code>	某个字符之后出现，表示该字符 ** 最少 <strong><code>n</code> 次，</strong> 最多 **<code>m</code> 次</li>
+<li><code>&#123;m&#125;</code>	正好出现了 <code>m</code> 次</li>
+</ul>
+<h3 id="POSIX-特殊字符"><a href="#POSIX-特殊字符" class="headerlink" title="POSIX 特殊字符"></a>POSIX 特殊字符</h3><ul>
+<li><code>[:alnum:]</code>	匹配任意字母字符 0-9 a-z A-Z</li>
+<li><code>[:alpha:]</code>	匹配任意字母，大写或小写</li>
+<li><code>[:digit:]</code>	数字 0-9</li>
+<li><code>[:graph:]</code>	非空字符 ( 非空格控制字符)</li>
+<li><code>[:lower:]</code>	小写字符 a-z</li>
+<li><code>[:upper:]</code>	大写字符 A-Z</li>
+<li><code>[:cntrl:]</code>	控制字符</li>
+<li><code>[:print:]</code>	非空字符 ( 包括空格)</li>
+<li><code>[:punct:]</code>	标点符号</li>
+<li><code>[:blank:]</code>	空格和 TAB 字符</li>
+<li><code>[:xdigit:]</code>	16 进制数字</li>
+<li><code>[:space:]</code>	所有空白字符 ( 新行、空格、制表符)</li>
+</ul>
+<h2 id="shell-文件操作"><a href="#shell-文件操作" class="headerlink" title="shell 文件操作"></a>shell 文件操作</h2><p>非交互式文件操作, vim 和 nano 是交互式文件操作.</p>
+<h3 id="sed-stream-editor"><a href="#sed-stream-editor" class="headerlink" title="sed (stream editor)"></a>sed (stream editor)</h3><ul>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9jb29sc2hlbGwuY24vYXJ0aWNsZXMvOTEwNC5odG1s">CoolShell 的 sed 简明教程<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="awk-pattern-directed-scanning-and-processing-language"><a href="#awk-pattern-directed-scanning-and-processing-language" class="headerlink" title="awk(pattern-directed scanning and processing language)"></a>awk(pattern-directed scanning and processing language)</h3></li>
+<li><p><span class="exturl" data-url="aHR0cHM6Ly9jb29sc2hlbGwuY24vYXJ0aWNsZXMvOTA3MC5odG1s">CoolShell 的 AWK 简明教程<i class="fa fa-external-link-alt"></i></span></p>
+</li>
+</ul>
+<h2 id="常见的-shell-案例"><a href="#常见的-shell-案例" class="headerlink" title="常见的 shell 案例"></a>常见的 shell 案例</h2><h3 id="监控主机是否存活的脚本"><a href="#监控主机是否存活的脚本" class="headerlink" title="监控主机是否存活的脚本"></a>监控主机是否存活的脚本</h3><details><summary> 监控主机是否存活的脚本 </summary>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ((;;))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    ping -c1 <span class="variable">$1</span> &amp;&gt;/dev/null</span><br><span class="line">    <span class="keyword">if</span> [$? -eq 0]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;`date +&quot;</span>%F %H:%M;%S<span class="string">&quot;`:<span class="variable">$1</span> is \033[32m UP\033[0m&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;`date +&quot;</span>%F %H:%M;%S<span class="string">&quot;`:<span class="variable">$1</span> is \033[31m DOWN \033[0m&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># controll the frequency</span></span><br><span class="line">    <span class="built_in">sleep</span> 5</span><br><span class="line">    <span class="comment">#in production usually use at least 60</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</details>
+
+<h3 id="nginx-启动脚本"><a href="#nginx-启动脚本" class="headerlink" title="nginx 启动脚本"></a>nginx 启动脚本</h3><details><summary>nginx 启动脚本</summary>
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># variables definition</span></span><br><span class="line">nginx_dir=/usr/local/nginx</span><br><span class="line">nginxd=<span class="variable">$nginx_dir</span>/sbin/nginx</span><br><span class="line">pid=<span class="variable">$nginx_dir</span>/logs/nginx.pid</span><br><span class="line">conf=<span class="variable">$nginx_dir</span>/conf/nginx.conf</span><br><span class="line">proc=nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Source the function library</span></span><br><span class="line"><span class="keyword">if</span> [-f /etc/init.d/functions]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># . means source the function</span></span><br><span class="line">    .  /etc/init.d/functions</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;file not found  /etc/init.d/functions&quot;</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [-f <span class="variable">$pid_file</span>];<span class="keyword">then</span></span><br><span class="line">    nginx_process_name=`<span class="built_in">cat</span> <span class="variable">$pid</span> `</span><br><span class="line">    nginx_process_num=`ps aux | grep <span class="variable">$nginx_process_name</span>| grep -v <span class="string">&quot;grep&quot;</span>| <span class="built_in">wc</span> -l `</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># start func</span></span><br><span class="line"><span class="function"><span class="title">start</span></span>()&#123;</span><br><span class="line"><span class="comment"># judge the file by the pid file if the nginx is running then alert something</span></span><br><span class="line"><span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;nginx is already runnig&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -le 1 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">rm</span> -f <span class="variable">$pid_file</span></span><br><span class="line">       <span class="comment"># echo &quot;nginx start `daemon $nginxd`&quot;</span></span><br><span class="line">        action <span class="string">&quot;nginx start&quot;</span> <span class="variable">$nginxd</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># echo &quot;nginx start `daemon $nginxd`&quot;</span></span><br><span class="line">    action <span class="string">&quot;nginx start&quot;</span> <span class="variable">$nginxd</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">            action <span class="string">&quot;nginx stop&quot;</span>  killall -s QUIT <span class="variable">$proc</span></span><br><span class="line">            <span class="built_in">rm</span> -f <span class="variable">$pid</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            action <span class="string">&quot;nginx stop&quot;</span> killall -s QUIT <span class="variable">$proc</span> 2&gt;/dev/null</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">restart</span></span>()&#123;</span><br><span class="line">    stop</span><br><span class="line">    <span class="built_in">sleep</span> 1</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">reload</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">        action <span class="string">&quot;nginx reload&quot;</span> killall -s HUP <span class="variable">$proc</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        action <span class="string">&quot;nginx reload&quot;</span> killall -s HUP <span class="variable">$proc</span> 2&gt;/dev/null</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">status</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;nginx runnig&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;nginx not running&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># call the funcs</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    start)start;;</span><br><span class="line">    stop)stop;;</span><br><span class="line">    restart)restart;;</span><br><span class="line">    reload)reload;;</span><br><span class="line">    status)status;;</span><br><span class="line">    *) <span class="built_in">echo</span> <span class="string">&quot;USAGE: <span class="variable">$0</span> start|stop|restart|reload|status&quot;</span> ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
+</details>
+
+
+
+<hr>
+<p>相关教程和书籍:</p>
+<ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zMDM1OTk1NC8=">鸟哥的Linux私房菜 基础学习篇 第四版 (豆瓣)<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmFwZWxhbmQuY24vZGV0YWlscy8xMi8=">路飞学城 shell 教程<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC82ODA2ODYyLw==">The Linux Command Line <i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93YW5nZG9jLmNvbS9iYXNoLw==">Bash 脚本教程 - 网道<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<center>--- 全文完 ---</center>]]></content>
+      <categories>
+        <category>编程语言</category>
+        <category>shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArrayList 源码分析</title>
+    <url>/articles/392f85e6.html</url>
+    <content><![CDATA[<h2 id="ArrayList-的结构"><a href="#ArrayList-的结构" class="headerlink" title="ArrayList 的结构"></a>ArrayList 的结构</h2><ul>
+<li>在逻辑结构上是：线性结构、线性表</li>
+<li>在物理结构是：连续储存结构</li>
+</ul>
+<h2 id="ArrayList-实现的接口"><a href="#ArrayList-实现的接口" class="headerlink" title="ArrayList 实现的接口"></a>ArrayList 实现的接口</h2><span id="more"></span>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;E&gt; <span class="keyword">extends</span> <span class="title class_">AbstractList</span>&lt;E&gt;<span class="keyword">implements</span> <span class="title class_">List</span>&lt;E&gt;,</span><br><span class="line">RandomAccess, Cloneable, java.io.Serializable</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3hoj29ydj30yu0jijs1.jpg"></p>
+<h3 id="RandomAccess"><a href="#RandomAccess" class="headerlink" title="RandomAccess"></a><code>RandomAccess</code></h3><p><code>RandomAccess</code>，没有方法，是一个标记的接口。List 实现这个接口用来表示其支持随机访问：即下标访问，（<strong>通常是固定时间</strong>）<code>RandomAccess</code> 这个标记接口就是标记能够随机访问元素的集合， 简单来说就 <strong>是底层是数组实现</strong> 的集合。 <code>for (int i=0, n=list.size(); i &lt; n; i++)</code> 循环，比 <code>for (Iterator i=list.iterator(); i.hasNext(); )i.next();</code> 要快。（快速随机访问速度 &gt; 迭代器遍历速度。）</p>
+<h3 id="Cloneable"><a href="#Cloneable" class="headerlink" title="Cloneable"></a><code>Cloneable</code></h3><p>空接口，实现了这个接口，在使用 <code>Object.clone()</code> 方法进行每个字段的拷贝是合法的，没有实现这个方法会抛出 <code>CloneNotSupportedException</code>。接口不包含 <code>clone</code> 方法，及时这个实现了这个接口，也不能进行 clone，即使是使用反射。实现此接口的类应该使用公共方法覆盖 clone 方法.</p>
+<h2 id="ArrayList-属性"><a href="#ArrayList-属性" class="headerlink" title="ArrayList 属性"></a>ArrayList 属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认长度</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DEFAULT_CAPACITY</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="comment">// 用于默认大小空实例的共享空数组实例，与 EMPTY_ELEMENTDATA 的区别在于知道当第一个元素插入时该如何扩充数组</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="comment">// 保存了多少个数据</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"><span class="comment">// 最大的长度，2^31 - 8 减去头关键字</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MAX_ARRAY_SIZE</span> <span class="operator">=</span> Integer.MAX_VALUE - <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ArrayList-构造方法-3-个"><a href="#ArrayList-构造方法-3-个" class="headerlink" title="ArrayList 构造方法(3 个)"></a>ArrayList 构造方法(3 个)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(<span class="type">int</span> initialCapacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity&gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = <span class="keyword">new</span> <span class="title class_">Object</span>[initialCapacity];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Illegal Capacity:&quot;</span> + initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 无初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用其他集合来初始化</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> &#123;</span><br><span class="line">    elementData = c.toArray();</span><br><span class="line">    <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">        <span class="keyword">if</span> (elementData.getClass() != Object[].class)</span><br><span class="line">            <span class="comment">// 调用 Array.copyOf</span></span><br><span class="line">            elementData = Arrays.copyOf(elementData, size, Object[].class);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ArrayList-扩容机制"><a href="#ArrayList-扩容机制" class="headerlink" title="ArrayList 扩容机制"></a>ArrayList 扩容机制</h2><p>在初始化 <code>ArrayList</code> 的时候，JVM 并不知道要存多少个数据，但是数组必须要声明其大小。这样的话，<strong>最迟</strong> 在第一个元素插入时，必须指定数组容量大小、初始化数组以容纳元素。</p>
+<h2 id="ArrayList-添加方法"><a href="#ArrayList-添加方法" class="headerlink" title="ArrayList 添加方法"></a>ArrayList 添加方法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 直接添加元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">add</span><span class="params">(E e)</span> &#123;</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在指定的位置加上元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, E element)</span> &#123;</span><br><span class="line">    rangeCheckForAdd(index);</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    System.arraycopy(elementData, index, elementData, index + <span class="number">1</span>,</span><br><span class="line">                    size - index);</span><br><span class="line">    elementData[index] = element;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先看到的是带三个感叹号的注释 <code>// Increments modCount!!</code>，这个 <code>modCount</code> 是干什么呢的?</p>
+<ul>
+<li><p>点进去发现是继承自 <code>AbstractList</code></p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="type">int</span> <span class="variable">modCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>  这个属性就是：<strong>已对该列表进行结构化的修改次数</strong>，否则的话会干扰正在迭代的，产生错误的结果。如果这个 field 变换不正常的话，就会在听下一个迭代（next，remove，previous，set，add 操作的时候）产生在并发里面很常见的并发修改异常（这就是根源。Man, I Learned so much.）<code>ConcurrentModificationException</code>。</p>
+<p>  面对迭代过程中的并发修改，这提供了 <strong>快速故障 fast-fail</strong> 行为，而不是不确定的行为。</p>
+<p>  如果子类希望提供快速失败的迭代器（和列表迭代器），则只需在其 <code>add（int E）</code>和 <code>remove（int E）</code>方法（以及任何其他覆盖该方法导致结构化的方法）中递增此字段即可。 在添加或者移出的时候，这个加不能超过一个。否则会抛出虚假的 <code>ConcurrentModificationException</code>。</p>
+</li>
+</ul>
+<p>接着看</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureCapacityInternal</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 计算容量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">calculateCapacity</span><span class="params">(Object[] elementData, <span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 如果是第一次添加数据，是无参构造第一次添加数据</span></span><br><span class="line">    <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        <span class="comment">// 获取到 10 和 size+1</span></span><br><span class="line">        <span class="keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> minCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 避免并发修改异常</span></span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        <span class="comment">// 进行扩容</span></span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">grow</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">oldCapacity</span> <span class="operator">=</span> elementData.length;</span><br><span class="line">    <span class="comment">// 原来 * 1.5 使用位运算</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">newCapacity</span> <span class="operator">=</span> oldCapacity + (oldCapacity&gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE&gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以扩容的最大容量，当想要扩容的容量大于 MAX_ARRAY_SIZE 时调用</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">hugeCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 是否扩容的时候变成了负数</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity &lt; <span class="number">0</span>) <span class="comment">// overflow 内存不足</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">OutOfMemoryError</span>();</span><br><span class="line">    <span class="comment">// 返回</span></span><br><span class="line">    <span class="keyword">return</span> (minCapacity&gt; MAX_ARRAY_SIZE) ?</span><br><span class="line">        Integer.MAX_VALUE :</span><br><span class="line">        MAX_ARRAY_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>总结：</p>
+<ol>
+<li>有 <code>index</code> 添加会进行 index range check, 没有 <code>index</code> 就进行保证容量的的方法</li>
+<li>先计算容量判断是否是默认容量 <code>10</code>，就返回 <code>Math.max(DEFAULT_CAPACITY, index);</code> 或者 <code>index</code></li>
+<li>拿到上面的值 <code>a</code>, 先加 <code>modCount++</code>，如果 <code>a</code> 大于存储元素的长度的话就进行 <code>grow</code> 操作</li>
+<li>加入需要 <code>grow</code>，传入最大值<ol>
+<li>拿到原来数组的长度 <code>*1.5</code>，用位运算</li>
+<li>如过 <code>*1.5</code> 后，还小于 <code>a</code>，就返回 <code>a</code></li>
+<li>如果大于 <code>2^31-8</code>, 就进行 <code>hugeCapacity</code> 操作（判断是否溢出，就抛出来内存不足异常, 否则就返回，<code>MAX_ARRAY_SIZE</code>），否则就调用 <code>Arrays.copyOf</code> 方法进行拷贝。</li>
+</ol>
+</li>
+</ol>
+<h2 id="什么时候扩容？"><a href="#什么时候扩容？" class="headerlink" title="什么时候扩容？"></a>什么时候扩容？</h2><ol>
+<li>主动扩容: 从 <code>public void ensureCapacity(int minCapacity)</code> 可以看出，我们可以主动调用该方法进行扩容。</li>
+<li>添加时候扩容: 在调用 <code>add/addAll</code> 等添加元素的方法时，<code>ArrayList</code> 也会调用内部扩容方法（ensureCapacityInternal）来主动扩容</li>
+</ol>
+<p>见代码如下: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ensureCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">minExpand</span> <span class="operator">=</span> (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)</span><br><span class="line">        <span class="comment">// any size if not default element table</span></span><br><span class="line">        ? <span class="number">0</span></span><br><span class="line">        <span class="comment">// larger than default for default empty table. It&#x27;s already</span></span><br><span class="line">        <span class="comment">// supposed to be at default size.</span></span><br><span class="line">        : DEFAULT_CAPACITY;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity&gt; minExpand) &#123;</span><br><span class="line">        ensureExplicitCapacity(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组底层的方法"><a href="#数组底层的方法" class="headerlink" title="数组底层的方法"></a>数组底层的方法</h3><p>扩容的时候其实调用了 <code>Arrays.copyOf </code> 方法，最后也是调用了 <code>System.arraycopy</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Arrays.copyOf</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T[] copyOf(T[] original, <span class="type">int</span> newLength) &#123;</span><br><span class="line">    <span class="keyword">return</span> (T[]) copyOf(original, newLength, original.getClass());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T,U&gt; T[] copyOf(U[] original, <span class="type">int</span> newLength, Class&lt;? <span class="keyword">extends</span> <span class="title class_">T</span>[]&gt; newType) &#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">    T[] copy = ((Object)newType == (Object)Object[].class)</span><br><span class="line">        ? (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[newLength]</span><br><span class="line">        : (T[]) Array.newInstance(newType.getComponentType(), newLength);</span><br><span class="line">    System.arraycopy(original, <span class="number">0</span>, copy, <span class="number">0</span>,</span><br><span class="line">                        Math.min(original.length, newLength));</span><br><span class="line">    <span class="keyword">return</span> copy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">native</span> Class&lt;?&gt; getComponentType();</span><br><span class="line"></span><br><span class="line"><span class="comment">//  System 中的 copy ：native 方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">arraycopy</span><span class="params">(Object src,  <span class="type">int</span>  srcPos,</span></span><br><span class="line"><span class="params">                                        Object dest, <span class="type">int</span> destPos,</span></span><br><span class="line"><span class="params">                                        <span class="type">int</span> length)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="其他几个-public-方法"><a href="#其他几个-public-方法" class="headerlink" title="其他几个 public 方法"></a>其他几个 public 方法</h2><ul>
+<li><code>clear()</code> <code>fori</code> 将每个元素设置为 <code>null</code>，让 gc 做工作。</li>
+<li><code>clone()</code> 调用父类的 <code>clone</code> 方法，生成新 <code>ArrayList</code>，然后把数据 copy 过去（<code>Arrays.copy</code>）,<code>modCount=0</code>。</li>
+<li><code>toArray()</code> <code>Arrays.copy</code> 返回新拷贝的数据。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>基于数组实现, 默认长度 10</p>
+</li>
+<li><p>可以动态扩容，每次 <code>*1.5</code> 倍的长度增加</p>
+</li>
+<li><p>元素可以为 <code>null</code></p>
+</li>
+<li><p>不是并发安全的，是通过 <code>modCount</code> 来进行判断的</p>
+</li>
+<li><p>如果想并发安全：</p>
+<ol>
+<li><code>Vector</code> 不行, 效率低</li>
+<li>使用 <code>Collections.synchronizedList</code>()</li>
+<li>JUC 中的并发容器 <code>new CopyOnWriteArrayList&lt;&gt;()</code>;</li>
+</ol>
+</li>
+<li><p>为什么数组中的最大元素是 <code>Integer.MAX_VALUE - 8</code></p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzU3NTYyNzcvd2h5LXRoZS1tYXhpbXVtLWFycmF5LXNpemUtb2YtYXJyYXlsaXN0LWlzLWludGVnZXItbWF4LXZhbHVlLTg=">stackoverflow<i class="fa fa-external-link-alt"></i></span><blockquote>
+<p>数组对象（例如 int 值的数组）的形状和结构类似于标准 Java 对象的形状和结构。主要区别在于，数组对象还有一条额外的元数据，它表示数组的大小。然后，数组对象的元数据包括：Class：指向类信息的指针，该信息描述对象的类型。对于 int 字段数组，这是指向 int [] 类的指针。<br>标志：描述对象状态的标志的集合，包括对象的哈希码（如果有的话）以及对象的形状（即，对象是否为数组）。<br>Lock：对象的同步信息，即对象当前是否同步。<br>Size：数组的大小。</p>
+</blockquote>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9qYXZhL2xpYnJhcnkvai1jb2RldG9oZWFwL2k=">From Java code to Java heap<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>源码</category>
+        <category>JDK</category>
+      </categories>
+      <tags>
+        <tag>源码</tag>
+        <tag>Java容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《数学之美》读书笔记</title>
+    <url>/articles/e9e88f1a.html</url>
+    <content><![CDATA[<p>书籍链接：<span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8yNjE2MzQ1NC8=">数学之美 （第二版）<i class="fa fa-external-link-alt"></i></span></p>
+<h2 id="第一章-文字和语言-vs-数字和信息"><a href="#第一章-文字和语言-vs-数字和信息" class="headerlink" title="第一章: 文字和语言 vs 数字和信息"></a>第一章: 文字和语言 vs 数字和信息</h2><h3 id="信息概览"><a href="#信息概览" class="headerlink" title="信息概览"></a>信息概览</h3><p>通信的原理和模型：</p>
+<ul>
+<li>通信的原理：信息的产生、传播、接受、反馈</li>
+<li>信息传播的模型：信息源 –&gt; 编码 –&gt; 信道 –&gt; 解码 –&gt; 接受者</li>
+</ul>
+<p>聚类：</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JTgxJTlBJUU3JUIxJUJCJUU1JTg4JTg2JUU2JTlFJTkw">聚类分析 - 维基百科，自由的百科全书<i class="fa fa-external-link-alt"></i></span></li>
+<li>“根据相同的属性将事物聚集在一起”</li>
+</ul>
+<p>（信源）编码和最短编码：</p>
+<ul>
+<li>编码：将物体的外表进化成抽象的概念，本质对应着信息的编码。</li>
+<li>最短编码：“常用字短、生僻字长，经常用的文字笔画少比较简单”</li>
+</ul>
+<p>编码和解码：</p>
+<ul>
+<li>字母到词的构词法是词的编码规则。语法则是语言的编码和解码规则。</li>
+</ul>
+<p>校验位：</p>
+<ul>
+<li>防止信息传输有误采用的方法。犹太学者抄写圣经的时候将每个希伯来字母对应一个数字，最后每一行进行求和在和原书的每一行进行比较，如果和相同则表示抄写无误。</li>
+</ul>
+<p>双语对照文本，语料库和机器翻译：</p>
+<ul>
+<li>Rosetta 上有三种文字记录了同一段诏书。</li>
+</ul>
+<p>多义性和利用上下文消除歧义性：</p>
+<ul>
+<li>同一个字可能表示不同的意思（聚类），可以通过上下文来确定含义。</li>
+</ul>
+<h3 id="段落摘要"><a href="#段落摘要" class="headerlink" title="段落摘要:"></a>段落摘要:</h3><blockquote>
+<p>翻译这件事之所以能够达成,仅仅是因为不同的文字系统在记录信息上的能力是等价的。（这个结论很重要。）进一步讲，文字只是信息的载体，而非信息本身。</p>
+</blockquote>
+<blockquote>
+<p>在通信时，如果信道较宽，信息不必压缩就可以直接传递；如果信道较窄，信息传递前要尽可能的压缩，然后再接收端进行解压缩。在古代，两个人说的快是一个宽信道，无需压缩；书信来得慢是一个窄信道，需要压缩。</p>
+</blockquote>
+<h3 id="有趣的知识"><a href="#有趣的知识" class="headerlink" title="有趣的知识"></a>有趣的知识</h3><ul>
+<li>Rosetta Stone： 一块古埃及石碑，上面有埃及象形文字、埃及拼音文字和古希腊文字三种文字，这三种文字记录了同一件事情：托勒密五世的登基诏书。现在在英国大英博物馆。这也是很多翻译软件叫 Rosetta 的原因。 有趣的是这个名字也是老友记中 Joey 的懒人椅的名字。wiki 链接：<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU3JUJFJTg1JUU1JUExJTlFJUU1JUExJTk0JUU3JTlGJUIzJUU3JUEyJTkx">罗塞塔石碑 - 维基百科，自由的百科全书<i class="fa fa-external-link-alt"></i></span></li>
+<li>阿拉伯数字实际上是印度人发明的，通过阿拉伯人传入了欧洲，阿拉伯人只是“二道贩子”。</li>
+</ul>
+]]></content>
+      <categories>
+        <category>自然科学</category>
+      </categories>
+      <tags>
+        <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《大话数据结构》读书笔记</title>
     <url>/articles/7ef02f1c.html</url>
     <content><![CDATA[<h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><h3 id="逻辑结构与物理结构"><a href="#逻辑结构与物理结构" class="headerlink" title="逻辑结构与物理结构"></a>逻辑结构与物理结构</h3><p>逻辑结构: 数据对象和数据元素中的关系:</p>
@@ -1014,537 +1639,6 @@
       </categories>
       <tags>
         <tag>数据结构</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>文本换行符号(^M)导致的 git diff 问题</title>
-    <url>/articles/8e8cc4d1.html</url>
-    <content><![CDATA[<h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><p>文件改动了一点，但是在 gitlab&#x2F;github 看 diff 却发现整个文件全部都进行了改动，且文件变的乱序或者变成了一行。</p>
-<h2 id="原因-文件换行符导致"><a href="#原因-文件换行符导致" class="headerlink" title="原因: 文件换行符导致"></a>原因: 文件换行符导致</h2><p>文本换行符号通常有: LF 和 CRLF。</p>
-<span id="more"></span>
-<p>首先介绍 LF 和 CRLF 下是什么：</p>
-<ul>
-<li><strong>CRLF</strong>: 是 carriagereturnlinefeed 的缩写。中文意思是回车换行；</li>
-<li><strong>LF</strong>: 是 line feed 的缩写，中文意思是换行；</li>
-<li><strong>CR</strong>: 是 carriagereturn 的缩写。中文意思是回车；</li>
-</ul>
-<p>为什么换行回车会不同呢? 主要的原因在于操作系统之间的分歧：</p>
-<ul>
-<li>早期的 macOS 系统使用 CR 当做换行，现在也已经统一成了 LF。</li>
-<li>Unix(包含现在大量使用的 linux) 系统使用 LF</li>
-<li>Windows 系统使用 LFCR 当做换行</li>
-</ul>
-<p>也正是因为不同系统的分歧，在多人协作共同开发的时候，可能导致提交代码时候产生问题。</p>
-<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><h3 id="1-IDE-或者代码编辑器中统一将换行符修改为-LF"><a href="#1-IDE-或者代码编辑器中统一将换行符修改为-LF" class="headerlink" title="1. IDE 或者代码编辑器中统一将换行符修改为: LF"></a>1. IDE 或者代码编辑器中统一将换行符修改为: LF</h3><h3 id="2-在-git-中进行配置"><a href="#2-在-git-中进行配置" class="headerlink" title="2. 在 git 中进行配置"></a>2. 在 git 中进行配置</h3><p>git 为了防止以上问题扰乱跨平台合作开发，使用命令可以转化 LF 和 CRLF<br>具体命令为：</p>
-<ol>
-<li><p><code>git config --global core.autocrlf true</code>: Git 可以在你 push 时自动地把行结束符 CRLF 转换成 LF，而在 pull 代码时把 LF 转换成 CRLF。用 core.autocrlf 来打开此项功能，如果是在 Windows 系统上，把它设置成 true，这样当签出代码时，LF 会被转换成 CRLF</p>
-</li>
-<li><p><code>git config --global core.autocrlf input</code>: Linux 或 Mac 系统使用 LF 作为行结束符；当一个以 CRLF 为行结束符的文件不小心被引入时你肯定想进行修正，把 core.autocrlf 设置成 input 来告诉 Git 在 push 时把 CRLF 转换成 LF，pull 时不转换</p>
-</li>
-<li><p><code>git config --global core.autocrlf false</code>: 在本地和代码库中都保留 CRLF，无论 pull 还是 push 都不变，代码库什么样，本地还是什么样子</p>
-</li>
-</ol>
-<p>参考链接:</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoZW56aG91X3loL2FydGljbGUvZGV0YWlscy8xMDU1MDc1NDk=">IDEA 批量替换文件换行符、分隔符 CRLF、LF、CR_shenzhou_yh 的博客<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3Nkbi5uZXQvdGFncy9NdFRhQWcyc05EWTJNRGt6TFdKc2IyY08wTzBPLmh0bWw=">idea 换行格式指定为 LF<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGV0aWFuYmlqaS5jb20vZ2l0L2dpdC1jcmxmLmh0bWw=">git 解决换行符 ^M 导致整个文件被改 - 乐天笔记<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<!-- - www.baidu.com -->]]></content>
-      <categories>
-        <category>BugMemo</category>
-      </categories>
-      <tags>
-        <tag>文本换行符号</tag>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>优秀的项目备忘</title>
-    <url>/articles/6d3e6a59.html</url>
-    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span></p>
-<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
-<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
-<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">Guice<i class="fa fa-external-link-alt"></i></span> 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">DI 的核心思想<i class="fa fa-external-link-alt"></i></span>:</p>
-<blockquote>
-<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>备忘</category>
-      </categories>
-      <tags>
-        <tag>开源项目</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell 脚本编程-1</title>
-    <url>/articles/80fbfe5c.html</url>
-    <content><![CDATA[<h2 id="什么是-shell"><a href="#什么是-shell" class="headerlink" title="什么是 shell ?"></a>什么是 shell ?</h2><p>维基百科定义：</p>
-<blockquote>
-<p>Computers understand the language of zeros and ones known as <span class="exturl" data-url="aHR0cHM6Ly9iYXNoLmN5YmVyY2l0aS5iaXovd2lraS9pbmRleC5waHA/dGl0bGU9QmluYXJ5X2xhbmd1YWdlJmFjdGlvbj1lZGl0JnJlZGxpbms9MQ==">binary language<i class="fa fa-external-link-alt"></i></span>. In the early days of computing, instructions were provided using binary language, which is difficult for all of us to read and write. Therefore, in an operating system there is a special program called the shell. The shell accepts human readable commands and translates them into something the kernel can read and process.</p>
-</blockquote>
-<p>简而言之：shell 就是将人类可读的指令转换成计算机内核能够识别并执行的程序。</p>
-<p>常见的 shell 有:</p>
-<p><img  width = '256' height ='144' src="https://kurume-4th-ranger-club.com/wp-content/uploads/2020/07/bash_logo_eyecatch-1024x576.png" align = "right" hspace="12"></img></p>
-<ul>
-<li>Bourne Shell（sh）</li>
-<li>Bourne Again shell（bash）</li>
-<li>C Shell（csh）</li>
-<li>TENEX C Shell（tcsh）</li>
-<li>Korn shell（ksh）</li>
-<li>Z Shell（zsh）</li>
-<li>Friendly Interactive Shell（fish）</li>
-</ul>
-<p>其中 bash 是目前使用最多的 shell。</p>
-<p><strong>shell 脚本</strong> 就是将完成一个任务的所有的命令按照执行的先后顺序，自上而下写入到一个文本文件中，然后给予执行权限。</p>
-<p>比如：这是一个安装 ngixn 的脚本：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment">#install gcc</span></span><br><span class="line">yum -y install wget gcc pcre-devel zlib-devel</span><br><span class="line"><span class="comment">#get nginx</span></span><br><span class="line">wget http://nginx.org/download/nginx-1.16.0.tar.gz</span><br><span class="line"></span><br><span class="line">tar xf nginx-1.16.0.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> nginx-1.16.0</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<p>给脚本赋予权限 <code>chmod 700 ngnix_installation_script.sh</code> 或者 <code>sh nginx_installation_script.sh</code>, 就可以运行了.</p>
-<h2 id="shell-脚本基础"><a href="#shell-脚本基础" class="headerlink" title="shell 脚本基础"></a>shell 脚本基础</h2><h3 id="注释和命名"><a href="#注释和命名" class="headerlink" title="注释和命名"></a>注释和命名</h3><ul>
-<li>shell 中使用 <code>#</code> 进行注释</li>
-<li>脚本的第一行通常是指定解释器，即这个脚本必须通过什么解释器执行。这一行以 <code>#!</code> 字符开头，这个字符称为 Shebang，所以这一行就叫做 Shebang 行。</li>
-<li>shell 脚本文件的命名和其他编程语言的命名类似，数字不能开头，</li>
-</ul>
-<h3 id="运行一个脚本"><a href="#运行一个脚本" class="headerlink" title="运行一个脚本"></a>运行一个脚本</h3><ol>
-<li><p>脚本运行需要执行权限，当我们给一个文件赋予执行权限后，该脚本就可以运行。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod u+x script_fileName</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>直接使用 bash 进行运行 <code>bash script_fileName</code></p>
-</li>
-</ol>
-<h3 id="shell-中的特殊符号-会被特殊对待"><a href="#shell-中的特殊符号-会被特殊对待" class="headerlink" title="shell 中的特殊符号,(会被特殊对待)"></a>shell 中的特殊符号,(会被特殊对待)</h3><ol>
-<li><code>~</code> 家目录</li>
-<li><code>!</code> 执行历史命令,<code>!!</code> 表示执行上一条命令</li>
-<li><code>$</code> 去变量符号</li>
-<li><code>&amp;</code> 后台执行</li>
-<li><code>*</code> shell 中的通配符号, 匹配所有</li>
-<li><code>?</code> shell 中的通配符号, 匹配除回车外的一个字符</li>
-<li><code>;</code> 多条命令之间的分割符号</li>
-<li><code>|</code> 管道符号</li>
-<li><code>\</code> 转义符号</li>
-<li>&#96; 反引号, 命令中执行命令</li>
-<li><code>&#39;&#39;</code> 单引号, 脚本中字符串需要用单引号括起来,<strong>但是不会解释变量</strong></li>
-<li><code>&quot;&quot;</code> 双引号, 用于包裹字符串</li>
-</ol>
-<h3 id="shell-中的重定向"><a href="#shell-中的重定向" class="headerlink" title="shell 中的重定向"></a>shell 中的重定向</h3><ol>
-<li><p><code>&gt;</code> 重定向输入 覆盖原始的数据</p>
-</li>
-<li><p><code>&gt;&gt;</code> 从定向追加输入, 在原来的文件中追加数据</p>
-</li>
-<li><p><code>&lt;</code> 重定向输出 <code>wc -l &lt; /etc/passwd</code> 统计数据流</p>
-</li>
-<li><p><code>&lt;&lt;</code> 重定向追加输出 <code>fdisk /dev/sdb &lt;</code></p>
-<p> 格式化硬盘，重新缓存。</p>
- <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">fdisk /dev/sdb &lt;&lt; <span class="string">EOF</span></span><br><span class="line"><span class="string">n</span></span><br><span class="line"><span class="string">p</span></span><br><span class="line"><span class="string">3</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">+534M</span></span><br><span class="line"><span class="string">w</span></span><br><span class="line"><span class="string">EOF</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="shell-中的数学运算"><a href="#shell-中的数学运算" class="headerlink" title="shell 中的数学运算"></a>shell 中的数学运算</h3><ol>
-<li><p><strong>expr</strong> 只能整数运算, 格式比较古板 需要有空格 <code>expr 1 + 1</code></p>
-</li>
-<li><p><strong>bc</strong> 使用 bc 计算器处理浮点运算,<code>scale=2</code> 代表小数点保留两位 <code>echo &quot;scale=2;3+100&quot;|bc</code></p>
-</li>
-<li><p>双小圆括号进行运算 shell 中 <code>(())</code> 可以用来做数学运算 <code>echo $(( 100**3 ))</code></p>
-</li>
-</ol>
-<h3 id="退出脚本"><a href="#退出脚本" class="headerlink" title="退出脚本"></a>退出脚本</h3><p>exit NUM 退出脚本, 释放系统资源 (NUM 代表一个整数) 代表脚本的返回值</p>
-<p>在命令行中输入：<br><code>man exit</code> 查看详细 <code>exit</code> 详细的信息</p>
-<h2 id="输出和输入"><a href="#输出和输入" class="headerlink" title="输出和输入"></a>输出和输入</h2><h3 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h3><h4 id="echo"><a href="#echo" class="headerlink" title="echo"></a>echo</h4><p><code>echo</code> 命令的作用是在屏幕输出一行文本，可以将该命令的参数原样输出。</p>
-<ul>
-<li><p><code>-n</code>: 在文本末尾不添加换行符号</p>
-</li>
-<li><p><code>-e</code>: <strong>解释</strong> 引号中的特殊字符 (双引号和单引号)</p>
-</li>
-<li><p><code>-b</code>: 删除一个符号</p>
-<p>  倒计时脚本:</p>
-  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> time <span class="keyword">in</span> `<span class="built_in">seq</span> 9 -1 0`;<span class="keyword">do</span></span><br><span class="line">        <span class="built_in">echo</span> -ne <span class="string">&quot;\b<span class="variable">$time</span>&quot;</span></span><br><span class="line">        <span class="built_in">sleep</span> 1</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h3><h4 id="脚本的传参"><a href="#脚本的传参" class="headerlink" title="脚本的传参"></a>脚本的传参</h4><ul>
-<li><p><code>$1</code>: 在执行 Shell 脚本时，向脚本传递参数，脚本内获取参数的格式为：**<code>$n</code>**。<code>n</code> 代表一个数字，，其中 <code>$0</code> 为执行的文件名（包含文件路径）, <code>$1</code> 为执行脚本的第一个参数，<code>$2 </code> 为执行脚本的第二个参数，以此类推……</p>
-</li>
-<li><p><code>$#</code>:  传递到脚本的参数个数</p>
-</li>
-<li><p><code>$*</code>:  以一个单字符串显示所有向脚本传递的参数。 如 <code>$*</code> 用「”」括起来的情况、以 <code>$1</code> <code>$2</code> … <code>$n</code> 的形式输出所有参数。</p>
-</li>
-<li><p><code>$$</code>:   脚本运行的当前进程 ID 号</p>
-</li>
-<li><p><code>$!</code>:  后台运行的最后一个进程的 ID 号</p>
-</li>
-<li><p><code>$@</code>:   与 <code>$*</code> 相同，但是使用时加引号，并在引号中返回每个参数。 如 <code>&quot;$@&quot;</code> 用 <code>「&quot;」</code> 括起来的情况、以 <code>&quot;$1&quot;&quot;$2&quot; … &quot;$n&quot;</code> 的形式输出所有参数。</p>
-</li>
-<li><p><code>$-</code>:   显示 Shell 使用的当前选项，与 <span class="exturl" data-url="aHR0cHM6Ly93d3cucnVub29iLmNvbS9saW51eC9saW51eC1jb21tLXNldC5odG1s">set 命令<i class="fa fa-external-link-alt"></i></span> 功能相同。</p>
-</li>
-<li><p><code>$?</code>:  显示最后命令的退出状态。0 表示没有错误，其他任何值表明有错误。</p>
-</li>
-</ul>
-<h4 id="Read-命令"><a href="#Read-命令" class="headerlink" title="Read 命令"></a><code>Read</code> 命令</h4><p>默认接受键盘的输入，回车符代表输入结束</p>
-<ul>
-<li><p><code>-p</code>: 打印信息</p>
-</li>
-<li><p><code>-t</code>: 限定时间</p>
-</li>
-<li><p><code>-s</code>: 不回显</p>
-</li>
-<li><p><code>-n</code>: 输入字符个数</p>
-</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">clear</span><br><span class="line"><span class="built_in">echo</span> -n -e <span class="string">&quot;type something&quot;</span></span><br><span class="line"><span class="built_in">read</span> var</span><br><span class="line"><span class="built_in">echo</span>  <span class="string">&quot;you typed:&quot;</span> <span class="variable">$var</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="shell-变量"><a href="#shell-变量" class="headerlink" title="shell 变量"></a>shell 变量</h2><h3 id="变量的操作"><a href="#变量的操作" class="headerlink" title="变量的操作"></a>变量的操作</h3><ul>
-<li><p>定义变量格式: <code>变量名 = 值</code>(不能有空号)</p>
-</li>
-<li><p>使用 <code>$</code> 进行变量的读取</p>
-</li>
-<li><p>使用 <code>unset 变量名 </code> 取消变量</p>
-</li>
-</ul>
-<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><ol>
-<li><p>本地变量：用户私有变量，只有 <strong>本用户可以使用</strong>，保存在家目录下的 <code>.bash_profile</code>、<code>.bashrc</code> 文件中</p>
-</li>
-<li><p>全局变量：<strong>所有用户都可以使用</strong>，保存在 <code>/etc/profile</code>、<code>/etc/bashrc</code> 文件中。使用 <code>export 变量名 = 变量值 </code> 进行全局变量的定义</p>
-</li>
-<li><p>用户自定义变量：用户自定义，比如脚本中的变量，终端关闭或者关机，都会丢失，</p>
-</li>
-</ol>
-<h2 id="shell-数组"><a href="#shell-数组" class="headerlink" title="shell 数组"></a>shell 数组</h2><h3 id="基本数组"><a href="#基本数组" class="headerlink" title="基本数组"></a>基本数组</h3><h4 id="数组语法"><a href="#数组语法" class="headerlink" title="数组语法"></a>数组语法</h4><ul>
-<li>定义: <code> 数组名称 =(元素 1 元素 2 元素 3 ...)</code></li>
-<li>数组的读出 <code>$&#123;数组名称&#125;[index]</code></li>
-</ul>
-<h4 id="数组的赋值"><a href="#数组的赋值" class="headerlink" title="数组的赋值"></a>数组的赋值</h4><p>方法一: 一次赋一个值</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">array0[0]=<span class="string">&#x27;tom&#x27;</span></span><br></pre></td></tr></table></figure>
-
-<p>方法二: 一次赋予多个值</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">array2=(tom jack alice)</span><br><span class="line"></span><br><span class="line">array3=(<span class="built_in">cat</span> /etc/passwd) <span class="comment">#希望是将该文件中的每一个行作为一个元素赋值给数组 array3</span></span><br><span class="line"></span><br><span class="line">array4=(<span class="built_in">ls</span> /var/ftp/Shell/for*)</span><br><span class="line"></span><br><span class="line">array5=(tom jack alice “bash shell”)</span><br></pre></td></tr></table></figure>
-
-<h4 id="访问数组元素"><a href="#访问数组元素" class="headerlink" title="访问数组元素"></a>访问数组元素</h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[0]&#125;</span> 访问数组中的第一个元素</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[@]&#125;</span> 访问数组中所有元素 等同于 <span class="built_in">echo</span> <span class="variable">$&#123;array1[*]&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#array1[@]&#125;</span> 统计数组元素的个数</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;!array2[@]&#125;</span> 获取数组元素的索引</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[@]:1&#125;</span> 从数组下标 1 开始</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;array1[@]:1:2&#125;</span> 从数组下标 1 开始，访问两个元素</span><br></pre></td></tr></table></figure>
-
-<h3 id="联合数组"><a href="#联合数组" class="headerlink" title="联合数组"></a>联合数组</h3><p>关联数组可以允许用户自定义数组的索引，这样使用起来更加方便、高效。</p>
-<p><strong>需要先申明该数组为关联数组</strong></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="built_in">declare</span> -A a_array</span><br><span class="line">a_array=([name]=<span class="string">&#x27;joey&#x27;</span> [age]=<span class="string">&#x27;25&#x27;</span>)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;a_array[name]&#125;</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>访问数组元素：</strong></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;ass_array2[index2]&#125;</span> 访问数组中的第二个元数</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;ass_array2[@]&#125;</span> 访问数组中所有元数 等同于 <span class="built_in">echo</span> <span class="variable">$&#123;array1[*]&#125;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;#ass_array2[@]&#125;</span> 获得数组元数的个数</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;!ass_array2[@]&#125;</span> 获得数组元数的索引</span><br></pre></td></tr></table></figure>
-
-
-
-<hr>
-<p>相关教程和书籍:</p>
-<ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zMDM1OTk1NC8=">鸟哥的Linux私房菜 基础学习篇 第四版 (豆瓣)<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmFwZWxhbmQuY24vZGV0YWlscy8xMi8=">路飞学城 shell 教程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC82ODA2ODYyLw==">The Linux Command Line <i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93YW5nZG9jLmNvbS9iYXNoLw==">Bash 脚本教程 - 网道<i class="fa fa-external-link-alt"></i></span></li>
-</ol>
-<p>接着入门: <a href="https://tech-garden.top/articles/98e16645.html">https://tech-garden.top/articles/98e16645.html</a></p>
-<center>--- 全文完 ---</center>]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>shell 脚本编程-2</title>
-    <url>/articles/98e16645.html</url>
-    <content><![CDATA[<p>前置文章：<a href="https://tech-garden.top/articles/98e16645.html">https://tech-garden.top/articles/98e16645.html</a></p>
-<h2 id="流程控制语句"><a href="#流程控制语句" class="headerlink" title="流程控制语句"></a>流程控制语句</h2><h3 id="shell-中的比较运算"><a href="#shell-中的比较运算" class="headerlink" title="shell 中的比较运算"></a>shell 中的比较运算</h3><h4 id="数学运算"><a href="#数学运算" class="headerlink" title="数学运算"></a>数学运算</h4><p>  运算符解释</p>
-<ul>
-<li><code>-eq</code>       等于</li>
-<li><code>-gt</code>       大于</li>
-<li><code>-lt</code>       小于</li>
-<li><code>-ge</code>       大于或等于</li>
-<li><code>-le</code>       小于或等于</li>
-<li><code>-ne</code>       不等于</li>
-</ul>
-<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><p>运算符解释，注意字符串一定别忘了使用引号引起来</p>
-<ul>
-<li><code>==</code> 等于</li>
-<li><code>!=</code> 不等于</li>
-<li><code>-n</code> 检查字符串长度是否大于 0</li>
-<li><code>-z</code> 检查字符串长度是否为 0</li>
-</ul>
-<h4 id="文件的检查和比较"><a href="#文件的检查和比较" class="headerlink" title="文件的检查和比较"></a>文件的检查和比较</h4><ul>
-<li><code>-d</code> 是否存在且为目录</li>
-<li><code>-e</code> 检查文件是否存在</li>
-<li><code>-f</code> 检查文件是否存在且为文件</li>
-<li><code>-s</code> 检查文件是否存在且可读</li>
-<li><code>-w</code> 检查文件是否存在且不为空</li>
-<li><code>-x </code> 检查文件是否存在且可写</li>
-<li><code>-O</code> 检查文件是否存在且可执行</li>
-<li><code>-G</code> 检查文件是否存在并且被当前用户拥有</li>
-<li><code> file1 -nt file2</code>  检查 file1 是否比 file2 新</li>
-<li><code>file1 -ot file2</code> 检查 file1 是否比 file2 旧</li>
-</ul>
-<h3 id="if-语法"><a href="#if-语法" class="headerlink" title="if 语法"></a><code>if</code> 语法</h3><p>if 条件要加 <code>[]</code></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition]</span><br><span class="line">   <span class="keyword">then</span></span><br><span class="line">      commands</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="if-else"><a href="#if-else" class="headerlink" title="if-else"></a><code>if-else</code></h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition]</span><br><span class="line">	<span class="keyword">then</span></span><br><span class="line">    	commands1</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        commands2</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="if-else-elseif"><a href="#if-else-elseif" class="headerlink" title="if-else-elseif"></a><code>if-else-elseif</code></h4><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span> [condition 1]</span><br><span class="line">	<span class="keyword">then</span></span><br><span class="line">    	commands1</span><br><span class="line"><span class="keyword">elif</span> [condition 2]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        commands2</span><br><span class="line">  .......</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    commandsX</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="if-的高级用法"><a href="#if-的高级用法" class="headerlink" title="if 的高级用法"></a><code>if</code> 的高级用法</h4><ul>
-<li><p>🍋条件符号使用双圆括号 <code>(())</code>，<strong>可以在条件中植入数学表达式</strong></p>
-</li>
-<li><p>🍋使用双方括号 <code>[[]]</code>, 可以在条件中 <strong>使用通配符</strong></p>
-</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">if</span> ((100*3+10&gt;500 ));<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&gt;&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;&lt;&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> str <span class="keyword">in</span> java javascript js</span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    	<span class="keyword">if</span> [[<span class="string">&quot;<span class="variable">$str</span>&quot;</span> == j*]];<span class="keyword">then</span></span><br><span class="line">            <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$str</span>&quot;</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line">    <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-
-<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><h4 id="for-语法"><a href="#for-语法" class="headerlink" title="for 语法"></a>for 语法</h4><ul>
-<li><p>语法 1: 有限变量</p>
-  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> v1 v2 v3..</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法 2: C 语言写法</p>
-  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ((变量; 条件; 变化))</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>语法 3: 无限循环</p>
-  <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ((;;))</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="循环控制"><a href="#循环控制" class="headerlink" title="循环控制"></a>循环控制</h3><ul>
-<li><code>continue</code> 跳过循环中的某次循环</li>
-<li><code>break</code> 跳出循环继续执行后续代码, 可以使用 <code>break N</code> 循环退出, 循环从里往外排序为 <code>1 - N</code></li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> ((i=9;i&gt;0;i--))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="keyword">if</span> [<span class="variable">$i</span> -eq 5]</span><br><span class="line">		<span class="keyword">then</span></span><br><span class="line">  		<span class="built_in">continue</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> -n -e <span class="string">&quot;\b<span class="variable">$i</span>===&quot;</span></span><br><span class="line">        <span class="built_in">sleep</span> 1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"><span class="built_in">echo</span> -e</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="keyword">for</span> ((i=1;i&lt;100;i++))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="built_in">echo</span> <span class="string">&quot;ha&quot;</span></span><br><span class="line">	<span class="keyword">for</span>((;;))</span><br><span class="line">	<span class="keyword">do</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">&quot;the inner loop&quot;</span></span><br><span class="line">        <span class="built_in">break</span> 2</span><br><span class="line">    <span class="keyword">done</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">打印:</span><br><span class="line">ha</span><br><span class="line">the inner loop</span><br></pre></td></tr></table></figure>
-
-<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><h4 id="语法格式-条件可以是-5-种运算中的任意一种"><a href="#语法格式-条件可以是-5-种运算中的任意一种" class="headerlink" title="语法格式: 条件可以是 5 种运算中的任意一种"></a>语法格式: 条件可以是 5 种运算中的任意一种</h4><p><strong>数学, 字符串比较, 文件类型, 逻辑运算, 赋值运算</strong></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> [condition]</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">	<span class="built_in">command</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="until"><a href="#until" class="headerlink" title="until"></a>until</h4><p><code>while</code> 是条件为真开始时循环, <code>until</code> 是条件为假开始循环.</p>
-<h4 id="case-多条件执行语句"><a href="#case-多条件执行语句" class="headerlink" title="case (多条件执行语句)"></a>case (多条件执行语句)</h4><p><strong>语法 (比较奇怪):</strong></p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">case</span> var <span class="keyword">in</span></span><br><span class="line">condition1)</span><br><span class="line">	command1</span><br><span class="line">;;</span><br><span class="line">condition1)</span><br><span class="line">	command2</span><br><span class="line">;;</span><br><span class="line">...</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
-
-<p><strong>注意特殊的变量</strong></p>
-<h2 id="shell-函数"><a href="#shell-函数" class="headerlink" title="shell 函数"></a>shell 函数</h2><h3 id="函数语法"><a href="#函数语法" class="headerlink" title="函数语法"></a>函数语法</h3><figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 方式 1</span></span><br><span class="line"><span class="function"><span class="title">func_name</span></span> ()&#123;</span><br><span class="line">	<span class="built_in">command</span></span><br><span class="line">	<span class="built_in">return</span> N</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># 方式 2</span></span><br><span class="line"><span class="keyword">function</span> func_name&#123;</span><br><span class="line">	<span class="built_in">command</span></span><br><span class="line">	<span class="built_in">return</span> N</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="调用函数"><a href="#调用函数" class="headerlink" title="调用函数"></a>调用函数</h3><p>直接使用函数名字, 不加括号: <code>func_name</code></p>
-<h2 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h2><h3 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h3><h3 id="定位字符-锚定字符"><a href="#定位字符-锚定字符" class="headerlink" title="定位字符: 锚定字符"></a>定位字符: 锚定字符</h3><ul>
-<li><code>^</code> 锚定开头 <code>^a</code> 以 a 开头, 默认锚定一个字符</li>
-<li><code>$</code> 锚定结尾 <code>a$</code> 以 a 结尾, 默认锚定一个字符</li>
-<li><code>^$</code> 两个字符在一起表示精准匹配</li>
-<li><code>grep</code> 默认不支持正则表达式, 需要加上 <code>-e</code> 参数, 或者使用 <code>egrep</code></li>
-</ul>
-<p>其他特定符号的意思</p>
-<h3 id="匹配符-匹配字符串"><a href="#匹配符-匹配字符串" class="headerlink" title="匹配符: 匹配字符串"></a>匹配符: 匹配字符串</h3><ul>
-<li><code>.</code> 除了回车符号任意的字符</li>
-<li><code>(|)</code> 字符串分组 <code>^(a|b)c$</code> a 或者 b 开头以 c 结尾的串</li>
-<li><code>[]</code> 定义字符类, 匹配括号中的一个字符</li>
-<li><code>[^]</code> 表示否定括号中出现字符类中的字符, 取反</li>
-<li><code>\</code> 转义字符</li>
-<li><code>|</code> 或符号</li>
-</ul>
-<h3 id="限定符号-对前面的字符或者字符串做限定说明"><a href="#限定符号-对前面的字符或者字符串做限定说明" class="headerlink" title="限定符号 : 对前面的字符或者字符串做限定说明"></a>限定符号 : 对前面的字符或者字符串做限定说明</h3><ul>
-<li><code>*</code> 某个字符之后加星号表示该字符不出现或出现多次 (**0 次或者多次 **)</li>
-<li><code>?</code> 与星号相似，但略有变化，表示该字符出现一次或不出现 <strong>(0 次或者 1 次)</strong></li>
-</ul>
-<ul>
-<li><code>+</code> 与星号相似，表示其前面字符出现 ** 一次或多次 <strong>，</strong> 但必须出现一次 **</li>
-<li><code>&#123;n,m&#125;</code>	某个字符之后出现，表示该字符 ** 最少 <strong><code>n</code> 次，</strong> 最多 **<code>m</code> 次</li>
-<li><code>&#123;m&#125;</code>	正好出现了 <code>m</code> 次</li>
-</ul>
-<h3 id="POSIX-特殊字符"><a href="#POSIX-特殊字符" class="headerlink" title="POSIX 特殊字符"></a>POSIX 特殊字符</h3><ul>
-<li><code>[:alnum:]</code>	匹配任意字母字符 0-9 a-z A-Z</li>
-<li><code>[:alpha:]</code>	匹配任意字母，大写或小写</li>
-<li><code>[:digit:]</code>	数字 0-9</li>
-<li><code>[:graph:]</code>	非空字符 ( 非空格控制字符)</li>
-<li><code>[:lower:]</code>	小写字符 a-z</li>
-<li><code>[:upper:]</code>	大写字符 A-Z</li>
-<li><code>[:cntrl:]</code>	控制字符</li>
-<li><code>[:print:]</code>	非空字符 ( 包括空格)</li>
-<li><code>[:punct:]</code>	标点符号</li>
-<li><code>[:blank:]</code>	空格和 TAB 字符</li>
-<li><code>[:xdigit:]</code>	16 进制数字</li>
-<li><code>[:space:]</code>	所有空白字符 ( 新行、空格、制表符)</li>
-</ul>
-<h2 id="shell-文件操作"><a href="#shell-文件操作" class="headerlink" title="shell 文件操作"></a>shell 文件操作</h2><p>非交互式文件操作, vim 和 nano 是交互式文件操作.</p>
-<h3 id="sed-stream-editor"><a href="#sed-stream-editor" class="headerlink" title="sed (stream editor)"></a>sed (stream editor)</h3><ul>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9jb29sc2hlbGwuY24vYXJ0aWNsZXMvOTEwNC5odG1s">CoolShell 的 sed 简明教程<i class="fa fa-external-link-alt"></i></span></p>
-<h3 id="awk-pattern-directed-scanning-and-processing-language"><a href="#awk-pattern-directed-scanning-and-processing-language" class="headerlink" title="awk(pattern-directed scanning and processing language)"></a>awk(pattern-directed scanning and processing language)</h3></li>
-<li><p><span class="exturl" data-url="aHR0cHM6Ly9jb29sc2hlbGwuY24vYXJ0aWNsZXMvOTA3MC5odG1s">CoolShell 的 AWK 简明教程<i class="fa fa-external-link-alt"></i></span></p>
-</li>
-</ul>
-<h2 id="常见的-shell-案例"><a href="#常见的-shell-案例" class="headerlink" title="常见的 shell 案例"></a>常见的 shell 案例</h2><h3 id="监控主机是否存活的脚本"><a href="#监控主机是否存活的脚本" class="headerlink" title="监控主机是否存活的脚本"></a>监控主机是否存活的脚本</h3><details><summary> 监控主机是否存活的脚本 </summary>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> ((;;))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    ping -c1 <span class="variable">$1</span> &amp;&gt;/dev/null</span><br><span class="line">    <span class="keyword">if</span> [$? -eq 0]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;`date +&quot;</span>%F %H:%M;%S<span class="string">&quot;`:<span class="variable">$1</span> is \033[32m UP\033[0m&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">echo</span> -e <span class="string">&quot;`date +&quot;</span>%F %H:%M;%S<span class="string">&quot;`:<span class="variable">$1</span> is \033[31m DOWN \033[0m&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># controll the frequency</span></span><br><span class="line">    <span class="built_in">sleep</span> 5</span><br><span class="line">    <span class="comment">#in production usually use at least 60</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-</details>
-
-<h3 id="nginx-启动脚本"><a href="#nginx-启动脚本" class="headerlink" title="nginx 启动脚本"></a>nginx 启动脚本</h3><details><summary>nginx 启动脚本</summary>
-
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># variables definition</span></span><br><span class="line">nginx_dir=/usr/local/nginx</span><br><span class="line">nginxd=<span class="variable">$nginx_dir</span>/sbin/nginx</span><br><span class="line">pid=<span class="variable">$nginx_dir</span>/logs/nginx.pid</span><br><span class="line">conf=<span class="variable">$nginx_dir</span>/conf/nginx.conf</span><br><span class="line">proc=nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># Source the function library</span></span><br><span class="line"><span class="keyword">if</span> [-f /etc/init.d/functions]; <span class="keyword">then</span></span><br><span class="line">    <span class="comment"># . means source the function</span></span><br><span class="line">    .  /etc/init.d/functions</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;file not found  /etc/init.d/functions&quot;</span></span><br><span class="line">    <span class="built_in">exit</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [-f <span class="variable">$pid_file</span>];<span class="keyword">then</span></span><br><span class="line">    nginx_process_name=`<span class="built_in">cat</span> <span class="variable">$pid</span> `</span><br><span class="line">    nginx_process_num=`ps aux | grep <span class="variable">$nginx_process_name</span>| grep -v <span class="string">&quot;grep&quot;</span>| <span class="built_in">wc</span> -l `</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># start func</span></span><br><span class="line"><span class="function"><span class="title">start</span></span>()&#123;</span><br><span class="line"><span class="comment"># judge the file by the pid file if the nginx is running then alert something</span></span><br><span class="line"><span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;nginx is already runnig&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -le 1 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">rm</span> -f <span class="variable">$pid_file</span></span><br><span class="line">       <span class="comment"># echo &quot;nginx start `daemon $nginxd`&quot;</span></span><br><span class="line">        action <span class="string">&quot;nginx start&quot;</span> <span class="variable">$nginxd</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="comment"># echo &quot;nginx start `daemon $nginxd`&quot;</span></span><br><span class="line">    action <span class="string">&quot;nginx start&quot;</span> <span class="variable">$nginxd</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">stop</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">            action <span class="string">&quot;nginx stop&quot;</span>  killall -s QUIT <span class="variable">$proc</span></span><br><span class="line">            <span class="built_in">rm</span> -f <span class="variable">$pid</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            action <span class="string">&quot;nginx stop&quot;</span> killall -s QUIT <span class="variable">$proc</span> 2&gt;/dev/null</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">restart</span></span>()&#123;</span><br><span class="line">    stop</span><br><span class="line">    <span class="built_in">sleep</span> 1</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">reload</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">        action <span class="string">&quot;nginx reload&quot;</span> killall -s HUP <span class="variable">$proc</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        action <span class="string">&quot;nginx reload&quot;</span> killall -s HUP <span class="variable">$proc</span> 2&gt;/dev/null</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">status</span></span>()&#123;</span><br><span class="line">    <span class="keyword">if</span> [-f <span class="variable">$pid</span>] &amp;&amp; [ <span class="variable">$nginx_process_num</span> -ge 1 ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;nginx runnig&quot;</span></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;nginx not running&quot;</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># call the funcs</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">    start)start;;</span><br><span class="line">    stop)stop;;</span><br><span class="line">    restart)restart;;</span><br><span class="line">    reload)reload;;</span><br><span class="line">    status)status;;</span><br><span class="line">    *) <span class="built_in">echo</span> <span class="string">&quot;USAGE: <span class="variable">$0</span> start|stop|restart|reload|status&quot;</span> ;;</span><br><span class="line"><span class="keyword">esac</span></span><br></pre></td></tr></table></figure>
-</details>
-
-
-
-<hr>
-<p>相关教程和书籍:</p>
-<ol>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8zMDM1OTk1NC8=">鸟哥的Linux私房菜 基础学习篇 第四版 (豆瓣)<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmFwZWxhbmQuY24vZGV0YWlscy8xMi8=">路飞学城 shell 教程<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC82ODA2ODYyLw==">The Linux Command Line <i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93YW5nZG9jLmNvbS9iYXNoLw==">Bash 脚本教程 - 网道<i class="fa fa-external-link-alt"></i></span></li>
-</ol>
-<center>--- 全文完 ---</center>]]></content>
-      <categories>
-        <category>编程语言</category>
-        <category>shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ArrayList 源码分析</title>
-    <url>/articles/392f85e6.html</url>
-    <content><![CDATA[<h2 id="ArrayList-的结构"><a href="#ArrayList-的结构" class="headerlink" title="ArrayList 的结构"></a>ArrayList 的结构</h2><ul>
-<li>在逻辑结构上是：线性结构、线性表</li>
-<li>在物理结构是：连续储存结构</li>
-</ul>
-<h2 id="ArrayList-实现的接口"><a href="#ArrayList-实现的接口" class="headerlink" title="ArrayList 实现的接口"></a>ArrayList 实现的接口</h2><span id="more"></span>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;E&gt; <span class="keyword">extends</span> <span class="title class_">AbstractList</span>&lt;E&gt;<span class="keyword">implements</span> <span class="title class_">List</span>&lt;E&gt;,</span><br><span class="line">RandomAccess, Cloneable, java.io.Serializable</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3hoj29ydj30yu0jijs1.jpg"></p>
-<h3 id="RandomAccess"><a href="#RandomAccess" class="headerlink" title="RandomAccess"></a><code>RandomAccess</code></h3><p><code>RandomAccess</code>，没有方法，是一个标记的接口。List 实现这个接口用来表示其支持随机访问：即下标访问，（<strong>通常是固定时间</strong>）<code>RandomAccess</code> 这个标记接口就是标记能够随机访问元素的集合， 简单来说就 <strong>是底层是数组实现</strong> 的集合。 <code>for (int i=0, n=list.size(); i &lt; n; i++)</code> 循环，比 <code>for (Iterator i=list.iterator(); i.hasNext(); )i.next();</code> 要快。（快速随机访问速度 &gt; 迭代器遍历速度。）</p>
-<h3 id="Cloneable"><a href="#Cloneable" class="headerlink" title="Cloneable"></a><code>Cloneable</code></h3><p>空接口，实现了这个接口，在使用 <code>Object.clone()</code> 方法进行每个字段的拷贝是合法的，没有实现这个方法会抛出 <code>CloneNotSupportedException</code>。接口不包含 <code>clone</code> 方法，及时这个实现了这个接口，也不能进行 clone，即使是使用反射。实现此接口的类应该使用公共方法覆盖 clone 方法.</p>
-<h2 id="ArrayList-属性"><a href="#ArrayList-属性" class="headerlink" title="ArrayList 属性"></a>ArrayList 属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认长度</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DEFAULT_CAPACITY</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="comment">// 用于默认大小空实例的共享空数组实例，与 EMPTY_ELEMENTDATA 的区别在于知道当第一个元素插入时该如何扩充数组</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="comment">// 保存了多少个数据</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"><span class="comment">// 最大的长度，2^31 - 8 减去头关键字</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MAX_ARRAY_SIZE</span> <span class="operator">=</span> Integer.MAX_VALUE - <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ArrayList-构造方法-3-个"><a href="#ArrayList-构造方法-3-个" class="headerlink" title="ArrayList 构造方法(3 个)"></a>ArrayList 构造方法(3 个)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(<span class="type">int</span> initialCapacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity&gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = <span class="keyword">new</span> <span class="title class_">Object</span>[initialCapacity];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Illegal Capacity:&quot;</span> + initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 无初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用其他集合来初始化</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> &#123;</span><br><span class="line">    elementData = c.toArray();</span><br><span class="line">    <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">        <span class="keyword">if</span> (elementData.getClass() != Object[].class)</span><br><span class="line">            <span class="comment">// 调用 Array.copyOf</span></span><br><span class="line">            elementData = Arrays.copyOf(elementData, size, Object[].class);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ArrayList-扩容机制"><a href="#ArrayList-扩容机制" class="headerlink" title="ArrayList 扩容机制"></a>ArrayList 扩容机制</h2><p>在初始化 <code>ArrayList</code> 的时候，JVM 并不知道要存多少个数据，但是数组必须要声明其大小。这样的话，<strong>最迟</strong> 在第一个元素插入时，必须指定数组容量大小、初始化数组以容纳元素。</p>
-<h2 id="ArrayList-添加方法"><a href="#ArrayList-添加方法" class="headerlink" title="ArrayList 添加方法"></a>ArrayList 添加方法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 直接添加元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">add</span><span class="params">(E e)</span> &#123;</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在指定的位置加上元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, E element)</span> &#123;</span><br><span class="line">    rangeCheckForAdd(index);</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    System.arraycopy(elementData, index, elementData, index + <span class="number">1</span>,</span><br><span class="line">                    size - index);</span><br><span class="line">    elementData[index] = element;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先看到的是带三个感叹号的注释 <code>// Increments modCount!!</code>，这个 <code>modCount</code> 是干什么呢的?</p>
-<ul>
-<li><p>点进去发现是继承自 <code>AbstractList</code></p>
-  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="type">int</span> <span class="variable">modCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p>  这个属性就是：<strong>已对该列表进行结构化的修改次数</strong>，否则的话会干扰正在迭代的，产生错误的结果。如果这个 field 变换不正常的话，就会在听下一个迭代（next，remove，previous，set，add 操作的时候）产生在并发里面很常见的并发修改异常（这就是根源。Man, I Learned so much.）<code>ConcurrentModificationException</code>。</p>
-<p>  面对迭代过程中的并发修改，这提供了 <strong>快速故障 fast-fail</strong> 行为，而不是不确定的行为。</p>
-<p>  如果子类希望提供快速失败的迭代器（和列表迭代器），则只需在其 <code>add（int E）</code>和 <code>remove（int E）</code>方法（以及任何其他覆盖该方法导致结构化的方法）中递增此字段即可。 在添加或者移出的时候，这个加不能超过一个。否则会抛出虚假的 <code>ConcurrentModificationException</code>。</p>
-</li>
-</ul>
-<p>接着看</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureCapacityInternal</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 计算容量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">calculateCapacity</span><span class="params">(Object[] elementData, <span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 如果是第一次添加数据，是无参构造第一次添加数据</span></span><br><span class="line">    <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        <span class="comment">// 获取到 10 和 size+1</span></span><br><span class="line">        <span class="keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> minCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 避免并发修改异常</span></span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        <span class="comment">// 进行扩容</span></span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">grow</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">oldCapacity</span> <span class="operator">=</span> elementData.length;</span><br><span class="line">    <span class="comment">// 原来 * 1.5 使用位运算</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">newCapacity</span> <span class="operator">=</span> oldCapacity + (oldCapacity&gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE&gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以扩容的最大容量，当想要扩容的容量大于 MAX_ARRAY_SIZE 时调用</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">hugeCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 是否扩容的时候变成了负数</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity &lt; <span class="number">0</span>) <span class="comment">// overflow 内存不足</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">OutOfMemoryError</span>();</span><br><span class="line">    <span class="comment">// 返回</span></span><br><span class="line">    <span class="keyword">return</span> (minCapacity&gt; MAX_ARRAY_SIZE) ?</span><br><span class="line">        Integer.MAX_VALUE :</span><br><span class="line">        MAX_ARRAY_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>总结：</p>
-<ol>
-<li>有 <code>index</code> 添加会进行 index range check, 没有 <code>index</code> 就进行保证容量的的方法</li>
-<li>先计算容量判断是否是默认容量 <code>10</code>，就返回 <code>Math.max(DEFAULT_CAPACITY, index);</code> 或者 <code>index</code></li>
-<li>拿到上面的值 <code>a</code>, 先加 <code>modCount++</code>，如果 <code>a</code> 大于存储元素的长度的话就进行 <code>grow</code> 操作</li>
-<li>加入需要 <code>grow</code>，传入最大值<ol>
-<li>拿到原来数组的长度 <code>*1.5</code>，用位运算</li>
-<li>如过 <code>*1.5</code> 后，还小于 <code>a</code>，就返回 <code>a</code></li>
-<li>如果大于 <code>2^31-8</code>, 就进行 <code>hugeCapacity</code> 操作（判断是否溢出，就抛出来内存不足异常, 否则就返回，<code>MAX_ARRAY_SIZE</code>），否则就调用 <code>Arrays.copyOf</code> 方法进行拷贝。</li>
-</ol>
-</li>
-</ol>
-<h2 id="什么时候扩容？"><a href="#什么时候扩容？" class="headerlink" title="什么时候扩容？"></a>什么时候扩容？</h2><ol>
-<li>主动扩容: 从 <code>public void ensureCapacity(int minCapacity)</code> 可以看出，我们可以主动调用该方法进行扩容。</li>
-<li>添加时候扩容: 在调用 <code>add/addAll</code> 等添加元素的方法时，<code>ArrayList</code> 也会调用内部扩容方法（ensureCapacityInternal）来主动扩容</li>
-</ol>
-<p>见代码如下: </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ensureCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">minExpand</span> <span class="operator">=</span> (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)</span><br><span class="line">        <span class="comment">// any size if not default element table</span></span><br><span class="line">        ? <span class="number">0</span></span><br><span class="line">        <span class="comment">// larger than default for default empty table. It&#x27;s already</span></span><br><span class="line">        <span class="comment">// supposed to be at default size.</span></span><br><span class="line">        : DEFAULT_CAPACITY;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity&gt; minExpand) &#123;</span><br><span class="line">        ensureExplicitCapacity(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="数组底层的方法"><a href="#数组底层的方法" class="headerlink" title="数组底层的方法"></a>数组底层的方法</h3><p>扩容的时候其实调用了 <code>Arrays.copyOf </code> 方法，最后也是调用了 <code>System.arraycopy</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Arrays.copyOf</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T[] copyOf(T[] original, <span class="type">int</span> newLength) &#123;</span><br><span class="line">    <span class="keyword">return</span> (T[]) copyOf(original, newLength, original.getClass());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T,U&gt; T[] copyOf(U[] original, <span class="type">int</span> newLength, Class&lt;? <span class="keyword">extends</span> <span class="title class_">T</span>[]&gt; newType) &#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">    T[] copy = ((Object)newType == (Object)Object[].class)</span><br><span class="line">        ? (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[newLength]</span><br><span class="line">        : (T[]) Array.newInstance(newType.getComponentType(), newLength);</span><br><span class="line">    System.arraycopy(original, <span class="number">0</span>, copy, <span class="number">0</span>,</span><br><span class="line">                        Math.min(original.length, newLength));</span><br><span class="line">    <span class="keyword">return</span> copy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">native</span> Class&lt;?&gt; getComponentType();</span><br><span class="line"></span><br><span class="line"><span class="comment">//  System 中的 copy ：native 方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">arraycopy</span><span class="params">(Object src,  <span class="type">int</span>  srcPos,</span></span><br><span class="line"><span class="params">                                        Object dest, <span class="type">int</span> destPos,</span></span><br><span class="line"><span class="params">                                        <span class="type">int</span> length)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="其他几个-public-方法"><a href="#其他几个-public-方法" class="headerlink" title="其他几个 public 方法"></a>其他几个 public 方法</h2><ul>
-<li><code>clear()</code> <code>fori</code> 将每个元素设置为 <code>null</code>，让 gc 做工作。</li>
-<li><code>clone()</code> 调用父类的 <code>clone</code> 方法，生成新 <code>ArrayList</code>，然后把数据 copy 过去（<code>Arrays.copy</code>）,<code>modCount=0</code>。</li>
-<li><code>toArray()</code> <code>Arrays.copy</code> 返回新拷贝的数据。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li><p>基于数组实现, 默认长度 10</p>
-</li>
-<li><p>可以动态扩容，每次 <code>*1.5</code> 倍的长度增加</p>
-</li>
-<li><p>元素可以为 <code>null</code></p>
-</li>
-<li><p>不是并发安全的，是通过 <code>modCount</code> 来进行判断的</p>
-</li>
-<li><p>如果想并发安全：</p>
-<ol>
-<li><code>Vector</code> 不行, 效率低</li>
-<li>使用 <code>Collections.synchronizedList</code>()</li>
-<li>JUC 中的并发容器 <code>new CopyOnWriteArrayList&lt;&gt;()</code>;</li>
-</ol>
-</li>
-<li><p>为什么数组中的最大元素是 <code>Integer.MAX_VALUE - 8</code></p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzU3NTYyNzcvd2h5LXRoZS1tYXhpbXVtLWFycmF5LXNpemUtb2YtYXJyYXlsaXN0LWlzLWludGVnZXItbWF4LXZhbHVlLTg=">stackoverflow<i class="fa fa-external-link-alt"></i></span><blockquote>
-<p>数组对象（例如 int 值的数组）的形状和结构类似于标准 Java 对象的形状和结构。主要区别在于，数组对象还有一条额外的元数据，它表示数组的大小。然后，数组对象的元数据包括：Class：指向类信息的指针，该信息描述对象的类型。对于 int 字段数组，这是指向 int [] 类的指针。<br>标志：描述对象状态的标志的集合，包括对象的哈希码（如果有的话）以及对象的形状（即，对象是否为数组）。<br>Lock：对象的同步信息，即对象当前是否同步。<br>Size：数组的大小。</p>
-</blockquote>
-</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9qYXZhL2xpYnJhcnkvai1jb2RldG9oZWFwL2k=">From Java code to Java heap<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>源码</category>
-        <category>JDK</category>
-      </categories>
-      <tags>
-        <tag>源码</tag>
-        <tag>Java容器</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《数学之美》读书笔记</title>
-    <url>/articles/e9e88f1a.html</url>
-    <content><![CDATA[<p>书籍链接：<span class="exturl" data-url="aHR0cHM6Ly9ib29rLmRvdWJhbi5jb20vc3ViamVjdC8yNjE2MzQ1NC8=">数学之美 （第二版）<i class="fa fa-external-link-alt"></i></span></p>
-<h2 id="第一章-文字和语言-vs-数字和信息"><a href="#第一章-文字和语言-vs-数字和信息" class="headerlink" title="第一章: 文字和语言 vs 数字和信息"></a>第一章: 文字和语言 vs 数字和信息</h2><h3 id="信息概览"><a href="#信息概览" class="headerlink" title="信息概览"></a>信息概览</h3><p>通信的原理和模型：</p>
-<ul>
-<li>通信的原理：信息的产生、传播、接受、反馈</li>
-<li>信息传播的模型：信息源 –&gt; 编码 –&gt; 信道 –&gt; 解码 –&gt; 接受者</li>
-</ul>
-<p>聚类：</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JTgxJTlBJUU3JUIxJUJCJUU1JTg4JTg2JUU2JTlFJTkw">聚类分析 - 维基百科，自由的百科全书<i class="fa fa-external-link-alt"></i></span></li>
-<li>“根据相同的属性将事物聚集在一起”</li>
-</ul>
-<p>（信源）编码和最短编码：</p>
-<ul>
-<li>编码：将物体的外表进化成抽象的概念，本质对应着信息的编码。</li>
-<li>最短编码：“常用字短、生僻字长，经常用的文字笔画少比较简单”</li>
-</ul>
-<p>编码和解码：</p>
-<ul>
-<li>字母到词的构词法是词的编码规则。语法则是语言的编码和解码规则。</li>
-</ul>
-<p>校验位：</p>
-<ul>
-<li>防止信息传输有误采用的方法。犹太学者抄写圣经的时候将每个希伯来字母对应一个数字，最后每一行进行求和在和原书的每一行进行比较，如果和相同则表示抄写无误。</li>
-</ul>
-<p>双语对照文本，语料库和机器翻译：</p>
-<ul>
-<li>Rosetta 上有三种文字记录了同一段诏书。</li>
-</ul>
-<p>多义性和利用上下文消除歧义性：</p>
-<ul>
-<li>同一个字可能表示不同的意思（聚类），可以通过上下文来确定含义。</li>
-</ul>
-<h3 id="段落摘要"><a href="#段落摘要" class="headerlink" title="段落摘要:"></a>段落摘要:</h3><blockquote>
-<p>翻译这件事之所以能够达成,仅仅是因为不同的文字系统在记录信息上的能力是等价的。（这个结论很重要。）进一步讲，文字只是信息的载体，而非信息本身。</p>
-</blockquote>
-<blockquote>
-<p>在通信时，如果信道较宽，信息不必压缩就可以直接传递；如果信道较窄，信息传递前要尽可能的压缩，然后再接收端进行解压缩。在古代，两个人说的快是一个宽信道，无需压缩；书信来得慢是一个窄信道，需要压缩。</p>
-</blockquote>
-<h3 id="有趣的知识"><a href="#有趣的知识" class="headerlink" title="有趣的知识"></a>有趣的知识</h3><ul>
-<li>Rosetta Stone： 一块古埃及石碑，上面有埃及象形文字、埃及拼音文字和古希腊文字三种文字，这三种文字记录了同一件事情：托勒密五世的登基诏书。现在在英国大英博物馆。这也是很多翻译软件叫 Rosetta 的原因。 有趣的是这个名字也是老友记中 Joey 的懒人椅的名字。wiki 链接：<span class="exturl" data-url="aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU3JUJFJTg1JUU1JUExJTlFJUU1JUExJTk0JUU3JTlGJUIzJUU3JUEyJTkx">罗塞塔石碑 - 维基百科，自由的百科全书<i class="fa fa-external-link-alt"></i></span></li>
-<li>阿拉伯数字实际上是印度人发明的，通过阿拉伯人传入了欧洲，阿拉伯人只是“二道贩子”。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>自然科学</category>
-      </categories>
-      <tags>
-        <tag>读书笔记</tag>
       </tags>
   </entry>
 </search>

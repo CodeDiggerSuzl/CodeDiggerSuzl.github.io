@@ -35,68 +35,6 @@
       </tags>
   </entry>
   <entry>
-    <title>文本换行符号(^M)导致的 git diff 问题</title>
-    <url>/articles/8e8cc4d1.html</url>
-    <content><![CDATA[<h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><p>文件改动了一点，但是在 gitlab&#x2F;github 看 diff 却发现整个文件全部都进行了改动，且文件变的乱序或者变成了一行。</p>
-<h2 id="原因-文件换行符导致"><a href="#原因-文件换行符导致" class="headerlink" title="原因: 文件换行符导致"></a>原因: 文件换行符导致</h2><p>文本换行符号通常有: LF 和 CRLF。</p>
-<span id="more"></span>
-<p>首先介绍 LF 和 CRLF 下是什么：</p>
-<ul>
-<li><strong>CRLF</strong>: 是 carriagereturnlinefeed 的缩写。中文意思是回车换行；</li>
-<li><strong>LF</strong>: 是 line feed 的缩写，中文意思是换行；</li>
-<li><strong>CR</strong>: 是 carriagereturn 的缩写。中文意思是回车；</li>
-</ul>
-<p>为什么换行回车会不同呢? 主要的原因在于操作系统之间的分歧：</p>
-<ul>
-<li>早期的 macOS 系统使用 CR 当做换行，现在也已经统一成了 LF。</li>
-<li>Unix(包含现在大量使用的 linux) 系统使用 LF</li>
-<li>Windows 系统使用 LFCR 当做换行</li>
-</ul>
-<p>也正是因为不同系统的分歧，在多人协作共同开发的时候，可能导致提交代码时候产生问题。</p>
-<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><h3 id="1-IDE-或者代码编辑器中统一将换行符修改为-LF"><a href="#1-IDE-或者代码编辑器中统一将换行符修改为-LF" class="headerlink" title="1. IDE 或者代码编辑器中统一将换行符修改为: LF"></a>1. IDE 或者代码编辑器中统一将换行符修改为: LF</h3><h3 id="2-在-git-中进行配置"><a href="#2-在-git-中进行配置" class="headerlink" title="2. 在 git 中进行配置"></a>2. 在 git 中进行配置</h3><p>git 为了防止以上问题扰乱跨平台合作开发，使用命令可以转化 LF 和 CRLF<br>具体命令为：</p>
-<ol>
-<li><p><code>git config --global core.autocrlf true</code>: Git 可以在你 push 时自动地把行结束符 CRLF 转换成 LF，而在 pull 代码时把 LF 转换成 CRLF。用 core.autocrlf 来打开此项功能，如果是在 Windows 系统上，把它设置成 true，这样当签出代码时，LF 会被转换成 CRLF</p>
-</li>
-<li><p><code>git config --global core.autocrlf input</code>: Linux 或 Mac 系统使用 LF 作为行结束符；当一个以 CRLF 为行结束符的文件不小心被引入时你肯定想进行修正，把 core.autocrlf 设置成 input 来告诉 Git 在 push 时把 CRLF 转换成 LF，pull 时不转换</p>
-</li>
-<li><p><code>git config --global core.autocrlf false</code>: 在本地和代码库中都保留 CRLF，无论 pull 还是 push 都不变，代码库什么样，本地还是什么样子</p>
-</li>
-</ol>
-<p>参考链接:</p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoZW56aG91X3loL2FydGljbGUvZGV0YWlscy8xMDU1MDc1NDk=">IDEA 批量替换文件换行符、分隔符 CRLF、LF、CR_shenzhou_yh 的博客<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3Nkbi5uZXQvdGFncy9NdFRhQWcyc05EWTJNRGt6TFdKc2IyY08wTzBPLmh0bWw=">idea 换行格式指定为 LF<i class="fa fa-external-link-alt"></i></span></li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGV0aWFuYmlqaS5jb20vZ2l0L2dpdC1jcmxmLmh0bWw=">git 解决换行符 ^M 导致整个文件被改 - 乐天笔记<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-<!-- - www.baidu.com -->]]></content>
-      <categories>
-        <category>BugMemo</category>
-      </categories>
-      <tags>
-        <tag>文本换行符号</tag>
-        <tag>git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>优秀的项目备忘</title>
-    <url>/articles/6d3e6a59.html</url>
-    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span></p>
-<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
-<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
-<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">Guice<i class="fa fa-external-link-alt"></i></span> 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">DI 的核心思想<i class="fa fa-external-link-alt"></i></span>:</p>
-<blockquote>
-<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>备忘</category>
-      </categories>
-      <tags>
-        <tag>开源项目</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《大话数据结构》读书笔记</title>
     <url>/articles/7ef02f1c.html</url>
     <content><![CDATA[<h2 id="绪论"><a href="#绪论" class="headerlink" title="绪论"></a>绪论</h2><h3 id="逻辑结构与物理结构"><a href="#逻辑结构与物理结构" class="headerlink" title="逻辑结构与物理结构"></a>逻辑结构与物理结构</h3><p>逻辑结构: 数据对象和数据元素中的关系:</p>
@@ -1079,6 +1017,60 @@
       </tags>
   </entry>
   <entry>
+    <title>优秀的项目备忘</title>
+    <url>/articles/6d3e6a59.html</url>
+    <content><![CDATA[<h2 id="nginx-tutorial：Nginx-极简教程"><a href="#nginx-tutorial：Nginx-极简教程" class="headerlink" title="nginx-tutorial：Nginx 极简教程"></a>nginx-tutorial：Nginx 极简教程</h2><p>Github 地址：<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2R1bnd1L25naW54LXR1dG9yaWFs">https://github.com/dunwu/nginx-tutorial<i class="fa fa-external-link-alt"></i></span></p>
+<p>在线阅读：<span class="exturl" data-url="aHR0cHM6Ly9kdW53dS5naXRodWIuaW8vbmdpbngtdHV0b3JpYWwv">https://dunwu.github.io/nginx-tutorial/<i class="fa fa-external-link-alt"></i></span> 。</p>
+<p>你可以配合《深入理解 Nginx（第 2 版）》 这本书食用。</p>
+<h2 id="Guice：轻量级依赖注入框架"><a href="#Guice：轻量级依赖注入框架" class="headerlink" title="Guice：轻量级依赖注入框架"></a>Guice：轻量级依赖注入框架</h2><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZQ==">Guice<i class="fa fa-external-link-alt"></i></span> 是 Google 开源的一个轻量级依赖注入框架，相当于一个功能极简化的轻量级 Spring Boot。在某些情况下非常实用，就比如说我们的项目只需要使用依赖注入，不需要 AOP 等功能特性。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvb2dsZS9ndWljZS93aWtpL01vdGl2YXRpb24=">DI 的核心思想<i class="fa fa-external-link-alt"></i></span>:</p>
+<blockquote>
+<p>Like the factory, dependency injection is just a design pattern. The core principle is to separate behaviour from dependency resolution.</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>备忘</category>
+      </categories>
+      <tags>
+        <tag>开源项目</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一种基于广播消息的 Redis 热key 的解决方法</title>
+    <url>/articles/60c77327.html</url>
+    <content><![CDATA[<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>项目中最近遇到一个营销需求场景，类似于商品库存实时展示的功能。</p>
+<p>简单来说就是<strong>每一个活动</strong>有一个奖池的概念。比如说总共有 999 个商品，用户做任务，完成任务就能领取奖池中奖励。</p>
+<p>产品经理为了营造 “紧张的” 气氛，要求每秒轮询<strong>1</strong>次（先不谈是否有必要这么实时的查询）。那么当用户停留 H5 页面的时候，就会轮询去调用服务的接口，查询剩余奖品数。</p>
+<p>QPS 大概 5-6 万左右。<em>可能实际 QPS 没有这么高，只是一个大概的估计</em>。</p>
+<h3 id="大致思路"><a href="#大致思路" class="headerlink" title="大致思路"></a>大致思路</h3><p>计划是用一个 redis key 来维护这个数据，因为并不是秒杀场景，用户需要完成某个比较耗时的任务才能领取奖品。</p>
+<p>可以通过 redis 的 <code>incr</code> 或者 <code>decr</code> 命令，在用户领取奖励时维护这个缓存。</p>
+<p>维护这个 key 比较容易，但是读的频率要远远大于写频率。</p>
+<p>本质上来说就是大量用户实时去请求 redis 中的维护的计数器。</p>
+<p>redis 集群和其他业务组共用，希望尽可能的减少对 redis 的压力。防止对缓存成为系统的瓶颈。最坏的情况：reids 崩掉，那将对其他的业务组也造成极大的影响，因为一个查询的操作实在是得不偿失。</p>
+<h3 id="最终解法"><a href="#最终解法" class="headerlink" title="最终解法"></a>最终解法</h3><p>我们最终采用了一种<strong>MQ 广播消息 + 本地缓存</strong>的思路。</p>
+<ol>
+<li>当 redis 计数器的值变化的时候，用 RocketMQ 去发一个广播消息，然后将 redis 当前的值广播到各个应用实例上。</li>
+<li>各个应用实例接收到这个广播消息的时候，将这个值维护在本地缓存中</li>
+<li>请求来的时候只需要查询本地缓存就可以</li>
+<li>活动时加机器，活动结束后摘掉实例。</li>
+<li>加些兜底的策略<ol>
+<li>通过开关控制请求本地缓存还是 redis</li>
+<li>出现异常返回假数据</li>
+<li>等等符合业务需求的降级策略</li>
+</ol>
+</li>
+</ol>
+<p>这样避免了直接查询缓存可能带来的一些问题，算是一个比较巧妙的解决方法，故记录下。</p>
+]]></content>
+      <categories>
+        <category>缓存</category>
+      </categories>
+      <tags>
+        <tag>热key</tag>
+        <tag>redis</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>从头开始搭建开发环境（CentOS)</title>
     <url>/articles/d0e276b1.html</url>
     <content><![CDATA[<p>首先确定系统的包管理工具：这里是 CentOS，是 yum</p>
@@ -1170,102 +1162,6 @@
         <tag>rocketmq</tag>
         <tag>java</tag>
         <tag>maven</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ArrayList 源码分析</title>
-    <url>/articles/392f85e6.html</url>
-    <content><![CDATA[<h2 id="ArrayList-的结构"><a href="#ArrayList-的结构" class="headerlink" title="ArrayList 的结构"></a>ArrayList 的结构</h2><ul>
-<li>在逻辑结构上是：线性结构、线性表</li>
-<li>在物理结构是：连续储存结构</li>
-</ul>
-<h2 id="ArrayList-实现的接口"><a href="#ArrayList-实现的接口" class="headerlink" title="ArrayList 实现的接口"></a>ArrayList 实现的接口</h2><span id="more"></span>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;E&gt; <span class="keyword">extends</span> <span class="title class_">AbstractList</span>&lt;E&gt;<span class="keyword">implements</span> <span class="title class_">List</span>&lt;E&gt;,</span><br><span class="line">RandomAccess, Cloneable, java.io.Serializable</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3hoj29ydj30yu0jijs1.jpg"></p>
-<h3 id="RandomAccess"><a href="#RandomAccess" class="headerlink" title="RandomAccess"></a><code>RandomAccess</code></h3><p><code>RandomAccess</code>，没有方法，是一个标记的接口。List 实现这个接口用来表示其支持随机访问：即下标访问，（<strong>通常是固定时间</strong>）<code>RandomAccess</code> 这个标记接口就是标记能够随机访问元素的集合， 简单来说就 <strong>是底层是数组实现</strong> 的集合。 <code>for (int i=0, n=list.size(); i &lt; n; i++)</code> 循环，比 <code>for (Iterator i=list.iterator(); i.hasNext(); )i.next();</code> 要快。（快速随机访问速度 &gt; 迭代器遍历速度。）</p>
-<h3 id="Cloneable"><a href="#Cloneable" class="headerlink" title="Cloneable"></a><code>Cloneable</code></h3><p>空接口，实现了这个接口，在使用 <code>Object.clone()</code> 方法进行每个字段的拷贝是合法的，没有实现这个方法会抛出 <code>CloneNotSupportedException</code>。接口不包含 <code>clone</code> 方法，及时这个实现了这个接口，也不能进行 clone，即使是使用反射。实现此接口的类应该使用公共方法覆盖 clone 方法.</p>
-<h2 id="ArrayList-属性"><a href="#ArrayList-属性" class="headerlink" title="ArrayList 属性"></a>ArrayList 属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认长度</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DEFAULT_CAPACITY</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="comment">// 用于默认大小空实例的共享空数组实例，与 EMPTY_ELEMENTDATA 的区别在于知道当第一个元素插入时该如何扩充数组</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="comment">// 保存了多少个数据</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"><span class="comment">// 最大的长度，2^31 - 8 减去头关键字</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MAX_ARRAY_SIZE</span> <span class="operator">=</span> Integer.MAX_VALUE - <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ArrayList-构造方法-3-个"><a href="#ArrayList-构造方法-3-个" class="headerlink" title="ArrayList 构造方法(3 个)"></a>ArrayList 构造方法(3 个)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(<span class="type">int</span> initialCapacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity&gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = <span class="keyword">new</span> <span class="title class_">Object</span>[initialCapacity];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Illegal Capacity:&quot;</span> + initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 无初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用其他集合来初始化</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> &#123;</span><br><span class="line">    elementData = c.toArray();</span><br><span class="line">    <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">        <span class="keyword">if</span> (elementData.getClass() != Object[].class)</span><br><span class="line">            <span class="comment">// 调用 Array.copyOf</span></span><br><span class="line">            elementData = Arrays.copyOf(elementData, size, Object[].class);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="ArrayList-扩容机制"><a href="#ArrayList-扩容机制" class="headerlink" title="ArrayList 扩容机制"></a>ArrayList 扩容机制</h2><p>在初始化 <code>ArrayList</code> 的时候，JVM 并不知道要存多少个数据，但是数组必须要声明其大小。这样的话，<strong>最迟</strong> 在第一个元素插入时，必须指定数组容量大小、初始化数组以容纳元素。</p>
-<h2 id="ArrayList-添加方法"><a href="#ArrayList-添加方法" class="headerlink" title="ArrayList 添加方法"></a>ArrayList 添加方法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 直接添加元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">add</span><span class="params">(E e)</span> &#123;</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在指定的位置加上元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, E element)</span> &#123;</span><br><span class="line">    rangeCheckForAdd(index);</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    System.arraycopy(elementData, index, elementData, index + <span class="number">1</span>,</span><br><span class="line">                    size - index);</span><br><span class="line">    elementData[index] = element;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>首先看到的是带三个感叹号的注释 <code>// Increments modCount!!</code>，这个 <code>modCount</code> 是干什么呢的?</p>
-<ul>
-<li><p>点进去发现是继承自 <code>AbstractList</code></p>
-  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="type">int</span> <span class="variable">modCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
-<p>  这个属性就是：<strong>已对该列表进行结构化的修改次数</strong>，否则的话会干扰正在迭代的，产生错误的结果。如果这个 field 变换不正常的话，就会在听下一个迭代（next，remove，previous，set，add 操作的时候）产生在并发里面很常见的并发修改异常（这就是根源。Man, I Learned so much.）<code>ConcurrentModificationException</code>。</p>
-<p>  面对迭代过程中的并发修改，这提供了 <strong>快速故障 fast-fail</strong> 行为，而不是不确定的行为。</p>
-<p>  如果子类希望提供快速失败的迭代器（和列表迭代器），则只需在其 <code>add（int E）</code>和 <code>remove（int E）</code>方法（以及任何其他覆盖该方法导致结构化的方法）中递增此字段即可。 在添加或者移出的时候，这个加不能超过一个。否则会抛出虚假的 <code>ConcurrentModificationException</code>。</p>
-</li>
-</ul>
-<p>接着看</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureCapacityInternal</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 计算容量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">calculateCapacity</span><span class="params">(Object[] elementData, <span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 如果是第一次添加数据，是无参构造第一次添加数据</span></span><br><span class="line">    <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        <span class="comment">// 获取到 10 和 size+1</span></span><br><span class="line">        <span class="keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> minCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 避免并发修改异常</span></span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        <span class="comment">// 进行扩容</span></span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">grow</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">oldCapacity</span> <span class="operator">=</span> elementData.length;</span><br><span class="line">    <span class="comment">// 原来 * 1.5 使用位运算</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">newCapacity</span> <span class="operator">=</span> oldCapacity + (oldCapacity&gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE&gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以扩容的最大容量，当想要扩容的容量大于 MAX_ARRAY_SIZE 时调用</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">hugeCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 是否扩容的时候变成了负数</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity &lt; <span class="number">0</span>) <span class="comment">// overflow 内存不足</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">OutOfMemoryError</span>();</span><br><span class="line">    <span class="comment">// 返回</span></span><br><span class="line">    <span class="keyword">return</span> (minCapacity&gt; MAX_ARRAY_SIZE) ?</span><br><span class="line">        Integer.MAX_VALUE :</span><br><span class="line">        MAX_ARRAY_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>总结：</p>
-<ol>
-<li>有 <code>index</code> 添加会进行 index range check, 没有 <code>index</code> 就进行保证容量的的方法</li>
-<li>先计算容量判断是否是默认容量 <code>10</code>，就返回 <code>Math.max(DEFAULT_CAPACITY, index);</code> 或者 <code>index</code></li>
-<li>拿到上面的值 <code>a</code>, 先加 <code>modCount++</code>，如果 <code>a</code> 大于存储元素的长度的话就进行 <code>grow</code> 操作</li>
-<li>加入需要 <code>grow</code>，传入最大值<ol>
-<li>拿到原来数组的长度 <code>*1.5</code>，用位运算</li>
-<li>如过 <code>*1.5</code> 后，还小于 <code>a</code>，就返回 <code>a</code></li>
-<li>如果大于 <code>2^31-8</code>, 就进行 <code>hugeCapacity</code> 操作（判断是否溢出，就抛出来内存不足异常, 否则就返回，<code>MAX_ARRAY_SIZE</code>），否则就调用 <code>Arrays.copyOf</code> 方法进行拷贝。</li>
-</ol>
-</li>
-</ol>
-<h2 id="什么时候扩容？"><a href="#什么时候扩容？" class="headerlink" title="什么时候扩容？"></a>什么时候扩容？</h2><ol>
-<li>主动扩容: 从 <code>public void ensureCapacity(int minCapacity)</code> 可以看出，我们可以主动调用该方法进行扩容。</li>
-<li>添加时候扩容: 在调用 <code>add/addAll</code> 等添加元素的方法时，<code>ArrayList</code> 也会调用内部扩容方法（ensureCapacityInternal）来主动扩容</li>
-</ol>
-<p>见代码如下: </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ensureCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">minExpand</span> <span class="operator">=</span> (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)</span><br><span class="line">        <span class="comment">// any size if not default element table</span></span><br><span class="line">        ? <span class="number">0</span></span><br><span class="line">        <span class="comment">// larger than default for default empty table. It&#x27;s already</span></span><br><span class="line">        <span class="comment">// supposed to be at default size.</span></span><br><span class="line">        : DEFAULT_CAPACITY;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity&gt; minExpand) &#123;</span><br><span class="line">        ensureExplicitCapacity(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<h3 id="数组底层的方法"><a href="#数组底层的方法" class="headerlink" title="数组底层的方法"></a>数组底层的方法</h3><p>扩容的时候其实调用了 <code>Arrays.copyOf </code> 方法，最后也是调用了 <code>System.arraycopy</code></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Arrays.copyOf</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T[] copyOf(T[] original, <span class="type">int</span> newLength) &#123;</span><br><span class="line">    <span class="keyword">return</span> (T[]) copyOf(original, newLength, original.getClass());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T,U&gt; T[] copyOf(U[] original, <span class="type">int</span> newLength, Class&lt;? <span class="keyword">extends</span> <span class="title class_">T</span>[]&gt; newType) &#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">    T[] copy = ((Object)newType == (Object)Object[].class)</span><br><span class="line">        ? (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[newLength]</span><br><span class="line">        : (T[]) Array.newInstance(newType.getComponentType(), newLength);</span><br><span class="line">    System.arraycopy(original, <span class="number">0</span>, copy, <span class="number">0</span>,</span><br><span class="line">                        Math.min(original.length, newLength));</span><br><span class="line">    <span class="keyword">return</span> copy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">native</span> Class&lt;?&gt; getComponentType();</span><br><span class="line"></span><br><span class="line"><span class="comment">//  System 中的 copy ：native 方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">arraycopy</span><span class="params">(Object src,  <span class="type">int</span>  srcPos,</span></span><br><span class="line"><span class="params">                                        Object dest, <span class="type">int</span> destPos,</span></span><br><span class="line"><span class="params">                                        <span class="type">int</span> length)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h2 id="其他几个-public-方法"><a href="#其他几个-public-方法" class="headerlink" title="其他几个 public 方法"></a>其他几个 public 方法</h2><ul>
-<li><code>clear()</code> <code>fori</code> 将每个元素设置为 <code>null</code>，让 gc 做工作。</li>
-<li><code>clone()</code> 调用父类的 <code>clone</code> 方法，生成新 <code>ArrayList</code>，然后把数据 copy 过去（<code>Arrays.copy</code>）,<code>modCount=0</code>。</li>
-<li><code>toArray()</code> <code>Arrays.copy</code> 返回新拷贝的数据。</li>
-</ul>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li><p>基于数组实现, 默认长度 10</p>
-</li>
-<li><p>可以动态扩容，每次 <code>*1.5</code> 倍的长度增加</p>
-</li>
-<li><p>元素可以为 <code>null</code></p>
-</li>
-<li><p>不是并发安全的，是通过 <code>modCount</code> 来进行判断的</p>
-</li>
-<li><p>如果想并发安全：</p>
-<ol>
-<li><code>Vector</code> 不行, 效率低</li>
-<li>使用 <code>Collections.synchronizedList</code>()</li>
-<li>JUC 中的并发容器 <code>new CopyOnWriteArrayList&lt;&gt;()</code>;</li>
-</ol>
-</li>
-<li><p>为什么数组中的最大元素是 <code>Integer.MAX_VALUE - 8</code></p>
-<ul>
-<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzU3NTYyNzcvd2h5LXRoZS1tYXhpbXVtLWFycmF5LXNpemUtb2YtYXJyYXlsaXN0LWlzLWludGVnZXItbWF4LXZhbHVlLTg=">stackoverflow<i class="fa fa-external-link-alt"></i></span><blockquote>
-<p>数组对象（例如 int 值的数组）的形状和结构类似于标准 Java 对象的形状和结构。主要区别在于，数组对象还有一条额外的元数据，它表示数组的大小。然后，数组对象的元数据包括：Class：指向类信息的指针，该信息描述对象的类型。对于 int 字段数组，这是指向 int [] 类的指针。<br>标志：描述对象状态的标志的集合，包括对象的哈希码（如果有的话）以及对象的形状（即，对象是否为数组）。<br>Lock：对象的同步信息，即对象当前是否同步。<br>Size：数组的大小。</p>
-</blockquote>
-</li>
-<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9qYXZhL2xpYnJhcnkvai1jb2RldG9oZWFwL2k=">From Java code to Java heap<i class="fa fa-external-link-alt"></i></span></li>
-</ul>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>源码</category>
-        <category>JDK</category>
-      </categories>
-      <tags>
-        <tag>源码</tag>
-        <tag>Java容器</tag>
       </tags>
   </entry>
   <entry>
@@ -1639,6 +1535,175 @@
       </categories>
       <tags>
         <tag>读书笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>文本换行符号(^M)导致的 git diff 问题</title>
+    <url>/articles/8e8cc4d1.html</url>
+    <content><![CDATA[<h2 id="问题现象"><a href="#问题现象" class="headerlink" title="问题现象"></a>问题现象</h2><p>文件改动了一点，但是在 gitlab&#x2F;github 看 diff 却发现整个文件全部都进行了改动，且文件变的乱序或者变成了一行。</p>
+<h2 id="原因-文件换行符导致"><a href="#原因-文件换行符导致" class="headerlink" title="原因: 文件换行符导致"></a>原因: 文件换行符导致</h2><p>文本换行符号通常有: LF 和 CRLF。</p>
+<span id="more"></span>
+<p>首先介绍 LF 和 CRLF 下是什么：</p>
+<ul>
+<li><strong>CRLF</strong>: 是 carriagereturnlinefeed 的缩写。中文意思是回车换行；</li>
+<li><strong>LF</strong>: 是 line feed 的缩写，中文意思是换行；</li>
+<li><strong>CR</strong>: 是 carriagereturn 的缩写。中文意思是回车；</li>
+</ul>
+<p>为什么换行回车会不同呢? 主要的原因在于操作系统之间的分歧：</p>
+<ul>
+<li>早期的 macOS 系统使用 CR 当做换行，现在也已经统一成了 LF。</li>
+<li>Unix(包含现在大量使用的 linux) 系统使用 LF</li>
+<li>Windows 系统使用 LFCR 当做换行</li>
+</ul>
+<p>也正是因为不同系统的分歧，在多人协作共同开发的时候，可能导致提交代码时候产生问题。</p>
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><h3 id="1-IDE-或者代码编辑器中统一将换行符修改为-LF"><a href="#1-IDE-或者代码编辑器中统一将换行符修改为-LF" class="headerlink" title="1. IDE 或者代码编辑器中统一将换行符修改为: LF"></a>1. IDE 或者代码编辑器中统一将换行符修改为: LF</h3><h3 id="2-在-git-中进行配置"><a href="#2-在-git-中进行配置" class="headerlink" title="2. 在 git 中进行配置"></a>2. 在 git 中进行配置</h3><p>git 为了防止以上问题扰乱跨平台合作开发，使用命令可以转化 LF 和 CRLF<br>具体命令为：</p>
+<ol>
+<li><p><code>git config --global core.autocrlf true</code>: Git 可以在你 push 时自动地把行结束符 CRLF 转换成 LF，而在 pull 代码时把 LF 转换成 CRLF。用 core.autocrlf 来打开此项功能，如果是在 Windows 系统上，把它设置成 true，这样当签出代码时，LF 会被转换成 CRLF</p>
+</li>
+<li><p><code>git config --global core.autocrlf input</code>: Linux 或 Mac 系统使用 LF 作为行结束符；当一个以 CRLF 为行结束符的文件不小心被引入时你肯定想进行修正，把 core.autocrlf 设置成 input 来告诉 Git 在 push 时把 CRLF 转换成 LF，pull 时不转换</p>
+</li>
+<li><p><code>git config --global core.autocrlf false</code>: 在本地和代码库中都保留 CRLF，无论 pull 还是 push 都不变，代码库什么样，本地还是什么样子</p>
+</li>
+</ol>
+<p>参考链接:</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NoZW56aG91X3loL2FydGljbGUvZGV0YWlscy8xMDU1MDc1NDk=">IDEA 批量替换文件换行符、分隔符 CRLF、LF、CR_shenzhou_yh 的博客<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuY3Nkbi5uZXQvdGFncy9NdFRhQWcyc05EWTJNRGt6TFdKc2IyY08wTzBPLmh0bWw=">idea 换行格式指定为 LF<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cubGV0aWFuYmlqaS5jb20vZ2l0L2dpdC1jcmxmLmh0bWw=">git 解决换行符 ^M 导致整个文件被改 - 乐天笔记<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<!-- - www.baidu.com -->]]></content>
+      <categories>
+        <category>BugMemo</category>
+      </categories>
+      <tags>
+        <tag>文本换行符号</tag>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ArrayList 源码分析</title>
+    <url>/articles/392f85e6.html</url>
+    <content><![CDATA[<h2 id="ArrayList-的结构"><a href="#ArrayList-的结构" class="headerlink" title="ArrayList 的结构"></a>ArrayList 的结构</h2><ul>
+<li>在逻辑结构上是：线性结构、线性表</li>
+<li>在物理结构是：连续储存结构</li>
+</ul>
+<h2 id="ArrayList-实现的接口"><a href="#ArrayList-实现的接口" class="headerlink" title="ArrayList 实现的接口"></a>ArrayList 实现的接口</h2><span id="more"></span>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ArrayList&lt;E&gt; <span class="keyword">extends</span> <span class="title class_">AbstractList</span>&lt;E&gt;<span class="keyword">implements</span> <span class="title class_">List</span>&lt;E&gt;,</span><br><span class="line">RandomAccess, Cloneable, java.io.Serializable</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gf3hoj29ydj30yu0jijs1.jpg"></p>
+<h3 id="RandomAccess"><a href="#RandomAccess" class="headerlink" title="RandomAccess"></a><code>RandomAccess</code></h3><p><code>RandomAccess</code>，没有方法，是一个标记的接口。List 实现这个接口用来表示其支持随机访问：即下标访问，（<strong>通常是固定时间</strong>）<code>RandomAccess</code> 这个标记接口就是标记能够随机访问元素的集合， 简单来说就 <strong>是底层是数组实现</strong> 的集合。 <code>for (int i=0, n=list.size(); i &lt; n; i++)</code> 循环，比 <code>for (Iterator i=list.iterator(); i.hasNext(); )i.next();</code> 要快。（快速随机访问速度 &gt; 迭代器遍历速度。）</p>
+<h3 id="Cloneable"><a href="#Cloneable" class="headerlink" title="Cloneable"></a><code>Cloneable</code></h3><p>空接口，实现了这个接口，在使用 <code>Object.clone()</code> 方法进行每个字段的拷贝是合法的，没有实现这个方法会抛出 <code>CloneNotSupportedException</code>。接口不包含 <code>clone</code> 方法，及时这个实现了这个接口，也不能进行 clone，即使是使用反射。实现此接口的类应该使用公共方法覆盖 clone 方法.</p>
+<h2 id="ArrayList-属性"><a href="#ArrayList-属性" class="headerlink" title="ArrayList 属性"></a>ArrayList 属性</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 默认长度</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DEFAULT_CAPACITY</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="comment">// 用于默认大小空实例的共享空数组实例，与 EMPTY_ELEMENTDATA 的区别在于知道当第一个元素插入时该如何扩充数组</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = &#123;&#125;;</span><br><span class="line"><span class="keyword">transient</span> Object[] elementData;</span><br><span class="line"><span class="comment">// 保存了多少个数据</span></span><br><span class="line"><span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"><span class="comment">// 最大的长度，2^31 - 8 减去头关键字</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MAX_ARRAY_SIZE</span> <span class="operator">=</span> Integer.MAX_VALUE - <span class="number">8</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ArrayList-构造方法-3-个"><a href="#ArrayList-构造方法-3-个" class="headerlink" title="ArrayList 构造方法(3 个)"></a>ArrayList 构造方法(3 个)</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 有初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(<span class="type">int</span> initialCapacity)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (initialCapacity&gt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = <span class="keyword">new</span> <span class="title class_">Object</span>[initialCapacity];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (initialCapacity == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalArgumentException</span>(<span class="string">&quot;Illegal Capacity:&quot;</span> + initialCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 无初始容量</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 使用其他集合来初始化</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">ArrayList</span><span class="params">(Collection&lt;? extends E&gt; c)</span> &#123;</span><br><span class="line">    elementData = c.toArray();</span><br><span class="line">    <span class="keyword">if</span> ((size = elementData.length) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// c.toArray might (incorrectly) not return Object[] (see 6260652)</span></span><br><span class="line">        <span class="keyword">if</span> (elementData.getClass() != Object[].class)</span><br><span class="line">            <span class="comment">// 调用 Array.copyOf</span></span><br><span class="line">            elementData = Arrays.copyOf(elementData, size, Object[].class);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.elementData = EMPTY_ELEMENTDATA;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ArrayList-扩容机制"><a href="#ArrayList-扩容机制" class="headerlink" title="ArrayList 扩容机制"></a>ArrayList 扩容机制</h2><p>在初始化 <code>ArrayList</code> 的时候，JVM 并不知道要存多少个数据，但是数组必须要声明其大小。这样的话，<strong>最迟</strong> 在第一个元素插入时，必须指定数组容量大小、初始化数组以容纳元素。</p>
+<h2 id="ArrayList-添加方法"><a href="#ArrayList-添加方法" class="headerlink" title="ArrayList 添加方法"></a>ArrayList 添加方法</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 直接添加元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">add</span><span class="params">(E e)</span> &#123;</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    elementData[size++] = e;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在指定的位置加上元素</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(<span class="type">int</span> index, E element)</span> &#123;</span><br><span class="line">    rangeCheckForAdd(index);</span><br><span class="line">    ensureCapacityInternal(size + <span class="number">1</span>);  <span class="comment">// Increments modCount!!</span></span><br><span class="line">    System.arraycopy(elementData, index, elementData, index + <span class="number">1</span>,</span><br><span class="line">                    size - index);</span><br><span class="line">    elementData[index] = element;</span><br><span class="line">    size++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先看到的是带三个感叹号的注释 <code>// Increments modCount!!</code>，这个 <code>modCount</code> 是干什么呢的?</p>
+<ul>
+<li><p>点进去发现是继承自 <code>AbstractList</code></p>
+  <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">transient</span> <span class="type">int</span> <span class="variable">modCount</span> <span class="operator">=</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>  这个属性就是：<strong>已对该列表进行结构化的修改次数</strong>，否则的话会干扰正在迭代的，产生错误的结果。如果这个 field 变换不正常的话，就会在听下一个迭代（next，remove，previous，set，add 操作的时候）产生在并发里面很常见的并发修改异常（这就是根源。Man, I Learned so much.）<code>ConcurrentModificationException</code>。</p>
+<p>  面对迭代过程中的并发修改，这提供了 <strong>快速故障 fast-fail</strong> 行为，而不是不确定的行为。</p>
+<p>  如果子类希望提供快速失败的迭代器（和列表迭代器），则只需在其 <code>add（int E）</code>和 <code>remove（int E）</code>方法（以及任何其他覆盖该方法导致结构化的方法）中递增此字段即可。 在添加或者移出的时候，这个加不能超过一个。否则会抛出虚假的 <code>ConcurrentModificationException</code>。</p>
+</li>
+</ul>
+<p>接着看</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureCapacityInternal</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 计算容量</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">calculateCapacity</span><span class="params">(Object[] elementData, <span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 如果是第一次添加数据，是无参构造第一次添加数据</span></span><br><span class="line">    <span class="keyword">if</span> (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) &#123;</span><br><span class="line">        <span class="comment">// 获取到 10 和 size+1</span></span><br><span class="line">        <span class="keyword">return</span> Math.max(DEFAULT_CAPACITY, minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> minCapacity;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 避免并发修改异常</span></span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        <span class="comment">// 进行扩容</span></span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">grow</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">oldCapacity</span> <span class="operator">=</span> elementData.length;</span><br><span class="line">    <span class="comment">// 原来 * 1.5 使用位运算</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">newCapacity</span> <span class="operator">=</span> oldCapacity + (oldCapacity&gt;&gt; <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - minCapacity &lt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = minCapacity;</span><br><span class="line">    <span class="keyword">if</span> (newCapacity - MAX_ARRAY_SIZE&gt; <span class="number">0</span>)</span><br><span class="line">        newCapacity = hugeCapacity(minCapacity);</span><br><span class="line">    elementData = Arrays.copyOf(elementData, newCapacity);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 可以扩容的最大容量，当想要扩容的容量大于 MAX_ARRAY_SIZE 时调用</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span> <span class="title function_">hugeCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="comment">// 是否扩容的时候变成了负数</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity &lt; <span class="number">0</span>) <span class="comment">// overflow 内存不足</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">OutOfMemoryError</span>();</span><br><span class="line">    <span class="comment">// 返回</span></span><br><span class="line">    <span class="keyword">return</span> (minCapacity&gt; MAX_ARRAY_SIZE) ?</span><br><span class="line">        Integer.MAX_VALUE :</span><br><span class="line">        MAX_ARRAY_SIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>总结：</p>
+<ol>
+<li>有 <code>index</code> 添加会进行 index range check, 没有 <code>index</code> 就进行保证容量的的方法</li>
+<li>先计算容量判断是否是默认容量 <code>10</code>，就返回 <code>Math.max(DEFAULT_CAPACITY, index);</code> 或者 <code>index</code></li>
+<li>拿到上面的值 <code>a</code>, 先加 <code>modCount++</code>，如果 <code>a</code> 大于存储元素的长度的话就进行 <code>grow</code> 操作</li>
+<li>加入需要 <code>grow</code>，传入最大值<ol>
+<li>拿到原来数组的长度 <code>*1.5</code>，用位运算</li>
+<li>如过 <code>*1.5</code> 后，还小于 <code>a</code>，就返回 <code>a</code></li>
+<li>如果大于 <code>2^31-8</code>, 就进行 <code>hugeCapacity</code> 操作（判断是否溢出，就抛出来内存不足异常, 否则就返回，<code>MAX_ARRAY_SIZE</code>），否则就调用 <code>Arrays.copyOf</code> 方法进行拷贝。</li>
+</ol>
+</li>
+</ol>
+<h2 id="什么时候扩容？"><a href="#什么时候扩容？" class="headerlink" title="什么时候扩容？"></a>什么时候扩容？</h2><ol>
+<li>主动扩容: 从 <code>public void ensureCapacity(int minCapacity)</code> 可以看出，我们可以主动调用该方法进行扩容。</li>
+<li>添加时候扩容: 在调用 <code>add/addAll</code> 等添加元素的方法时，<code>ArrayList</code> 也会调用内部扩容方法（ensureCapacityInternal）来主动扩容</li>
+</ol>
+<p>见代码如下: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ensureCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">minExpand</span> <span class="operator">=</span> (elementData != DEFAULTCAPACITY_EMPTY_ELEMENTDATA)</span><br><span class="line">        <span class="comment">// any size if not default element table</span></span><br><span class="line">        ? <span class="number">0</span></span><br><span class="line">        <span class="comment">// larger than default for default empty table. It&#x27;s already</span></span><br><span class="line">        <span class="comment">// supposed to be at default size.</span></span><br><span class="line">        : DEFAULT_CAPACITY;</span><br><span class="line">    <span class="keyword">if</span> (minCapacity&gt; minExpand) &#123;</span><br><span class="line">        ensureExplicitCapacity(minCapacity);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">ensureExplicitCapacity</span><span class="params">(<span class="type">int</span> minCapacity)</span> &#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="comment">// overflow-conscious code</span></span><br><span class="line">    <span class="keyword">if</span> (minCapacity - elementData.length&gt; <span class="number">0</span>)</span><br><span class="line">        grow(minCapacity);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="数组底层的方法"><a href="#数组底层的方法" class="headerlink" title="数组底层的方法"></a>数组底层的方法</h3><p>扩容的时候其实调用了 <code>Arrays.copyOf </code> 方法，最后也是调用了 <code>System.arraycopy</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Arrays.copyOf</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; T[] copyOf(T[] original, <span class="type">int</span> newLength) &#123;</span><br><span class="line">    <span class="keyword">return</span> (T[]) copyOf(original, newLength, original.getClass());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T,U&gt; T[] copyOf(U[] original, <span class="type">int</span> newLength, Class&lt;? <span class="keyword">extends</span> <span class="title class_">T</span>[]&gt; newType) &#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">    T[] copy = ((Object)newType == (Object)Object[].class)</span><br><span class="line">        ? (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[newLength]</span><br><span class="line">        : (T[]) Array.newInstance(newType.getComponentType(), newLength);</span><br><span class="line">    System.arraycopy(original, <span class="number">0</span>, copy, <span class="number">0</span>,</span><br><span class="line">                        Math.min(original.length, newLength));</span><br><span class="line">    <span class="keyword">return</span> copy;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">native</span> Class&lt;?&gt; getComponentType();</span><br><span class="line"></span><br><span class="line"><span class="comment">//  System 中的 copy ：native 方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">arraycopy</span><span class="params">(Object src,  <span class="type">int</span>  srcPos,</span></span><br><span class="line"><span class="params">                                        Object dest, <span class="type">int</span> destPos,</span></span><br><span class="line"><span class="params">                                        <span class="type">int</span> length)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="其他几个-public-方法"><a href="#其他几个-public-方法" class="headerlink" title="其他几个 public 方法"></a>其他几个 public 方法</h2><ul>
+<li><code>clear()</code> <code>fori</code> 将每个元素设置为 <code>null</code>，让 gc 做工作。</li>
+<li><code>clone()</code> 调用父类的 <code>clone</code> 方法，生成新 <code>ArrayList</code>，然后把数据 copy 过去（<code>Arrays.copy</code>）,<code>modCount=0</code>。</li>
+<li><code>toArray()</code> <code>Arrays.copy</code> 返回新拷贝的数据。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li><p>基于数组实现, 默认长度 10</p>
+</li>
+<li><p>可以动态扩容，每次 <code>*1.5</code> 倍的长度增加</p>
+</li>
+<li><p>元素可以为 <code>null</code></p>
+</li>
+<li><p>不是并发安全的，是通过 <code>modCount</code> 来进行判断的</p>
+</li>
+<li><p>如果想并发安全：</p>
+<ol>
+<li><code>Vector</code> 不行, 效率低</li>
+<li>使用 <code>Collections.synchronizedList</code>()</li>
+<li>JUC 中的并发容器 <code>new CopyOnWriteArrayList&lt;&gt;()</code>;</li>
+</ol>
+</li>
+<li><p>为什么数组中的最大元素是 <code>Integer.MAX_VALUE - 8</code></p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9zdGFja292ZXJmbG93LmNvbS9xdWVzdGlvbnMvMzU3NTYyNzcvd2h5LXRoZS1tYXhpbXVtLWFycmF5LXNpemUtb2YtYXJyYXlsaXN0LWlzLWludGVnZXItbWF4LXZhbHVlLTg=">stackoverflow<i class="fa fa-external-link-alt"></i></span><blockquote>
+<p>数组对象（例如 int 值的数组）的形状和结构类似于标准 Java 对象的形状和结构。主要区别在于，数组对象还有一条额外的元数据，它表示数组的大小。然后，数组对象的元数据包括：Class：指向类信息的指针，该信息描述对象的类型。对于 int 字段数组，这是指向 int [] 类的指针。<br>标志：描述对象状态的标志的集合，包括对象的哈希码（如果有的话）以及对象的形状（即，对象是否为数组）。<br>Lock：对象的同步信息，即对象当前是否同步。<br>Size：数组的大小。</p>
+</blockquote>
+</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly93d3cuaWJtLmNvbS9kZXZlbG9wZXJ3b3Jrcy9qYXZhL2xpYnJhcnkvai1jb2RldG9oZWFwL2k=">From Java code to Java heap<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>源码</category>
+        <category>JDK</category>
+      </categories>
+      <tags>
+        <tag>源码</tag>
+        <tag>Java容器</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>正则之反向引用</title>
+    <url>/articles/a629e553.html</url>
+    <content><![CDATA[<h3 id="正则的分组和反向引用"><a href="#正则的分组和反向引用" class="headerlink" title="正则的分组和反向引用"></a>正则的分组和反向引用</h3><p>了解反向应用的前，首先了解正则中的分组，简单来说：组是用括号划分的正则表达式，可以根据组的编号来引用某个组。组号为 0 表示整个表达式匹配到的内容，组号 1 表示第一对括号扩起的组，以此类推，进行分组匹配时的原则是：由外向内，由左向右。</p>
+<p>譬如一个手机号：16300020013，可以用<code>(\d&#123;3&#125;)\d&#123;4&#125;(\d&#123;4&#125;)</code>进行匹配。</p>
+<p>这里整个手机号就是组 0，前三位是组 1，最后四位为组 2。</p>
+<p>捕获组捕获到的内容，不仅可以在正则表达式外部通过程序进行引用，也可以<em>在正则表达式内部进行引用</em>，这种引用方式就是<strong>反向引用</strong>。</p>
+<h3 id="在-Java-中使用反向引用"><a href="#在-Java-中使用反向引用" class="headerlink" title="在 Java 中使用反向引用"></a>在 Java 中使用反向引用</h3><p>Java 中的 <code>java.lang.String#replaceAll</code> 方法可以用正则对String 进行替换。</p>
+<p>方法的定义：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> String <span class="title function_">replaceAll</span><span class="params">(String regex, String replacement)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> Pattern.compile(regex).matcher(<span class="built_in">this</span>).replaceAll(replacement);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以在第二个参数中使用反向引用。</p>
+<h4 id="在小时和分钟上加上秒数"><a href="#在小时和分钟上加上秒数" class="headerlink" title="在小时和分钟上加上秒数"></a>在小时和分钟上加上秒数</h4><p>前端传入多个时间段，用<code>|</code>分割，比如<code>00:30,01:30|02:30,03:30</code>，需要后端加上秒数。</p>
+<p>可以用切分后遍历解决， 也可以用一个正则表达式解决。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;00:30,01:30|02:30,03:30&quot;</span>;</span><br><span class="line">s.replaceAll(<span class="string">&quot;:\\d&#123;2&#125;&quot;</span>, <span class="string">&quot;$0:00&quot;</span>);  <span class="comment">// 00:30:00,01:30:00|02:30:00,03:30:00</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="手机号脱敏"><a href="#手机号脱敏" class="headerlink" title="手机号脱敏"></a>手机号脱敏</h4><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">phoneNumber</span> <span class="operator">=</span> <span class="string">&quot;16000008686&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">phone</span> <span class="operator">=</span> phoneNumber.replaceAll(<span class="string">&quot;(\\d&#123;3&#125;)\\d&#123;4&#125;(\\d&#123;4&#125;)&quot;</span>, <span class="string">&quot;$1****$2&quot;</span>); <span class="comment">// 160****8686</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>$0 表示的是整个正则表达式匹配到的文本，这里是整个表达式</li>
+<li>$1 表示的是第一个括号里匹配到的文本，这里是 <code>160</code></li>
+<li>$2 表示的是第二个括号里匹配到的文本，这里是 <code>8686</code></li>
+</ul>
+]]></content>
+      <categories>
+        <category>开发 tips</category>
+      </categories>
+      <tags>
+        <tag>正则表达式</tag>
       </tags>
   </entry>
 </search>
